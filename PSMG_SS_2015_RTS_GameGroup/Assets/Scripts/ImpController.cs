@@ -13,8 +13,12 @@ public class ImpController : MonoBehavior
         BLASTER
     }
 
-    JOB job;
+    // Events
+    public delegate void ImpSelected(ImpController impController);
+    public event ImpSelected OnSelect;
 
+    JOB job;
+    
     void Awake()
     {
         job = JOB.NONE;
@@ -22,7 +26,10 @@ public class ImpController : MonoBehavior
 
     void OnMouseDown()
     {
-        Debug.Log("You clicked on an imp.");
+        if (OnSelect != null)
+        {
+            OnSelect(this);
+        }
     }
 
     void Update()

@@ -4,12 +4,9 @@ using System.Collections;
 public class LevelLoader : MonoBehavior
 {
 
-    public interface ILevelLoader
-    {
-        void OnLevelLoaded(Level level);
-    }
+    public delegate void LevelLoaded(Level level);
+    public event LevelLoaded OnLevelLoaded;
 
-    ILevelLoader iLevelLoader;
     Level currentLevel;
 
     void Awake()
@@ -30,6 +27,7 @@ public class LevelLoader : MonoBehavior
     {
         Application.LoadLevel(levelName);
         RetrieveLevelData();
+        OnLevelLoaded(currentLevel);
     }
 
     void RetrieveLevelData()

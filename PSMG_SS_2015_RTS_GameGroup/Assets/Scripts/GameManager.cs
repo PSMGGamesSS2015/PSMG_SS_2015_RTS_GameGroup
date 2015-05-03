@@ -28,6 +28,20 @@ public class GameManager : MonoBehaviour {
 
         levelLoader = GetComponent<LevelLoader>(); // Initializing sub components
         impManager = GetComponent<ImpManager>();
+
+        
+        RegisterEvents();
+    }
+
+
+    private void RegisterEvents()
+    {
+        levelLoader.OnLevelLoaded += OnLevelLoaded;
+    }
+
+    private void OnLevelLoaded(Level level)
+    {
+        // TODO react to event
     }
 
     void Update()
@@ -58,5 +72,6 @@ public class GameManager : MonoBehaviour {
     {
         impManager.SpawnImp();
     }
+
 
 }

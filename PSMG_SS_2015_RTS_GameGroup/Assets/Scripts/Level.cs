@@ -10,7 +10,7 @@ public class Level : MonoBehavior
     GameObject start;
     GameObject end;
 
-    List<Imp> imps;
+    List<ImpController> imps;
     
     int maxImps;
 

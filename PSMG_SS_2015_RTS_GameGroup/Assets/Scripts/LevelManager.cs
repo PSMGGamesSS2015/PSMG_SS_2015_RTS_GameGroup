@@ -12,6 +12,7 @@ public class LevelManager : MonoBehavior
 
     private const int MAX_IMPS = 4;
     private const float SPAWNING_INTERVALL = 4.0f; // in seconds
+    private const string TEST_LEVEL = "TEST LEVEL";
 
     public GameObject impPrefab;
     private float spawnCounter;
@@ -27,6 +28,7 @@ public class LevelManager : MonoBehavior
     {
         obstacles = new List<GameObject>();
         enemies = new List<GameObject>();
+        LoadLevel(TEST_LEVEL);
     }
 
     private void Update()

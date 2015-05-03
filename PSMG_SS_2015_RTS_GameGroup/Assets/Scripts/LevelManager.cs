@@ -7,12 +7,12 @@ using System.Collections.Generic;
  *  is responsible for loading levels and managing the game logic.
  */
 
-public class LevelManager : MonoBehavior
+public class LevelManager : MonoBehaviour
 {
 
-    private const int MAX_IMPS = 4;
+    private const int MAX_IMPS = 1;
     private const float SPAWNING_INTERVALL = 4.0f; // in seconds
-    private const string TEST_LEVEL = "TEST LEVEL";
+    private const string TEST_LEVEL = "Test Level";
 
     public GameObject impPrefab;
     private float spawnCounter;
@@ -22,7 +22,7 @@ public class LevelManager : MonoBehavior
     private List<GameObject> obstacles;
     private List<GameObject> enemies;
     private GameObject start;
-    private GameObject end;
+    private GameObject goal;
 
     private void Awake()
     {
@@ -41,20 +41,22 @@ public class LevelManager : MonoBehavior
         if (currentImps == 0)
         {
             SpawnImp();
+            currentImps++;
             spawnCounter = 0f;
         }
         else if (currentImps < MAX_IMPS && spawnCounter >= SPAWNING_INTERVALL)
         {
             SpawnImp();
+            currentImps++;
             spawnCounter = 0f;
         }
         spawnCounter += Time.deltaTime;
-        Debug.Log(spawnCounter);
+        //Debug.Log(spawnCounter);
     }
 
     private void SpawnImp()
     {
-        Instantiate(impPrefab);
+        Instantiate(impPrefab, new Vector3(-3f, -1f, 0f), Quaternion.identity);
     }
 
     private void LoadLevel(string levelName)
@@ -69,7 +71,7 @@ public class LevelManager : MonoBehavior
         obstacles.Clear();
         enemies.Clear();
         start = null;
-        end = null;
+        goal = null;
         currentImps = 0;
     }
 
@@ -78,12 +80,12 @@ public class LevelManager : MonoBehavior
         RetrieveObstacles();
         RetrieveEnemies();
         RetrieveStart();
-        RetrieveEnd();
+        RetrieveGoal();
     }
 
     private void RetrieveObstacles()
     {
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag<Obstacle>();
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
         for (int i = 0; i < obstacles.Length; i++)
         {
             this.obstacles.Add(obstacles[i]);
@@ -92,7 +94,7 @@ public class LevelManager : MonoBehavior
 
     private void RetrieveEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameOjectsWithTag<Enemy>();
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for (int i = 0; i < enemies.Length; i++)
         {
             this.enemies.Add(enemies[i]);
@@ -101,11 +103,11 @@ public class LevelManager : MonoBehavior
 
     private void RetrieveStart()
     {
-        start = GameObject.FindWithTag<Start>();
+        start = GameObject.FindWithTag("Start");
     }
 
-    private void RetrieveEnd()
+    private void RetrieveGoal()
     {
-        end = GameObject.FindWithTag<End>();
+        goal = GameObject.FindWithTag("Goal");
     }
 }

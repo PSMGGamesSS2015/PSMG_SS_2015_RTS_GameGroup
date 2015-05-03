@@ -7,7 +7,7 @@ using System.Collections;
  *  hub for communication between them.
  */
 
-public class GameManager : MonoBehavior
+public class GameManager : MonoBehaviour
 {
 
     private LevelManager levelManager;

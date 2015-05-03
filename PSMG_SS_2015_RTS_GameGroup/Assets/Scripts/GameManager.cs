@@ -2,76 +2,22 @@
 using System.Collections;
 
 /*
- *  - manages the flow of the Application
- *  - major control unit that glues the whole application together
+ *  The GameManager is a global object that glues the whole application together.
+ *  It holds references to the major components of the game and serves as an event
+ *  hub for communication between them.
  */
-public class GameManager : MonoBehaviour {
 
-    // major components of the GameManager
-    private LevelLoader levelLoader;
-    private ImpManager impManager;
+public class GameManager : MonoBehavior
+{
 
-    public static GameManager instance = null;
+    private LevelManager levelManager;
 
-    void Awake()
+    private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject); // Prevents the gameObject to which this script is attached from being disposed on scene load
-
-        levelLoader = GetComponent<LevelLoader>(); // Initializing sub components
-        impManager = GetComponent<ImpManager>();
-
-        
-        RegisterEvents();
+        DontDestroyOnLoad(gameObject);
+        levelManager = GetComponent<LevelManager>();
     }
 
-
-    private void RegisterEvents()
-    {
-        levelLoader.OnLevelLoaded += OnLevelLoaded;
-    }
-
-    private void OnLevelLoaded(Level level)
-    {
-        // TODO react to event
-    }
-
-    void Update()
-    {
-        CheckForCompletion();
-        SpawnImps();
-    }
-
-    void CheckForCompletion() {
-        if (IsLevelLost()) {
-            levelLoader.RestartLevel();
-        } else if (IsLevelWon()) {
-            levelLoader.LoadNextLevel();
-        } 
-    }
-
-    private bool IsLevelLost()
-    {
-        return false;
-    }
-
-    private bool IsLevelWon()
-    {
-        return false;
-    }
-
-    private void SpawnImps()
-    {
-        impManager.SpawnImp();
-    }
 
 
 }

@@ -9,7 +9,7 @@ public class Loader : MonoBehaviour {
 
     public GameObject gameManager;
     
-    void Awake()
+    private void Awake()
     {
         Instantiate(gameManager);
     }

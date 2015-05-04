@@ -11,10 +11,18 @@ public class ImpController : MonoBehaviour {
     private float movementSpeed = 1f;
     bool facingRight = true;
 
+    public delegate void Click(ImpController impController);
+    public event Click OnImpSelected;
+
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+    }
+
+    void OnMouseDown()
+    {
+        OnImpSelected(this);
     }
 
     void FixedUpdate()
@@ -40,8 +48,6 @@ public class ImpController : MonoBehaviour {
             movementSpeed *= -1;
             raycastLength *= -1;
         }
-
-        
 
         rigidBody2D.velocity = new Vector2(movementSpeed, rigidBody2D.velocity.y);
     }

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/*
- *  Contains configurations for all levels in the game.
- */
+/// <summary>
+/// The LevelConfig class contains a static array of LevelConfigs that stores
+/// basic information about the individual levels such as the number of imps
+/// that can exist in the level at a time.
+/// </summary>
 
 public class LevelConfig  {
 

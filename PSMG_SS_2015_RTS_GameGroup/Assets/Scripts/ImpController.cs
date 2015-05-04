@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// The ImpController is a component attached to every instance of
+/// an Imp prefab. It manages movement patterns and collision detection
+/// of imps and listens for click events on the imps.
+/// </summary>
+
 public class ImpController : MonoBehaviour {
 
     Rigidbody2D rigidBody2D;

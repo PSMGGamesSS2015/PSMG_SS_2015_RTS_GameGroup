@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/*
- *  A class able to load and hold all GameObjects of a scene relevant for interaction logic.
- */
+/// <summary>
+/// The Level class loads and holds the GameObjects in a level that are of
+/// interest for the interaction logic.
+/// </summary>
 
 public class Level
 {

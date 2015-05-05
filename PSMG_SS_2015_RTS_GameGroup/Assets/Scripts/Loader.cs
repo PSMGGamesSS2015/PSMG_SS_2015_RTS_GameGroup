@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-/*
- *  Loads the game manager and is called when the game is started.   
- */
+/// <summary>
+/// The only task of the Loader is to load the GameManager when the application starts.
+/// </summary>
 
 public class Loader : MonoBehaviour {
 

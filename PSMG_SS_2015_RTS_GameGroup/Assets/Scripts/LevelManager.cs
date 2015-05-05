@@ -2,16 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/*
- *  The LevelManager is a subcomponent of the GameManager and
- *  is responsible for loading levels and managing the game logic.
- */
+/// <summary>
+/// The LevelManager is a subcompoment of the GameManager and is responsible for
+/// loading levels and managing the game logic.
+/// </summary>
 
 public class LevelManager : MonoBehaviour
 {
     
     private Level lvl;
-    private LevelConfig config = LevelConfig.LEVELS[0];
     private LevelManagerListener listener;
 
     public interface LevelManagerListener
@@ -24,17 +23,12 @@ public class LevelManager : MonoBehaviour
         this.listener = listener;
     }
 
-    private void Awake()
+    public void LoadLevel(LevelConfig config)
     {
-        LoadLevel(config.GetName());
-    }
-
-    private void LoadLevel(string levelName)
-    {
-        Application.LoadLevel(levelName);
+        Application.LoadLevel(config.GetName());
         lvl = new Level(config);
     }
- 
+
     private void OnLevelWasLoaded(int level)
     {
         lvl.RetrieveLevelData();

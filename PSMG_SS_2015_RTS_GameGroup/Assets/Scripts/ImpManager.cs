@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+/// <summary>
+/// The ImpManager is a subcomponent of the GameManager and manages the
+/// logic behind the player-controlled imps in a level. For example,
+/// it spawns imps and gets notified when an imp is selected by the player.
+/// </summary>
 
 public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private Level lvl;
+
+    private List<ImpController> imps;
 
     private float spawnCounter;
     private int currentImps;
@@ -12,6 +21,11 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     public GameObject impPrefab;
 
+    private void Awake()
+    {
+        imps = new List<ImpController>();
+    }
+    
     public void SetLvl(Level lvl) {
         this.lvl = lvl;
     }
@@ -50,6 +64,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         impController.RegisterListener(this);
         currentImps++;
         spawnCounter = 0f;
+
     }
 
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)

@@ -9,11 +9,20 @@ using System.Collections.Generic;
 
 public class LevelManager : MonoBehaviour
 {
+    
     private Level lvl;
     private LevelConfig config = LevelConfig.LEVELS[0];
+    private LevelManagerListener listener;
 
-    public delegate void LevelStarted(Level lvl);
-    public event LevelStarted OnLevelStarted;
+    public interface LevelManagerListener
+    {
+        void OnLevelStarted(Level lvl);
+    }
+
+    public void RegisterListener(LevelManagerListener listener)
+    {
+        this.listener = listener;
+    }
 
     private void Awake()
     {
@@ -25,12 +34,11 @@ public class LevelManager : MonoBehaviour
         Application.LoadLevel(levelName);
         lvl = new Level(config);
     }
-
-    
+ 
     private void OnLevelWasLoaded(int level)
     {
         lvl.RetrieveLevelData();
-        OnLevelStarted(lvl);
+        listener.OnLevelStarted(lvl);
     }
 
     

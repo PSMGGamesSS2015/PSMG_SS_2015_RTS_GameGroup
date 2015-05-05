@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ImpManager : MonoBehaviour {
+public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private Level lvl;
 
@@ -45,18 +45,17 @@ public class ImpManager : MonoBehaviour {
     private void SpawnImp()
     {
         Vector3 spawnPosition = lvl.GetSpawnPosition();
-        GameObject newImp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
-        ImpController newImpController = newImp.GetComponent<ImpController>();
-        newImpController.OnImpSelected += OnImpSelected;
+        GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
+        ImpController impController = imp.GetComponent<ImpController>();
+        impController.RegisterListener(this);
         currentImps++;
         spawnCounter = 0f;
     }
 
-    private void OnImpSelected(ImpController impSelected)
+    void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
-        this.impSelected = impSelected;
+        impSelected = impController;
         Debug.Log("An imp was selected:");
-        Debug.Log(this.impSelected);
+        Debug.Log(this.impSelected); 
     }
-
 }

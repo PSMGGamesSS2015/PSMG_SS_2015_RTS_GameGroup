@@ -7,11 +7,15 @@ using System.Collections;
  *  hub for communication between them.
  */
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
 {
+    private enum GameState
+    {
+        NotStarted,
+        LevelStarted
+    }
 
-    private const int STATE_LEVEL_STARTED = 0;
-    private int gameState = -1;
+    private GameState gameState;
 
     private LevelManager levelManager;
     private ImpManager impManager;
@@ -20,27 +24,22 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         levelManager = GetComponent<LevelManager>();
+        levelManager.RegisterListener(this);
         impManager = GetComponent<ImpManager>();
-        RegisterEvents();
-    }
-
-    private void RegisterEvents()
-    {
-        levelManager.OnLevelStarted += OnLevelStarted;
-    }
-
-    private void OnLevelStarted(Level lvl)
-    {
-        impManager.SetLvl(lvl);
-        gameState = STATE_LEVEL_STARTED;
+        gameState = GameState.NotStarted;
     }
 
     private void Update()
     {
-        if (gameState == STATE_LEVEL_STARTED)
+        if (gameState == GameState.LevelStarted)
         {
             impManager.SpawnImps();
         }
     }
 
+    void LevelManager.LevelManagerListener.OnLevelStarted(Level lvl)
+    {
+        impManager.SetLvl(lvl);
+        gameState = GameState.LevelStarted;
+    }
 }

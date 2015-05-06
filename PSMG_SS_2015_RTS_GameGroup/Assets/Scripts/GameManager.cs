@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
 
     private LevelManager levelManager;
     private ImpManager impManager;
+    private UIManager uiManager;
 
     private void Awake()
     {
@@ -28,6 +29,8 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         levelManager = GetComponent<LevelManager>();
         levelManager.RegisterListener(this);
         impManager = GetComponent<ImpManager>();
+        uiManager = GetComponent<UIManager>();
+
         gameState = GameState.NotStarted;
 
     }
@@ -48,5 +51,6 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
     {
         impManager.SetLvl(lvl);
         gameState = GameState.LevelStarted;
+        uiManager.SetButtonBar(lvl.GetButtonBar());
     }
 }

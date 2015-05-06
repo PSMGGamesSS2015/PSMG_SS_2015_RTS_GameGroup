@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -15,6 +16,7 @@ public class Level
     private List<GameObject> enemies;
     private GameObject start;
     private GameObject goal;
+    private Button[] buttonBar;
 
     public Level(LevelConfig config)
     {
@@ -53,12 +55,32 @@ public class Level
         return GetStart().transform.position;
     }
 
+    public Button[] GetButtonBar()
+    {
+        return buttonBar;
+    }
+
     public void RetrieveLevelData()
     {
         RetrieveObstacles();
         RetrieveEnemies();
         RetrieveStart();
         RetrieveGoal();
+        RetrieveButtonBar();
+    }
+
+    private void RetrieveButtonBar() // TODO rework
+    {
+        GameObject[] buttons = GameObject.FindGameObjectsWithTag("Button");
+        Button[] newButtonBar = new Button[buttons.Length];
+
+        for (int i = 0; i < newButtonBar.Length; i++)
+        {
+            newButtonBar[i] = buttons[i].GetComponent<Button>();
+            Debug.Log(newButtonBar[i]);
+        }
+
+        buttonBar = newButtonBar;
     }
 
     private void RetrieveObstacles()

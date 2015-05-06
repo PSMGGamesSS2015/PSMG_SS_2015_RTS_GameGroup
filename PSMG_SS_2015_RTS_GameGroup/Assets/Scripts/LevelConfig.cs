@@ -36,6 +36,6 @@ public class LevelConfig  {
 
     public static LevelConfig[] LEVELS = 
     {                                 
-        new LevelConfig(1, 4.0f, "Test Level")                            
+        new LevelConfig(3, 4.0f, "Test Level")                            
     };
 }

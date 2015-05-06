@@ -13,7 +13,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     private Level lvl;
 
     private List<ImpController> imps;
-
+   
     private float spawnCounter;
     private int currentImps;
 
@@ -24,6 +24,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     private void Awake()
     {
         imps = new List<ImpController>();
+        SetupCollisionManagement();
     }
     
     public void SetLvl(Level lvl) {
@@ -63,14 +64,25 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         ImpController impController = imp.GetComponent<ImpController>();
         impController.RegisterListener(this);
         currentImps++;
+        imps.Add(impController);
         spawnCounter = 0f;
 
+        
+    }
+
+    private void SetupCollisionManagement()
+    {
+        Physics2D.IgnoreLayerCollision(10, 10, true);
     }
 
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
         impSelected = impController;
-        Debug.Log("An imp was selected:");
-        Debug.Log(this.impSelected); 
+        impSelected.Train(Job.Guardian); // TODO Remove
+    }
+
+    public void OnImpTrained(ImpController impController, Job job)
+    {
+        impController.SetLayer(11);
     }
 }

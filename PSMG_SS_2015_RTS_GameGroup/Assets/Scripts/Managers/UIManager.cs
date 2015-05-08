@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
 
     public interface UIManagerListener
     {
-        void OnTrainImpClick(Job job);
+        void OnTrainImpClick(ImpType job);
     }
 
     public void SetButtonBar(Button[] buttonBar)

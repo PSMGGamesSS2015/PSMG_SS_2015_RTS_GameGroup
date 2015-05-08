@@ -65,9 +65,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         impController.RegisterListener(this);
         currentImps++;
         imps.Add(impController);
-        spawnCounter = 0f;
-
-        
+        spawnCounter = 0f; 
     }
 
     private void SetupCollisionManagement()
@@ -78,10 +76,10 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
         impSelected = impController;
-        impSelected.Train(Job.Guardian); // TODO Remove
+        impSelected.Train(ImpType.Guardian); // TODO Remove
     }
 
-    public void OnImpTrained(ImpController impController, Job job)
+    public void OnImpTrained(ImpController impController, ImpType job)
     {
         impController.SetLayer(11);
     }

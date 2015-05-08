@@ -9,27 +9,22 @@ using System.Collections;
 
 public class ImpController : MonoBehaviour {
    
-    public LayerMask blockingLayer;
-    public LayerMask enemyLayer;
-    
     private Rigidbody2D rigidBody2D;
-    private BoxCollider2D boxCollider2D;
     private float raycastLength = 0.3f;
     private float movementSpeed = 1f;
     private ImpControllerListener listener;
-    private Job job;
+    private ImpType job;
 
     public interface ImpControllerListener
     {
         void OnImpSelected(ImpController impController);
-        void OnImpTrained(ImpController impController, Job job);
+        void OnImpTrained(ImpController impController, ImpType job);
     }
     
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
-        job = Job.Unemployed;
+        job = ImpType.Unemployed;
     }
 
     private void OnMouseDown()
@@ -44,35 +39,50 @@ public class ImpController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (IsPathBlockedByObstacle()) 
-        {
-            Turn();
-        } 
-        else if (IsPathBlockedByEnemy())
-        {
-            StopMoving();
-        }
-        else
-        {
-            Move();
-        }
-        
+        Move();
     }
 
-    private bool IsPathBlockedByEnemy()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 start = transform.position;
-        Vector2 end = start + new Vector2(raycastLength, 0f);
-        RaycastHit2D hit = Physics2D.Linecast(start, end, enemyLayer);
-        return hit.transform != null;
+        string tag = collision.gameObject.tag;
+
+        switch (tag)
+        {
+            case "Enemy":
+                EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                InteractWith(enemy);
+                break;
+            case "Imp":
+                ImpController imp = collision.gameObject.GetComponent<ImpController>();
+                InteractWith(imp);
+                break;
+            case "Obstacle":
+                ObstacleController obstacle = collision.gameObject.GetComponent<ObstacleController>();
+                InteractWith(obstacle);
+                break;
+            case "Impassable":
+                Turn();
+                break;
+            default:
+                break;
+        }
     }
 
-    private bool IsPathBlockedByObstacle()
+    private void InteractWith(ObstacleController obstacle)
     {
-        Vector2 start = transform.position;
-        Vector2 end = start + new Vector2(raycastLength, 0f);
-        RaycastHit2D hit = Physics2D.Linecast(start, end, blockingLayer);
-        return hit.transform != null;
+        Debug.Log("Interacting with obstacle.");
+    }
+
+    private void InteractWith(EnemyController enemy)
+    {
+        Debug.Log("Interacting with enemy.");
+        Turn();
+    }
+
+    private void InteractWith(ImpController impController)
+    {
+        Debug.Log("Interacting with imp.");
+        Turn();
     }
 
     private void Turn()
@@ -96,26 +106,21 @@ public class ImpController : MonoBehaviour {
         movementSpeed = 0.0f;
     }
 
-    public BoxCollider2D GetBoxCollider2D()
-    {
-        return boxCollider2D;
-    }
-
     public bool HasJob()
     {
-        return job != Job.Unemployed;
+        return job != ImpType.Unemployed;
     }
 
-    public Job GetJob()
+    public ImpType GetJob()
     {
         return job;
     }
 
-    public void Train(Job job)
+    public void Train(ImpType job)
     {
         this.job = job;
         listener.OnImpTrained(this, job);
-        if (job == Job.Guardian)
+        if (job == ImpType.Guardian)
         {
             StopMoving();
         }
@@ -123,12 +128,11 @@ public class ImpController : MonoBehaviour {
 
     public void Untrain()
     {
-        job = Job.Unemployed;
+        job = ImpType.Unemployed;
         listener.OnImpTrained(this, job);
     }
 
-
-    internal void SetLayer(int layer)
+    public void SetLayer(int layer)
     {
         gameObject.layer = layer;
     }

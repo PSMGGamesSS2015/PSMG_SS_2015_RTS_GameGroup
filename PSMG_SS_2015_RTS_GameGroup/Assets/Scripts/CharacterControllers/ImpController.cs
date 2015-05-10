@@ -96,8 +96,14 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     private void InteractWith(ImpController imp)
     {
-        Debug.Log("Deactivating collider.");
-        Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), true);
+        if (imp.GetJob() == ImpType.Guardian)
+        {
+            Turn();
+        }
+        else
+        {
+            Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), true);
+        }
     }
 
     private void Turn()
@@ -154,10 +160,11 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     void ColliderHelper.ColliderHelperListener.OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.GetComponent<ImpController>() != null)
+        ImpController imp = collider.gameObject.GetComponent<ImpController>();
+
+        if (imp != null)
         {
-            Physics2D.IgnoreCollision(GetCollider(), collider, false);
-            Debug.Log("Activating collider.");
+            Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
         }
     }
 }

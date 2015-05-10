@@ -77,7 +77,6 @@ public class Level
         for (int i = 0; i < newButtonBar.Length; i++)
         {
             newButtonBar[i] = buttons[i].GetComponent<Button>();
-            Debug.Log(newButtonBar[i]);
         }
 
         buttonBar = newButtonBar;

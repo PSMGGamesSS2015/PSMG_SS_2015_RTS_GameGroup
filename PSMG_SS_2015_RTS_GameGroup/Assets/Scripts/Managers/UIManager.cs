@@ -17,10 +17,8 @@ public class UIManager : MonoBehaviour
         this.buttonBar = buttonBar;
         for (int i = 0; i < buttonBar.Length; i++)
         {
-            Debug.Log(buttonBar[i]);
             buttonBar[i].onClick.AddListener(this.ButtonClicked);
         }
-
     }
 
     private void ButtonClicked()

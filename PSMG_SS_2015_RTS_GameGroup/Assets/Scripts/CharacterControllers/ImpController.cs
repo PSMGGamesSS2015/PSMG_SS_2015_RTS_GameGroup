@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// The ImpController is a component attached to every instance of
@@ -7,13 +8,18 @@ using System.Collections;
 /// of imps and listens for click events on the imps.
 /// </summary>
 
-public class ImpController : MonoBehaviour {
+public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListener {
    
     private Rigidbody2D rigidBody2D;
+    private BoxCollider2D boxCollider2D;
     private float raycastLength = 0.3f;
     private float movementSpeed = 1f;
     private ImpControllerListener listener;
     private ImpType job;
+
+    private ColliderHelper colliderHelper;
+
+    public LayerMask impLayer;
 
     public interface ImpControllerListener
     {
@@ -24,6 +30,11 @@ public class ImpController : MonoBehaviour {
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+
+        colliderHelper = GetComponentInChildren<ColliderHelper>(); 
+        colliderHelper.RegisterListener(this);
+
         job = ImpType.Unemployed;
     }
 
@@ -40,6 +51,11 @@ public class ImpController : MonoBehaviour {
     private void FixedUpdate()
     {
         Move();
+    }
+
+    public BoxCollider2D GetCollider()
+    {
+        return boxCollider2D;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -75,14 +91,13 @@ public class ImpController : MonoBehaviour {
 
     private void InteractWith(EnemyController enemy)
     {
-        Debug.Log("Interacting with enemy.");
         Turn();
     }
 
-    private void InteractWith(ImpController impController)
+    private void InteractWith(ImpController imp)
     {
-        Debug.Log("Interacting with imp.");
-        Turn();
+        Debug.Log("Deactivating collider.");
+        Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), true);
     }
 
     private void Turn()
@@ -135,5 +150,14 @@ public class ImpController : MonoBehaviour {
     public void SetLayer(int layer)
     {
         gameObject.layer = layer;
+    }
+
+    void ColliderHelper.ColliderHelperListener.OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.GetComponent<ImpController>() != null)
+        {
+            Physics2D.IgnoreCollision(GetCollider(), collider, false);
+            Debug.Log("Activating collider.");
+        }
     }
 }

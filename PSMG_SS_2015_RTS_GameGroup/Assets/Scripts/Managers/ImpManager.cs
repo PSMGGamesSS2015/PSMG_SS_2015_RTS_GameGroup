@@ -70,7 +70,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private void SetupCollisionManagement()
     {
-        Physics2D.IgnoreLayerCollision(10, 10, true);
+        //Physics2D.IgnoreLayerCollision(10, 10, true);
     }
 
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
@@ -81,6 +81,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     public void OnImpTrained(ImpController impController, ImpType job)
     {
-        impController.SetLayer(11);
+        //impController.SetLayer(11);
     }
 }

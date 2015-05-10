@@ -15,16 +15,20 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
     private float raycastLength = 0.3f;
     private float movementSpeed = 1f;
     private ImpControllerListener listener;
-    private ImpType job;
+    
+    private ImpType impType;
+
+    private ImpController commandPartner;
 
     private ColliderHelper colliderHelper;
 
     public LayerMask impLayer;
+    private bool isAtThrowingPosition;
 
     public interface ImpControllerListener
     {
         void OnImpSelected(ImpController impController);
-        void OnImpTrained(ImpController impController, ImpType job);
+        void OnImpTrained(ImpController impController, ImpType impType);
     }
     
     private void Awake()
@@ -35,7 +39,9 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
         colliderHelper = GetComponentInChildren<ColliderHelper>(); 
         colliderHelper.RegisterListener(this);
 
-        job = ImpType.Unemployed;
+        isAtThrowingPosition = false;
+
+        impType = ImpType.Unemployed;
     }
 
     private void OnMouseDown()
@@ -96,14 +102,51 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     private void InteractWith(ImpController imp)
     {
-        if (imp.GetJob() == ImpType.Guardian)
+        #region interaction logic for imps
+
+        if (commandPartner == null &&
+            ((GetType() == ImpType.Coward && imp.GetType() == ImpType.Spearman) ||
+            (GetType() == ImpType.Spearman && imp.GetType() == ImpType.Coward)))
+        {
+            FormCommand(imp);
+        }
+
+         else if (imp.GetType() == ImpType.Coward &&
+            (GetType() == ImpType.Unemployed    ||
+            GetType() == ImpType.LadderCarrier  ||
+            GetType() == ImpType.Blaster        ||
+            GetType() == ImpType.Firebug        ||
+            GetType() == ImpType.Botcher        ||
+            GetType() == ImpType.Schwarzenegger))
         {
             Turn();
+        }
+
+        else if((GetType() == ImpType.Schwarzenegger) &&
+            ((imp.GetType() != ImpType.Schwarzenegger) ||
+             (imp.GetType() != ImpType.Coward)))
+        {
+            if (isAtThrowingPosition)
+            {
+                ThrowImp(imp);
+            }
         }
         else
         {
             Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), true);
         }
+
+        #endregion
+    }
+
+    private void ThrowImp(ImpController projectile)
+    {
+        // TODO 
+    }
+
+    private void FormCommand(ImpController commandPartner)
+    {
+        // TODO
     }
 
     private void Turn()
@@ -129,19 +172,19 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     public bool HasJob()
     {
-        return job != ImpType.Unemployed;
+        return impType != ImpType.Unemployed;
     }
 
-    public ImpType GetJob()
+    public ImpType GetType()
     {
-        return job;
+        return impType;
     }
 
-    public void Train(ImpType job)
+    public void Train(ImpType type)
     {
-        this.job = job;
-        listener.OnImpTrained(this, job);
-        if (job == ImpType.Guardian)
+        this.impType = type;
+        listener.OnImpTrained(this, type);
+        if (type == ImpType.Coward)
         {
             StopMoving();
         }
@@ -149,8 +192,9 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     public void Untrain()
     {
-        job = ImpType.Unemployed;
-        listener.OnImpTrained(this, job);
+        impType = ImpType.Unemployed;
+        commandPartner = null;
+        listener.OnImpTrained(this, impType);
     }
 
     public void SetLayer(int layer)

@@ -8,12 +8,12 @@ public enum ImpType
 {
     Unemployed, // Default
     Spearman,
-    Guardian,
-    Slingshot,
+    Coward,
+    Pest,
     LadderCarrier,
     Blaster,
     Firebug,
-    Mechanic,
-    Bard,
+    Botcher,
+    Minnesinger,
     Schwarzenegger
 }

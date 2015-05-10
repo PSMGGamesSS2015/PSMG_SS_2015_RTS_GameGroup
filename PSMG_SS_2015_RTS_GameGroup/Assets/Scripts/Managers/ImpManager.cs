@@ -76,7 +76,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
         impSelected = impController;
-        impSelected.Train(ImpType.Guardian); // TODO Remove
+        impSelected.Train(ImpType.Coward); // TODO Remove
     }
 
     public void OnImpTrained(ImpController impController, ImpType job)

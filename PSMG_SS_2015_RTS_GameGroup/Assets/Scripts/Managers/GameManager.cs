@@ -47,10 +47,10 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         }
     }
 
-    void LevelManager.LevelManagerListener.OnLevelStarted(Level lvl)
+    void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
     {
-        impManager.SetLvl(lvl);
+        impManager.SetLevelConfig(config, start);
         gameState = GameState.LevelStarted;
-        uiManager.SetButtonBar(lvl.ButtonBar);
+        //uiManager.SetButtonBar(lvl.ButtonBar);
     }
 }

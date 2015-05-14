@@ -8,19 +8,21 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     public EnemyType type;
     private TriggerCollider2D triggerCollider2d;
     private float hitDelay = 0f;
+    private float angryCounter = 0f;
     private List<ImpController> impsInAttackRange;
+    private bool isAngry = true;
+    private EnemyControllerListener listener;
+
+    public interface EnemyControllerListener
+    {
+        void OnEnemyHurt(EnemyController enemyController);
+    }
 
     private void Awake()
     {
         triggerCollider2d = GetComponentInChildren<TriggerCollider2D>();
         triggerCollider2d.RegisterListener(this);
         impsInAttackRange = new List<ImpController>();
-    }
-
-    private void InteractWith(ImpController imp)
-    {
-        // Smash imp
-        
     }
 
     private void Update()
@@ -33,8 +35,26 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
                 StrikeWithMaul();
             }
         }
-
+        if (isAngry)
+        {
+            angryCounter += Time.deltaTime;
+            if (angryCounter >= 4.0f)
+            {
+                isAngry = false;
+                angryCounter = 0f;
+            }
+        }
         
+    }
+
+    public void RegisterListener(EnemyControllerListener listener)
+    {
+        this.listener = listener;
+    }
+
+    public void UnregisterListener()
+    {
+        listener = null;
     }
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(Collider2D collider)
@@ -43,7 +63,15 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         {
             Debug.Log("An imp has entered the sight of the troll.");
             impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
-            StartCounter();
+            if (isAngry)
+            {
+                StrikeWithMaul();
+            }
+            else
+            {
+                StartCounter();
+            }
+            
         }
     }
 
@@ -56,18 +84,41 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     {
         if (collider.gameObject.tag == "Imp")
         {
-            impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
-            StopCounter();
             Debug.Log("An imp has left the sight of the troll.");
+            impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
+            hitDelay = 0f;
         }
     }
 
-    private void StopCounter()
+    public void ReceiveHit()
     {
-        hitDelay = 0f;
+        if (isAngry)
+        {
+            LeaveGame();
+        }
+        else
+        {
+            isAngry = true;
+            StartAngryCounter();
+            StrikeWithMaul();
+        }
     }
 
+    private void StartAngryCounter()
+    {
+        angryCounter = 0f;
+    }
 
+    private void StopAngryCounter()
+    {
+        angryCounter = 0f;
+    }
+
+    private void LeaveGame()
+    {
+        listener.OnEnemyHurt(this);
+        Destroy(gameObject);
+    }
 
     private void StrikeWithMaul()
     {

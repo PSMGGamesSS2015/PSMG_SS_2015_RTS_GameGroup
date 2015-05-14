@@ -10,7 +10,8 @@ using System.Collections.Generic;
 
 public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
-    private Level lvl;
+    private LevelConfig config;
+    private GameObject start;
 
     private List<ImpController> imps;
    
@@ -24,11 +25,15 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private void Awake()
     {
+        currentImps = 0;
         imps = new List<ImpController>();
     }
 
-    public void SetLvl(Level lvl) {
-        this.lvl = lvl;
+    public void SetLevelConfig(LevelConfig config, GameObject start)
+    {
+        currentImps = 0;
+        this.config = config;
+        this.start = start;
         professions = new int[9];
     }
 
@@ -99,7 +104,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private bool IsTrainingLimitReached(ImpType profession)
     {
-        return professions[(int)profession] < lvl.Config.MaxProfessions[(int)profession];
+        return professions[(int)profession] < config.MaxProfessions[(int)profession];
     }
 
     private void UpdateMaxProfessions(ImpType profession)
@@ -135,17 +140,17 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private bool IsMaxImpsReached()
     {
-        return currentImps < lvl.Config.MaxImps;
+        return currentImps < config.MaxImps;
     }
 
     private bool IsSpawnTimeCooledDown()
     {
-        return spawnCounter >= lvl.Config.SpawnInterval;
+        return spawnCounter >= config.SpawnInterval;
     }
 
     private void SpawnImp()
     {
-        Vector3 spawnPosition = lvl.SpawnPosition;
+        Vector3 spawnPosition = start.transform.position;
         GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
         ImpController impController = imp.GetComponent<ImpController>();
         impController.RegisterListener(this);

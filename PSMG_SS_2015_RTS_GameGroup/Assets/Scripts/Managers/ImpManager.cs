@@ -16,6 +16,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
    
     private float spawnCounter;
     private int currentImps;
+    private int[] professions;
 
     private ImpController impSelected;
 
@@ -28,8 +29,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     public void SetLvl(Level lvl) {
         this.lvl = lvl;
-        Debug.Log(lvl.Config.Name);
-        Debug.Log(lvl.Config.MaxProfessions);
+        professions = new int[9];
     }
 
     private void OnGUI()
@@ -77,10 +77,46 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     {
         if (impSelected != null)
         {
-            impSelected.Train(profession);
+            if (profession != ImpType.Unemployed)
+            {
+                if (IsTrainingLimitReached(profession))
+                {
+                    UpdateMaxProfessions(profession);
+                    impSelected.Train(profession);
+                }
+                else
+                {
+                    Debug.Log("You cannot train anymore imps of that profession.");
+                }
+            }
+            else
+            {
+                UpdateMaxProfessions();
+                impSelected.Train(profession);
+            }
         }
     }
 
+    private bool IsTrainingLimitReached(ImpType profession)
+    {
+        return professions[(int)profession] < lvl.Config.MaxProfessions[(int)profession];
+    }
+
+    private void UpdateMaxProfessions(ImpType profession)
+    {
+        UpdateMaxProfessions();
+        professions[(int)profession]++;
+    }
+
+    private void UpdateMaxProfessions()
+    {
+        if (impSelected.Type != ImpType.Unemployed && 
+            professions[(int)impSelected.Type] > 0)
+        {
+            professions[(int)impSelected.Type]--;
+        }
+    }
+    
     public void SpawnImps()
     {
         if (currentImps == 0)

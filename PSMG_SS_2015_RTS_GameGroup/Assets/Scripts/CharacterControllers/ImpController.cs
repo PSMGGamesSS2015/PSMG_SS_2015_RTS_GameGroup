@@ -8,7 +8,8 @@ using System.Collections.Generic;
 /// of imps and listens for click events on the imps.
 /// </summary>
 
-public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListener {
+public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DListener
+{
    
     private Rigidbody2D rigidBody2D;
     private BoxCollider2D boxCollider2D;
@@ -20,7 +21,7 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     private ImpController commandPartner;
 
-    private ColliderHelper colliderHelper;
+    private TriggerCollider2D triggerCollider2d;
 
     public LayerMask impLayer;
     private bool isAtThrowingPosition;
@@ -35,8 +36,8 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
         rigidBody2D = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
 
-        colliderHelper = GetComponentInChildren<ColliderHelper>(); 
-        colliderHelper.RegisterListener(this);
+        triggerCollider2d = GetComponentInChildren<TriggerCollider2D>(); 
+        triggerCollider2d.RegisterListener(this);
 
         isAtThrowingPosition = false;
 
@@ -213,7 +214,7 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
         gameObject.layer = layer;
     }
 
-    void ColliderHelper.ColliderHelperListener.OnTriggerExit2D(Collider2D collider)
+    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(Collider2D collider)
     {
         ImpController imp = collider.gameObject.GetComponent<ImpController>();
 

@@ -5,6 +5,7 @@ public class TriggerCollider2D : MonoBehaviour {
 
     public interface TriggerCollider2DListener
     {
+        void OnTriggerEnter2D(Collider2D collider);
         void OnTriggerExit2D(Collider2D collider);    
     }
 
@@ -18,6 +19,11 @@ public class TriggerCollider2D : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collider)
     {
         listener.OnTriggerExit2D(collider);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        listener.OnTriggerEnter2D(collider);
     }
 
 }

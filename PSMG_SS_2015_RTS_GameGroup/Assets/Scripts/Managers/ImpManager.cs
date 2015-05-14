@@ -159,4 +159,9 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         impSelected = impController;
     }
 
+    void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
+    {
+        imps.Remove(impController);
+        impController.UnregisterListener();
+    }
 }

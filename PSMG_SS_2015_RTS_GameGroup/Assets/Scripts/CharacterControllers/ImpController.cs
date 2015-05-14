@@ -29,6 +29,8 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     public interface ImpControllerListener
     {
         void OnImpSelected(ImpController impController);
+
+        void OnImpHurt(ImpController impController);
     }
     
     private void Awake()
@@ -222,5 +224,21 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
         }
+    }
+
+    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(Collider2D collider)
+    {
+        // Do nothing
+    }
+
+    public void LeaveGame()
+    {
+        listener.OnImpHurt(this);
+        Destroy(gameObject);
+    }
+
+    public void UnregisterListener()
+    {
+        listener = null;
     }
 }

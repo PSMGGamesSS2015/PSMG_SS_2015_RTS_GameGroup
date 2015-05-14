@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLevel(LevelConfig config)
     {
-        Application.LoadLevel(config.GetName());
+        Application.LoadLevel(config.Name);
         lvl = new Level(config);
     }
 

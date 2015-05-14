@@ -51,6 +51,6 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
     {
         impManager.SetLvl(lvl);
         gameState = GameState.LevelStarted;
-        uiManager.SetButtonBar(lvl.GetButtonBar());
+        uiManager.SetButtonBar(lvl.ButtonBar);
     }
 }

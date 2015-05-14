@@ -24,11 +24,61 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     private void Awake()
     {
         imps = new List<ImpController>();
-        SetupCollisionManagement();
     }
-    
+
     public void SetLvl(Level lvl) {
         this.lvl = lvl;
+        Debug.Log(lvl.Config.Name);
+        Debug.Log(lvl.Config.MaxProfessions);
+    }
+
+    private void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.type == EventType.KeyDown)
+        {
+            switch (e.keyCode)
+            {
+                case KeyCode.Alpha1:
+                    SelectProfession(ImpType.Spearman);
+                    break;
+                case KeyCode.Alpha2:
+                    SelectProfession(ImpType.Coward);
+                    break;
+                case KeyCode.Alpha3:
+                    SelectProfession(ImpType.Pest);
+                    break;
+                case KeyCode.Alpha4:
+                    SelectProfession(ImpType.LadderCarrier);
+                    break;
+                case KeyCode.Alpha5:
+                    SelectProfession(ImpType.Blaster);
+                    break;
+                case KeyCode.Alpha6:
+                    SelectProfession(ImpType.Firebug);
+                    break;
+                case KeyCode.Alpha7:
+                    SelectProfession(ImpType.Minnesinger);
+                    break;
+                case KeyCode.Alpha8:
+                    SelectProfession(ImpType.Botcher);
+                    break;
+                case KeyCode.Alpha9:
+                    SelectProfession(ImpType.Schwarzenegger);
+                    break;
+                case KeyCode.Alpha0:
+                    SelectProfession(ImpType.Unemployed);
+                    break;
+            }
+        }
+    }
+
+    private void SelectProfession(ImpType profession)
+    {
+        if (impSelected != null)
+        {
+            impSelected.Train(profession);
+        }
     }
 
     public void SpawnImps()
@@ -49,17 +99,17 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private bool IsMaxImpsReached()
     {
-        return currentImps < lvl.GetConfig().GetMaxImps();
+        return currentImps < lvl.Config.MaxImps;
     }
 
     private bool IsSpawnTimeCooledDown()
     {
-        return spawnCounter >= lvl.GetConfig().GetSpawnInterval();
+        return spawnCounter >= lvl.Config.SpawnInterval;
     }
 
     private void SpawnImp()
     {
-        Vector3 spawnPosition = lvl.GetSpawnPosition();
+        Vector3 spawnPosition = lvl.SpawnPosition;
         GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
         ImpController impController = imp.GetComponent<ImpController>();
         impController.RegisterListener(this);
@@ -68,19 +118,9 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         spawnCounter = 0f; 
     }
 
-    private void SetupCollisionManagement()
-    {
-        //Physics2D.IgnoreLayerCollision(10, 10, true);
-    }
-
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
         impSelected = impController;
-        impSelected.Train(ImpType.Coward); // TODO Remove
     }
 
-    public void OnImpTrained(ImpController impController, ImpType job)
-    {
-        //impController.SetLayer(11);
-    }
 }

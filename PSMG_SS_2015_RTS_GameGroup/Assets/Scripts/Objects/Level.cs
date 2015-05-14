@@ -25,39 +25,62 @@ public class Level
         enemies = new List<GameObject>();
     }
 
-    public LevelConfig GetConfig()
+    public LevelConfig Config
     {
-        return config;
+        get
+        {
+            return config;
+        }
     }
 
-    public GameObject GetStart()
+    public GameObject Start
     {
-        return start;
+        get 
+        {
+            return start;
+        }
+        
     }
 
-    public GameObject GetGoal()
+    public GameObject Goal
     {
-        return goal;
+        get 
+        {
+            return goal;
+        }
     }
 
-    public List<GameObject> GetEnemies()
+    public List<GameObject> Enemies
     {
-        return enemies;
+        get 
+        {
+            return enemies;
+        }
     }
 
-    public List<GameObject> GetObstacles()
+    public List<GameObject> Obstacles
     {
-        return obstacles;
+        get 
+        {
+            return obstacles;
+        }
+        
     }
 
-    public Vector3 GetSpawnPosition()
+    public Vector3 SpawnPosition
     {
-        return GetStart().transform.position;
+        get 
+        {
+            return start.transform.position;
+        }
     }
 
-    public Button[] GetButtonBar()
+    public Button[] ButtonBar
     {
-        return buttonBar;
+        get
+        {
+            return buttonBar;
+        }
     }
 
     public void RetrieveLevelData()

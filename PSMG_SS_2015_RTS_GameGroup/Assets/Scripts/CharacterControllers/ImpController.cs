@@ -12,11 +12,11 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
    
     private Rigidbody2D rigidBody2D;
     private BoxCollider2D boxCollider2D;
-    private float raycastLength = 0.3f;
     private float movementSpeed = 1f;
+    private bool facingRight = true;
     private ImpControllerListener listener;
     
-    private ImpType impType;
+    private ImpType type;
 
     private ImpController commandPartner;
 
@@ -28,7 +28,6 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
     public interface ImpControllerListener
     {
         void OnImpSelected(ImpController impController);
-        void OnImpTrained(ImpController impController, ImpType impType);
     }
     
     private void Awake()
@@ -41,7 +40,7 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
         isAtThrowingPosition = false;
 
-        impType = ImpType.Unemployed;
+        type = ImpType.Unemployed;
     }
 
     private void OnMouseDown()
@@ -105,26 +104,26 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
         #region interaction logic for imps
 
         if (commandPartner == null &&
-            ((GetType() == ImpType.Coward && imp.GetType() == ImpType.Spearman) ||
-            (GetType() == ImpType.Spearman && imp.GetType() == ImpType.Coward)))
+            ((type == ImpType.Coward && imp.Type == ImpType.Spearman) ||
+            (type == ImpType.Spearman && imp.Type == ImpType.Coward)))
         {
             FormCommand(imp);
         }
 
-         else if (imp.GetType() == ImpType.Coward &&
-            (GetType() == ImpType.Unemployed    ||
-            GetType() == ImpType.LadderCarrier  ||
-            GetType() == ImpType.Blaster        ||
-            GetType() == ImpType.Firebug        ||
-            GetType() == ImpType.Botcher        ||
-            GetType() == ImpType.Schwarzenegger))
+         else if (imp.Type == ImpType.Coward &&
+            (type == ImpType.Unemployed ||
+            type == ImpType.LadderCarrier ||
+            type == ImpType.Blaster ||
+            type == ImpType.Firebug ||
+            type == ImpType.Botcher ||
+            type == ImpType.Schwarzenegger))
         {
             Turn();
         }
 
-        else if((GetType() == ImpType.Schwarzenegger) &&
-            ((imp.GetType() != ImpType.Schwarzenegger) ||
-             (imp.GetType() != ImpType.Coward)))
+        else if ((type == ImpType.Schwarzenegger) &&
+            ((imp.Type != ImpType.Schwarzenegger) ||
+             (imp.Type != ImpType.Coward)))
         {
             if (isAtThrowingPosition)
             {
@@ -152,7 +151,7 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
     private void Turn()
     {
         movementSpeed *= -1;
-        raycastLength *= -1;
+        facingRight = !facingRight;
     }
 
     private void Move()
@@ -162,7 +161,15 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     private void StartMoving()
     {
-        movementSpeed = 1.0f;
+        if (facingRight)
+        {
+            movementSpeed = 1.0f;
+        }
+        else
+        {
+            movementSpeed = -1.0f;
+        }
+        
     }
 
     private void StopMoving()
@@ -172,29 +179,33 @@ public class ImpController : MonoBehaviour, ColliderHelper.ColliderHelperListene
 
     public bool HasJob()
     {
-        return impType != ImpType.Unemployed;
+        return type != ImpType.Unemployed;
     }
 
-    public ImpType GetType()
+    public ImpType Type
     {
-        return impType;
+        get {
+            return type;
+        }
     }
 
     public void Train(ImpType type)
     {
-        this.impType = type;
-        listener.OnImpTrained(this, type);
+        this.type = type;
         if (type == ImpType.Coward)
         {
             StopMoving();
+        }
+        else
+        {
+            StartMoving();
         }
     }
 
     public void Untrain()
     {
-        impType = ImpType.Unemployed;
+        type = ImpType.Unemployed;
         commandPartner = null;
-        listener.OnImpTrained(this, impType);
     }
 
     public void SetLayer(int layer)

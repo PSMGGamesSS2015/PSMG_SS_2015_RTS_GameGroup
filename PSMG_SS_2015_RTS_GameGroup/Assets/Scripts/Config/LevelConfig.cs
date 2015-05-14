@@ -12,30 +12,49 @@ public class LevelConfig  {
     private int maxImps;
     private float spawnInterval;
     private string name;
-	
-    public LevelConfig (int maxImps, float spawnInterval, string name) {
+    private int[] maxProfessions;
+
+    public LevelConfig (int maxImps, float spawnInterval, string name, int[] maxProfessions) {
         this.maxImps = maxImps;
         this.spawnInterval = spawnInterval;
         this.name = name;
+        this.maxProfessions = maxProfessions;
     }
 
-    public int GetMaxImps()
+    public int MaxImps
     {
-        return maxImps;
+        get
+        {
+            return maxImps;
+        }
     }
 
-    public float GetSpawnInterval()
+    public float SpawnInterval
     {
-        return spawnInterval;
+        get
+        {
+            return spawnInterval;
+        }
     }
 
-    public string GetName()
+    public string Name
     {
-        return name;
+        get
+        {
+            return name;
+        }
+    }
+
+    public int[] MaxProfessions
+    {
+        get
+        {
+            return maxProfessions;
+        }
     }
 
     public static LevelConfig[] LEVELS = 
     {                                 
-        new LevelConfig(10, 4.0f, "Test Level")                            
+        new LevelConfig(10, 4.0f, "Test Level", new int[9] {1,2,1,1,0,0,0,0,0})                         
     };
 }

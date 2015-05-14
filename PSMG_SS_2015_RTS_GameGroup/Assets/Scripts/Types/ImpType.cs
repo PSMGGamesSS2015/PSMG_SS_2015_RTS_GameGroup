@@ -6,7 +6,6 @@
 
 public enum ImpType
 {
-    Unemployed, // Default
     Spearman,
     Coward,
     Pest,
@@ -15,5 +14,7 @@ public enum ImpType
     Firebug,
     Botcher,
     Minnesinger,
-    Schwarzenegger
+    Schwarzenegger,
+
+    Unemployed // Default
 }

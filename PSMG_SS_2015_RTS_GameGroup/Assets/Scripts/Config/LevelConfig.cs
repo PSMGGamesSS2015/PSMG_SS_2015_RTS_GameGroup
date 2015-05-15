@@ -55,6 +55,6 @@ public class LevelConfig  {
 
     public static LevelConfig[] LEVELS = 
     {                                 
-        new LevelConfig(1, 4.0f, "Test Level", new int[9] {1,1,1,1,0,0,0,0,0})                         
+        new LevelConfig(3, 4.0f, "Test Level", new int[9] {1,1,1,1,0,0,0,0,0})                         
     };
 }

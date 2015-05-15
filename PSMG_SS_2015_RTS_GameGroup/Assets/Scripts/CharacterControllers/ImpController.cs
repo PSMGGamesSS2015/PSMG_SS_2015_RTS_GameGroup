@@ -16,12 +16,15 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private float movementSpeed = 1f;
     private bool facingRight = true;
     private ImpControllerListener listener;
-    
+    private float attackCounter = 0f;
+    private List<EnemyController> enemiesInAttackRange;
+
     private ImpType type;
 
     private ImpController commandPartner;
 
-    private TriggerCollider2D triggerCollider2d;
+    private TriggerCollider2D impCollisionCheck;
+    private TriggerCollider2D attackRange;
 
     public LayerMask impLayer;
     private bool isAtThrowingPosition;
@@ -37,9 +40,22 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        enemiesInAttackRange = new List<EnemyController>();
+        TriggerCollider2D[] triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
 
-        triggerCollider2d = GetComponentInChildren<TriggerCollider2D>(); 
-        triggerCollider2d.RegisterListener(this);
+        foreach (TriggerCollider2D c in triggerColliders)
+        {
+            if (c.tag == "AttackRange")
+            {
+                attackRange = c;
+            }
+            else
+            {
+                impCollisionCheck = c;
+            }
+        }
+        impCollisionCheck.RegisterListener(this);
+        attackRange.RegisterListener(this);
 
         isAtThrowingPosition = false;
 
@@ -59,6 +75,35 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void FixedUpdate()
     {
         Move();
+        
+    }
+
+    private void Update()
+    {
+        if (IsInCommand() && type == ImpType.Spearman)
+        {
+            if (attackCounter >= 4.0f)
+            {
+                attackCounter = 0f;
+                Pierce();
+            }
+            else
+            {
+                attackCounter += Time.deltaTime;
+            }
+        }
+    }
+
+    private void Pierce()
+    {
+        Debug.Log("Attacking");
+        Debug.Log("Number of enemies in Attack range: " + enemiesInAttackRange.Count);
+        foreach (EnemyController enemy in enemiesInAttackRange)
+        {
+            enemy.LeaveGame();
+        }
+        enemiesInAttackRange.Clear();
+        
     }
 
     public BoxCollider2D GetCollider()
@@ -148,7 +193,19 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void FormCommand(ImpController commandPartner)
     {
-        // TODO
+        StopMoving();
+        attackCounter = 0f;
+        this.commandPartner = commandPartner;
+    }
+
+    private void DissolveCommand()
+    {
+        this.commandPartner = null;
+    }
+
+    private bool IsInCommand()
+    {
+        return commandPartner != null;
     }
 
     private void Turn()
@@ -216,19 +273,32 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         gameObject.layer = layer;
     }
 
-    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(Collider2D collider)
+    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
     {
-        ImpController imp = collider.gameObject.GetComponent<ImpController>();
-
-        if (imp != null)
+        if (self.GetInstanceID() == impCollisionCheck.GetInstanceID())
         {
-            Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
+            ImpController imp = collider.gameObject.GetComponent<ImpController>();
+
+            if (imp != null)
+            {
+                Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
+            }
         }
+        
+
+
     }
 
-    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(Collider2D collider)
+    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
     {
-        // Do nothing
+        if (self.GetInstanceID() == attackRange.GetInstanceID())
+        {
+            if (collider.gameObject.tag == "Enemy")
+            {
+                enemiesInAttackRange.Add(collider.gameObject.GetComponent<EnemyController>());
+            }
+        }
+
     }
 
     public void LeaveGame()

@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private float hitDelay = 0f;
     private float angryCounter = 0f;
     private List<ImpController> impsInAttackRange;
-    private bool isAngry = true;
+    private bool isAngry = false;
     private EnemyControllerListener listener;
 
     public interface EnemyControllerListener
@@ -57,7 +57,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         listener = null;
     }
 
-    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(Collider2D collider)
+    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
     {
         if (collider.gameObject.tag == "Imp")
         {
@@ -80,7 +80,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         hitDelay = 0f;
     }
 
-    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(Collider2D collider)
+    void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
     {
         if (collider.gameObject.tag == "Imp")
         {
@@ -114,13 +114,62 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         angryCounter = 0f;
     }
 
-    private void LeaveGame()
+    public void LeaveGame()
     {
         listener.OnEnemyHurt(this);
         Destroy(gameObject);
     }
 
     private void StrikeWithMaul()
+    {
+        ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
+
+        if (coward != null)
+        {
+            SmashImpsBetweenCowardAndTroll(coward);
+        }
+        else
+        {
+            SmashAllImpsInRange();
+        }
+        
+        
+    }
+
+    private void SmashImpsBetweenCowardAndTroll(ImpController coward)
+    {
+        float distanceBetweenCowardAndTroll = Vector2.Distance(gameObject.transform.position, coward.gameObject.transform.position);
+
+        List<ImpController> impsToBeHit = new List<ImpController>();
+        foreach (ImpController imp in impsInAttackRange)
+        {
+            float currentDistance = Vector2.Distance(gameObject.transform.position, imp.gameObject.transform.position);
+            if (currentDistance < distanceBetweenCowardAndTroll)
+            {
+                impsToBeHit.Add(imp); // Mark the imps to be hit
+            }
+        }
+        foreach (ImpController imp in impsToBeHit)
+        {
+            impsInAttackRange.Remove(imp);
+            imp.LeaveGame(); // actually hit the imps
+        }
+        impsToBeHit.Clear();
+    }
+
+    private ImpController SearchForCoward()
+    {
+        foreach (ImpController imp in impsInAttackRange)
+        {
+            if (imp.Type == ImpType.Coward)
+            {
+                return imp;
+            }
+        }
+        return null;
+    }
+
+    private void SmashAllImpsInRange()
     {
         foreach (ImpController imp in impsInAttackRange)
         {

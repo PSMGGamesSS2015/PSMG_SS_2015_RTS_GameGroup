@@ -32,10 +32,19 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     public interface ImpControllerListener
     {
         void OnImpSelected(ImpController impController);
-
         void OnImpHurt(ImpController impController);
     }
-    
+
+    public void RegisterListener(ImpControllerListener listener)
+    {
+        this.listener = listener;
+    }
+
+    public void UnregisterListener()
+    {
+        listener = null;
+    }
+
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
@@ -62,24 +71,27 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         type = ImpType.Unemployed;
     }
 
+    public ImpType Type
+    {
+        get
+        {
+            return type;
+        }
+    }
+
     private void OnMouseDown()
     {
         listener.OnImpSelected(this);
     }
 
-    public void RegisterListener(ImpControllerListener listener)
-    {
-        this.listener = listener;
-    }
-
     private void FixedUpdate()
     {
-        Move();
-        
-    }
+        if (type != ImpType.Coward && 
+            !IsInCommand())
+        {
+            Move();
+        }
 
-    private void Update()
-    {
         if (IsInCommand() && type == ImpType.Spearman)
         {
             if (attackCounter >= 4.0f)
@@ -94,6 +106,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
+    private void Update()
+    {
+        
+    }
+
     private void Pierce()
     {
         Debug.Log("Attacking");
@@ -103,7 +120,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             enemy.LeaveGame();
         }
         enemiesInAttackRange.Clear();
-        
     }
 
     public BoxCollider2D GetCollider()
@@ -134,6 +150,22 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 break;
             default:
                 break;
+        }
+    }
+
+    // TODO Does not work properly
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        ImpController imp = collision.gameObject.GetComponent<ImpController>();
+        if (imp != null)
+        {
+            if (imp.Type == ImpType.Coward)
+            {
+                if (type != ImpType.Spearman)
+                {
+                    Turn();
+                }
+            }
         }
     }
 
@@ -193,17 +225,16 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void FormCommand(ImpController commandPartner)
     {
-        StopMoving();
         attackCounter = 0f;
         this.commandPartner = commandPartner;
     }
 
-    private void DissolveCommand()
+    public void DissolveCommand()
     {
         this.commandPartner = null;
     }
 
-    private bool IsInCommand()
+    public bool IsInCommand()
     {
         return commandPartner != null;
     }
@@ -219,48 +250,22 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         rigidBody2D.velocity = new Vector2(movementSpeed, rigidBody2D.velocity.y);
     }
 
-    private void StartMoving()
-    {
-        if (facingRight)
-        {
-            movementSpeed = 1.0f;
-        }
-        else
-        {
-            movementSpeed = -1.0f;
-        }
-        
-    }
-
-    private void StopMoving()
-    {
-        movementSpeed = 0.0f;
-    }
-
     public bool HasJob()
     {
         return type != ImpType.Unemployed;
     }
 
-    public ImpType Type
-    {
-        get {
-            return type;
-        }
-    }
-
     public void Train(ImpType type)
     {
-        this.type = type;
-        if (type == ImpType.Coward)
+        this.type = type; // assign new type
+        if (commandPartner != null)
         {
-            StopMoving();
+            commandPartner.DissolveCommand();
+            DissolveCommand();
         }
-        else
-        {
-            StartMoving();
-        }
+        
     }
+
 
     public void Untrain()
     {
@@ -284,18 +289,29 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
             }
         }
-        
 
-
+        if (self.GetInstanceID() == attackRange.GetInstanceID())
+        {
+            if (type == ImpType.Spearman)
+            {
+                if (collider.gameObject.tag == "Enemy")
+                {
+                    enemiesInAttackRange.Remove(collider.gameObject.GetComponent<EnemyController>());
+                }
+            }
+        }
     }
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
     {
         if (self.GetInstanceID() == attackRange.GetInstanceID())
         {
-            if (collider.gameObject.tag == "Enemy")
+            if (type == ImpType.Spearman)
             {
-                enemiesInAttackRange.Add(collider.gameObject.GetComponent<EnemyController>());
+                if (collider.gameObject.tag == "Enemy")
+                {
+                    enemiesInAttackRange.Add(collider.gameObject.GetComponent<EnemyController>());
+                }
             }
         }
 
@@ -306,9 +322,5 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         listener.OnImpHurt(this);
         Destroy(gameObject);
     }
-
-    public void UnregisterListener()
-    {
-        listener = null;
-    }
+    
 }

@@ -80,24 +80,36 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
 
     private void SelectProfession(ImpType profession)
     {
-        if (impSelected != null)
+        if (impSelected == null)
         {
-            if (profession != ImpType.Unemployed)
+            Debug.Log("No imp selected");
+        }
+        else
+        {
+            if (impSelected.Type == profession)
             {
-                if (IsTrainingLimitReached(profession))
-                {
-                    UpdateMaxProfessions(profession);
-                    impSelected.Train(profession);
-                }
-                else
-                {
-                    Debug.Log("You cannot train anymore imps of that profession.");
-                }
+                Debug.Log("The selected imp already has that profession.");
             }
             else
             {
-                UpdateMaxProfessions();
-                impSelected.Train(profession);
+                    if (profession != ImpType.Unemployed)
+                    {
+                        if (IsTrainingLimitReached(profession))
+                        {
+                            UpdateMaxProfessions(profession);
+                            impSelected.Train(profession);
+                        }
+                        else
+                        {
+                            Debug.Log("You cannot train anymore imps of that profession.");
+                        }
+                    }
+                    else
+                    {
+                        UpdateMaxProfessions();
+                        impSelected.Train(profession);
+                    }
+                
             }
         }
     }
@@ -159,6 +171,8 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         spawnCounter = 0f; 
     }
 
+    #region interface methods
+     
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
         impSelected = impController;
@@ -169,4 +183,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         imps.Remove(impController);
         impController.UnregisterListener();
     }
+
+    #endregion 
 }

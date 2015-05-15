@@ -29,6 +29,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     public LayerMask impLayer;
     private bool isAtThrowingPosition;
 
+    public GameObject verticalLadderPrefab;
+    public GameObject horizontalLadderPrefab;
+    private bool movingUpwards = false;
+
     public interface ImpControllerListener
     {
         void OnImpSelected(ImpController impController);
@@ -89,7 +93,15 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type != ImpType.Coward && 
             !IsInCommand())
         {
-            Move();
+            if (movingUpwards)
+            {
+                MoveUpwards();
+            }
+            else
+            {
+                Move();
+            }
+            
         }
 
         if (IsInCommand() && type == ImpType.Spearman)
@@ -106,9 +118,9 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
-    private void Update()
+    private void MoveUpwards()
     {
-        
+        rigidBody2D.velocity = new Vector2(0f, movementSpeed); // TODO Stop moving upwards when reached top
     }
 
     private void Pierce()
@@ -153,7 +165,44 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
-    // TODO Does not work properly
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        string tag = collider.gameObject.tag;
+
+        switch (tag)
+        {
+            case "VerticalLadderSpot":
+                if (type == ImpType.LadderCarrier)
+                {
+                    SetupLadder(collider.gameObject.transform.position); // TODO improve positioning
+                    Untrain();
+                }
+                break;
+            case "HorizontalLadderSpot":
+                break;
+            case "VerticalLadder":
+                ClimbLadder();
+                break;
+            case "HorizontalLadder":
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ClimbLadder()
+    {
+        // TODO Move upwards
+        movingUpwards = true;
+    }
+
+    private void SetupLadder(Vector3 position)
+    {
+        Instantiate(verticalLadderPrefab, position, Quaternion.identity);
+        Untrain();
+        Debug.Log("Setting up a ladder");
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         ImpController imp = collision.gameObject.GetComponent<ImpController>();
@@ -266,11 +315,9 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         
     }
 
-
     public void Untrain()
     {
-        type = ImpType.Unemployed;
-        commandPartner = null;
+        Train(ImpType.Unemployed);
     }
 
     public void SetLayer(int layer)
@@ -314,7 +361,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 }
             }
         }
-
     }
 
     public void LeaveGame()

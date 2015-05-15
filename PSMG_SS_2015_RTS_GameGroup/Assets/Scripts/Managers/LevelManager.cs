@@ -30,6 +30,13 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
         
         obstacles = new List<GameObject>();
         enemies = new List<GameObject>();
+        SetupCollisionManagement();
+    }
+
+    private void SetupCollisionManagement()
+    {
+        Physics2D.IgnoreLayerCollision(2, 2); // TODO this still seems like a bit of a workaround ...
+        // Note: 2 is the layer: IgnoreRaycast
     }
 
     public void RegisterListener(LevelManagerListener listener)

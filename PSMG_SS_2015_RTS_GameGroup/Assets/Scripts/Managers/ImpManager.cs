@@ -133,7 +133,17 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
             professions[(int)impSelected.Type]--;
         }
     }
-    
+
+    private void UpdateMaxProfessions(ImpController imp)
+    {
+        if (imp.Type != ImpType.Unemployed &&
+            professions[(int)imp.Type] > 0)
+        {
+            professions[(int)imp.Type]--;
+        }
+        imp.Train(ImpType.Unemployed);
+    }
+
     public void SpawnImps()
     {
         if (currentImps == 0)
@@ -185,4 +195,10 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     }
 
     #endregion 
+
+
+    public void OnUntrain(ImpController impController)
+    {
+        UpdateMaxProfessions(impController);
+    }
 }

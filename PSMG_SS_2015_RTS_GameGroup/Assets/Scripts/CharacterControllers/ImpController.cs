@@ -12,7 +12,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 {
     
     private Rigidbody2D rigidBody2D;
-    private BoxCollider2D boxCollider2D;
+    private CircleCollider2D circleCollider2D;
     private float movementSpeed = 1f;
     private bool facingRight = true;
     private ImpControllerListener listener;
@@ -42,6 +42,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         void OnImpSelected(ImpController impController);
         void OnImpHurt(ImpController impController);
+        void OnUntrain(ImpController impController);
     }
 
     public void RegisterListener(ImpControllerListener listener)
@@ -57,7 +58,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
         enemiesInAttackRange = new List<EnemyController>();
         TriggerCollider2D[] triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
 
@@ -136,7 +137,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void DetonateBomb()
     {
         Debug.Log("BOOOM");
-        Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 5f);
+        Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
         foreach (Collider2D c in objectsWithinRadius)
         {
             if (c.gameObject.tag == "Obstacle")
@@ -164,9 +165,9 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         enemiesInAttackRange.Clear();
     }
 
-    public BoxCollider2D GetCollider()
+    public CircleCollider2D GetCollider()
     {
-        return boxCollider2D;
+        return circleCollider2D;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -222,8 +223,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 break;
         }
     }
-
-    
 
     private void OnTriggerExit2D(Collider2D collider)
     {
@@ -375,7 +374,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void Untrain()
     {
-        Train(ImpType.Unemployed);
+        listener.OnUntrain(this);
     }
 
     public void SetLayer(int layer)

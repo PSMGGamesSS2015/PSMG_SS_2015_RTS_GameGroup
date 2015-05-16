@@ -37,6 +37,7 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
     {
         Physics2D.IgnoreLayerCollision(2, 2); // TODO this still seems like a bit of a workaround ...
         // Note: 2 is the layer: IgnoreRaycast
+        Physics2D.IgnoreLayerCollision(2, 12);
     }
 
     public void RegisterListener(LevelManagerListener listener)

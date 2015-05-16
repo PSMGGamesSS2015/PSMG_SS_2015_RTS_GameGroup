@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DListener
 {
-   
+    
     private Rigidbody2D rigidBody2D;
     private BoxCollider2D boxCollider2D;
     private float movementSpeed = 1f;
@@ -95,13 +95,13 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             if (movingUpwards)
             {
+                Debug.Log("Moving Upwards");
                 MoveUpwards();
             }
             else
             {
                 Move();
-            }
-            
+            }   
         }
 
         if (IsInCommand() && type == ImpType.Spearman)
@@ -120,7 +120,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void MoveUpwards()
     {
-        rigidBody2D.velocity = new Vector2(0f, movementSpeed); // TODO Stop moving upwards when reached top
+        rigidBody2D.velocity = new Vector2(0f, 1f); // TODO Stop moving upwards when reached top
     }
 
     private void Pierce()
@@ -179,6 +179,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 }
                 break;
             case "HorizontalLadderSpot":
+                if (type == ImpType.LadderCarrier)
+                {
+                    SetupHorizontalLadder(collider.gameObject.transform.position); // TODO improve positioning
+                    Untrain();
+                }
                 break;
             case "VerticalLadder":
                 ClimbLadder();
@@ -190,10 +195,28 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
+    
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        string tag = collider.gameObject.tag;
+
+        if (tag == "VerticalLadder" && movingUpwards == true)
+        {
+            movingUpwards = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        // TODO
+    }
+
     private void ClimbLadder()
     {
-        // TODO Move upwards
+        Debug.Log("Climbing ladder");
         movingUpwards = true;
+        // check when the top is reached
     }
 
     private void SetupLadder(Vector3 position)
@@ -201,6 +224,13 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         Instantiate(verticalLadderPrefab, position, Quaternion.identity);
         Untrain();
         Debug.Log("Setting up a ladder");
+    }
+
+    private void SetupHorizontalLadder(Vector3 position)
+    {
+        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, 90));
+        Untrain();
+        Debug.Log("Placing a horizontal ladder");
     }
 
     private void OnCollisionStay2D(Collision2D collision)

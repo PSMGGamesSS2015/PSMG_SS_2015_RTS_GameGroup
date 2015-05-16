@@ -31,7 +31,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public GameObject verticalLadderPrefab;
     public GameObject horizontalLadderPrefab;
+    public GameObject bomb;
+    public GameObject spear;
+    public GameObject shield;
+
     private bool movingUpwards = false;
+    private float bombCounter = 0f;
 
     public interface ImpControllerListener
     {
@@ -116,6 +121,31 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 attackCounter += Time.deltaTime;
             }
         }
+
+        if (type == ImpType.Blaster)
+        {
+            bombCounter += Time.deltaTime;
+            if (bombCounter >= 3.0f)
+            {
+                DetonateBomb();
+            }
+        }
+
+    }
+
+    private void DetonateBomb()
+    {
+        Debug.Log("BOOOM");
+        Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 5f);
+        foreach (Collider2D c in objectsWithinRadius)
+        {
+            if (c.gameObject.tag == "Obstacle")
+            {
+                Destroy(c.gameObject);
+            }
+        }
+        Untrain();
+        bombCounter = 0f;
     }
 
     private void MoveUpwards()
@@ -188,8 +218,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             case "VerticalLadder":
                 ClimbLadder();
                 break;
-            case "HorizontalLadder":
-                break;
             default:
                 break;
         }
@@ -205,11 +233,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             movingUpwards = false;
         }
-    }
-
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        // TODO
     }
 
     private void ClimbLadder()
@@ -251,6 +274,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void InteractWith(ObstacleController obstacle)
     {
         Debug.Log("Interacting with obstacle.");
+        Turn();
     }
 
     private void InteractWith(EnemyController enemy)
@@ -342,7 +366,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             commandPartner.DissolveCommand();
             DissolveCommand();
         }
-        
+
+        if (type == ImpType.Blaster)
+        {
+            bombCounter = 0f;
+        }
     }
 
     public void Untrain()

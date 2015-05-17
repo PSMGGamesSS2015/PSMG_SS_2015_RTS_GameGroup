@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 6e44e3819de10a143b8e2bd1701f2c3a
+timeCreated: 1431889092
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Imp_Body_0
+    21300002: Imp_Body_1
+    21300004: Imp_Body_2
+    21300006: Imp_Body_3
+    21300008: Imp_Body_4
+    21300010: Imp_Body_5
+    21300012: Imp_Body_6
+    21300014: Imp_Body_7
+    21300016: Imp_Body_8
+    21300018: Imp_Body_9
+    21300020: Imp_Body_10
+    21300022: Imp_Body_11
+    21300024: Imp_Body_12
+    21300026: Imp_Body_13
+    21300028: Imp_Body_14
+    21300030: Imp_Body_15
+    21300032: Imp_Body_16
+    21300034: Imp_Body_17
+    21300036: Imp_Body_18
+    21300038: Imp_Body_19
+    21300040: Imp_Body_20
+    21300042: Imp_Body_21
+    21300044: Imp_Body_22
+    21300046: Imp_Body_23
+    21300048: Imp_Body_24
+    21300050: Imp_Body_25
+    21300052: Imp_Body_26
+    21300054: Imp_Body_27
+    21300056: Imp_Body_28
+    21300058: Imp_Body_29
+    21300060: Imp_Body_30
+    21300062: Imp_Body_31
+    21300064: Imp_Body_32
+    21300066: Imp_Body_33
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Imp_Body_0
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 3233
+        width: 253
+        height: 751
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_1
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 3275
+        width: 314
+        height: 726
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_2
+      rect:
+        serializedVersion: 2
+        x: 1231
+        y: 3799
+        width: 260
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_3
+      rect:
+        serializedVersion: 2
+        x: 1605
+        y: 3752
+        width: 160
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_4
+      rect:
+        serializedVersion: 2
+        x: 2591
+        y: 3800
+        width: 236
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_5
+      rect:
+        serializedVersion: 2
+        x: 1143
+        y: 3581
+        width: 72
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_6
+      rect:
+        serializedVersion: 2
+        x: 1261
+        y: 3573
+        width: 83
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_7
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 3559
+        width: 87
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_8
+      rect:
+        serializedVersion: 2
+        x: 1519
+        y: 3557
+        width: 82
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_9
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 3587
+        width: 101
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_10
+      rect:
+        serializedVersion: 2
+        x: 2184
+        y: 3592
+        width: 123
+        height: 187
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_11
+      rect:
+        serializedVersion: 2
+        x: 2391
+        y: 3608
+        width: 68
+        height: 185
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_12
+      rect:
+        serializedVersion: 2
+        x: 2512
+        y: 3591
+        width: 77
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_13
+      rect:
+        serializedVersion: 2
+        x: 2640
+        y: 3567
+        width: 80
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_14
+      rect:
+        serializedVersion: 2
+        x: 2763
+        y: 3551
+        width: 102
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_15
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 3375
+        width: 91
+        height: 164
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_16
+      rect:
+        serializedVersion: 2
+        x: 1275
+        y: 3365
+        width: 98
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_17
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 3367
+        width: 107
+        height: 174
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_18
+      rect:
+        serializedVersion: 2
+        x: 1544
+        y: 3344
+        width: 115
+        height: 173
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_19
+      rect:
+        serializedVersion: 2
+        x: 2221
+        y: 3449
+        width: 108
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_20
+      rect:
+        serializedVersion: 2
+        x: 2371
+        y: 3397
+        width: 90
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_21
+      rect:
+        serializedVersion: 2
+        x: 2520
+        y: 3395
+        width: 67
+        height: 181
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_22
+      rect:
+        serializedVersion: 2
+        x: 2637
+        y: 3349
+        width: 98
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_23
+      rect:
+        serializedVersion: 2
+        x: 2773
+        y: 3341
+        width: 70
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_24
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 2061
+        width: 492
+        height: 771
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_25
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 1999
+        width: 326
+        height: 832
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_26
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 2597
+        width: 318
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_27
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 1103
+        width: 709
+        height: 1514
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_28
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 1197
+        width: 334
+        height: 788
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_29
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 1216
+        width: 409
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_30
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 7
+        width: 615
+        height: 937
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_31
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 24
+        width: 632
+        height: 933
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_32
+      rect:
+        serializedVersion: 2
+        x: 1361
+        y: 43
+        width: 682
+        height: 1010
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Body_33
+      rect:
+        serializedVersion: 2
+        x: 2056
+        y: 30
+        width: 813
+        height: 1159
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 22, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

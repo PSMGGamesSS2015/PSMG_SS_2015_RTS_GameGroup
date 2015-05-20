@@ -4,21 +4,47 @@ using System.Collections.Generic;
 
 public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DListener
 {
+    #region variables and constants
 
+    // general
     public EnemyType type;
-    private TriggerCollider2D triggerCollider2d;
+    private EnemyControllerListener listener;
+    // troll
+    private bool isAngry = false;
     private float hitDelay = 0f;
     private float angryCounter = 0f;
+    private TriggerCollider2D triggerCollider2d;
     private List<ImpController> impsInAttackRange;
-    private bool isAngry = false;
-    private EnemyControllerListener listener;
+
+    #endregion
+
+    #region listener interface
 
     public interface EnemyControllerListener
     {
         void OnEnemyHurt(EnemyController enemyController);
     }
 
+    public void RegisterListener(EnemyControllerListener listener)
+    {
+        this.listener = listener;
+    }
+
+    public void UnregisterListener()
+    {
+        listener = null;
+    }
+
+    #endregion
+
+    #region initialization, update
+
     private void Awake()
+    {
+        InitTriggerColliders();
+    }
+
+    private void InitTriggerColliders()
     {
         triggerCollider2d = GetComponentInChildren<TriggerCollider2D>();
         triggerCollider2d.RegisterListener(this);
@@ -47,15 +73,15 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         
     }
 
-    public void RegisterListener(EnemyControllerListener listener)
+    public void LeaveGame()
     {
-        this.listener = listener;
+        listener.OnEnemyHurt(this);
+        Destroy(gameObject);
     }
 
-    public void UnregisterListener()
-    {
-        listener = null;
-    }
+    #endregion
+
+    #region interface implementation
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
     {
@@ -71,13 +97,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
             {
                 StartCounter();
             }
-            
         }
-    }
-
-    private void StartCounter()
-    {
-        hitDelay = 0f;
     }
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
@@ -88,6 +108,15 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
             impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
             hitDelay = 0f;
         }
+    }
+
+    #endregion
+
+    #region troll battle-logic
+
+    private void StartCounter()
+    {
+        hitDelay = 0f;
     }
 
     public void ReceiveHit()
@@ -114,11 +143,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         angryCounter = 0f;
     }
 
-    public void LeaveGame()
-    {
-        listener.OnEnemyHurt(this);
-        Destroy(gameObject);
-    }
+
 
     private void StrikeWithMaul()
     {
@@ -132,8 +157,8 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         {
             SmashAllImpsInRange();
         }
-        
-        
+
+
     }
 
     private void SmashImpsBetweenCowardAndTroll(ImpController coward)
@@ -177,5 +202,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         }
         impsInAttackRange.Clear();
     }
+
+    #endregion
 
 }

@@ -21,6 +21,8 @@ public class LevelConfig  {
         this.maxProfessions = maxProfessions;
     }
 
+    #region properties
+
     public int MaxImps
     {
         get
@@ -53,6 +55,11 @@ public class LevelConfig  {
         }
     }
 
+    #endregion
+
+    /// <summary>
+    /// This is a globally usable array of level configurations.
+    /// </summary>
     public static LevelConfig[] LEVELS = 
     {                                 
         new LevelConfig(4, 4.0f, "Test Level", new int[9] {1,1,0,1,1,0,0,0,0})                         

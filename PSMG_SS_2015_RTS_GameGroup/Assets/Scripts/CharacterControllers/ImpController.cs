@@ -10,33 +10,36 @@ using System.Collections.Generic;
 
 public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DListener
 {
-    
+    #region variables and constants
+
+    // movement
     private Rigidbody2D rigidBody2D;
     private CircleCollider2D circleCollider2D;
+    private TriggerCollider2D impCollisionCheck;
     private float movementSpeed = 1f;
     private bool facingRight = true;
-    private ImpControllerListener listener;
+    private bool movingUpwards = false;
+    //profession-related
+    private TriggerCollider2D attackRange;
     private float attackCounter = 0f;
     private List<EnemyController> enemiesInAttackRange;
-
-    private ImpType type;
-
     private ImpController commandPartner;
-
-    private TriggerCollider2D impCollisionCheck;
-    private TriggerCollider2D attackRange;
-
-    public LayerMask impLayer;
     private bool isAtThrowingPosition;
-
+    private float bombCounter = 0f;
+    //general
+    private ImpType type;
+    private ImpControllerListener listener;
+    public LayerMask impLayer;
+    //prefabs
     public GameObject verticalLadderPrefab;
     public GameObject horizontalLadderPrefab;
-    public GameObject bomb;
-    public GameObject spear;
-    public GameObject shield;
+    public GameObject bombPrefab;
+    public GameObject spearPrefab;
+    public GameObject shieldPrefab;
 
-    private bool movingUpwards = false;
-    private float bombCounter = 0f;
+    #endregion
+
+    # region listener interface
 
     public interface ImpControllerListener
     {
@@ -55,11 +58,37 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         listener = null;
     }
 
+    #endregion
+
+    #region initialization, properties, input handling and update
+
+    private void OnMouseDown()
+    {
+        listener.OnImpSelected(this);
+    }
+
     private void Awake()
+    {
+        InitComponents();
+        InitAttributes();
+        InitTriggerColliders();
+    }
+
+    private void InitComponents()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
-        enemiesInAttackRange = new List<EnemyController>();
+    }
+
+    private void InitAttributes()
+    {
+        
+        isAtThrowingPosition = false;
+        type = ImpType.Unemployed;
+    }
+
+    private void InitTriggerColliders()
+    {
         TriggerCollider2D[] triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
 
         foreach (TriggerCollider2D c in triggerColliders)
@@ -76,9 +105,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         impCollisionCheck.RegisterListener(this);
         attackRange.RegisterListener(this);
 
-        isAtThrowingPosition = false;
-
-        type = ImpType.Unemployed;
+        enemiesInAttackRange = new List<EnemyController>();
     }
 
     public ImpType Type
@@ -87,11 +114,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             return type;
         }
-    }
-
-    private void OnMouseDown()
-    {
-        listener.OnImpSelected(this);
     }
 
     private void FixedUpdate()
@@ -134,6 +156,84 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     }
 
+    public void LeaveGame()
+    {
+        listener.OnImpHurt(this);
+        Destroy(gameObject);
+    }
+
+    #endregion
+
+    #region basic movement patterns
+
+    private void Move()
+    {
+        rigidBody2D.velocity = new Vector2(movementSpeed, rigidBody2D.velocity.y);
+    }
+    
+    private void Turn()
+    {
+        movementSpeed *= -1;
+        facingRight = !facingRight;
+    }
+
+    private void MoveUpwards()
+    {
+        rigidBody2D.velocity = new Vector2(0f, 1f); // TODO Stop moving upwards when reached top
+    }
+
+    private void ClimbLadder()
+    {
+        Debug.Log("Climbing ladder");
+        movingUpwards = true;
+        // check when the top is reached
+    }
+
+    #endregion
+
+    #region profession-specific methods
+
+    private void Pierce()
+    {
+        Debug.Log("Attacking");
+        Debug.Log("Number of enemies in Attack range: " + enemiesInAttackRange.Count);
+        foreach (EnemyController enemy in enemiesInAttackRange)
+        {
+            enemy.LeaveGame();
+        }
+        enemiesInAttackRange.Clear();
+    }
+
+    private void SetupVerticalLadder(Vector3 position)
+    {
+        Instantiate(verticalLadderPrefab, position, Quaternion.identity);
+        Untrain();
+        Debug.Log("Setting up a ladder");
+    }
+
+    private void SetupHorizontalLadder(Vector3 position)
+    {
+        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, 90));
+        Untrain();
+        Debug.Log("Placing a horizontal ladder");
+    }
+
+    private void FormCommand(ImpController commandPartner)
+    {
+        attackCounter = 0f;
+        this.commandPartner = commandPartner;
+    }
+
+    public void DissolveCommand()
+    {
+        this.commandPartner = null;
+    }
+
+    public bool IsInCommand()
+    {
+        return commandPartner != null;
+    }
+
     private void DetonateBomb()
     {
         Debug.Log("BOOOM");
@@ -149,21 +249,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         bombCounter = 0f;
     }
 
-    private void MoveUpwards()
+    private void ThrowImp(ImpController projectile)
     {
-        rigidBody2D.velocity = new Vector2(0f, 1f); // TODO Stop moving upwards when reached top
+        // TODO 
     }
 
-    private void Pierce()
-    {
-        Debug.Log("Attacking");
-        Debug.Log("Number of enemies in Attack range: " + enemiesInAttackRange.Count);
-        foreach (EnemyController enemy in enemiesInAttackRange)
-        {
-            enemy.LeaveGame();
-        }
-        enemiesInAttackRange.Clear();
-    }
+    #endregion 
+
+    #region collision management and related behaviors
 
     public CircleCollider2D GetCollider()
     {
@@ -205,7 +298,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             case "VerticalLadderSpot":
                 if (type == ImpType.LadderCarrier)
                 {
-                    SetupLadder(collider.gameObject.transform.position); // TODO improve positioning
+                    SetupVerticalLadder(collider.gameObject.transform.position); // TODO improve positioning
                     Untrain();
                 }
                 break;
@@ -234,27 +327,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
-    private void ClimbLadder()
-    {
-        Debug.Log("Climbing ladder");
-        movingUpwards = true;
-        // check when the top is reached
-    }
-
-    private void SetupLadder(Vector3 position)
-    {
-        Instantiate(verticalLadderPrefab, position, Quaternion.identity);
-        Untrain();
-        Debug.Log("Setting up a ladder");
-    }
-
-    private void SetupHorizontalLadder(Vector3 position)
-    {
-        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, 90));
-        Untrain();
-        Debug.Log("Placing a horizontal ladder");
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         ImpController imp = collision.gameObject.GetComponent<ImpController>();
@@ -270,6 +342,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
+    #endregion
+
+    #region interaction logic
+
     private void InteractWith(ObstacleController obstacle)
     {
         Debug.Log("Interacting with obstacle.");
@@ -283,8 +359,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void InteractWith(ImpController imp)
     {
-        #region interaction logic for imps
-
         if (commandPartner == null &&
             ((type == ImpType.Coward && imp.Type == ImpType.Spearman) ||
             (type == ImpType.Spearman && imp.Type == ImpType.Coward)))
@@ -316,46 +390,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), true);
         }
-
-        #endregion
     }
 
-    private void ThrowImp(ImpController projectile)
-    {
-        // TODO 
-    }
+    #endregion
 
-    private void FormCommand(ImpController commandPartner)
-    {
-        attackCounter = 0f;
-        this.commandPartner = commandPartner;
-    }
-
-    public void DissolveCommand()
-    {
-        this.commandPartner = null;
-    }
-
-    public bool IsInCommand()
-    {
-        return commandPartner != null;
-    }
-
-    private void Turn()
-    {
-        movementSpeed *= -1;
-        facingRight = !facingRight;
-    }
-
-    private void Move()
-    {
-        rigidBody2D.velocity = new Vector2(movementSpeed, rigidBody2D.velocity.y);
-    }
-
-    public bool HasJob()
-    {
-        return type != ImpType.Unemployed;
-    }
+    #region training
 
     public void Train(ImpType type)
     {
@@ -372,15 +411,19 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
+    public bool HasJob()
+    {
+        return type != ImpType.Unemployed;
+    }
+
     public void Untrain()
     {
         listener.OnUntrain(this);
     }
 
-    public void SetLayer(int layer)
-    {
-        gameObject.layer = layer;
-    }
+    #endregion
+
+    # region interface implementation
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
     {
@@ -420,10 +463,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
-    public void LeaveGame()
-    {
-        listener.OnImpHurt(this);
-        Destroy(gameObject);
-    }
+    #endregion
     
 }

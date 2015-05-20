@@ -9,7 +9,7 @@ using System.Collections;
 /// coordinating the flow of the application.
 /// </summary>
 
-public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
+public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, InputManager.InputManagerListener
 {
     private enum GameState
     {
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
     private LevelManager levelManager;
     private ImpManager impManager;
     private UIManager uiManager;
+    private InputManager inputManager;
 
     private void Awake()
     {
@@ -30,6 +31,8 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         levelManager.RegisterListener(this);
         impManager = GetComponent<ImpManager>();
         uiManager = GetComponent<UIManager>();
+        inputManager = GetComponent<InputManager>();
+        inputManager.RegisterListener(this);
 
         gameState = GameState.NotStarted;
 
@@ -52,5 +55,10 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         impManager.SetLevelConfig(config, start);
         gameState = GameState.LevelStarted;
         //uiManager.SetButtonBar(lvl.ButtonBar);
+    }
+    
+   void InputManager.InputManagerListener.DisplayImpLabels()
+    {
+        impManager.DisplayImpLabels();
     }
 }

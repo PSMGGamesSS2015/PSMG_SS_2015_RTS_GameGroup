@@ -201,4 +201,9 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
     {
         UpdateMaxProfessions(impController);
     }
+
+    public void DisplayImpLabels()
+    {
+        Debug.Log("DisplayImpLabels");
+    }
 }

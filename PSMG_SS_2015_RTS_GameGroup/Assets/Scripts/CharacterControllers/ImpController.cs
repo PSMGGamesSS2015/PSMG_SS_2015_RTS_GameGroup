@@ -36,6 +36,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     public GameObject bombPrefab;
     public GameObject spearPrefab;
     public GameObject shieldPrefab;
+    public GameObject carriedLadder;
 
     #endregion
 

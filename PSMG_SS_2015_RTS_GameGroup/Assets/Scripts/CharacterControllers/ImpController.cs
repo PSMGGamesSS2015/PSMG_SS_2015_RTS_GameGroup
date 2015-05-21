@@ -214,7 +214,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void SetupHorizontalLadder(Vector3 position)
     {
-        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, 90));
+        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, 0));
         Untrain();
         Debug.Log("Placing a horizontal ladder");
     }

@@ -1,10 +1,17 @@
 fileFormatVersion: 2
 guid: 9a6681405fd6b1b48ae055d1218152fb
-timeCreated: 1431071839
+timeCreated: 1432204558
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - verticalLadderPrefab: {instanceID: 0}
+  - horizontalLadderPrefab: {fileID: 177672, guid: 82dede1f12cf0ec4181952ffb8d66898,
+      type: 2}
+  - bombPrefab: {instanceID: 0}
+  - spearPrefab: {instanceID: 0}
+  - shieldPrefab: {instanceID: 0}
+  - carriedLadder: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

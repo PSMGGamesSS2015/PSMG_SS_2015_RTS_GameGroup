@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 /// <summary>
 /// The ImpController is a component attached to every instance of
@@ -68,6 +69,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         listener.OnImpSelected(this);
     }
 
+    private void OnGUI()
+    {
+        Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), type.ToString());
+        Debug.Log(gameObject.transform.position.x);
+    }
+
     private void Awake()
     {
         InitComponents();
@@ -119,6 +126,8 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void FixedUpdate()
     {
+        
+        
         if (type != ImpType.Coward && 
             !IsInCommand())
         {
@@ -155,7 +164,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             }
         }
 
+        
+
     }
+
 
     public void LeaveGame()
     {
@@ -176,6 +188,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         movementSpeed *= -1;
         facingRight = !facingRight;
+        // flipping the gameobject
+        Vector3 newScale = gameObject.transform.localScale;
+        newScale.x *= -1;
+        gameObject.transform.localScale = newScale;
     }
 
     private void MoveUpwards()

@@ -72,7 +72,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void OnGUI()
     {
         Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), type.ToString());
-        Debug.Log(gameObject.transform.position.x);
+       // Debug.Log(gameObject.transform.position.x);
     }
 
     private void Awake()

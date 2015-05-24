@@ -18,7 +18,13 @@ public class InputManager : MonoBehaviour {
             {
                 case KeyCode.LeftAlt:
                     DisplayImpLabels();
-                    break;                       
+                    break;
+                case KeyCode.Escape:
+                    Debug.Log("ESC clicked");
+                    break;
+                case KeyCode.Tab:
+                    Debug.Log("Tab clicked");
+                    break;
             }
         }
     }
@@ -28,6 +34,8 @@ public class InputManager : MonoBehaviour {
         //Userinterface display Implabels
         listener.DisplayImpLabels();
     }
+
+ 
 
     public void RegisterListener(InputManagerListener listener)
     {

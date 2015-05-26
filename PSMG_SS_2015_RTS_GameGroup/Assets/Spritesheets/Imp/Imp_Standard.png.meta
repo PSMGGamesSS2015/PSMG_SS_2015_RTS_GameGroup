@@ -1,0 +1,319 @@
+fileFormatVersion: 2
+guid: 12b22185b140cb249acdadcc45df56cd
+timeCreated: 1432665656
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Rucksack
+    21300002: Body
+    21300004: Right Ear
+    21300006: Left Ear
+    21300008: Jaw
+    21300010: Nose
+    21300012: Eyeball
+    21300014: Browse
+    21300016: Pupil Looking to Player
+    21300018: Pupil_Standard
+    21300020: Upper Finger
+    21300022: Right Wrist
+    21300024: Head
+    21300026: Lower Finger
+    21300028: Left Wrist
+    21300030: Lid
+    21300032: Lower Thumb
+    21300034: Right Lower Arm
+    21300036: Right Upper Arm
+    21300038: Upper Leg
+    21300040: Right Lower Leg
+    21300042: Left Upper Arm
+    21300044: Left Lower Arm
+    21300046: Left Lower Leg
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Rucksack
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 2448
+        width: 1070
+        height: 1640
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Body
+      rect:
+        serializedVersion: 2
+        x: 1153
+        y: 1784
+        width: 1002
+        height: 2273
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Right Ear
+      rect:
+        serializedVersion: 2
+        x: 2376
+        y: 3427
+        width: 935
+        height: 584
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Left Ear
+      rect:
+        serializedVersion: 2
+        x: 3607
+        y: 3527
+        width: 456
+        height: 545
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Jaw
+      rect:
+        serializedVersion: 2
+        x: 2335
+        y: 2888
+        width: 573
+        height: 451
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Nose
+      rect:
+        serializedVersion: 2
+        x: 3405
+        y: 2976
+        width: 604
+        height: 323
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Eyeball
+      rect:
+        serializedVersion: 2
+        x: 2213
+        y: 2133
+        width: 459
+        height: 446
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Browse
+      rect:
+        serializedVersion: 2
+        x: 2919
+        y: 2447
+        width: 642
+        height: 328
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pupil Looking to Player
+      rect:
+        serializedVersion: 2
+        x: 3712
+        y: 2431
+        width: 129
+        height: 313
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pupil_Standard
+      rect:
+        serializedVersion: 2
+        x: 3927
+        y: 2425
+        width: 106
+        height: 311
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Upper Finger
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 2064
+        width: 117
+        height: 273
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Right Wrist
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 2029
+        width: 364
+        height: 336
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Head
+      rect:
+        serializedVersion: 2
+        x: 3023
+        y: 1287
+        width: 1028
+        height: 1033
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Lower Finger
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 1789
+        width: 98
+        height: 252
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Left Wrist
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 1617
+        width: 332
+        height: 364
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Lid
+      rect:
+        serializedVersion: 2
+        x: 2237
+        y: 1573
+        width: 456
+        height: 446
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Lower Thumb
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 1583
+        width: 140
+        height: 162
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Right Lower Arm
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 37
+        width: 350
+        height: 1059
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Right Upper Arm
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 45
+        width: 447
+        height: 1179
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Upper Leg
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 61
+        width: 453
+        height: 1114
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Right Lower Leg
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 13
+        width: 869
+        height: 1339
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 1, w: 0}
+    - name: Left Upper Arm
+      rect:
+        serializedVersion: 2
+        x: 3216
+        y: 15
+        width: 440
+        height: 1178
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Left Lower Arm
+      rect:
+        serializedVersion: 2
+        x: 3719
+        y: 41
+        width: 358
+        height: 1050
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Left Lower Leg
+      rect:
+        serializedVersion: 2
+        x: 2283
+        y: 0
+        width: 894
+        height: 1357
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 38}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

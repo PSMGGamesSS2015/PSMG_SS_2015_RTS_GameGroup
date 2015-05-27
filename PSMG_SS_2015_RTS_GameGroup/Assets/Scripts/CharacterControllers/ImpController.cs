@@ -13,11 +13,13 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 {
     #region variables and constants
 
+    // animation
+    private Animator animator;
     // movement
     private Rigidbody2D rigidBody2D;
     private CircleCollider2D circleCollider2D;
     private TriggerCollider2D impCollisionCheck;
-    private float movementSpeed = 1f;
+    private float movementSpeed = 0.6f;
     private bool facingRight = true;
     private bool movingUpwards = false;
     //profession-related
@@ -80,12 +82,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         InitComponents();
         InitAttributes();
         InitTriggerColliders();
+        animator.Play("Imp Walking");
     }
 
     private void InitComponents()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void InitAttributes()

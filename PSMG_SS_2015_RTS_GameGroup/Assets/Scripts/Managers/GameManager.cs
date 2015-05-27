@@ -59,9 +59,13 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         }
     }
 
+    # region interface implementation
+
     void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
     {
         gameState = GameState.LevelStarted;
     }
+
+    #endregion
 
 }

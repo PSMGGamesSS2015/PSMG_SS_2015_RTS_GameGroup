@@ -41,8 +41,6 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
 
     public void RegisterListener(LevelManagerListener listener)
     {
-        Debug.Log(listeners);
-        Debug.Log(listener);
         listeners.Add(listener);
     }
 

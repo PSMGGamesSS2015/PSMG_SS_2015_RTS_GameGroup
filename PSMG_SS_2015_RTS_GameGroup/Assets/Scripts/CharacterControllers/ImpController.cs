@@ -40,6 +40,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     public GameObject spearPrefab;
     public GameObject shieldPrefab;
     public GameObject carriedLadder;
+    private ImpInventory impInventory;
 
     #endregion
 
@@ -90,6 +91,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         rigidBody2D = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
+        impInventory = GetComponentInChildren<ImpInventory>();
     }
 
     private void InitAttributes()
@@ -430,6 +432,13 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             bombCounter = 0f;
         }
+
+        if (type == ImpType.Spearman)
+        {
+            impInventory.DisplaySpear();
+            animator.Play("Imp Walking with Spear");
+        }
+
     }
 
     public bool HasJob()

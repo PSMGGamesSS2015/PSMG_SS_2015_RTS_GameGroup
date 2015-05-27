@@ -9,7 +9,7 @@ using System.Collections;
 /// coordinating the flow of the application.
 /// </summary>
 
-public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, InputManager.InputManagerListener
+public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
 {
     private enum GameState
     {
@@ -27,19 +27,28 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, Inp
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        InitManagers();
+        gameState = GameState.NotStarted;
+    }
+
+    private void InitManagers()
+    {
         levelManager = GetComponent<LevelManager>();
-        levelManager.RegisterListener(this);
         impManager = GetComponent<ImpManager>();
         uiManager = GetComponent<UIManager>();
         inputManager = GetComponent<InputManager>();
-        inputManager.RegisterListener(this);
-
-        gameState = GameState.NotStarted;
-
     }
 
     private void Start() {
+        SetupCommunicationBetweenManagers();
         levelManager.LoadLevel(LevelConfig.LEVELS[0]);
+    }
+
+    private void SetupCommunicationBetweenManagers()
+    {
+        levelManager.RegisterListener(this);
+        levelManager.RegisterListener(impManager);
+        inputManager.RegisterListener(impManager);
     }
 
     private void Update()
@@ -52,14 +61,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, Inp
 
     void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
     {
-        impManager.SetLevelConfig(config, start);
         gameState = GameState.LevelStarted;
-        //uiManager.SetButtonBar(lvl.ButtonBar);
-    }
-    
-   void InputManager.InputManagerListener.DisplayImpLabels()
-    {
-        impManager.DisplayImpLabels();
     }
 
 }

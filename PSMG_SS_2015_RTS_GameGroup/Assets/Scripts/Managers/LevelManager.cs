@@ -12,10 +12,9 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListener
 {
 
-    private LevelManagerListener listener;
+    private List<LevelManagerListener> listeners;
 
     private LevelConfig currentLevelConfig;
-
     private List<GameObject> obstacles;
     private List<GameObject> enemies;
     private GameObject start;
@@ -27,9 +26,9 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
     }
 
     private void Awake() {
-        
         obstacles = new List<GameObject>();
         enemies = new List<GameObject>();
+        listeners = new List<LevelManagerListener>();
         SetupCollisionManagement();
     }
 
@@ -42,7 +41,9 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
 
     public void RegisterListener(LevelManagerListener listener)
     {
-        this.listener = listener;
+        Debug.Log(listeners);
+        Debug.Log(listener);
+        listeners.Add(listener);
     }
 
     public void LoadLevel(LevelConfig config)
@@ -54,7 +55,11 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
     private void OnLevelWasLoaded(int level)
     {
         RetrieveLevelData();
-        listener.OnLevelStarted(currentLevelConfig, start);
+        foreach (LevelManagerListener listener in listeners)
+        {
+            listener.OnLevelStarted(currentLevelConfig, start);
+        }
+        
     }
 
     public LevelConfig CurrentLevelConfig

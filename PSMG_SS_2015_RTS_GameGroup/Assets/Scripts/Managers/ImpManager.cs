@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// it spawns imps and gets notified when an imp is selected by the player.
 /// </summary>
 
-public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
+public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, LevelManager.LevelManagerListener, InputManager.InputManagerListener {
 
     private LevelConfig config;
     private GameObject start;
@@ -35,47 +35,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         this.config = config;
         this.start = start;
         professions = new int[9];
-    }
-
-    private void OnGUI()
-    {
-        Event e = Event.current;
-        if (e.type == EventType.KeyDown)
-        {
-            switch (e.keyCode)
-            {
-                case KeyCode.Alpha1:
-                    SelectProfession(ImpType.Spearman);
-                    break;
-                case KeyCode.Alpha2:
-                    SelectProfession(ImpType.Coward);
-                    break;
-                case KeyCode.Alpha3:
-                    SelectProfession(ImpType.Pest);
-                    break;
-                case KeyCode.Alpha4:
-                    SelectProfession(ImpType.LadderCarrier);
-                    break;
-                case KeyCode.Alpha5:
-                    SelectProfession(ImpType.Blaster);
-                    break;
-                case KeyCode.Alpha6:
-                    SelectProfession(ImpType.Firebug);
-                    break;
-                case KeyCode.Alpha7:
-                    SelectProfession(ImpType.Minnesinger);
-                    break;
-                case KeyCode.Alpha8:
-                    SelectProfession(ImpType.Botcher);
-                    break;
-                case KeyCode.Alpha9:
-                    SelectProfession(ImpType.Schwarzenegger);
-                    break;
-                case KeyCode.Alpha0:
-                    SelectProfession(ImpType.Unemployed);
-                    break;
-            }
-        }
     }
 
     private void SelectProfession(ImpType profession)
@@ -181,7 +140,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         spawnCounter = 0f; 
     }
 
-    #region interface methods
+    #region interface implementation
      
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
@@ -194,16 +153,31 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener {
         impController.UnregisterListener();
     }
 
-    #endregion 
+    void InputManager.InputManagerListener.OnDisplayImpLabels()
+    {
+        Debug.Log("DisplayImpLabels");
+    }
 
+    void InputManager.InputManagerListener.OnProfessionSelected(ImpType profession)
+    {
+        SelectProfession(profession);
+    }
+
+    void InputManager.InputManagerListener.OnSelectNextImp()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+    {
+        SetLevelConfig(config, start);
+    }
+
+    #endregion 
 
     public void OnUntrain(ImpController impController)
     {
         UpdateMaxProfessions(impController);
     }
 
-    public void DisplayImpLabels()
-    {
-        Debug.Log("DisplayImpLabels");
-    }
 }

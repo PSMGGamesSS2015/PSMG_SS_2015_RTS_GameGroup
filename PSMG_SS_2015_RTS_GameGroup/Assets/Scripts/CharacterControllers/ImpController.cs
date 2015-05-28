@@ -448,6 +448,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type == ImpType.Blaster)
         {
             impInventory.DisplayBomb();
+            movementSpeed = 1.6f;
             animator.Play("Imp Walking with Bomb");
         }
 

@@ -61,9 +61,15 @@ public class ImpInventory : MonoBehaviour
     }
 
 
-    internal void DisplayLadder()
+    public void DisplayLadder()
     {
         HideAllTools();
         ladder.enabled = true;
+    }
+
+    public void DisplayBomb()
+    {
+        HideAllTools();
+        bomb.enabled = true;
     }
 }

@@ -445,6 +445,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             animator.Play("Imp Walking with Ladder");
         }
 
+        if (type == ImpType.Blaster)
+        {
+            impInventory.DisplayBomb();
+            animator.Play("Imp Walking with Bomb");
+        }
+
     }
 
     public bool HasJob()

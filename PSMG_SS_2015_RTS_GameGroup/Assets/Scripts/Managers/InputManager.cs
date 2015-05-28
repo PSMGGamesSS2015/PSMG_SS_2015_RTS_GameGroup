@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour {
         void OnDisplayImpLabels();
         void OnProfessionSelected(ImpType profession);
         void OnSelectNextImp();
+        void OnDismissImpLabels();
     }
 
     private void OnGUI()
@@ -67,6 +68,23 @@ public class InputManager : MonoBehaviour {
                     SelectProfession(ImpType.Unemployed);
                     break;
             }
+        }
+        if (e.type == EventType.KeyUp)
+        {
+            switch (e.keyCode) {
+                case KeyCode.LeftAlt:
+                    DismissImpLabels();
+                    break;
+            }
+            
+        }
+    }
+
+    private void DismissImpLabels()
+    {
+        foreach (InputManagerListener listener in listeners)
+        {
+            listener.OnDismissImpLabels();
         }
     }
 

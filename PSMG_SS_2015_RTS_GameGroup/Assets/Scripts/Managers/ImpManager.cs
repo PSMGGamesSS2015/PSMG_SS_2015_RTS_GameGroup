@@ -156,6 +156,10 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     void InputManager.InputManagerListener.OnDisplayImpLabels()
     {
         Debug.Log("DisplayImpLabels");
+        foreach (ImpController imp in imps)
+        {
+            imp.DisplayLabel();
+        }
     }
 
     void InputManager.InputManagerListener.OnProfessionSelected(ImpType profession)
@@ -180,4 +184,11 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         UpdateMaxProfessions(impController);
     }
 
+    void InputManager.InputManagerListener.OnDismissImpLabels()
+    {
+        foreach (ImpController imp in imps)
+        {
+            imp.DismissLabel();
+        }
+    }
 }

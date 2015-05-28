@@ -54,10 +54,16 @@ public class ImpInventory : MonoBehaviour
 
     #endregion
 
-    // TODO provisional
     public void DisplaySpear()
     {
+        HideAllTools();
         spear.enabled = true;
     }
 
+
+    internal void DisplayLadder()
+    {
+        HideAllTools();
+        ladder.enabled = true;
+    }
 }

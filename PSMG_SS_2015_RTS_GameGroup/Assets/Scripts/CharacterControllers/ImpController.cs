@@ -41,6 +41,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     public GameObject shieldPrefab;
     public GameObject carriedLadder;
     private ImpInventory impInventory;
+    private bool areLabelsDisplayed;
 
     #endregion
 
@@ -74,8 +75,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void OnGUI()
     {
-        Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), type.ToString());
-       // Debug.Log(gameObject.transform.position.x);
+        if (areLabelsDisplayed)
+        {
+            Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), type.ToString());
+        }
     }
 
     private void Awake()
@@ -170,10 +173,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             }
         }
 
-        
-
     }
-
 
     public void LeaveGame()
     {
@@ -439,6 +439,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             animator.Play("Imp Walking with Spear");
         }
 
+        if (type == ImpType.LadderCarrier)
+        {
+            impInventory.DisplayLadder();
+            animator.Play("Imp Walking with Ladder");
+        }
+
     }
 
     public bool HasJob()
@@ -494,5 +500,15 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     }
 
     #endregion
-    
+
+
+    public void DisplayLabel()
+    {
+        areLabelsDisplayed = true;
+    }
+
+    public void DismissLabel()
+    {
+        areLabelsDisplayed = false;
+    }
 }

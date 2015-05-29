@@ -36,11 +36,8 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     //prefabs
     public GameObject verticalLadderPrefab;
     public GameObject horizontalLadderPrefab;
-    public GameObject bombPrefab;
-    public GameObject spearPrefab;
-    public GameObject shieldPrefab;
-    public GameObject carriedLadder;
     private ImpInventory impInventory;
+    // ui
     private bool areLabelsDisplayed;
 
     #endregion
@@ -231,24 +228,30 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         Instantiate(verticalLadderPrefab, position, Quaternion.identity);
         Untrain();
-        Debug.Log("Setting up a ladder");
     }
 
     private void SetupHorizontalLadder(Vector3 position)
     {
-        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, 0));
+        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0,0,-90));
         Untrain();
-        Debug.Log("Placing a horizontal ladder");
     }
 
     private void FormCommand(ImpController commandPartner)
     {
         attackCounter = 0f;
+        if (type == ImpType.Spearman)
+        {
+            animator.Play("Imp Attacking with Spear");
+        }
         this.commandPartner = commandPartner;
     }
 
     public void DissolveCommand()
     {
+        if (type == ImpType.Spearman)
+        {
+            animator.Play("Imp Walking with Spear");
+        }
         this.commandPartner = null;
     }
 
@@ -496,11 +499,29 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             {
                 movementSpeed = -0.6f;
             }
+            else if (formerMovementSpeed == 0)
+            {
+                if (facingRight)
+                {
+                    movementSpeed = 0.6f;
+                }
+                else
+                {
+                    movementSpeed = -0.6f;
+                }
+            }
             else
             {
                 movementSpeed = 0.6f;
             }
+
             animator.Play("Imp Walking");
+        }
+
+        if (type == ImpType.Coward)
+        {
+            impInventory.DisplayShield();
+            animator.Play("Imp Hiding Behind Shield");
         }
 
     }

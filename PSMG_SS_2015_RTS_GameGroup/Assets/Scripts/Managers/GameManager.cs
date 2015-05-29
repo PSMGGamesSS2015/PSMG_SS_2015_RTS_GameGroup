@@ -49,9 +49,12 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         levelManager.RegisterListener(this);
         levelManager.RegisterListener(impManager);
         inputManager.RegisterListener(impManager);
-        //UIManager.RegisterListener(impManager);
+        uiManager.RegisterListener(impManager);
     }
-
+    public void UIInput()
+    {
+        uiManager.UIInput(5);
+    }
     private void Update()
     {
         if (gameState == GameState.LevelStarted)

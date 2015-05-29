@@ -8,7 +8,7 @@ using System.Collections.Generic;
 /// it spawns imps and gets notified when an imp is selected by the player.
 /// </summary>
 
-public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, LevelManager.LevelManagerListener, InputManager.InputManagerListener {
+public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, LevelManager.LevelManagerListener, InputManager.InputManagerListener, UIManager.UIManagerListener {
 
     private LevelConfig config;
     private GameObject start;
@@ -163,6 +163,11 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     }
 
     void InputManager.InputManagerListener.OnProfessionSelected(ImpType profession)
+    {
+        SelectProfession(profession);
+    }
+
+    void UIManager.UIManagerListener.OnProfessionSelected(ImpType profession)
     {
         SelectProfession(profession);
     }

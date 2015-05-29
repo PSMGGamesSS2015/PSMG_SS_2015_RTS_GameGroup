@@ -1,29 +1,25 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class UIManager : MonoBehaviour
 {
-    /*
-    private List<InputManagerListener> listeners;
+    
+    private List<UIManagerListener> listeners;
 
     private void Awake()
     {
-        listeners = new List<InputManagerListener>();
+        listeners = new List<UIManagerListener>();
     }
 
-    public interface InputManagerListener
+    public interface UIManagerListener
     {
-        void OnDisplayImpLabels();
-        void OnProfessionSelected(ImpType profession);
-        void OnSelectNextImp();
-        void OnDismissImpLabels();
+        void OnProfessionSelected(ImpType profession);        
     }
 
     private void SelectProfession(ImpType impType)
     {
-        foreach (InputManagerListener listener in listeners)
+        foreach (UIManagerListener listener in listeners)
         {
             listener.OnProfessionSelected(impType);
         }
@@ -65,6 +61,11 @@ public class UIManager : MonoBehaviour
                 SelectProfession(ImpType.Unemployed);
                 break;
         }
-    } */
+    }
 
+
+    public void RegisterListener(UIManagerListener listener)
+    {
+        listeners.Add(listener);
+    }
 }

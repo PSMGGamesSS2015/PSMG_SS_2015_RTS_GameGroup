@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// The imp inventory contains the sprite renderers of the tools
-/// that an imp uses. 
+/// used by an imp. 
 /// </summary>
 
 public class ImpInventory : MonoBehaviour
@@ -44,7 +44,7 @@ public class ImpInventory : MonoBehaviour
         }
     }
     
-    private void HideAllTools()
+    public void HideAllTools()
     {
         foreach (SpriteRenderer renderer in tools)
         {
@@ -61,9 +61,21 @@ public class ImpInventory : MonoBehaviour
     }
 
 
-    internal void DisplayLadder()
+    public void DisplayLadder()
     {
         HideAllTools();
         ladder.enabled = true;
+    }
+
+    public void DisplayBomb()
+    {
+        HideAllTools();
+        bomb.enabled = true;
+    }
+
+    public void DisplayShield()
+    {
+        HideAllTools();
+        shield.enabled = true;
     }
 }

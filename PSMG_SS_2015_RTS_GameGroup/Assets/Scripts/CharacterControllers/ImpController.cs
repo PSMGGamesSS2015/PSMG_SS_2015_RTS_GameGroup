@@ -421,6 +421,19 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void Train(ImpType type)
     {
+        StartCoroutine(TrainingRoutine(type));   
+    }
+
+    // TODO refactor method
+    IEnumerator TrainingRoutine(ImpType type)
+    {
+        float formerMovementSpeed = movementSpeed;
+
+        impInventory.HideAllTools();
+        animator.Play("Imp Taking Object");
+        movementSpeed = 0f;
+        yield return new WaitForSeconds(1.4f);
+
         this.type = type; // assign new type
         if (commandPartner != null)
         {
@@ -436,20 +449,58 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type == ImpType.Spearman)
         {
             impInventory.DisplaySpear();
+            if (formerMovementSpeed < 0)
+            {
+                movementSpeed = -0.6f;
+            }
+            else
+            {
+                movementSpeed = 0.6f;
+            }
+
             animator.Play("Imp Walking with Spear");
         }
 
         if (type == ImpType.LadderCarrier)
         {
             impInventory.DisplayLadder();
+            if (formerMovementSpeed < 0)
+            {
+                movementSpeed = -0.6f;
+            }
+            else
+            {
+                movementSpeed = 0.6f;
+            }
             animator.Play("Imp Walking with Ladder");
         }
 
         if (type == ImpType.Blaster)
         {
             impInventory.DisplayBomb();
-            movementSpeed = 1.6f;
+            if (formerMovementSpeed < 0)
+            {
+                movementSpeed = -1.8f;
+            }
+            else
+            {
+                movementSpeed = 1.8f;
+            }
             animator.Play("Imp Walking with Bomb");
+        }
+
+        if (type == ImpType.Unemployed)
+        {
+            impInventory.HideAllTools();
+            if (formerMovementSpeed < 0)
+            {
+                movementSpeed = -0.6f;
+            }
+            else
+            {
+                movementSpeed = 0.6f;
+            }
+            animator.Play("Imp Walking");
         }
 
     }

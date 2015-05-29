@@ -44,7 +44,7 @@ public class ImpInventory : MonoBehaviour
         }
     }
     
-    private void HideAllTools()
+    public void HideAllTools()
     {
         foreach (SpriteRenderer renderer in tools)
         {

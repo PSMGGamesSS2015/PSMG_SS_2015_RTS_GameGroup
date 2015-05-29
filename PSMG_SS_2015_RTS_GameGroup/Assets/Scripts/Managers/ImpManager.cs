@@ -135,8 +135,12 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
         ImpController impController = imp.GetComponent<ImpController>();
         impController.RegisterListener(this);
+        impController.MoveToSortingLayerPosition(currentImps);
         currentImps++;
+        // TODO Add sorting layer stuff
         imps.Add(impController);
+        
+        
         spawnCounter = 0f; 
     }
 

@@ -19,6 +19,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private Rigidbody2D rigidBody2D;
     private CircleCollider2D circleCollider2D;
     private TriggerCollider2D impCollisionCheck;
+    private SpriteRenderer[] sprites;
     private float movementSpeed = 0.6f;
     private bool facingRight = true;
     private bool movingUpwards = false;
@@ -78,6 +79,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
+    public void MoveToSortingLayerPosition(int position)
+    {
+        foreach (SpriteRenderer r in sprites)
+        {
+            r.sortingOrder = position;
+        }
+    }
+
     private void Awake()
     {
         InitComponents();
@@ -92,11 +101,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         circleCollider2D = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
         impInventory = GetComponentInChildren<ImpInventory>();
+        sprites = GetComponentsInChildren<SpriteRenderer>();
     }
 
     private void InitAttributes()
     {
-        
         isAtThrowingPosition = false;
         type = ImpType.Unemployed;
     }
@@ -199,14 +208,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void MoveUpwards()
     {
-        rigidBody2D.velocity = new Vector2(0f, 1f); // TODO Stop moving upwards when reached top
+        rigidBody2D.velocity = new Vector2(0f, 1f); 
+        // TODO Stop moving upwards when reached top
     }
 
     private void ClimbLadder()
     {
-        Debug.Log("Climbing ladder");
         movingUpwards = true;
-        // check when the top is reached
+        // TODO check when the top is reached
     }
 
     #endregion
@@ -215,8 +224,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void Pierce()
     {
-        Debug.Log("Attacking");
-        Debug.Log("Number of enemies in Attack range: " + enemiesInAttackRange.Count);
         foreach (EnemyController enemy in enemiesInAttackRange)
         {
             enemy.LeaveGame();

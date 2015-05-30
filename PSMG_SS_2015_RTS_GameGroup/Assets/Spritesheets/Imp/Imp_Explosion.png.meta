@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 9d23519af2d5de943addc399d3f5a37c
+timeCreated: 1432973409
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Red_Ornament
+    21300002: Yellow_Ornament
+    21300004: Bright_Yellow_Ornament
+    21300006: Pointy_Shard
+    21300008: Regular_Shard
+    21300010: Red_Explosion_Bubble
+    21300012: Orange_Explosion_Bubble
+    21300014: Label
+    21300016: Yellow_Explosion_Bubble
+    21300018: Center
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Red_Ornament
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 3511
+        width: 426
+        height: 546
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Yellow_Ornament
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 3631
+        width: 396
+        height: 426
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bright_Yellow_Ornament
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 3741
+        width: 323
+        height: 331
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pointy_Shard
+      rect:
+        serializedVersion: 2
+        x: 1307
+        y: 3530
+        width: 154
+        height: 549
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Regular_Shard
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 3897
+        width: 117
+        height: 168
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Red_Explosion_Bubble
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 2653
+        width: 843
+        height: 844
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Orange_Explosion_Bubble
+      rect:
+        serializedVersion: 2
+        x: 971
+        y: 2696
+        width: 774
+        height: 777
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Label
+      rect:
+        serializedVersion: 2
+        x: 2236
+        y: 3430
+        width: 1634
+        height: 382
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Yellow_Explosion_Bubble
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1880
+        width: 733
+        height: 733
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Center
+      rect:
+        serializedVersion: 2
+        x: 1564
+        y: 42
+        width: 2509
+        height: 2658
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

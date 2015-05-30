@@ -269,7 +269,15 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void DetonateBomb()
     {
-        Debug.Log("BOOOM");
+
+        StartCoroutine(DetonatingRoutine());  
+    }
+
+    private IEnumerator DetonatingRoutine()
+    {
+        impInventory.DisplayExplosion();
+        animator.Play("Explosion");
+        yield return new WaitForSeconds(1f);
         Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
         foreach (Collider2D c in objectsWithinRadius)
         {

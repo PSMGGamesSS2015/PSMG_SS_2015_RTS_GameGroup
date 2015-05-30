@@ -13,6 +13,7 @@ public class ImpInventory : MonoBehaviour
     private SpriteRenderer shield;
     private SpriteRenderer bomb;
     private SpriteRenderer ladder;
+    private Explosion explosion;
 
     private List<SpriteRenderer> tools;
 
@@ -29,19 +30,32 @@ public class ImpInventory : MonoBehaviour
         HideAllTools();
     }
 
-
     private void RetrieveTools()
     {
         SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (renderers[i].gameObject.tag == "Spear") spear = renderers[i];
-            if (renderers[i].gameObject.tag == "Shield") shield = renderers[i];
-            if (renderers[i].gameObject.tag == "Bomb") bomb = renderers[i];
-            if (renderers[i].gameObject.tag == "Ladder") ladder = renderers[i];
+            if (renderers[i].gameObject.tag == "Spear")
+            {
+                spear = renderers[i];
+            }
+            if (renderers[i].gameObject.tag == "Shield")
+            {
+                shield = renderers[i];
+            }
+            if (renderers[i].gameObject.tag == "Bomb")
+            {
+                bomb = renderers[i];
+            }
+            if (renderers[i].gameObject.tag == "Ladder")
+            {
+                ladder = renderers[i];
+            }
             tools.Add(renderers[i]);
         }
+
+        explosion = GetComponentInChildren<Explosion>();
     }
     
     public void HideAllTools()
@@ -77,5 +91,11 @@ public class ImpInventory : MonoBehaviour
     {
         HideAllTools();
         shield.enabled = true;
+    }
+
+    public void DisplayExplosion()
+    {
+        HideAllTools();
+        explosion.Display();
     }
 }

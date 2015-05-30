@@ -68,6 +68,14 @@ public class ImpInventory : MonoBehaviour
 
     #endregion
 
+    public Explosion Explo
+    {
+        get
+        {
+            return explosion;
+        }
+    }
+
     public void DisplaySpear()
     {
         HideAllTools();

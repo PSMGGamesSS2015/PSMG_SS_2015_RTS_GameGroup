@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using System;
 
 /// <summary>
 /// The ImpController is a component attached to every instance of
@@ -40,6 +41,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private ImpInventory impInventory;
     // ui
     private bool areLabelsDisplayed;
+    private bool isPlacingLadder;
+
+    private const float MOVEMENT_SPEED_WALKING = 0.6f;
+    private const float MOVEMENT_SPEED_RUNNING = 1.8f;
+
+    
 
     #endregion
 
@@ -108,6 +115,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         isAtThrowingPosition = false;
         type = ImpType.Unemployed;
+        isPlacingLadder = false;
     }
 
     private void InitTriggerColliders()
@@ -131,6 +139,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         enemiesInAttackRange = new List<EnemyController>();
     }
 
+    public bool IsPlacingLadder
+    {
+        get
+        {
+            return isPlacingLadder;
+        }
+    }
+
     public ImpType Type
     {
         get
@@ -142,13 +158,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void FixedUpdate()
     {
         
-        
         if (type != ImpType.Coward && 
             !IsInCommand())
         {
             if (movingUpwards)
             {
-                Debug.Log("Moving Upwards");
                 MoveUpwards();
             }
             else
@@ -172,10 +186,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         if (type == ImpType.Blaster)
         {
-            bombCounter += Time.deltaTime;
             if (bombCounter >= 3.0f)
             {
+                bombCounter = 0f;
                 DetonateBomb();
+            }
+            else
+            {
+                bombCounter += Time.deltaTime;
             }
         }
 
@@ -200,10 +218,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         movementSpeed *= -1;
         facingRight = !facingRight;
-        // flipping the gameobject
-        Vector3 newScale = gameObject.transform.localScale;
+        Flip(gameObject);
+    }
+
+    private void Flip(GameObject obj)
+    {
+        Vector3 newScale = obj.transform.localScale;
         newScale.x *= -1;
-        gameObject.transform.localScale = newScale;
+        obj.transform.localScale = newScale;
     }
 
     private void MoveUpwards()
@@ -239,8 +261,34 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void SetupHorizontalLadder(Vector3 position)
     {
-        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0,0,-90));
+        StartCoroutine(SetupHorizontalLadderRoutine(position)); 
+    }
+
+    private IEnumerator SetupHorizontalLadderRoutine(Vector3 position)
+    {
+        float formerMovementSpeed = movementSpeed;
+        movementSpeed = 0f;
+        isPlacingLadder = true;
+        
+        impInventory.DisplayLadder();
+        
+        animator.Play("Imp Placing Ladder Horizontally");
+
+        yield return new WaitForSeconds(5.5f);
+
+        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, -90));
+
+        isPlacingLadder = false;
+        
         Untrain();
+
+        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+        animator.Play("Imp Walking");
+    }
+
+    private void StartMovingAgain(float direction, float speed)
+    {
+        movementSpeed = (direction < 0f) ? -speed : speed;
     }
 
     private void FormCommand(ImpController commandPartner)
@@ -269,15 +317,30 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void DetonateBomb()
     {
-
         StartCoroutine(DetonatingRoutine());  
     }
 
     private IEnumerator DetonatingRoutine()
     {
+        float formerMovementSpeed = movementSpeed;
+        bool isFlippingNecessary = (formerMovementSpeed < 0);
+        movementSpeed = 0f;
+
+        if (isFlippingNecessary)
+        {
+            Flip(impInventory.Explo.gameObject);
+        }
+
         impInventory.DisplayExplosion();
         animator.Play("Explosion");
+        
         yield return new WaitForSeconds(1f);
+
+        if (isFlippingNecessary)
+        {
+            Flip(impInventory.Explo.gameObject);
+        }
+
         Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
         foreach (Collider2D c in objectsWithinRadius)
         {
@@ -286,8 +349,9 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 Destroy(c.gameObject);
             }
         }
+
+        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
         Untrain();
-        bombCounter = 0f;
     }
 
     private void ThrowImp(ImpController projectile)
@@ -340,14 +404,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                 if (type == ImpType.LadderCarrier)
                 {
                     SetupVerticalLadder(collider.gameObject.transform.position); // TODO improve positioning
-                    Untrain();
                 }
                 break;
             case "HorizontalLadderSpot":
                 if (type == ImpType.LadderCarrier)
                 {
                     SetupHorizontalLadder(collider.gameObject.transform.position); // TODO improve positioning
-                    Untrain();
                 }
                 break;
             case "VerticalLadder":
@@ -389,13 +451,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void InteractWith(ObstacleController obstacle)
     {
-        Debug.Log("Interacting with obstacle.");
         Turn();
+        // TODO
     }
 
     private void InteractWith(EnemyController enemy)
     {
         Turn();
+        // TODO
     }
 
     private void InteractWith(ImpController imp)
@@ -407,7 +470,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             FormCommand(imp);
         }
 
-         else if (imp.Type == ImpType.Coward &&
+         else if ((imp.Type == ImpType.Coward || imp.IsPlacingLadder)  &&
             (type == ImpType.Unemployed ||
             type == ImpType.LadderCarrier ||
             type == ImpType.Blaster ||
@@ -442,6 +505,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         StartCoroutine(TrainingRoutine(type));   
     }
 
+    private void DoAndStartWalkingAgain(Func<Void> firstAction, float timeTowait, Func<Void> secondAction)
+    {
+        // TODO Hier höre ich für heute auf
+    }
+
     // TODO refactor method
     IEnumerator TrainingRoutine(ImpType type)
     {
@@ -450,6 +518,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         impInventory.HideAllTools();
         animator.Play("Imp Taking Object");
         movementSpeed = 0f;
+
         yield return new WaitForSeconds(1.4f);
 
         this.type = type; // assign new type
@@ -467,43 +536,21 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type == ImpType.Spearman)
         {
             impInventory.DisplaySpear();
-            if (formerMovementSpeed < 0)
-            {
-                movementSpeed = -0.6f;
-            }
-            else
-            {
-                movementSpeed = 0.6f;
-            }
-
+            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
             animator.Play("Imp Walking with Spear");
         }
 
         if (type == ImpType.LadderCarrier)
         {
             impInventory.DisplayLadder();
-            if (formerMovementSpeed < 0)
-            {
-                movementSpeed = -0.6f;
-            }
-            else
-            {
-                movementSpeed = 0.6f;
-            }
+            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
             animator.Play("Imp Walking with Ladder");
         }
 
         if (type == ImpType.Blaster)
         {
             impInventory.DisplayBomb();
-            if (formerMovementSpeed < 0)
-            {
-                movementSpeed = -1.8f;
-            }
-            else
-            {
-                movementSpeed = 1.8f;
-            }
+            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_RUNNING);
             animator.Play("Imp Walking with Bomb");
         }
 

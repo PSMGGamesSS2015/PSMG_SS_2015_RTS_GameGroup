@@ -76,34 +76,55 @@ public class ImpInventory : MonoBehaviour
         }
     }
 
-    public void DisplaySpear()
+    public void Display(string item)
     {
         HideAllTools();
+        switch (item)
+        {
+            case "Spear":
+                DisplaySpear();
+                break;
+            case "Shield":
+                DisplayShield();
+                break;
+            case "Ladder":
+                DisplayLadder();
+                break;
+            case "Bomb":
+                DisplayBomb();
+                break;
+            case "Explosion":
+                explosion.Display();
+                break;
+            default:
+                break;
+        }
+        
+    }
+
+    public void DisplaySpear()
+    {
         spear.enabled = true;
     }
 
 
     public void DisplayLadder()
     {
-        HideAllTools();
         ladder.enabled = true;
     }
 
     public void DisplayBomb()
     {
-        HideAllTools();
         bomb.enabled = true;
     }
 
     public void DisplayShield()
     {
-        HideAllTools();
         shield.enabled = true;
     }
 
     public void DisplayExplosion()
     {
-        HideAllTools();
         explosion.Display();
     }
 }

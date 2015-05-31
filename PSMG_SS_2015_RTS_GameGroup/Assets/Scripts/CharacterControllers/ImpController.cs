@@ -30,7 +30,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private List<EnemyController> enemiesInAttackRange;
     private ImpController commandPartner;
     private bool isAtThrowingPosition;
-    private float bombCounter = 0f;
     //general
     private ImpType type;
     private ImpControllerListener listener;
@@ -38,15 +37,16 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     //prefabs
     public GameObject verticalLadderPrefab;
     public GameObject horizontalLadderPrefab;
+    public GameObject counter;
     private ImpInventory impInventory;
     // ui
     private bool areLabelsDisplayed;
     private bool isPlacingLadder;
-
+    // constants
     private const float MOVEMENT_SPEED_WALKING = 0.6f;
     private const float MOVEMENT_SPEED_RUNNING = 1.8f;
-
-    
+    private Counter bombCounter;
+    private Counter attackCounter1;
 
     #endregion
 
@@ -171,32 +171,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             }   
         }
 
-        if (IsInCommand() && type == ImpType.Spearman)
-        {
-            if (attackCounter >= 4.0f)
-            {
-                attackCounter = 0f;
-                Pierce();
-            }
-            else
-            {
-                attackCounter += Time.deltaTime;
-            }
-        }
-
-        if (type == ImpType.Blaster)
-        {
-            if (bombCounter >= 3.0f)
-            {
-                bombCounter = 0f;
-                DetonateBomb();
-            }
-            else
-            {
-                bombCounter += Time.deltaTime;
-            }
-        }
-
     }
 
     public void LeaveGame()
@@ -246,11 +220,22 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void Pierce()
     {
+        StartCoroutine(PiercingRoutine());
+    }
+
+    private IEnumerator PiercingRoutine()
+    {
+        animator.Play("Imp Attacking with Spear");
+
+        yield return new WaitForSeconds(0.75f);
+
         foreach (EnemyController enemy in enemiesInAttackRange)
         {
             enemy.LeaveGame();
         }
         enemiesInAttackRange.Clear();
+
+        animator.Play("Imp Standing with Spear");
     }
 
     private void SetupVerticalLadder(Vector3 position)
@@ -276,7 +261,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         yield return new WaitForSeconds(5.5f);
 
-        Instantiate(horizontalLadderPrefab, position, Quaternion.Euler(0, 0, -90));
+        Instantiate(horizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
 
         isPlacingLadder = false;
         
@@ -293,10 +278,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void FormCommand(ImpController commandPartner)
     {
-        attackCounter = 0f;
         if (type == ImpType.Spearman)
         {
-            animator.Play("Imp Attacking with Spear");
+            animator.Play("Imp Standing with Spear");
+            attackCounter1 = Instantiate(counter).GetComponent<Counter>();
+            attackCounter1.Init(4f, Pierce, true);
         }
         this.commandPartner = commandPartner;
     }
@@ -505,12 +491,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         StartCoroutine(TrainingRoutine(type));   
     }
 
-    private void DoAndStartWalkingAgain(Func<Void> firstAction, float timeTowait, Func<Void> secondAction)
-    {
-        // TODO Hier höre ich für heute auf
-    }
-
-    // TODO refactor method
     IEnumerator TrainingRoutine(ImpType type)
     {
         float formerMovementSpeed = movementSpeed;
@@ -521,71 +501,90 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         yield return new WaitForSeconds(1.4f);
 
-        this.type = type; // assign new type
+        this.type = type;
         if (commandPartner != null)
         {
             commandPartner.DissolveCommand();
             DissolveCommand();
         }
 
-        if (type == ImpType.Blaster)
-        {
-            bombCounter = 0f;
-        }
+        if (type == ImpType.Blaster) TrainBlaster(formerMovementSpeed);
+        
+        if (type == ImpType.Spearman) TrainSpearman(formerMovementSpeed);
 
-        if (type == ImpType.Spearman)
-        {
-            impInventory.DisplaySpear();
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-            animator.Play("Imp Walking with Spear");
-        }
+        if (type == ImpType.LadderCarrier) TrainLadderCarrier(formerMovementSpeed);
 
-        if (type == ImpType.LadderCarrier)
-        {
-            impInventory.DisplayLadder();
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-            animator.Play("Imp Walking with Ladder");
-        }
+        if (type == ImpType.Unemployed) TrainUnemployed(formerMovementSpeed);
 
-        if (type == ImpType.Blaster)
-        {
-            impInventory.DisplayBomb();
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_RUNNING);
-            animator.Play("Imp Walking with Bomb");
-        }
+        if (type == ImpType.Coward) TrainCoward();
 
-        if (type == ImpType.Unemployed)
+    }
+
+    private void TrainUnemployed(float formerMovementSpeed)
+    {
+        impInventory.HideAllTools();
+        if (formerMovementSpeed < 0)
         {
-            impInventory.HideAllTools();
-            if (formerMovementSpeed < 0)
-            {
-                movementSpeed = -0.6f;
-            }
-            else if (formerMovementSpeed == 0)
-            {
-                if (facingRight)
-                {
-                    movementSpeed = 0.6f;
-                }
-                else
-                {
-                    movementSpeed = -0.6f;
-                }
-            }
-            else
+            movementSpeed = -0.6f;
+        }
+        else if (formerMovementSpeed == 0)
+        {
+            if (facingRight)
             {
                 movementSpeed = 0.6f;
             }
-
-            animator.Play("Imp Walking");
+            else
+            {
+                movementSpeed = -0.6f;
+            }
         }
-
-        if (type == ImpType.Coward)
+        else
         {
-            impInventory.DisplayShield();
-            animator.Play("Imp Hiding Behind Shield");
+            movementSpeed = 0.6f;
         }
 
+        animator.Play("Imp Walking");
+    }
+
+    private void TrainCoward()
+    {
+        impInventory.Display("Shield");
+        animator.Play("Imp Hiding Behind Shield");
+    }
+
+    private void TrainLadderCarrier(float formerMovementSpeed)
+    {
+        impInventory.Display("Ladder");
+        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+        animator.Play("Imp Walking with Ladder");
+    }
+
+    private void TrainSpearman(float formerMovementSpeed)
+    {
+        impInventory.Display("Spear");
+        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+        animator.Play("Imp Walking with Spear");
+    }
+
+    private void TrainBlaster(float formerMovementSpeed)
+    {
+        SetupBombCounter();
+        DisplayBlasterAnimation(formerMovementSpeed);
+    }
+
+    private void SetupBombCounter()
+    {
+        if (bombCounter != null) Destroy(bombCounter.gameObject);
+
+        bombCounter = Instantiate(counter).GetComponent<Counter>();
+        bombCounter.Init(3f, DetonateBomb, false);
+    }
+
+    private void DisplayBlasterAnimation(float formerMovementSpeed)
+    {
+        impInventory.Display("Bomb");
+        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_RUNNING);
+        animator.Play("Imp Walking with Bomb");
     }
 
     public bool HasJob()

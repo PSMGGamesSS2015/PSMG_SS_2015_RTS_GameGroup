@@ -62,6 +62,6 @@ public class LevelConfig  {
     /// </summary>
     public static LevelConfig[] LEVELS = 
     {                                 
-        new LevelConfig(4, 4.0f, "Test Level", new int[9] {1,1,0,1,1,0,0,0,0})                         
+        new LevelConfig(4, 4.0f, "Test Level", new int[9] {4,3,0,3,3,0,0,0,0})                         
     };
 }

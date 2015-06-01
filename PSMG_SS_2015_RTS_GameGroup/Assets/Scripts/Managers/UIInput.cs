@@ -19,6 +19,8 @@ public class UIInput : MonoBehaviour
         CounterButton6 = GameObject.Find("Counter6").GetComponent<Text>();
         CounterButton7 = GameObject.Find("Counter7").GetComponent<Text>();
         CounterButton8 = GameObject.Find("Counter8").GetComponent<Text>();
+
+        RefreshUI();
     }
 
     public void Input(int buttonNumber)

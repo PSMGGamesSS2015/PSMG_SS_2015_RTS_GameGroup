@@ -73,6 +73,16 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         }
     }
 
+    public int[] getProfessions()
+    {
+        return professions;
+    }
+
+    public int[] getProfessionsMax()
+    {
+        return config.MaxProfessions;
+    }
+
     private bool IsTrainingLimitReached(ImpType profession)
     {
         return professions[(int)profession] < config.MaxProfessions[(int)profession];

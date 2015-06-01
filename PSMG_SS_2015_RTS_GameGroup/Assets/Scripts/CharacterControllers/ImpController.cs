@@ -210,6 +210,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void ClimbLadder()
     {
+        animator.Play("Imp Climbing Ladder");
         movingUpwards = true;
         // TODO check when the top is reached
     }
@@ -413,7 +414,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (tag == "VerticalLadder" && movingUpwards == true)
         {
             movingUpwards = false;
+            animator.Play("Imp Walking");
         }
+
+        // TODO
     }
 
     private void OnCollisionStay2D(Collision2D collision)

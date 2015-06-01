@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     #region variables and constants
 
     // general
+    private Animator animator;
     public EnemyType type;
     private EnemyControllerListener listener;
     // troll
@@ -41,7 +42,13 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     private void Awake()
     {
+        InitComponents();
         InitTriggerColliders();
+    }
+
+    private void InitComponents()
+    {
+        animator = GetComponent<Animator>();
     }
 
     private void InitTriggerColliders()
@@ -196,11 +203,25 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     private void SmashAllImpsInRange()
     {
+        StartCoroutine(SmashingRoutine());
+
+        
+    }
+
+    private IEnumerator SmashingRoutine() {
+
+        animator.Play("troll_attack");
+
+        yield return new WaitForSeconds(1f);
+
         foreach (ImpController imp in impsInAttackRange)
         {
             imp.LeaveGame();
         }
         impsInAttackRange.Clear();
+
+        animator.Play("troll_standing");
+
     }
 
     #endregion

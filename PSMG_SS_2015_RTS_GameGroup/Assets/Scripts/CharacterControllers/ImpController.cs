@@ -20,6 +20,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private Rigidbody2D rigidBody2D;
     private CircleCollider2D circleCollider2D;
     private TriggerCollider2D impCollisionCheck;
+    private TriggerCollider2D impClickCheck;
     private SpriteRenderer[] sprites;
     private float movementSpeed = 0.6f;
     private bool facingRight = true;
@@ -128,13 +129,17 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             {
                 attackRange = c;
             }
-            else
+            else if (c.tag == "ImpCollisionCheck")
             {
                 impCollisionCheck = c;
+            }
+            else if(c.tag == "ImpClickCheck") {
+                impClickCheck = c;
             }
         }
         impCollisionCheck.RegisterListener(this);
         attackRange.RegisterListener(this);
+        impClickCheck.RegisterListener(this);
 
         enemiesInAttackRange = new List<EnemyController>();
     }

@@ -22,6 +22,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private TriggerCollider2D impCollisionCheck;
     private TriggerCollider2D impClickCheck;
     private SpriteRenderer[] sprites;
+    private ImpSelection impSelection;
     private float movementSpeed = 0.6f;
     private bool facingRight = true;
     private bool movingUpwards = false;
@@ -110,6 +111,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         animator = GetComponent<Animator>();
         impInventory = GetComponentInChildren<ImpInventory>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
+        impSelection = GetComponentInChildren<ImpSelection>();
     }
 
     private void InitAttributes()
@@ -157,6 +159,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         get
         {
             return type;
+        }
+    }
+
+    public ImpSelection Selection
+    {
+        get
+        {
+            return impSelection;
         }
     }
 

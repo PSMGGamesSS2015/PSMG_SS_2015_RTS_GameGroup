@@ -159,6 +159,21 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
         impSelected = impController;
+        HideSelectionOfAllImps();
+        DisplaySelectionOfSelectedImp();
+    }
+
+    private void DisplaySelectionOfSelectedImp()
+    {
+        impSelected.Selection.Display();
+    }
+
+    private void HideSelectionOfAllImps()
+    {
+        foreach (ImpController imp in imps)
+        {
+            imp.Selection.Hide();
+        }
     }
 
     void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)

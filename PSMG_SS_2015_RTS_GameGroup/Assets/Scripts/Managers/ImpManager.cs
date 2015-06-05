@@ -147,9 +147,8 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         impController.RegisterListener(this);
         impController.MoveToSortingLayerPosition(currentImps);
         currentImps++;
-        // TODO Add sorting layer stuff
+
         imps.Add(impController);
-        
         
         spawnCounter = 0f; 
     }
@@ -158,9 +157,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
      
     void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
     {
-        impSelected = impController;
-        HideSelectionOfAllImps();
-        DisplaySelectionOfSelectedImp();
+        SelectImp(impController);
     }
 
     private void DisplaySelectionOfSelectedImp()
@@ -174,6 +171,13 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         {
             imp.Selection.Hide();
         }
+    }
+
+    private void SelectImp(ImpController imp)
+    {
+        impSelected = imp;
+        HideSelectionOfAllImps();
+        DisplaySelectionOfSelectedImp();
     }
 
     void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
@@ -203,7 +207,28 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
 
     void InputManager.InputManagerListener.OnSelectNextImp()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("On selecting next imp");
+        if (impSelected == null)
+        {
+            if (imps.Count != 0)
+            {
+                SelectImp(imps[(int)Random.Range(0, imps.Count - 1)]);
+            }
+        }
+        else
+        {
+            int indexOfCurrentImp = imps.IndexOf(impSelected);
+            int indexOfNextImp;
+            if (indexOfCurrentImp >= imps.Count - 1)
+            {
+                indexOfNextImp = 0;
+            }
+            else
+            {
+                indexOfNextImp = indexOfCurrentImp + 1;
+            }
+            SelectImp(imps[indexOfNextImp]);
+        }
     }
 
     void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)

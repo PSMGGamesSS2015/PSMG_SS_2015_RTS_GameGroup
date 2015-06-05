@@ -104,7 +104,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         InitComponents();
         InitAttributes();
         InitTriggerColliders();
-        animator.Play("Imp Walking");
+        animator.Play(AnimationReferences.IMP_WALKING_UNEMPLOYED);
     }
 
     private void InitComponents()
@@ -232,7 +232,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void ClimbLadder()
     {
-        animator.Play("Imp Climbing Ladder");
+        animator.Play(AnimationReferences.IMP_CLIMBING_LADDER_UNEMPLOYED); // TODO check for job
         movingUpwards = true;
         // TODO check when the top is reached
     }
@@ -248,7 +248,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private IEnumerator PiercingRoutine()
     {
-        animator.Play("Imp Attacking with Spear");
+        animator.Play(AnimationReferences.IMP_ATTACKING_WITH_SPEAR);
 
         yield return new WaitForSeconds(0.75f);
 
@@ -258,7 +258,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
         enemiesInAttackRange.Clear();
 
-        animator.Play("Imp Standing with Spear");
+        animator.Play(AnimationReferences.IMP_STANDING_WITH_SPEAR);
     }
 
     private void SetupVerticalLadder(Vector3 position)
@@ -280,7 +280,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         
         impInventory.DisplayLadder();
         
-        animator.Play("Imp Placing Ladder Horizontally");
+        animator.Play(AnimationReferences.IMP_PLACING_LADDER_HORIZONTALLY);
 
         yield return new WaitForSeconds(5.5f);
 
@@ -291,7 +291,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         Untrain();
 
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-        animator.Play("Imp Walking");
+        animator.Play(AnimationReferences.IMP_WALKING_UNEMPLOYED);
     }
 
     private void StartMovingAgain(float direction, float speed)
@@ -303,7 +303,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         if (type == ImpType.Spearman)
         {
-            animator.Play("Imp Standing with Spear");
+            animator.Play(AnimationReferences.IMP_STANDING_WITH_SPEAR);
             attackCounter1 = Instantiate(counter).GetComponent<Counter>();
             attackCounter1.Init(4f, Pierce, true);
         }
@@ -314,7 +314,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         if (type == ImpType.Spearman)
         {
-            animator.Play("Imp Walking with Spear");
+            animator.Play(AnimationReferences.IMP_WALKING_SPEAR);
         }
         this.commandPartner = null;
     }
@@ -341,7 +341,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
 
         impInventory.DisplayExplosion();
-        animator.Play("Explosion");
+        animator.Play(AnimationReferences.IMP_DETONATING_BOMB);
         
         yield return new WaitForSeconds(1f);
 
@@ -436,7 +436,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (tag == "VerticalLadder" && movingUpwards == true)
         {
             movingUpwards = false;
-            animator.Play("Imp Walking");
+            animator.Play(AnimationReferences.IMP_WALKING_UNEMPLOYED); // TODO Check for job
         }
 
         // TODO
@@ -522,7 +522,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         float formerMovementSpeed = movementSpeed;
 
         impInventory.HideAllTools();
-        animator.Play("Imp Taking Object");
+        animator.Play(AnimationReferences.IMP_TAKING_OBJECT);
         movementSpeed = 0f;
 
         yield return new WaitForSeconds(1.4f);
@@ -569,27 +569,27 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             movementSpeed = 0.6f;
         }
 
-        animator.Play("Imp Walking");
+        animator.Play(AnimationReferences.IMP_WALKING_UNEMPLOYED);
     }
 
     private void TrainCoward()
     {
         impInventory.Display("Shield");
-        animator.Play("Imp Hiding Behind Shield");
+        animator.Play(AnimationReferences.IMP_HIDING_BEHIND_SHIELD);
     }
 
     private void TrainLadderCarrier(float formerMovementSpeed)
     {
         impInventory.Display("Ladder");
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-        animator.Play("Imp Walking with Ladder");
+        animator.Play(AnimationReferences.IMP_WALKING_LADDER);
     }
 
     private void TrainSpearman(float formerMovementSpeed)
     {
         impInventory.Display("Spear");
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-        animator.Play("Imp Walking with Spear");
+        animator.Play(AnimationReferences.IMP_WALKING_SPEAR);
     }
 
     private void TrainBlaster(float formerMovementSpeed)
@@ -610,7 +610,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         impInventory.Display("Bomb");
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_RUNNING);
-        animator.Play("Imp Walking with Bomb");
+        animator.Play(AnimationReferences.IMP_WALKING_BOMB);
     }
 
     public bool HasJob()

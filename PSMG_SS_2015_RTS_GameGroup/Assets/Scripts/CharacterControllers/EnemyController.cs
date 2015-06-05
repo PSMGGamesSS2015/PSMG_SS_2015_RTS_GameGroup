@@ -94,7 +94,6 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     {
         if (collider.gameObject.tag == "Imp")
         {
-            Debug.Log("An imp has entered the sight of the troll.");
             impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
             if (isAngry)
             {
@@ -111,7 +110,6 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     {
         if (collider.gameObject.tag == "Imp")
         {
-            Debug.Log("An imp has left the sight of the troll.");
             impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
             hitDelay = 0f;
         }
@@ -210,7 +208,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     private IEnumerator SmashingRoutine() {
 
-        animator.Play("troll_attack");
+        animator.Play(AnimationReferences.TROLL_ATTACKING);
 
         yield return new WaitForSeconds(1f);
 
@@ -220,7 +218,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         }
         impsInAttackRange.Clear();
 
-        animator.Play("troll_standing");
+        animator.Play(AnimationReferences.TROLL_STANDING);
 
     }
 

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 /// interest for the interaction logic.
 /// </summary>
 
-public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListener
+public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListener, GoalController.GoalControllerListener
 {
 
     private List<LevelManagerListener> listeners;
@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
     private List<GameObject> enemies;
     private GameObject start;
     private GameObject goal;
+    private GoalController goalController;
 
     public interface LevelManagerListener
     {
@@ -145,10 +146,17 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
     private void RetrieveGoal()
     {
         goal = GameObject.FindWithTag("Goal");
+        goalController = goal.GetComponent<GoalController>();
+        goalController.RegisterListener(this);
     }
 
     void EnemyController.EnemyControllerListener.OnEnemyHurt(EnemyController enemyController)
     {
         enemyController.UnregisterListener();
+    }
+
+    void GoalController.GoalControllerListener.OnGoalReachedByImp()
+    {
+        Debug.Log("An imp has reached the goal.");
     }
 }

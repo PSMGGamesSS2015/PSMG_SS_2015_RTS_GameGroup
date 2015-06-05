@@ -193,7 +193,9 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
 
     void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
     {
+        Debug.Log("On Imp Hurt");
         imps.Remove(impController);
+        currentImps--;
         impController.UnregisterListener(this);
         impController.UnregisterListener(soundManager);
     }

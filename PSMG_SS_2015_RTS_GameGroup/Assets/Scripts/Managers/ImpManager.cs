@@ -23,6 +23,16 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
 
     public GameObject impPrefab;
 
+    private SoundManager soundManager;
+    
+    public SoundManager SoundMgr
+    {
+        set
+        {
+            soundManager = value;
+        }
+    }
+
     private void Awake()
     {
         currentImps = 0;
@@ -145,6 +155,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
         ImpController impController = imp.GetComponent<ImpController>();
         impController.RegisterListener(this);
+        impController.RegisterListener(soundManager);
         impController.MoveToSortingLayerPosition(currentImps);
         currentImps++;
 
@@ -183,7 +194,8 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
     {
         imps.Remove(impController);
-        impController.UnregisterListener();
+        impController.UnregisterListener(this);
+        impController.UnregisterListener(soundManager);
     }
 
     void InputManager.InputManagerListener.OnDisplayImpLabels()
@@ -250,4 +262,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
             imp.DismissLabel();
         }
     }
+
+    
 }

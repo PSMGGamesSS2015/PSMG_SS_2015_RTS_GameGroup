@@ -34,7 +34,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private bool isAtThrowingPosition;
     //general
     private ImpType type;
-    private ImpControllerListener listener;
+    private List<ImpControllerListener> listeners;
     public LayerMask impLayer;
     //prefabs
     public GameObject verticalLadderPrefab;
@@ -63,12 +63,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void RegisterListener(ImpControllerListener listener)
     {
-        this.listener = listener;
+        listeners.Add(listener);
     }
 
-    public void UnregisterListener()
+    public void UnregisterListener(ImpControllerListener listener)
     {
-        listener = null;
+        listeners.Remove(listener);
     }
 
     #endregion
@@ -77,7 +77,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void OnMouseDown()
     {
-        listener.OnImpSelected(this);
+        foreach (ImpControllerListener listener in listeners)
+        {
+            listener.OnImpSelected(this);
+        }
     }
 
     private void OnGUI()
@@ -119,6 +122,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         isAtThrowingPosition = false;
         type = ImpType.Unemployed;
         isPlacingLadder = false;
+        listeners = new List<ImpControllerListener>();
     }
 
     private void InitTriggerColliders()
@@ -190,7 +194,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void LeaveGame()
     {
-        listener.OnImpHurt(this);
+        foreach (ImpControllerListener listener in listeners)
+        {
+            listener.OnImpHurt(this);
+        }
         Destroy(gameObject);
     }
 
@@ -613,7 +620,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void Untrain()
     {
-        listener.OnUntrain(this);
+        foreach (ImpControllerListener listener in listeners)
+        {
+            listener.OnUntrain(this);
+        }
     }
 
     #endregion

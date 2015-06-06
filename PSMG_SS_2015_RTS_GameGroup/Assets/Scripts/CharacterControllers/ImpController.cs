@@ -525,7 +525,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         animator.Play(AnimationReferences.IMP_TAKING_OBJECT);
         movementSpeed = 0f;
 
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(1.0f);
 
         this.type = type;
         if (commandPartner != null)

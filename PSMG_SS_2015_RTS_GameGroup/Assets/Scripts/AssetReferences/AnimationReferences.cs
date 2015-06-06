@@ -15,6 +15,7 @@
     public const string IMP_CLIMBING_LADDER_UNEMPLOYED = "Imp Climbing Ladder";
     public const string IMP_DETONATING_BOMB = "Explosion";
     public const string IMP_SELECTED = "Selection";
+    public const string IMP_CLIMBING_LADDER_SPEARMAN = "Imp Climbing Ladder with Spear";
 
     #endregion
 
@@ -23,6 +24,7 @@
     public const string TROLL_STANDING = "troll_standing";
     public const string TROLL_ATTACKING = "troll_attack";
     public const string TROLL_DEAD = "troll_dead";
+    
 
     #endregion
 

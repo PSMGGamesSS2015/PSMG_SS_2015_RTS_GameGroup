@@ -232,9 +232,23 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void ClimbLadder()
     {
-        animator.Play(AnimationReferences.IMP_CLIMBING_LADDER_UNEMPLOYED); // TODO check for job
+        PlayClimbingAnimation();
         movingUpwards = true;
         // TODO check when the top is reached
+    }
+
+    private void PlayClimbingAnimation()
+    {
+        string anim;
+        if (type == ImpType.Spearman)
+        {
+            anim = AnimationReferences.IMP_CLIMBING_LADDER_SPEARMAN;
+        }
+        else
+        {
+            anim = AnimationReferences.IMP_CLIMBING_LADDER_UNEMPLOYED;
+        }
+        animator.Play(anim);
     }
 
     #endregion
@@ -254,7 +268,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         foreach (EnemyController enemy in enemiesInAttackRange)
         {
-            enemy.LeaveGame();
+            enemy.ReceiveHit();
         }
         enemiesInAttackRange.Clear();
 
@@ -283,15 +297,13 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         animator.Play(AnimationReferences.IMP_PLACING_LADDER_HORIZONTALLY);
 
         yield return new WaitForSeconds(5.5f);
-
-        Instantiate(horizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
-
+  
+        impInventory.HideAllTools();
         isPlacingLadder = false;
-        
         Untrain();
-
-        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
         animator.Play(AnimationReferences.IMP_WALKING_UNEMPLOYED);
+        StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+        Instantiate(horizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
     }
 
     private void StartMovingAgain(float direction, float speed)
@@ -315,6 +327,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type == ImpType.Spearman)
         {
             animator.Play(AnimationReferences.IMP_WALKING_SPEAR);
+            if (attackCounter1 != null)
+            {
+                attackCounter1.Stop();
+            }
+            
         }
         this.commandPartner = null;
     }
@@ -398,6 +415,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             case "Impassable":
                 Turn();
                 break;
+            
             default:
                 break;
         }
@@ -421,25 +439,41 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                     SetupHorizontalLadder(collider.gameObject.transform.position); // TODO improve positioning
                 }
                 break;
-            case "VerticalLadder":
+            case "LadderBottom":
                 ClimbLadder();
+                break;
+            case "LadderTop":
+                movingUpwards = false;
+                PlayWalkingAnimation();
                 break;
             default:
                 break;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collider)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        string tag = collider.gameObject.tag;
+        /*string tag = collision.gameObject.tag;
 
         if (tag == "VerticalLadder" && movingUpwards == true)
         {
             movingUpwards = false;
-            animator.Play(AnimationReferences.IMP_WALKING_UNEMPLOYED); // TODO Check for job
-        }
+            PlayWalkingAnimation();
+        } */
+    }
 
-        // TODO
+    private void PlayWalkingAnimation()
+    {
+        string anim;
+        if (type == ImpType.Spearman)
+        {
+            anim = AnimationReferences.IMP_WALKING_SPEAR;
+        }
+        else
+        {
+            anim = AnimationReferences.IMP_WALKING_UNEMPLOYED;
+        }
+        animator.Play(anim);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -519,6 +553,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     IEnumerator TrainingRoutine(ImpType type)
     {
+
         float formerMovementSpeed = movementSpeed;
 
         impInventory.HideAllTools();
@@ -527,12 +562,16 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         yield return new WaitForSeconds(1.0f);
 
-        this.type = type;
         if (commandPartner != null)
         {
             commandPartner.DissolveCommand();
+        }
+        if (this.type == ImpType.Spearman || this.type == ImpType.Coward)
+        {
             DissolveCommand();
         }
+
+        this.type = type;
 
         if (type == ImpType.Blaster) TrainBlaster(formerMovementSpeed);
         

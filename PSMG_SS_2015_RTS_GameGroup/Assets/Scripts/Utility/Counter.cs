@@ -38,7 +38,6 @@ public class Counter : MonoBehaviour
         {
             if (currentCount >= counterMax)
             {
-                Debug.Log("Performing Action");
                 Action();
                 if (!isLoopModeActive)
                 {

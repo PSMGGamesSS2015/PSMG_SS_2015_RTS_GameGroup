@@ -126,16 +126,28 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     public void ReceiveHit()
     {
-        if (isAngry)
+        StartCoroutine(LeavingRoutine());
+        /*if (isAngry)
         {
-            LeaveGame();
+            Debug.Log("Angry troll is hit");
+            StartCoroutine(LeavingRoutine());
         }
         else
         {
             isAngry = true;
             StartAngryCounter();
             StrikeWithMaul();
-        }
+        }*/
+    }
+
+    private IEnumerator LeavingRoutine()
+    {
+        animator.Play(AnimationReferences.TROLL_DEAD);
+
+        yield return new WaitForSeconds(2.15f);
+
+        LeaveGame();
+
     }
 
     private void StartAngryCounter()
@@ -202,8 +214,6 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private void SmashAllImpsInRange()
     {
         StartCoroutine(SmashingRoutine());
-
-        
     }
 
     private IEnumerator SmashingRoutine() {

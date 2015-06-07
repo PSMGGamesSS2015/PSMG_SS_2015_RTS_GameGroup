@@ -46,24 +46,18 @@ public class InputManager : MonoBehaviour {
                     SelectProfession(ImpType.Coward);
                     break;
                 case KeyCode.Alpha3:
-                    SelectProfession(ImpType.Pest);
-                    break;
-                case KeyCode.Alpha4:
                     SelectProfession(ImpType.LadderCarrier);
                     break;
-                case KeyCode.Alpha5:
+                case KeyCode.Alpha4:
                     SelectProfession(ImpType.Blaster);
                     break;
-                case KeyCode.Alpha6:
+                case KeyCode.Alpha5:
                     SelectProfession(ImpType.Firebug);
                     break;
-                case KeyCode.Alpha7:
-                    SelectProfession(ImpType.Minnesinger);
-                    break;
-                case KeyCode.Alpha8:
+                case KeyCode.Alpha6:
                     SelectProfession(ImpType.Botcher);
                     break;
-                case KeyCode.Alpha9:
+                case KeyCode.Alpha7:
                     SelectProfession(ImpType.Schwarzenegger);
                     break;
                 case KeyCode.Alpha0:

@@ -8,9 +8,8 @@ public class RavineController : MonoBehaviour
     {
         string tag = collider.gameObject.tag;
 
-        if (tag == "Imp")
+        if (tag == TagReferences.IMP)
         {
-            Debug.Log("An Imp has fallen into a ravine");
             collider.gameObject.GetComponent<ImpController>().LeaveGame();
         }
     }

@@ -20,7 +20,7 @@ public class GoalController : MonoBehaviour {
     {
         string tag = collider.gameObject.tag;
 
-        if (tag == "Imp")
+        if (tag == TagReferences.IMP)
         {
             foreach (GoalControllerListener listener in listeners)
             {

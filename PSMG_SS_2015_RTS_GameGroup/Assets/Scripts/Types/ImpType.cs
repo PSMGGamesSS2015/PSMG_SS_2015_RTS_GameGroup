@@ -8,12 +8,10 @@ public enum ImpType
 {
     Spearman,
     Coward,
-    Pest,
     LadderCarrier,
     Blaster,
     Firebug,
     Botcher,
-    Minnesinger,
     Schwarzenegger,
 
     Unemployed // Default

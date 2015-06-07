@@ -92,7 +92,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
     {
-        if (collider.gameObject.tag == "Imp")
+        if (collider.gameObject.tag == TagReferences.IMP)
         {
             impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
             if (isAngry)
@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
     {
-        if (collider.gameObject.tag == "Imp")
+        if (collider.gameObject.tag == TagReferences.IMP)
         {
             impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
             hitDelay = 0f;

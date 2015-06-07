@@ -36,19 +36,19 @@ public class ImpInventory : MonoBehaviour
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (renderers[i].gameObject.tag == "Spear")
+            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_SPEAR)
             {
                 spear = renderers[i];
             }
-            if (renderers[i].gameObject.tag == "Shield")
+            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_SHIELD)
             {
                 shield = renderers[i];
             }
-            if (renderers[i].gameObject.tag == "Bomb")
+            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_BOMB)
             {
                 bomb = renderers[i];
             }
-            if (renderers[i].gameObject.tag == "Ladder")
+            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_LADDER)
             {
                 ladder = renderers[i];
             }

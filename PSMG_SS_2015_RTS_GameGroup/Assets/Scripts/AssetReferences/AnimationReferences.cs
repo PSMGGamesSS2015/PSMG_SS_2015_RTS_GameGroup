@@ -24,7 +24,6 @@
     public const string TROLL_STANDING = "troll_standing";
     public const string TROLL_ATTACKING = "troll_attack";
     public const string TROLL_DEAD = "troll_dead";
-    
 
     #endregion
 

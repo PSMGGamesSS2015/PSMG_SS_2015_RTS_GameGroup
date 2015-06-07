@@ -131,15 +131,15 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         foreach (TriggerCollider2D c in triggerColliders)
         {
-            if (c.tag == "AttackRange")
+            if (c.tag == TagReferences.IMP_ATTACK_RANGE)
             {
                 attackRange = c;
             }
-            else if (c.tag == "ImpCollisionCheck")
+            else if (c.tag == TagReferences.IMP_COLLISION_CHECK)
             {
                 impCollisionCheck = c;
             }
-            else if(c.tag == "ImpClickCheck") {
+            else if(c.tag == TagReferences.IMP_CLICK_CHECK) {
                 impClickCheck = c;
             }
         }
@@ -227,14 +227,12 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private void MoveUpwards()
     {
         rigidBody2D.velocity = new Vector2(0f, 1f); 
-        // TODO Stop moving upwards when reached top
     }
 
     private void ClimbLadder()
     {
         PlayClimbingAnimation();
         movingUpwards = true;
-        // TODO check when the top is reached
     }
 
     private void PlayClimbingAnimation()
@@ -370,7 +368,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
         foreach (Collider2D c in objectsWithinRadius)
         {
-            if (c.gameObject.tag == "Obstacle")
+            if (c.gameObject.tag == TagReferences.OBSTACLE)
             {
                 Destroy(c.gameObject);
             }
@@ -400,19 +398,19 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         switch (tag)
         {
-            case "Enemy":
+            case TagReferences.ENEMY_TROLL:
                 EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
                 InteractWith(enemy);
                 break;
-            case "Imp":
+            case TagReferences.IMP:
                 ImpController imp = collision.gameObject.GetComponent<ImpController>();
                 InteractWith(imp);
                 break;
-            case "Obstacle":
+            case TagReferences.OBSTACLE:
                 ObstacleController obstacle = collision.gameObject.GetComponent<ObstacleController>();
                 InteractWith(obstacle);
                 break;
-            case "Impassable":
+            case TagReferences.IMPASSABLE:
                 Turn();
                 break;
             
@@ -427,7 +425,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         switch (tag)
         {
-            case "VerticalLadderSpot":
+            case TagReferences.LADDER_SPOT_VERTICAL:
                 if (type == ImpType.LadderCarrier)
                 {
                     LadderSpotController ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
@@ -438,7 +436,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                     }
                 }
                 break;
-            case "HorizontalLadderSpot":
+            case TagReferences.LADDER_SPOT_HORIZONTAL:
                 if (type == ImpType.LadderCarrier)
                 {
                     LadderSpotController ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
@@ -449,10 +447,10 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
                     }
                 }
                 break;
-            case "LadderBottom":
+            case TagReferences.LADDER_BOTTOM:
                 ClimbLadder();
                 break;
-            case "LadderTop":
+            case TagReferences.LADDER_TOP:
                 movingUpwards = false;
                 PlayWalkingAnimation();
                 break;
@@ -612,20 +610,20 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void TrainCoward()
     {
-        impInventory.Display("Shield");
+        impInventory.Display(TagReferences.IMP_INVENTORY_SHIELD);
         animator.Play(AnimationReferences.IMP_HIDING_BEHIND_SHIELD);
     }
 
     private void TrainLadderCarrier(float formerMovementSpeed)
     {
-        impInventory.Display("Ladder");
+        impInventory.Display(TagReferences.IMP_INVENTORY_LADDER);
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
         animator.Play(AnimationReferences.IMP_WALKING_LADDER);
     }
 
     private void TrainSpearman(float formerMovementSpeed)
     {
-        impInventory.Display("Spear");
+        impInventory.Display(TagReferences.IMP_INVENTORY_SPEAR);
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
         animator.Play(AnimationReferences.IMP_WALKING_SPEAR);
     }
@@ -646,7 +644,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void DisplayBlasterAnimation(float formerMovementSpeed)
     {
-        impInventory.Display("Bomb");
+        impInventory.Display(TagReferences.IMP_INVENTORY_BOMB);
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_RUNNING);
         animator.Play(AnimationReferences.IMP_WALKING_BOMB);
     }
@@ -684,7 +682,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             if (type == ImpType.Spearman)
             {
-                if (collider.gameObject.tag == "Enemy")
+                if (collider.gameObject.tag == TagReferences.ENEMY_TROLL)
                 {
                     enemiesInAttackRange.Remove(collider.gameObject.GetComponent<EnemyController>());
                 }
@@ -698,7 +696,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             if (type == ImpType.Spearman)
             {
-                if (collider.gameObject.tag == "Enemy")
+                if (collider.gameObject.tag == TagReferences.ENEMY_TROLL)
                 {
                     enemiesInAttackRange.Add(collider.gameObject.GetComponent<EnemyController>());
                 }

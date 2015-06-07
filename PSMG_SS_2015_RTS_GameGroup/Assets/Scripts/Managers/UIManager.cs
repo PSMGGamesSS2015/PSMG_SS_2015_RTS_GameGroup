@@ -37,24 +37,18 @@ public class UIManager : MonoBehaviour
                 SelectProfession(ImpType.Coward);
                 break;
             case 3:
-                SelectProfession(ImpType.Pest);
-                break;
-            case 4:
                 SelectProfession(ImpType.LadderCarrier);
                 break;
-            case 5:
+            case 4:
                 SelectProfession(ImpType.Blaster);
                 break;
-            case 6:
+            case 5:
                 SelectProfession(ImpType.Firebug);
                 break;
-            case 7:
-                SelectProfession(ImpType.Minnesinger);
-                break;
-            case 8:
+            case 6:
                 SelectProfession(ImpType.Botcher);
                 break;
-            case 9:
+            case 7:
                 SelectProfession(ImpType.Schwarzenegger);
                 break;
             case 0:

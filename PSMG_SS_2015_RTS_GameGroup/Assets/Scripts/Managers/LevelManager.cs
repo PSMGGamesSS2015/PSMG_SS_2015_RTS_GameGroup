@@ -121,7 +121,7 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
 
     private void RetrieveObstacles()
     {
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag(TagReferences.OBSTACLE);
         for (int i = 0; i < obstacles.Length; i++)
         {
             this.obstacles.Add(obstacles[i]);
@@ -130,7 +130,7 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
 
     private void RetrieveEnemies()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(TagReferences.ENEMY_TROLL);
         for (int i = 0; i < enemies.Length; i++)
         {
             this.enemies.Add(enemies[i]);
@@ -140,12 +140,12 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
 
     private void RetrieveStart()
     {
-        start = GameObject.FindWithTag("Start");
+        start = GameObject.FindWithTag(TagReferences.LEVEL_START);
     }
 
     private void RetrieveGoal()
     {
-        goal = GameObject.FindWithTag("Goal");
+        goal = GameObject.FindWithTag(TagReferences.LEVEL_GOAL);
         goalController = goal.GetComponent<GoalController>();
         goalController.RegisterListener(this);
     }

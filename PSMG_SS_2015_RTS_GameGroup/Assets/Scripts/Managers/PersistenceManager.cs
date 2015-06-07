@@ -12,6 +12,8 @@ using System.IO;
 public class PersistenceManager : MonoBehaviour
 {
 
+    public const string STORAGE_PATH = "/savedGames.gd";
+
     private List<SaveGame> savedGames;
     private SaveGame currentGame;
 
@@ -43,7 +45,7 @@ public class PersistenceManager : MonoBehaviour
     {
         savedGames.Add(currentGame);
         BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream fileStream = File.Create(Application.persistentDataPath + "/savedGames.gd");
+        FileStream fileStream = File.Create(Application.persistentDataPath + STORAGE_PATH);
         binaryFormatter.Serialize(fileStream, savedGames);
         fileStream.Close();
 
@@ -56,10 +58,10 @@ public class PersistenceManager : MonoBehaviour
 
     public void LoadGame()
     {
-        if (File.Exists(Application.persistentDataPath + "/savedGames.gd"))
+        if (File.Exists(Application.persistentDataPath + STORAGE_PATH))
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
+            FileStream fileStream = File.Open(Application.persistentDataPath + STORAGE_PATH, FileMode.Open);
             savedGames = (List<SaveGame>)binaryFormatter.Deserialize(fileStream);
             fileStream.Close();
         }

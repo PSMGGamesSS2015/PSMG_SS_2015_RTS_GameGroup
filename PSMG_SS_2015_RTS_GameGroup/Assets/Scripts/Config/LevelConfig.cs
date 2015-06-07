@@ -62,6 +62,6 @@ public class LevelConfig  {
     /// </summary>
     public static LevelConfig[] LEVELS = 
     {                                 
-        new LevelConfig(4, 4.0f, "Test Level", new int[9] {4,3,0,3,3,0,0,0,0})                         
+        new LevelConfig(4, 4.0f, SceneReferences.TEST_SCENE, new int[8] {4,3,3,3,0,0,0,0})                         
     };
 }

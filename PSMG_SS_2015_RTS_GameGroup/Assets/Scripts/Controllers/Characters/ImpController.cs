@@ -430,13 +430,23 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             case "VerticalLadderSpot":
                 if (type == ImpType.LadderCarrier)
                 {
-                    SetupVerticalLadder(collider.gameObject.transform.position); // TODO improve positioning
+                    LadderSpotController ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
+                    if (!ladderSpotController.IsLadderPlaced)
+                    {
+                        SetupVerticalLadder(collider.gameObject.transform.position);
+                        ladderSpotController.PlaceLadder();
+                    }
                 }
                 break;
             case "HorizontalLadderSpot":
                 if (type == ImpType.LadderCarrier)
                 {
-                    SetupHorizontalLadder(collider.gameObject.transform.position); // TODO improve positioning
+                    LadderSpotController ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
+                    if (!ladderSpotController.IsLadderPlaced)
+                    {
+                        SetupHorizontalLadder(collider.gameObject.transform.position);
+                        ladderSpotController.PlaceLadder();
+                    }
                 }
                 break;
             case "LadderBottom":
@@ -449,17 +459,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             default:
                 break;
         }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        /*string tag = collision.gameObject.tag;
-
-        if (tag == "VerticalLadder" && movingUpwards == true)
-        {
-            movingUpwards = false;
-            PlayWalkingAnimation();
-        } */
     }
 
     private void PlayWalkingAnimation()

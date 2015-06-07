@@ -43,7 +43,7 @@ public class PersistenceManager : MonoBehaviour
     {
         savedGames.Add(currentGame);
         BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream fileStream = File.Create(Application.persistentDataPath + "/savedGames.gd")
+        FileStream fileStream = File.Create(Application.persistentDataPath + "/savedGames.gd");
         binaryFormatter.Serialize(fileStream, savedGames);
         fileStream.Close();
 

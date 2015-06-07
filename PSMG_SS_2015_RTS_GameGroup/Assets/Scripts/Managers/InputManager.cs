@@ -10,9 +10,11 @@ using System.Collections.Generic;
 public class InputManager : MonoBehaviour {
 
     private List<InputManagerListener> listeners;
+    private bool isPaused;
 
     private void Awake()
     {
+        isPaused = false;
         listeners = new List<InputManagerListener>();
     }
 
@@ -67,6 +69,9 @@ public class InputManager : MonoBehaviour {
                 case KeyCode.Alpha0:
                     SelectProfession(ImpType.Unemployed);
                     break;
+                case KeyCode.Space:
+                    PauseGame();
+                    break;
             }
         }
         if (e.type == EventType.KeyUp)
@@ -77,6 +82,18 @@ public class InputManager : MonoBehaviour {
                     break;
             }
             
+        }
+    }
+
+    private void PauseGame()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 1f;
+            isPaused = false;
+        } else {
+            Time.timeScale = 0f;
+            isPaused = true;
         }
     }
 

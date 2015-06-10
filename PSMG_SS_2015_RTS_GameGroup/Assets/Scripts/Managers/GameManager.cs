@@ -58,8 +58,9 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         levelManager.RegisterListener(this);
         levelManager.RegisterListener(impManager);
         levelManager.RegisterListener(soundManager);
+        levelManager.RegisterListener(uiManager);
         inputManager.RegisterListener(impManager);
-        uiManager.RegisterListener(impManager);
+        uiManager.RegisterListener(inputManager);
     }
     
     private void Update()

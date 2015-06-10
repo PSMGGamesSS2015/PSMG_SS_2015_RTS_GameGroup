@@ -23,4 +23,7 @@
 
     public const string LEVEL_START = "Start";
     public const string LEVEL_GOAL = "Goal";
+
+    public const string UI_IMP_TRAINING_BUTTON = "ImpTrainingButton";
+
 }

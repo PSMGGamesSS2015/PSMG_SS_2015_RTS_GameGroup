@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 /// <summary>
 /// The input managers defines the semantic of in-game input events and
 /// forwards these events to its listeners.
+/// It registers input from the keyboard as well as from the user interface.
 /// </summary>
 
-public class InputManager : MonoBehaviour {
+public class InputManager : MonoBehaviour, UIManager.UIManagerListener {
 
     private List<InputManagerListener> listeners;
     private bool isPaused;
@@ -115,6 +117,14 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    private void SelectProfession(int impTypeNumber)
+    {
+        foreach (InputManagerListener listener in listeners)
+        {
+            listener.OnProfessionSelected((ImpType) impTypeNumber);
+        }
+    }
+
     private void DisplayImpLabels()
     {
         foreach (InputManagerListener listener in listeners)
@@ -127,4 +137,20 @@ public class InputManager : MonoBehaviour {
     {
         listeners.Add(listener);
     }
+
+    private void RegisterListenersForImpTrainingButtons(UserInterface userInteface)
+    {
+        Button[] buttons = userInteface.ImpTrainingButtons;
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            int nr = i;
+            buttons[nr].onClick.AddListener(() => SelectProfession(nr));
+        }
+    }
+
+    void UIManager.UIManagerListener.OnUserInterfaceLoaded(UserInterface userInteface)
+    {
+        RegisterListenersForImpTrainingButtons(userInteface);
+    }
+
 }

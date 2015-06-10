@@ -14,7 +14,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     private GameObject start;
 
     private List<ImpController> imps;
-   
+
     private float spawnCounter;
     private int currentImps;
     private int[] professions;
@@ -24,7 +24,24 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     public GameObject impPrefab;
 
     private SoundManager soundManager;
-    
+
+    private List<ImpManagerListener> listeners;
+
+    public interface ImpManagerListener
+    {
+        void OnUpdateMaxProfessions(int[] professions);
+    }
+
+    public void RegisterListener(ImpManagerListener listener) 
+    {
+        listeners.Add(listener);
+    }
+
+    public void UnregisterListener(ImpManagerListener listener) 
+    {
+        listeners.Remove(listener);
+    }
+
     public SoundManager SoundMgr
     {
         set
@@ -37,6 +54,7 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     {
         currentImps = 0;
         imps = new List<ImpController>();
+        listeners = new List<ImpManagerListener>();
     }
 
     public void SetLevelConfig(LevelConfig config, GameObject start)
@@ -102,6 +120,10 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
     {
         UpdateMaxProfessions();
         professions[(int)profession]++;
+        foreach (ImpManagerListener listener in listeners)
+        {
+            listener.OnUpdateMaxProfessions(professions);
+        }
     }
 
     private void UpdateMaxProfessions()
@@ -110,7 +132,12 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
             professions[(int)impSelected.Type] > 0)
         {
             professions[(int)impSelected.Type]--;
+            foreach (ImpManagerListener listener in listeners)
+            {
+                listener.OnUpdateMaxProfessions(professions);
+            }
         }
+        
     }
 
     private void UpdateMaxProfessions(ImpController imp)
@@ -119,8 +146,13 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
             professions[(int)imp.Type] > 0)
         {
             professions[(int)imp.Type]--;
+            foreach (ImpManagerListener listener in listeners)
+            {
+                listener.OnUpdateMaxProfessions(professions);
+            }
         }
         imp.Train(ImpType.Unemployed);
+        
     }
 
     public void SpawnImps()

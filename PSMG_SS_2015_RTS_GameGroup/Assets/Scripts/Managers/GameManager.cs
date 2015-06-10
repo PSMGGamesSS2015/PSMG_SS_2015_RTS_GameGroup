@@ -9,7 +9,7 @@ using System.Collections;
 /// coordinating the flow of the application.
 /// </summary>
 
-public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
+public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, UIManager.UIManagerListener
 {
     private enum GameState
     {
@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
     private InputManager inputManager;
     private SoundManager soundManager;
     private PersistenceManager persistenceManager;
+
+    private UserInterface currentUserInterface;
 
     private void Awake()
     {
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         levelManager.RegisterListener(uiManager);
         inputManager.RegisterListener(impManager);
         uiManager.RegisterListener(inputManager);
+        uiManager.RegisterListener(this);
     }
     
     private void Update()
@@ -80,4 +83,13 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
 
     #endregion
 
+    void UIManager.UIManagerListener.OnUserInterfaceLoaded(UserInterface userInterface)
+    {
+        if (currentUserInterface != null)
+        {
+            impManager.UnregisterListener(currentUserInterface);
+        }
+        currentUserInterface = userInterface;
+        impManager.RegisterListener(userInterface);
+    }
 }

@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour, LevelManager.LevelManagerListener
     void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
     {
         UserInterface userInterface = Instantiate(userInterfacePrefab).GetComponent<UserInterface>();
+        userInterface.Setup(config);
         foreach (UIManagerListener listener in listeners)
         {
             listener.OnUserInterfaceLoaded(userInterface);

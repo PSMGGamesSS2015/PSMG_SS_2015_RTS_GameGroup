@@ -2,10 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class UserInterface : MonoBehaviour
+public class UserInterface : MonoBehaviour, ImpManager.ImpManagerListener
 {
-    Button[] impTrainingButtons;
-    public Button[] ImpTrainingButtons
+    private ImpTrainingButton[] impTrainingButtons;
+    private int[] currentMaxProfessions;
+
+    public ImpTrainingButton[] ImpTrainingButtons
     {
         get
         {
@@ -15,12 +17,35 @@ public class UserInterface : MonoBehaviour
 
     private void Awake()
     {
-        GameObject[] buttonGameObjects = GameObject.FindGameObjectsWithTag(TagReferences.UI_IMP_TRAINING_BUTTON);
-        impTrainingButtons = new Button[buttonGameObjects.Length];
-        for (int i = 0; i < impTrainingButtons.Length; i++)
+        RetrieveComponents();
+    }
+
+    private void RetrieveComponents()
+    {
+        impTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+    }
+
+    public void Setup(LevelConfig config)
+    {
+        currentMaxProfessions = config.MaxProfessions;
+    }
+
+    private void Start()
+    {
+        if (currentMaxProfessions != null)
         {
-            impTrainingButtons[i] = buttonGameObjects[i].GetComponent<Button>();
+            for (int i = 0; i < impTrainingButtons.Length; i++)
+            {
+                impTrainingButtons[i].counter.text = currentMaxProfessions[i].ToString();
+            }
         }
     }
 
+    void ImpManager.ImpManagerListener.OnUpdateMaxProfessions(int[] professions)
+    {
+        for (int i = 0; i < impTrainingButtons.Length; i++)
+        {
+            impTrainingButtons[i].counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
+        }
+    }
 }

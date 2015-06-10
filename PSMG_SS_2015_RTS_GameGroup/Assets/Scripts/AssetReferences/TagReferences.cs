@@ -25,5 +25,5 @@
     public const string LEVEL_GOAL = "Goal";
 
     public const string UI_IMP_TRAINING_BUTTON = "ImpTrainingButton";
-
+    public const string UI_IMP_TRAINING_BUTTON_LABEL = "ImpTrainingButtonLabel";
 }

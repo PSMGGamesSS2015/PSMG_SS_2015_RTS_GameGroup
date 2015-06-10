@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour, UIManager.UIManagerListener {
 
     private List<InputManagerListener> listeners;
     private bool isPaused;
+    private UserInterface userInterface;
 
     private void Awake()
     {
@@ -140,16 +141,17 @@ public class InputManager : MonoBehaviour, UIManager.UIManagerListener {
 
     private void RegisterListenersForImpTrainingButtons(UserInterface userInteface)
     {
-        Button[] buttons = userInteface.ImpTrainingButtons;
+        ImpTrainingButton[] buttons = userInteface.ImpTrainingButtons;
         for (int i = 0; i < buttons.Length; i++)
         {
             int nr = i;
-            buttons[nr].onClick.AddListener(() => SelectProfession(nr));
+            buttons[nr].button.onClick.AddListener(() => SelectProfession(nr));
         }
     }
 
     void UIManager.UIManagerListener.OnUserInterfaceLoaded(UserInterface userInteface)
     {
+        this.userInterface = userInteface;
         RegisterListenersForImpTrainingButtons(userInteface);
     }
 

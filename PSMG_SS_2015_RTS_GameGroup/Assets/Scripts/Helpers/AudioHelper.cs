@@ -4,6 +4,13 @@ using System.Collections;
 public class AudioHelper : MonoBehaviour
 {
     private AudioSource audioSource;
+    public AudioSource AudioSrc
+    {
+        get
+        {
+            return audioSource;
+        }
+    }
 
     private void Awake()
     {

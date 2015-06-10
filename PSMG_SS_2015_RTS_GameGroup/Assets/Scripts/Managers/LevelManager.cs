@@ -26,7 +26,8 @@ public class LevelManager : MonoBehaviour, EnemyController.EnemyControllerListen
         void OnLevelStarted(LevelConfig config, GameObject start);
     }
 
-    private void Awake() {
+    private void Awake() 
+    {
         obstacles = new List<GameObject>();
         enemies = new List<GameObject>();
         listeners = new List<LevelManagerListener>();

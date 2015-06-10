@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class SoundManager : MonoBehaviour, ImpController.ImpControllerListener
-{
+public class SoundManager : MonoBehaviour, LevelManager.LevelManagerListener
+{   
+    AudioSource backgroundMusic;
+    
+    public AudioClip mainTheme;
+    public AudioClip backgroundTheme;
+    public AudioClip levelWon;
 
-    void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
+    void Awake()
     {
-        // TODO
-        Debug.Log("Play sound for OnImpSelected");
+        DontDestroyOnLoad(gameObject);
+        backgroundMusic = GetComponent<AudioSource>();
     }
 
-    void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
+    void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
     {
-        // TODO
-        Debug.Log("Play sound for OnImpHurt");
-    }
-
-    void ImpController.ImpControllerListener.OnUntrain(ImpController impController)
-    {
-        // TODO
-        Debug.Log("Play sound for OnUntrain");
+        backgroundMusic.clip = mainTheme;
+        backgroundMusic.Play();
     }
 }

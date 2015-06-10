@@ -155,7 +155,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
         ImpController impController = imp.GetComponent<ImpController>();
         impController.RegisterListener(this);
-        impController.RegisterListener(soundManager);
         impController.MoveToSortingLayerPosition(currentImps);
         currentImps++;
 
@@ -197,7 +196,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         imps.Remove(impController);
         currentImps--;
         impController.UnregisterListener(this);
-        impController.UnregisterListener(soundManager);
     }
 
     void InputManager.InputManagerListener.OnDisplayImpLabels()

@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         LevelStarted
         // TODO
     }
-
+    
+    public GameObject soundManagerGameObject;
+   
     private GameState gameState;
 
     private LevelManager levelManager;
@@ -40,13 +42,13 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
         impManager = GetComponent<ImpManager>();
         uiManager = GetComponent<UIManager>();
         inputManager = GetComponent<InputManager>();
-        soundManager = GetComponent<SoundManager>();
+        soundManager = Instantiate(soundManagerGameObject).GetComponent<SoundManager>();
         impManager.SoundMgr = soundManager;
         persistenceManager = GetComponent<PersistenceManager>();
     }
 
-    private void Start() {
-        
+    private void Start() 
+    {
         SetupCommunicationBetweenManagers();
         levelManager.LoadLevel(LevelConfig.LEVELS[0]);
     }
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener
     {
         levelManager.RegisterListener(this);
         levelManager.RegisterListener(impManager);
+        levelManager.RegisterListener(soundManager);
         inputManager.RegisterListener(impManager);
         uiManager.RegisterListener(impManager);
     }

@@ -10,12 +10,15 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private Animator animator;
     public EnemyType type;
     private EnemyControllerListener listener;
+    public GameObject counter;
     // troll
     private bool isAngry = false;
     private float hitDelay = 0f;
     private float angryCounter = 0f;
     private TriggerCollider2D triggerCollider2d;
     private List<ImpController> impsInAttackRange;
+    private Counter angryCounter1;
+    private Counter hitDelay1;
 
     #endregion
 
@@ -95,13 +98,15 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         if (collider.gameObject.tag == TagReferences.IMP)
         {
             impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
+            // TODO Work in conditions here: replace old counter with hitcounters
             if (isAngry)
             {
                 StrikeWithMaul();
             }
             else
             {
-                StartCounter();
+                hitDelay1 = Instantiate(counter).GetComponent<Counter>();
+                hitDelay1.Init(4f, StrikeWithMaul, true);
             }
         }
     }
@@ -111,7 +116,10 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         if (collider.gameObject.tag == TagReferences.IMP)
         {
             impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
-            hitDelay = 0f;
+            if (impsInAttackRange.Count == 0)
+            {
+                hitDelay1.Stop();
+            } 
         }
     }
 
@@ -126,26 +134,18 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     public void ReceiveHit()
     {
+        StopCoroutine(SmashingRoutine());
+        animator.Play(AnimationReferences.TROLL_STANDING);
         StartCoroutine(LeavingRoutine());
-        /*if (isAngry)
-        {
-            Debug.Log("Angry troll is hit");
-            StartCoroutine(LeavingRoutine());
-        }
-        else
-        {
-            isAngry = true;
-            StartAngryCounter();
-            StrikeWithMaul();
-        }*/
     }
 
     private IEnumerator LeavingRoutine()
     {
         animator.Play(AnimationReferences.TROLL_DEAD);
+        this.StopAllCounters();
 
         yield return new WaitForSeconds(2.15f);
-
+        
         LeaveGame();
 
     }
@@ -160,22 +160,9 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         angryCounter = 0f;
     }
 
-
-
     private void StrikeWithMaul()
     {
-        ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
-
-        if (coward != null)
-        {
-            SmashImpsBetweenCowardAndTroll(coward);
-        }
-        else
-        {
-            SmashAllImpsInRange();
-        }
-
-
+        StartCoroutine(SmashingRoutine());
     }
 
     private void SmashImpsBetweenCowardAndTroll(ImpController coward)
@@ -196,7 +183,6 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
             impsInAttackRange.Remove(imp);
             imp.LeaveGame(); // actually hit the imps
         }
-        impsToBeHit.Clear();
     }
 
     private ImpController SearchForCoward()
@@ -213,7 +199,11 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     private void SmashAllImpsInRange()
     {
-        StartCoroutine(SmashingRoutine());
+        foreach (ImpController imp in impsInAttackRange)
+        {
+            imp.LeaveGame();
+        }
+        impsInAttackRange.Clear();
     }
 
     private IEnumerator SmashingRoutine() {
@@ -222,11 +212,16 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
         yield return new WaitForSeconds(1f);
 
-        foreach (ImpController imp in impsInAttackRange)
+        ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
+
+        if (coward != null)
         {
-            imp.LeaveGame();
+            SmashImpsBetweenCowardAndTroll(coward);
         }
-        impsInAttackRange.Clear();
+        else
+        {
+            SmashAllImpsInRange();
+        }
 
         animator.Play(AnimationReferences.TROLL_STANDING);
 

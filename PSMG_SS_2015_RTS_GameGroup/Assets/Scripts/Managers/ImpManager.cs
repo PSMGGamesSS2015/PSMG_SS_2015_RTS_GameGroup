@@ -73,12 +73,18 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
         }
         else
         {
-            if (impSelected.Type == profession)
+            if (!impSelected.IsTrainable)
             {
-                Debug.Log("The selected imp already has that profession.");
+                Debug.Log("This imp is currently not trainable");
             }
             else
             {
+                if (impSelected.Type == profession)
+                {
+                    Debug.Log("The selected imp already has that profession.");
+                }
+                else
+                {
                     if (profession != ImpType.Unemployed)
                     {
                         if (IsTrainingLimitReached(profession))
@@ -96,8 +102,10 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
                         UpdateMaxProfessions();
                         impSelected.Train(profession);
                     }
-                
+
+                }
             }
+            
         }
     }
 
@@ -224,7 +232,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
 
     void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
     {
-        Debug.Log("On Imp Hurt");
         imps.Remove(impController);
         currentImps--;
         impController.UnregisterListener(this);
@@ -232,7 +239,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
 
     void InputManager.InputManagerListener.OnDisplayImpLabels()
     {
-        Debug.Log("DisplayImpLabels");
         foreach (ImpController imp in imps)
         {
             imp.DisplayLabel();
@@ -246,7 +252,6 @@ public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, Le
 
     void InputManager.InputManagerListener.OnSelectNextImp()
     {
-        Debug.Log("On selecting next imp");
         if (impSelected == null)
         {
             if (imps.Count != 0)

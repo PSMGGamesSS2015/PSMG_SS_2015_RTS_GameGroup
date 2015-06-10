@@ -24,6 +24,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private SpriteRenderer[] sprites;
     private ImpSelection impSelection;
     private float movementSpeed = 0.6f;
+    private float formerMovementSpeed;
     private bool facingRight = true;
     private bool movingUpwards = false;
     //profession-related
@@ -49,6 +50,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private const float MOVEMENT_SPEED_RUNNING = 1.8f;
     private Counter bombCounter;
     private Counter attackCounter1;
+    private bool isTrainable;
 
     #endregion
 
@@ -122,6 +124,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         isAtThrowingPosition = false;
         type = ImpType.Unemployed;
         isPlacingLadder = false;
+        isTrainable = true;
         listeners = new List<ImpControllerListener>();
     }
 
@@ -174,6 +177,14 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
     }
 
+    public bool IsTrainable
+    {
+        get
+        {
+            return isTrainable;
+        }
+    }
+
     private void FixedUpdate()
     {
         
@@ -198,6 +209,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         {
             listener.OnImpHurt(this);
         }
+        this.StopAllCounters();
         Destroy(gameObject);
     }
 
@@ -375,6 +387,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         }
 
         StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+        isTrainable = true;
         Untrain();
     }
 
@@ -545,17 +558,19 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void Train(ImpType type)
     {
-        StartCoroutine(TrainingRoutine(type));   
+        StartCoroutine(TrainingRoutine(type)); 
     }
 
-    IEnumerator TrainingRoutine(ImpType type)
+    private IEnumerator TrainingRoutine(ImpType type)
     {
-
-        float formerMovementSpeed = movementSpeed;
+        if (this.type != ImpType.Coward)
+        {
+            formerMovementSpeed = movementSpeed;
+            movementSpeed = 0f;
+        }
 
         impInventory.HideAllTools();
         animator.Play(AnimationReferences.IMP_TAKING_OBJECT);
-        movementSpeed = 0f;
 
         yield return new WaitForSeconds(1.0f);
 
@@ -630,6 +645,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     private void TrainBlaster(float formerMovementSpeed)
     {
+        isTrainable = false;
         SetupBombCounter();
         DisplayBlasterAnimation(formerMovementSpeed);
     }

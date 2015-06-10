@@ -17,9 +17,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, UIM
         LevelStarted
         // TODO
     }
-    
-    public GameObject soundManagerGameObject;
-   
+
     private GameState gameState;
 
     private LevelManager levelManager;
@@ -29,6 +27,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, UIM
     private SoundManager soundManager;
     private PersistenceManager persistenceManager;
 
+    // TODO Move elsewhere
     private UserInterface currentUserInterface;
 
     private void Awake()
@@ -44,7 +43,7 @@ public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, UIM
         impManager = GetComponent<ImpManager>();
         uiManager = GetComponent<UIManager>();
         inputManager = GetComponent<InputManager>();
-        soundManager = Instantiate(soundManagerGameObject).GetComponent<SoundManager>();
+        soundManager = GetComponent<SoundManager>();
         impManager.SoundMgr = soundManager;
         persistenceManager = GetComponent<PersistenceManager>();
     }

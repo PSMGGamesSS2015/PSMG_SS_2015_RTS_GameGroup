@@ -4,21 +4,16 @@ using System.Collections.Generic;
 
 public class SoundManager : MonoBehaviour, LevelManager.LevelManagerListener
 {   
-    AudioSource backgroundMusic;
-    
-    public AudioClip mainTheme;
-    public AudioClip backgroundTheme;
-    public AudioClip levelWon;
+    AudioHelper backgroundMusic;
 
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        backgroundMusic = GetComponent<AudioSource>();
+        backgroundMusic = gameObject.AddComponent<AudioHelper>();
     }
 
     void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
     {
-        backgroundMusic.clip = mainTheme;
-        backgroundMusic.Play();
+        backgroundMusic.Play(SoundReferences.MAIN_THEME);
     }
 }

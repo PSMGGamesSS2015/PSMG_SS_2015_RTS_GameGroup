@@ -3,7 +3,7 @@
     #region Theme
 
     public const string BACKGROUND_THEME = "BackgroundTheme";
-    public const string MAIN_THEME = "MainTheme";
+    public const string MAIN_THEME = "Theme/MainTheme";
     public const string WON_THEME = "WonLevel";
 
     #endregion

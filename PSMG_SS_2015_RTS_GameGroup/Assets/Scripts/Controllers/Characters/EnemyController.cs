@@ -13,12 +13,11 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     public GameObject counter;
     // troll
     private bool isAngry = false;
-    private float hitDelay = 0f;
-    private float angryCounter = 0f;
     private TriggerCollider2D triggerCollider2d;
     private List<ImpController> impsInAttackRange;
-    private Counter angryCounter1;
     private Counter hitDelay1;
+    private bool isSmashing;
+    private bool isLeaving;
 
     #endregion
 
@@ -52,6 +51,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private void InitComponents()
     {
         animator = GetComponent<Animator>();
+        isLeaving = true;
     }
 
     private void InitTriggerColliders()
@@ -59,28 +59,6 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         triggerCollider2d = GetComponentInChildren<TriggerCollider2D>();
         triggerCollider2d.RegisterListener(this);
         impsInAttackRange = new List<ImpController>();
-    }
-
-    private void Update()
-    {
-        if (impsInAttackRange.Count > 0)
-        {
-            hitDelay += Time.deltaTime;
-            if (hitDelay >= 1.0f)
-            {
-                StrikeWithMaul();
-            }
-        }
-        if (isAngry)
-        {
-            angryCounter += Time.deltaTime;
-            if (angryCounter >= 4.0f)
-            {
-                isAngry = false;
-                angryCounter = 0f;
-            }
-        }
-        
     }
 
     public void LeaveGame()
@@ -97,43 +75,53 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     {
         if (collider.gameObject.tag == TagReferences.IMP)
         {
-            impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
-            // TODO Work in conditions here: replace old counter with hitcounters
-            if (isAngry)
+            if (!isSmashing)
             {
-                StrikeWithMaul();
-            }
-            else
-            {
-                hitDelay1 = Instantiate(counter).GetComponent<Counter>();
-                hitDelay1.Init(4f, StrikeWithMaul, true);
+                impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
+                // TODO Work in conditions here: replace old counter with hitcounters
+                if (isAngry)
+                {
+                    StrikeWithMaul();
+                }
+                else
+                {
+                    hitDelay1 = Instantiate(counter).GetComponent<Counter>();
+                    hitDelay1.Init(1f, StrikeWithMaul, true);
+                }
             }
         }
     }
 
     void TriggerCollider2D.TriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
     {
-        if (collider.gameObject.tag == TagReferences.IMP)
+        if (!isSmashing)
         {
-            impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
-            if (impsInAttackRange.Count == 0)
+            if (collider.gameObject.tag == TagReferences.IMP)
             {
-                hitDelay1.Stop();
-            } 
+                if (impsInAttackRange.Contains(collider.gameObject.GetComponent<ImpController>()))
+                {
+                    impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
+                    if (impsInAttackRange.Count == 0)
+                    {
+                        if (hitDelay1 != null)
+                        {
+                            hitDelay1.Stop();
+                        }
+
+                    }
+                }
+            }
         }
+        
     }
 
     #endregion
 
     #region troll battle-logic
 
-    private void StartCounter()
-    {
-        hitDelay = 0f;
-    }
-
     public void ReceiveHit()
     {
+        isLeaving = true;
         StopCoroutine(SmashingRoutine());
         animator.Play(AnimationReferences.TROLL_STANDING);
         StartCoroutine(LeavingRoutine());
@@ -147,17 +135,6 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         yield return new WaitForSeconds(2.15f);
         
         LeaveGame();
-
-    }
-
-    private void StartAngryCounter()
-    {
-        angryCounter = 0f;
-    }
-
-    private void StopAngryCounter()
-    {
-        angryCounter = 0f;
     }
 
     private void StrikeWithMaul()
@@ -178,6 +155,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
                 impsToBeHit.Add(imp); // Mark the imps to be hit
             }
         }
+
         foreach (ImpController imp in impsToBeHit)
         {
             impsInAttackRange.Remove(imp);
@@ -199,20 +177,28 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     private void SmashAllImpsInRange()
     {
-        foreach (ImpController imp in impsInAttackRange)
+        for (int i = impsInAttackRange.Count - 1; i >= 0; i--)
         {
-            imp.LeaveGame();
+            impsInAttackRange[i].LeaveGame();
         }
+
         impsInAttackRange.Clear();
+
+        if (hitDelay1 != null)
+        {
+            hitDelay1.Stop();
+        }
     }
 
     private IEnumerator SmashingRoutine() {
-
+        
         animator.Play(AnimationReferences.TROLL_ATTACKING);
 
         yield return new WaitForSeconds(1f);
 
         ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
+        
+        isSmashing = true;
 
         if (coward != null)
         {
@@ -224,6 +210,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         }
 
         animator.Play(AnimationReferences.TROLL_STANDING);
+        isSmashing = false;
 
     }
 

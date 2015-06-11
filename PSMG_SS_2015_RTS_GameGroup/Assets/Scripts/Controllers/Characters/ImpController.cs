@@ -205,10 +205,11 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
     public void LeaveGame()
     {
-        foreach (ImpControllerListener listener in listeners)
+        for (int i = listeners.Count - 1; i >= 0; i--)
         {
-            listener.OnImpHurt(this);
+            listeners[i].OnImpHurt(this);
         }
+        listeners.Clear();
         this.StopAllCounters();
         Destroy(gameObject);
     }

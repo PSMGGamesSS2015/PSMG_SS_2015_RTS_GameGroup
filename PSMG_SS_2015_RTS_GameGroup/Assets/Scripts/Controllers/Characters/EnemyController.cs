@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     // general
     private Animator animator;
+    private AudioHelper audioHelper;
     public EnemyType type;
     private EnemyControllerListener listener;
     public GameObject counter;
@@ -51,6 +52,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private void InitComponents()
     {
         animator = GetComponent<Animator>();
+        audioHelper = GetComponent<AudioHelper>();
         isLeaving = true;
     }
 
@@ -130,6 +132,7 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private IEnumerator LeavingRoutine()
     {
         animator.Play(AnimationReferences.TROLL_DEAD);
+        audioHelper.Play(SoundReferences.TROLL_DEATH);
         this.StopAllCounters();
 
         yield return new WaitForSeconds(2.15f);
@@ -191,10 +194,12 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     }
 
     private IEnumerator SmashingRoutine() {
-        
+
         animator.Play(AnimationReferences.TROLL_ATTACKING);
+        audioHelper.Play(SoundReferences.TROLL_ATTACK2);
 
         yield return new WaitForSeconds(1f);
+        
 
         ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
         

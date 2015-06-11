@@ -50,6 +50,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private Counter bombCounter;
     private Counter attackCounter;
     private bool isTrainable;
+    private AudioHelper audioHelper;
 
     #endregion
 
@@ -116,6 +117,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         impInventory = GetComponentInChildren<ImpInventory>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
         impSelection = GetComponentInChildren<ImpSelection>();
+        audioHelper = GetComponent<AudioHelper>();
     }
 
     private void InitAttributes()
@@ -273,6 +275,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private IEnumerator PiercingRoutine()
     {
         animator.Play(AnimationReferences.IMP_ATTACKING_WITH_SPEAR);
+        audioHelper.Play(SoundReferences.IMP_ATTACK1);
 
         yield return new WaitForSeconds(0.75f);
 
@@ -305,6 +308,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         impInventory.DisplayLadder();
         
         animator.Play(AnimationReferences.IMP_PLACING_LADDER_HORIZONTALLY);
+        audioHelper.Play(SoundReferences.IMP_SETUP_LADDER);
 
         yield return new WaitForSeconds(5.5f);
   
@@ -370,6 +374,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         impInventory.DisplayExplosion();
         animator.Play(AnimationReferences.IMP_DETONATING_BOMB);
+        audioHelper.Play(SoundReferences.BOMB_EXPLOSION);
         
         yield return new WaitForSeconds(1f);
 
@@ -486,6 +491,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
             anim = AnimationReferences.IMP_WALKING_UNEMPLOYED;
         }
         animator.Play(anim);
+        audioHelper.Play(SoundReferences.IMP_GOING);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -573,6 +579,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         impInventory.HideAllTools();
         animator.Play(AnimationReferences.IMP_TAKING_OBJECT);
+        audioHelper.Play(SoundReferences.IMP_SELECT4);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -629,6 +636,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         impInventory.Display(TagReferences.IMP_INVENTORY_SHIELD);
         animator.Play(AnimationReferences.IMP_HIDING_BEHIND_SHIELD);
+        audioHelper.Play(SoundReferences.SHIELD_WOOD1);
     }
 
     private void TrainLadderCarrier(float formerMovementSpeed)

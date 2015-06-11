@@ -29,7 +29,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private bool movingUpwards = false;
     //profession-related
     private TriggerCollider2D attackRange;
-    private float attackCounter = 0f;
     private List<EnemyController> enemiesInAttackRange;
     private ImpController commandPartner;
     private bool isAtThrowingPosition;
@@ -49,7 +48,7 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     private const float MOVEMENT_SPEED_WALKING = 0.6f;
     private const float MOVEMENT_SPEED_RUNNING = 1.8f;
     private Counter bombCounter;
-    private Counter attackCounter1;
+    private Counter attackCounter;
     private bool isTrainable;
 
     #endregion
@@ -227,15 +226,15 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
     {
         movementSpeed *= -1;
         facingRight = !facingRight;
-        Flip(gameObject);
+        this.Flip();
     }
 
-    private void Flip(GameObject obj)
+    /*private void Flip(GameObject obj)
     {
         Vector3 newScale = obj.transform.localScale;
         newScale.x *= -1;
         obj.transform.localScale = newScale;
-    }
+    }*/
 
     private void MoveUpwards()
     {
@@ -327,8 +326,8 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type == ImpType.Spearman)
         {
             animator.Play(AnimationReferences.IMP_STANDING_WITH_SPEAR);
-            attackCounter1 = Instantiate(counter).GetComponent<Counter>();
-            attackCounter1.Init(4f, Pierce, true);
+            attackCounter = Instantiate(counter).GetComponent<Counter>();
+            attackCounter.Init(4f, Pierce, true);
         }
         this.commandPartner = commandPartner;
     }
@@ -338,9 +337,9 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         if (type == ImpType.Spearman)
         {
             animator.Play(AnimationReferences.IMP_WALKING_SPEAR);
-            if (attackCounter1 != null)
+            if (attackCounter != null)
             {
-                attackCounter1.Stop();
+                attackCounter.Stop();
             }
             
         }
@@ -365,7 +364,8 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         if (isFlippingNecessary)
         {
-            Flip(impInventory.Explo.gameObject);
+            //Flip(impInventory.Explo.gameObject);
+            impInventory.Explo.Flip();
         }
 
         impInventory.DisplayExplosion();
@@ -375,7 +375,8 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
 
         if (isFlippingNecessary)
         {
-            Flip(impInventory.Explo.gameObject);
+           // Flip(impInventory.Explo.gameObject);
+            impInventory.Explo.Flip();
         }
 
         Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);

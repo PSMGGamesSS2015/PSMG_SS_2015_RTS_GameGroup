@@ -13,4 +13,12 @@ public static class ExtensionMethods
         }
     }
 
+    public static void Flip(this MonoBehaviour mb)
+    {
+        GameObject obj = mb.gameObject;
+        Vector3 newScale = obj.transform.localScale;
+        newScale.x *= -1;
+        obj.transform.localScale = newScale;
+    }
+
 }

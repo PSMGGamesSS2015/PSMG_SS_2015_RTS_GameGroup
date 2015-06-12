@@ -78,6 +78,9 @@ public class Counter : MonoBehaviour
 
     public void Stop()
     {
+        isPaused = true;
+        isLoopModeActive = false;
+        Action = null;
         Discard();
     }
 

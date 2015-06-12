@@ -231,13 +231,6 @@ public class ImpController : MonoBehaviour, TriggerCollider2D.TriggerCollider2DL
         this.Flip();
     }
 
-    /*private void Flip(GameObject obj)
-    {
-        Vector3 newScale = obj.transform.localScale;
-        newScale.x *= -1;
-        obj.transform.localScale = newScale;
-    }*/
-
     private void MoveUpwards()
     {
         rigidBody2D.velocity = new Vector2(0f, 1f); 

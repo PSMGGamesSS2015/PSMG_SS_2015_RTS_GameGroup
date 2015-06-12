@@ -52,8 +52,12 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private void InitComponents()
     {
         animator = GetComponent<Animator>();
+<<<<<<< HEAD
         audioHelper = GetComponent<AudioHelper>();
         isLeaving = true;
+=======
+        isLeaving = false;
+>>>>>>> origin/Davids_Branch
     }
 
     private void InitTriggerColliders()
@@ -87,8 +91,12 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
                 }
                 else
                 {
-                    hitDelay1 = Instantiate(counter).GetComponent<Counter>();
-                    hitDelay1.Init(1f, StrikeWithMaul, true);
+                    if (hitDelay1 == null)
+                    {
+                        hitDelay1 = Instantiate(counter).GetComponent<Counter>();
+                        hitDelay1.Init(1f, StrikeWithMaul, true);
+                    }
+                    
                 }
             }
         }
@@ -131,9 +139,17 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
 
     private IEnumerator LeavingRoutine()
     {
+        if (hitDelay1 != null)
+        {
+            hitDelay1.Stop();
+        }
         animator.Play(AnimationReferences.TROLL_DEAD);
+<<<<<<< HEAD
         audioHelper.Play(SoundReferences.TROLL_DEATH);
         this.StopAllCounters();
+=======
+        //this.StopAllCounters();
+>>>>>>> origin/Davids_Branch
 
         yield return new WaitForSeconds(2.15f);
         
@@ -163,6 +179,10 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
         {
             impsInAttackRange.Remove(imp);
             imp.LeaveGame(); // actually hit the imps
+        }
+        if (hitDelay1 != null)
+        {
+            hitDelay1.Stop();
         }
     }
 
@@ -194,29 +214,40 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     }
 
     private IEnumerator SmashingRoutine() {
+<<<<<<< HEAD
 
         animator.Play(AnimationReferences.TROLL_ATTACKING);
         audioHelper.Play(SoundReferences.TROLL_ATTACK2);
 
         yield return new WaitForSeconds(1f);
         
-
-        ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
-        
-        isSmashing = true;
-
-        if (coward != null)
+=======
+        if (!isLeaving)
         {
-            SmashImpsBetweenCowardAndTroll(coward);
-        }
-        else
-        {
-            SmashAllImpsInRange();
-        }
+            animator.Play(AnimationReferences.TROLL_ATTACKING);
 
-        animator.Play(AnimationReferences.TROLL_STANDING);
+            yield return new WaitForSeconds(1f);
+>>>>>>> origin/Davids_Branch
+
+            ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
+
+            isSmashing = true;
+
+            if (coward != null)
+            {
+                SmashImpsBetweenCowardAndTroll(coward);
+            }
+            else
+            {
+                SmashAllImpsInRange();
+            }
+            if (!isLeaving)
+            {
+                animator.Play(AnimationReferences.TROLL_STANDING);
+            }
+            
+        }
         isSmashing = false;
-
     }
 
     #endregion

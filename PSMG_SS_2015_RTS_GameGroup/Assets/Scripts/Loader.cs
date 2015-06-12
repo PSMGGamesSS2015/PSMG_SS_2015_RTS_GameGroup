@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-/// <summary>
-/// The only task of the Loader is to load the GameManager when the application starts.
-/// </summary>
+namespace Assets.Scripts
+{
+    /// <summary>
+    /// The only task of the Loader is to load the GameManager when the application starts.
+    /// </summary>
 
-public class Loader : MonoBehaviour {
+    public class Loader : MonoBehaviour {
 
-    public GameObject gameManager;
+        public GameObject GameManager;
     
-    private void Awake()
-    {
-        Instantiate(gameManager);
-    }
+        private void Awake()
+        {
+            Instantiate(GameManager);
+        }
 
+    }
 }

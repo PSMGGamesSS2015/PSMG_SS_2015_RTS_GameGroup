@@ -1,34 +1,36 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class ImpSelection : MonoBehaviour {
+namespace Assets.Scripts.Controllers.Characters
+{
+    public class ImpSelection : MonoBehaviour {
 
-    private SpriteRenderer[] components;
+        private SpriteRenderer[] components;
 
-    private void Awake()
-    {
-        components = GetComponentsInChildren<SpriteRenderer>();
-    }
-
-    private void Start()
-    {
-        Hide();
-    }
-
-    public void Display()
-    {
-        foreach (SpriteRenderer r in components)
+        public void Awake()
         {
-            r.enabled = true;
+            components = GetComponentsInChildren<SpriteRenderer>();
         }
-    }
 
-    public void Hide()
-    {
-        foreach (SpriteRenderer r in components)
+        public void Start()
         {
-            r.enabled = false;
+            Hide();
         }
-    }
 
+        public void Display()
+        {
+            foreach (var r in components)
+            {
+                r.enabled = true;
+            }
+        }
+
+        public void Hide()
+        {
+            foreach (var r in components)
+            {
+                r.enabled = false;
+            }
+        }
+
+    }
 }

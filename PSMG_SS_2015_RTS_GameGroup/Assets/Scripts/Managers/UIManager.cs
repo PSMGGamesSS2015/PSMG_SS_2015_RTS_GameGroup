@@ -1,36 +1,38 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Config;
+using UnityEngine;
 
-public class UIManager : MonoBehaviour, LevelManager.LevelManagerListener
+namespace Assets.Scripts.Managers
 {
-    public GameObject userInterfacePrefab;
-
-    private List<UIManagerListener> listeners;
-
-    private void Awake()
+    public class UIManager : MonoBehaviour, LevelManager.ILevelManagerListener
     {
-        listeners = new List<UIManagerListener>();
-    }
+        public GameObject UserInterfacePrefab;
 
-    public interface UIManagerListener
-    {
-        void OnUserInterfaceLoaded(UserInterface userInteface);       
-    }
+        private List<IUIManagerListener> listeners;
 
-    public void RegisterListener(UIManagerListener listener)
-    {
-        listeners.Add(listener);
-    }
-
-    void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
-    {
-        UserInterface userInterface = Instantiate(userInterfacePrefab).GetComponent<UserInterface>();
-        userInterface.Setup(config);
-        foreach (UIManagerListener listener in listeners)
+        public void Awake()
         {
-            listener.OnUserInterfaceLoaded(userInterface);
+            listeners = new List<IUIManagerListener>();
+        }
+
+        public interface IUIManagerListener
+        {
+            void OnUserInterfaceLoaded(UserInterface.UserInterface userInteface);       
+        }
+
+        public void RegisterListener(IUIManagerListener listener)
+        {
+            listeners.Add(listener);
+        }
+
+        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        {
+            var userInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface.UserInterface>();
+            userInterface.Setup(config);
+            foreach (var listener in listeners)
+            {
+                listener.OnUserInterfaceLoaded(userInterface);
+            }
         }
     }
 }

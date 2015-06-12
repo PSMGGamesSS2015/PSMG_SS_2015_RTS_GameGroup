@@ -1,51 +1,52 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
+﻿using Assets.Scripts.Config;
+using Assets.Scripts.Managers;
+using UnityEngine;
 
-public class UserInterface : MonoBehaviour, ImpManager.ImpManagerListener
+namespace Assets.Scripts.UserInterface
 {
-    private ImpTrainingButton[] impTrainingButtons;
-    private int[] currentMaxProfessions;
-
-    public ImpTrainingButton[] ImpTrainingButtons
+    public class UserInterface : MonoBehaviour, ImpManager.IMpManagerListener
     {
-        get
+        private ImpTrainingButton[] impTrainingButtons;
+        private int[] currentMaxProfessions;
+
+        public ImpTrainingButton[] ImpTrainingButtons
         {
-            return impTrainingButtons;
+            get
+            {
+                return impTrainingButtons;
+            }
         }
-    }
 
-    private void Awake()
-    {
-        RetrieveComponents();
-    }
+        public void Awake()
+        {
+            RetrieveComponents();
+        }
 
-    private void RetrieveComponents()
-    {
-        impTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
-    }
+        private void RetrieveComponents()
+        {
+            impTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+        }
 
-    public void Setup(LevelConfig config)
-    {
-        currentMaxProfessions = config.MaxProfessions;
-    }
+        public void Setup(LevelConfig config)
+        {
+            currentMaxProfessions = config.MaxProfessions;
+        }
 
-    private void Start()
-    {
-        if (currentMaxProfessions != null)
+        public void Start()
+        {
+            if (currentMaxProfessions == null) return;
+            for (var i = 0; i < impTrainingButtons.Length; i++)
+            {
+                impTrainingButtons[i].Counter.text = currentMaxProfessions[i].ToString();
+            }
+        }
+
+        void ImpManager.IMpManagerListener.OnUpdateMaxProfessions(int[] professions)
         {
             for (int i = 0; i < impTrainingButtons.Length; i++)
             {
-                impTrainingButtons[i].counter.text = currentMaxProfessions[i].ToString();
+                impTrainingButtons[i].Counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
             }
-        }
-    }
-
-    void ImpManager.ImpManagerListener.OnUpdateMaxProfessions(int[] professions)
-    {
-        for (int i = 0; i < impTrainingButtons.Length; i++)
-        {
-            impTrainingButtons[i].counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
         }
     }
 }

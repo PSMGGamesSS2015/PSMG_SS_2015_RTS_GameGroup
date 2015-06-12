@@ -1,5 +1,8 @@
-﻿public class SceneReferences
+﻿namespace Assets.Scripts.AssetReferences
 {
-    public const string LOADING_SCREEN = "LoadingScreen";
-    public const string TEST_SCENE = "Test Level";
+    public class SceneReferences
+    {
+        public const string LoadingScreen = "LoadingScreen";
+        public const string TestScene = "Test Level";
+    }
 }

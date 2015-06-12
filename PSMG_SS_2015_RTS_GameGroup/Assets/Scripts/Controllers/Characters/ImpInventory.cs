@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Characters;
 
 /// <summary>
 /// The imp inventory contains the sprite renderers of the tools
@@ -36,19 +38,19 @@ public class ImpInventory : MonoBehaviour
 
         for (int i = 0; i < renderers.Length; i++)
         {
-            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_SPEAR)
+            if (renderers[i].gameObject.tag == TagReferences.ImpInventorySpear)
             {
                 spear = renderers[i];
             }
-            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_SHIELD)
+            if (renderers[i].gameObject.tag == TagReferences.ImpInventoryShield)
             {
                 shield = renderers[i];
             }
-            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_BOMB)
+            if (renderers[i].gameObject.tag == TagReferences.ImpInventoryBomb)
             {
                 bomb = renderers[i];
             }
-            if (renderers[i].gameObject.tag == TagReferences.IMP_INVENTORY_LADDER)
+            if (renderers[i].gameObject.tag == TagReferences.ImpInventoryLadder)
             {
                 ladder = renderers[i];
             }

@@ -1,25 +1,27 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class LadderSpotController : MonoBehaviour {
+namespace Assets.Scripts.Controllers.Objects
+{
+    public class LadderSpotController : MonoBehaviour {
     
-    private bool isLadderPlaced;
+        private bool isLadderPlaced;
 
-    private void Awake()
-    {
-        isLadderPlaced = false;
-    }
-
-    public bool IsLadderPlaced
-    {
-        get
+        public void Awake()
         {
-            return isLadderPlaced;
+            isLadderPlaced = false;
         }
-    }
 
-	public void PlaceLadder() {
-        isLadderPlaced = true;
-    }
+        public bool IsLadderPlaced
+        {
+            get
+            {
+                return isLadderPlaced;
+            }
+        }
 
+        public void PlaceLadder() {
+            isLadderPlaced = true;
+        }
+
+    }
 }

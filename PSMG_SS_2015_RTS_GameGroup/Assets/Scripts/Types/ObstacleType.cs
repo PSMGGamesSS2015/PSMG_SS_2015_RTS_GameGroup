@@ -1,4 +1,7 @@
-﻿public enum ObstacleType
+﻿namespace Assets.Scripts.Types
 {
-    Wall
+    public enum ObstacleType
+    {
+        Wall
+    }
 }

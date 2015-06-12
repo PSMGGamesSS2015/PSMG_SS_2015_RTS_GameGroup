@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class ObstacleController : MonoBehaviour
+namespace Assets.Scripts.Controllers.Objects
 {
+    public class ObstacleController : MonoBehaviour
+    {
 
 
 
+    }
 }

@@ -1,17 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Characters;
+using UnityEngine;
 
-public class RavineController : MonoBehaviour
+namespace Assets.Scripts.Controllers.Objects
 {
-
-    private void OnTriggerEnter2D(Collider2D collider)
+    public class RavineController : MonoBehaviour
     {
-        string tag = collider.gameObject.tag;
-
-        if (tag == TagReferences.IMP)
+        public void OnTriggerEnter2D(Collider2D collider)
         {
-            collider.gameObject.GetComponent<ImpController>().LeaveGame();
-        }
-    }
+            var tag = collider.gameObject.tag;
 
+            if (tag == TagReferences.Imp)
+            {
+                collider.gameObject.GetComponent<ImpController>().LeaveGame();
+            }
+        }
+
+    }
 }

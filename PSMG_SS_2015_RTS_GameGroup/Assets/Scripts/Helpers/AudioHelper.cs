@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class AudioHelper : MonoBehaviour
+namespace Assets.Scripts.Helpers
 {
-    private AudioSource audioSource;
-    public AudioSource AudioSrc
+    public class AudioHelper : MonoBehaviour
     {
-        get
+        private AudioSource audioSource;
+        public AudioSource AudioSrc
         {
-            return audioSource;
+            get
+            {
+                return audioSource;
+            }
         }
-    }
 
-    private void Awake()
-    {
-        audioSource = gameObject.AddComponent<AudioSource>();
-    }
+        public void Awake()
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 
-    public void Play(string clipName)
-    {
-        AudioClip audioClip = Resources.Load(clipName) as AudioClip;
-        audioSource.clip = audioClip;
-        audioSource.Play();
-    }
+        public void Play(string clipName)
+        {
+            AudioClip audioClip = Resources.Load(clipName) as AudioClip;
+            audioSource.clip = audioClip;
+            audioSource.Play();
+        }
 
+    }
 }

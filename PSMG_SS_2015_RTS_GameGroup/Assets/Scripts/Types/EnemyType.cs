@@ -1,4 +1,7 @@
-﻿public enum EnemyType
+﻿namespace Assets.Scripts.Types
 {
-    Troll
+    public enum EnemyType
+    {
+        Troll
+    }
 }

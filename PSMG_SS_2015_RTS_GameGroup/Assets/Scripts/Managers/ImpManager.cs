@@ -1,298 +1,303 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Config;
+using Assets.Scripts.Controllers.Characters;
+using Assets.Scripts.Types;
+using UnityEngine;
 
-/// <summary>
-/// The ImpManager is a subcomponent of the GameManager and manages the
-/// logic behind the player-controlled imps in a level. For example,
-/// it spawns imps and gets notified when an imp is selected by the player.
-/// </summary>
+namespace Assets.Scripts.Managers
+{
+    /// <summary>
+    /// The ImpManager is a subcomponent of the GameManager and manages the
+    /// logic behind the player-controlled imps in a level. For example,
+    /// it spawns imps and gets notified when an imp is selected by the player.
+    /// </summary>
 
-public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, LevelManager.LevelManagerListener, InputManager.InputManagerListener {
+    public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, LevelManager.ILevelManagerListener, InputManager.IInputManagerListener {
 
-    private LevelConfig config;
-    private GameObject start;
+        private LevelConfig config;
+        private GameObject start;
 
-    private List<ImpController> imps;
+        private List<ImpController> imps;
 
-    private float spawnCounter;
-    private int currentImps;
-    private int[] professions;
+        private float spawnCounter;
+        private int currentImps;
+        private int[] professions;
 
-    private ImpController impSelected;
+        private ImpController impSelected;
 
-    public GameObject impPrefab;
+        public GameObject ImpPrefab;
 
-    private SoundManager soundManager;
+        private SoundManager soundManager;
 
-    private List<ImpManagerListener> listeners;
+        private List<IMpManagerListener> listeners;
 
-    public interface ImpManagerListener
-    {
-        void OnUpdateMaxProfessions(int[] professions);
-    }
-
-    public void RegisterListener(ImpManagerListener listener) 
-    {
-        listeners.Add(listener);
-    }
-
-    public void UnregisterListener(ImpManagerListener listener) 
-    {
-        listeners.Remove(listener);
-    }
-
-    public SoundManager SoundMgr
-    {
-        set
+        public interface IMpManagerListener
         {
-            soundManager = value;
+            void OnUpdateMaxProfessions(int[] professions);
         }
-    }
 
-    private void Awake()
-    {
-        currentImps = 0;
-        imps = new List<ImpController>();
-        listeners = new List<ImpManagerListener>();
-    }
-
-    public void SetLevelConfig(LevelConfig config, GameObject start)
-    {
-        currentImps = 0;
-        this.config = config;
-        this.start = start;
-        professions = new int[9];
-    }
-
-    private void SelectProfession(ImpType profession)
-    {
-        if (impSelected == null)
+        public void RegisterListener(IMpManagerListener listener) 
         {
-            Debug.Log("No imp selected");
+            listeners.Add(listener);
         }
-        else
+
+        public void UnregisterListener(IMpManagerListener listener) 
         {
-            if (!impSelected.IsTrainable)
+            listeners.Remove(listener);
+        }
+
+        public SoundManager SoundMgr
+        {
+            set
             {
-                Debug.Log("This imp is currently not trainable");
+                soundManager = value;
+            }
+        }
+
+        public void Awake()
+        {
+            currentImps = 0;
+            imps = new List<ImpController>();
+            listeners = new List<IMpManagerListener>();
+        }
+
+        public void SetLevelConfig(LevelConfig config, GameObject start)
+        {
+            currentImps = 0;
+            this.config = config;
+            this.start = start;
+            professions = new int[9];
+        }
+
+        private void SelectProfession(ImpType profession)
+        {
+            if (impSelected == null)
+            {
+                Debug.Log("No imp selected");
             }
             else
             {
-                if (impSelected.Type == profession)
+                if (!impSelected.IsTrainable)
                 {
-                    Debug.Log("The selected imp already has that profession.");
+                    Debug.Log("This imp is currently not trainable");
                 }
                 else
                 {
-                    if (profession != ImpType.Unemployed)
+                    if (impSelected.Type == profession)
                     {
-                        if (IsTrainingLimitReached(profession))
-                        {
-                            UpdateMaxProfessions(profession);
-                            impSelected.Train(profession);
-                        }
-                        else
-                        {
-                            Debug.Log("You cannot train anymore imps of that profession.");
-                        }
+                        Debug.Log("The selected imp already has that profession.");
                     }
                     else
                     {
-                        UpdateMaxProfessions();
-                        impSelected.Train(profession);
-                    }
+                        if (profession != ImpType.Unemployed)
+                        {
+                            if (IsTrainingLimitReached(profession))
+                            {
+                                UpdateMaxProfessions(profession);
+                                impSelected.Train(profession);
+                            }
+                            else
+                            {
+                                Debug.Log("You cannot train anymore imps of that profession.");
+                            }
+                        }
+                        else
+                        {
+                            UpdateMaxProfessions();
+                            impSelected.Train(profession);
+                        }
 
+                    }
+                }
+            
+            }
+        }
+
+        public int[] GetProfessions()
+        {
+            return professions;
+        }
+
+        public int[] GetProfessionsMax()
+        {
+            return config.MaxProfessions;
+        }
+
+        private bool IsTrainingLimitReached(ImpType profession)
+        {
+            return professions[(int)profession] < config.MaxProfessions[(int)profession];
+        }
+
+        private void UpdateMaxProfessions(ImpType profession)
+        {
+            UpdateMaxProfessions();
+            professions[(int)profession]++;
+            foreach (IMpManagerListener listener in listeners)
+            {
+                listener.OnUpdateMaxProfessions(professions);
+            }
+        }
+
+        private void UpdateMaxProfessions()
+        {
+            if (impSelected.Type != ImpType.Unemployed && 
+                professions[(int)impSelected.Type] > 0)
+            {
+                professions[(int)impSelected.Type]--;
+                foreach (IMpManagerListener listener in listeners)
+                {
+                    listener.OnUpdateMaxProfessions(professions);
                 }
             }
-            
-        }
-    }
-
-    public int[] getProfessions()
-    {
-        return professions;
-    }
-
-    public int[] getProfessionsMax()
-    {
-        return config.MaxProfessions;
-    }
-
-    private bool IsTrainingLimitReached(ImpType profession)
-    {
-        return professions[(int)profession] < config.MaxProfessions[(int)profession];
-    }
-
-    private void UpdateMaxProfessions(ImpType profession)
-    {
-        UpdateMaxProfessions();
-        professions[(int)profession]++;
-        foreach (ImpManagerListener listener in listeners)
-        {
-            listener.OnUpdateMaxProfessions(professions);
-        }
-    }
-
-    private void UpdateMaxProfessions()
-    {
-        if (impSelected.Type != ImpType.Unemployed && 
-            professions[(int)impSelected.Type] > 0)
-        {
-            professions[(int)impSelected.Type]--;
-            foreach (ImpManagerListener listener in listeners)
-            {
-                listener.OnUpdateMaxProfessions(professions);
-            }
-        }
         
-    }
+        }
 
-    private void UpdateMaxProfessions(ImpController imp)
-    {
-        if (imp.Type != ImpType.Unemployed &&
-            professions[(int)imp.Type] > 0)
+        private void UpdateMaxProfessions(ImpController imp)
         {
-            professions[(int)imp.Type]--;
-            foreach (ImpManagerListener listener in listeners)
+            if (imp.Type != ImpType.Unemployed &&
+                professions[(int)imp.Type] > 0)
             {
-                listener.OnUpdateMaxProfessions(professions);
+                professions[(int)imp.Type]--;
+                foreach (IMpManagerListener listener in listeners)
+                {
+                    listener.OnUpdateMaxProfessions(professions);
+                }
             }
-        }
-        imp.Train(ImpType.Unemployed);
+            imp.Train(ImpType.Unemployed);
         
-    }
-
-    public void SpawnImps()
-    {
-        if (currentImps == 0)
-        {
-            SpawnImp();
         }
-        else if (IsMaxImpsReached() && IsSpawnTimeCooledDown())
+
+        public void SpawnImps()
         {
-            SpawnImp();
-        }
-        else
-        {
-            spawnCounter += Time.deltaTime;
-        }
-    }
-
-    private bool IsMaxImpsReached()
-    {
-        return currentImps < config.MaxImps;
-    }
-
-    private bool IsSpawnTimeCooledDown()
-    {
-        return spawnCounter >= config.SpawnInterval;
-    }
-
-    private void SpawnImp()
-    {
-        Vector3 spawnPosition = start.transform.position;
-        GameObject imp = (GameObject)Instantiate(impPrefab, spawnPosition, Quaternion.identity);
-        ImpController impController = imp.GetComponent<ImpController>();
-        impController.RegisterListener(this);
-        impController.MoveToSortingLayerPosition(currentImps);
-        currentImps++;
-
-        imps.Add(impController);
-        
-        spawnCounter = 0f; 
-    }
-
-    #region interface implementation
-     
-    void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
-    {
-        SelectImp(impController);
-    }
-
-    private void DisplaySelectionOfSelectedImp()
-    {
-        impSelected.Selection.Display();
-    }
-
-    private void HideSelectionOfAllImps()
-    {
-        foreach (ImpController imp in imps)
-        {
-            imp.Selection.Hide();
-        }
-    }
-
-    private void SelectImp(ImpController imp)
-    {
-        impSelected = imp;
-        HideSelectionOfAllImps();
-        DisplaySelectionOfSelectedImp();
-    }
-
-    void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
-    {
-        imps.Remove(impController);
-        currentImps--;
-        impController.UnregisterListener(this);
-    }
-
-    void InputManager.InputManagerListener.OnDisplayImpLabels()
-    {
-        foreach (ImpController imp in imps)
-        {
-            imp.DisplayLabel();
-        }
-    }
-
-    void InputManager.InputManagerListener.OnProfessionSelected(ImpType profession)
-    {
-        SelectProfession(profession);
-    }
-
-    void InputManager.InputManagerListener.OnSelectNextImp()
-    {
-        if (impSelected == null)
-        {
-            if (imps.Count != 0)
+            if (currentImps == 0)
             {
-                SelectImp(imps[(int)Random.Range(0, imps.Count - 1)]);
+                SpawnImp();
             }
-        }
-        else
-        {
-            int indexOfCurrentImp = imps.IndexOf(impSelected);
-            int indexOfNextImp;
-            if (indexOfCurrentImp >= imps.Count - 1)
+            else if (IsMaxImpsReached() && IsSpawnTimeCooledDown())
             {
-                indexOfNextImp = 0;
+                SpawnImp();
             }
             else
             {
-                indexOfNextImp = indexOfCurrentImp + 1;
+                spawnCounter += Time.deltaTime;
             }
-            SelectImp(imps[indexOfNextImp]);
         }
-    }
 
-    void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
-    {
-        SetLevelConfig(config, start);
-    }
-
-    #endregion 
-
-    public void OnUntrain(ImpController impController)
-    {
-        UpdateMaxProfessions(impController);
-    }
-
-    void InputManager.InputManagerListener.OnDismissImpLabels()
-    {
-        foreach (ImpController imp in imps)
+        private bool IsMaxImpsReached()
         {
-            imp.DismissLabel();
+            return currentImps < config.MaxImps;
         }
-    }
 
+        private bool IsSpawnTimeCooledDown()
+        {
+            return spawnCounter >= config.SpawnInterval;
+        }
+
+        private void SpawnImp()
+        {
+            Vector3 spawnPosition = start.transform.position;
+            GameObject imp = (GameObject)Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
+            ImpController impController = imp.GetComponent<ImpController>();
+            impController.RegisterListener(this);
+            impController.MoveToSortingLayerPosition(currentImps);
+            currentImps++;
+
+            imps.Add(impController);
+        
+            spawnCounter = 0f; 
+        }
+
+        #region interface implementation
+     
+        void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
+        {
+            SelectImp(impController);
+        }
+
+        private void DisplaySelectionOfSelectedImp()
+        {
+            impSelected.Selection.Display();
+        }
+
+        private void HideSelectionOfAllImps()
+        {
+            foreach (ImpController imp in imps)
+            {
+                imp.Selection.Hide();
+            }
+        }
+
+        private void SelectImp(ImpController imp)
+        {
+            impSelected = imp;
+            HideSelectionOfAllImps();
+            DisplaySelectionOfSelectedImp();
+        }
+
+        void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
+        {
+            imps.Remove(impController);
+            currentImps--;
+            impController.UnregisterListener(this);
+        }
+
+        void InputManager.IInputManagerListener.OnDisplayImpLabels()
+        {
+            foreach (ImpController imp in imps)
+            {
+                imp.DisplayLabel();
+            }
+        }
+
+        void InputManager.IInputManagerListener.OnProfessionSelected(ImpType profession)
+        {
+            SelectProfession(profession);
+        }
+
+        void InputManager.IInputManagerListener.OnSelectNextImp()
+        {
+            if (impSelected == null)
+            {
+                if (imps.Count != 0)
+                {
+                    SelectImp(imps[Random.Range(0, imps.Count - 1)]);
+                }
+            }
+            else
+            {
+                int indexOfCurrentImp = imps.IndexOf(impSelected);
+                int indexOfNextImp;
+                if (indexOfCurrentImp >= imps.Count - 1)
+                {
+                    indexOfNextImp = 0;
+                }
+                else
+                {
+                    indexOfNextImp = indexOfCurrentImp + 1;
+                }
+                SelectImp(imps[indexOfNextImp]);
+            }
+        }
+
+        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        {
+            SetLevelConfig(config, start);
+        }
+
+        #endregion 
+
+        public void OnUntrain(ImpController impController)
+        {
+            UpdateMaxProfessions(impController);
+        }
+
+        void InputManager.IInputManagerListener.OnDismissImpLabels()
+        {
+            foreach (ImpController imp in imps)
+            {
+                imp.DismissLabel();
+            }
+        }
+
+    }
 }

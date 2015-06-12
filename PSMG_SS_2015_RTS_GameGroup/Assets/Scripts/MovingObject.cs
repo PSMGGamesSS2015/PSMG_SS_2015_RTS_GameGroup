@@ -1,118 +1,122 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using Assets.Scripts.ExtensionMethods;
+using UnityEngine;
 
-public class MovingObject : MonoBehaviour {
+namespace Assets.Scripts
+{
+    public class MovingObject : MonoBehaviour {
 
-    private const float MOVEMENT_SPEED_WALKING = 0.6f;
-    private const float MOVEMENT_SPEED_RUNNING = 1.8f;
+        private const float MovementSpeedWalking = 0.6f;
+        private const float MovementSpeedRunning = 1.8f;
     
-    private float movementSpeed;
-    private float formerMovementSpeed;
+        private float movementSpeed;
+        private float formerMovementSpeed;
     
-    private bool facingRight = true;
-    private Direction currentDirection;
-    private bool hasStartedMoving;
+        private bool facingRight = true;
+        private Direction currentDirection;
+        private bool hasStartedMoving;
 
-    public bool FacingRight 
-    {
-        get
+        public bool FacingRight 
         {
-            return facingRight;
-        }
-    }
-
-    private void Awake()
-    {
-        hasStartedMoving = false;
-    }
-
-	private void FixedUpdate () {
-        if (hasStartedMoving) 
-        {
-            if (currentDirection == Direction.Vertical)
+            get
             {
-                MoveUpwards();
+                return facingRight;
             }
-            else
+        }
+
+        public void Awake()
+        {
+            hasStartedMoving = false;
+        }
+
+        public void FixedUpdate () {
+            if (hasStartedMoving) 
             {
-                Move();
-            }   
+                if (currentDirection == Direction.Vertical)
+                {
+                    MoveUpwards();
+                }
+                else
+                {
+                    Move();
+                }   
+            }
         }
-	}
 
-    private void Turn()
-    {
-        movementSpeed *= -1;
-        facingRight = !facingRight;
-        this.Flip();
-    }
-
-    private void Move()
-    {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed, 0f);
-    }
-
-    private void MoveUpwards()
-    {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0f, movementSpeed);
-    }
-
-    public void StartMoving(bool facingRight, Direction direction) 
-    {
-        if (!facingRight) 
+        public void Turn()
         {
-            movementSpeed = -MOVEMENT_SPEED_WALKING;
+            movementSpeed *= -1;
+            facingRight = !facingRight;
+            this.Flip();
         }
-        else if (facingRight) 
-        {
-            movementSpeed = MOVEMENT_SPEED_WALKING;
-        }
-        this.facingRight = facingRight;
-        currentDirection = direction;
-        hasStartedMoving = true;
-    }
 
-    public void Walk()
-    {
-        if (formerMovementSpeed < 0f)
+        private void Move()
         {
-            movementSpeed = -MOVEMENT_SPEED_WALKING;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed, 0f);
         }
-        else if (formerMovementSpeed > 0f)
-        {
-            movementSpeed = MOVEMENT_SPEED_WALKING;
-        }
-    }
 
-    public void Run()
-    {
-        if (formerMovementSpeed < 0f)
+        private void MoveUpwards()
         {
-            movementSpeed = -MOVEMENT_SPEED_RUNNING;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, movementSpeed);
         }
-        else if (formerMovementSpeed > 0f)
+
+        public void StartMoving(bool facingRight, Direction direction) 
         {
-            movementSpeed = MOVEMENT_SPEED_RUNNING;
+            if (!facingRight) 
+            {
+                movementSpeed = -MovementSpeedWalking;
+            }
+            else if (facingRight) 
+            {
+                movementSpeed = MovementSpeedWalking;
+            }
+            this.facingRight = facingRight;
+            currentDirection = direction;
+            hasStartedMoving = true;
         }
-    }
 
-    public void ChangeDirection(Direction direction)
-    {
-        currentDirection = direction;
-    }
-
-    public void Stand()
-    {
-        if (movementSpeed != 0f)
+        public void Walk()
         {
-            formerMovementSpeed = movementSpeed;
+            if (formerMovementSpeed < 0f)
+            {
+                movementSpeed = -MovementSpeedWalking;
+            }
+            else if (formerMovementSpeed > 0f)
+            {
+                movementSpeed = MovementSpeedWalking;
+            }
         }
-        movementSpeed = 0f;
-    }
 
-    public enum Direction
-    {
-        Horizontal,
-        Vertical
+        public void Run()
+        {
+            if (formerMovementSpeed < 0f)
+            {
+                movementSpeed = -MovementSpeedRunning;
+            }
+            else if (formerMovementSpeed > 0f)
+            {
+                movementSpeed = MovementSpeedRunning;
+            }
+        }
+
+        public void ChangeDirection(Direction direction)
+        {
+            currentDirection = direction;
+        }
+
+        public void Stand()
+        {
+            if (Math.Abs(movementSpeed) > 0f)
+            {
+                formerMovementSpeed = movementSpeed;
+            }
+            movementSpeed = 0f;
+        }
+
+        public enum Direction
+        {
+            Horizontal,
+            Vertical
+        }
     }
 }

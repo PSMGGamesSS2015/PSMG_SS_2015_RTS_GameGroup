@@ -1,21 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
-public class ImpTrainingButton : MonoBehaviour
+namespace Assets.Scripts.UserInterface
 {
-    public Text counter;
-    public Button button;
-
-    private void Awake()
+    public class ImpTrainingButton : MonoBehaviour
     {
-        RetrieveComponents();
-    }
+        public Text Counter;
+        public Button Button;
 
-    private void RetrieveComponents()
-    {
-        button = GetComponent<Button>();
-        counter = GetComponentInChildren<ButtonCounter>().gameObject.GetComponent<Text>();
-    }
+        public void Awake()
+        {
+            RetrieveComponents();
+        }
 
+        private void RetrieveComponents()
+        {
+            Button = GetComponent<Button>();
+            Counter = GetComponentInChildren<ButtonCounter>().gameObject.GetComponent<Text>();
+        }
+
+    }
 }

@@ -1,30 +1,32 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Explosion : MonoBehaviour
+namespace Assets.Scripts.Controllers.Characters
 {
-
-    private SpriteRenderer[] components;
-
-    private void Awake()
+    public class Explosion : MonoBehaviour
     {
-        components = GetComponentsInChildren<SpriteRenderer>();
-    }
 
+        private SpriteRenderer[] components;
 
-    public void Display()
-    {
-        foreach (SpriteRenderer r in components)
+        public void Awake()
         {
-            r.enabled = true;
+            components = GetComponentsInChildren<SpriteRenderer>();
         }
-    }
 
-    public void Hide()
-    {
-        foreach (SpriteRenderer r in components)
+
+        public void Display()
         {
-            r.enabled = false;
-        } 
+            foreach (var r in components)
+            {
+                r.enabled = true;
+            }
+        }
+
+        public void Hide()
+        {
+            foreach (var r in components)
+            {
+                r.enabled = false;
+            } 
+        }
     }
 }

@@ -1,43 +1,46 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Assets.Scripts.AssetReferences;
+using UnityEngine;
 
-public class GoalController : MonoBehaviour {
+namespace Assets.Scripts.Controllers.Objects
+{
+    public class GoalController : MonoBehaviour {
 
-    private List<GoalControllerListener> listeners;
+        private List<IGoalControllerListener> listeners;
 
-    public interface GoalControllerListener
-    {
-        void OnGoalReachedByImp();
-    }
-
-    private void Awake()
-    {
-        listeners = new List<GoalControllerListener>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collider)
-    {
-        string tag = collider.gameObject.tag;
-
-        if (tag == TagReferences.IMP)
+        public interface IGoalControllerListener
         {
-            foreach (GoalControllerListener listener in listeners)
+            void OnGoalReachedByImp();
+        }
+
+        public void Awake()
+        {
+            listeners = new List<IGoalControllerListener>();
+        }
+
+        public void OnTriggerEnter2D(Collider2D collider)
+        {
+            string tag = collider.gameObject.tag;
+
+            if (tag == TagReferences.Imp)
             {
-                listener.OnGoalReachedByImp();
+                foreach (IGoalControllerListener listener in listeners)
+                {
+                    listener.OnGoalReachedByImp();
+                }
             }
+
+        }
+
+        public void RegisterListener(IGoalControllerListener listener)
+        {
+            listeners.Add(listener);
+        }
+
+        public void UnregisterLIstener(IGoalControllerListener listener)
+        {
+            listeners.Remove(listener);
         }
 
     }
-
-    public void RegisterListener(GoalControllerListener listener)
-    {
-        listeners.Add(listener);
-    }
-
-    public void UnregisterLIstener(GoalControllerListener listener)
-    {
-        listeners.Remove(listener);
-    }
-
 }

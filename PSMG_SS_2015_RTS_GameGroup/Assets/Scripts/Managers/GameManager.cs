@@ -1,94 +1,97 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Assets.Scripts.Config;
+using UnityEngine;
 
-/// <summary>
-/// The GameManager is a global object that glues the whole application together.
-/// It holds references to the major components of the game and serves as event hub
-/// for communication between these components.
-/// Beyond that, the GameManager is a state machine that manages the game states, thereby
-/// coordinating the flow of the application.
-/// </summary>
-
-public class GameManager : MonoBehaviour, LevelManager.LevelManagerListener, UIManager.UIManagerListener
+namespace Assets.Scripts.Managers
 {
-    private enum GameState
+    /// <summary>
+    /// The GameManager is a global object that glues the whole application together.
+    /// It holds references to the major components of the game and serves as event hub
+    /// for communication between these components.
+    /// Beyond that, the GameManager is a state machine that manages the game states, thereby
+    /// coordinating the flow of the application.
+    /// </summary>
+
+    public class GameManager : MonoBehaviour, LevelManager.ILevelManagerListener, UIManager.IUIManagerListener
     {
-        NotStarted,
-        LevelStarted
-        // TODO
-    }
-
-    private GameState gameState;
-
-    private LevelManager levelManager;
-    private ImpManager impManager;
-    private UIManager uiManager;
-    private InputManager inputManager;
-    private SoundManager soundManager;
-    private PersistenceManager persistenceManager;
-
-    // TODO Move elsewhere
-    private UserInterface currentUserInterface;
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-        InitManagers();
-        gameState = GameState.NotStarted;
-    }
-
-    private void InitManagers()
-    {
-        levelManager = GetComponent<LevelManager>();
-        impManager = GetComponent<ImpManager>();
-        uiManager = GetComponent<UIManager>();
-        inputManager = GetComponent<InputManager>();
-        soundManager = GetComponent<SoundManager>();
-        impManager.SoundMgr = soundManager;
-        persistenceManager = GetComponent<PersistenceManager>();
-    }
-
-    private void Start() 
-    {
-        SetupCommunicationBetweenManagers();
-        levelManager.LoadLevel(LevelConfig.LEVELS[0]);
-    }
-
-    private void SetupCommunicationBetweenManagers()
-    {
-        levelManager.RegisterListener(this);
-        levelManager.RegisterListener(impManager);
-        levelManager.RegisterListener(soundManager);
-        levelManager.RegisterListener(uiManager);
-        inputManager.RegisterListener(impManager);
-        uiManager.RegisterListener(inputManager);
-        uiManager.RegisterListener(this);
-    }
-    
-    private void Update()
-    {
-        if (gameState == GameState.LevelStarted)
+        private enum GameState
         {
-            impManager.SpawnImps();
+            NotStarted,
+            LevelStarted
+            // TODO
         }
-    }
 
-    # region interface implementation
+        private GameState gameState;
 
-    void LevelManager.LevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
-    {
-        gameState = GameState.LevelStarted;
-    }
+        private LevelManager levelManager;
+        private ImpManager impManager;
+        private UIManager uiManager;
+        private InputManager inputManager;
+        private SoundManager soundManager;
+        private PersistenceManager persistenceManager;
 
-    #endregion
+        // TODO Move elsewhere
+        private UserInterface.UserInterface currentUserInterface;
 
-    void UIManager.UIManagerListener.OnUserInterfaceLoaded(UserInterface userInterface)
-    {
-        if (currentUserInterface != null)
+        public void Awake()
         {
-            impManager.UnregisterListener(currentUserInterface);
+            DontDestroyOnLoad(gameObject);
+            InitManagers();
+            gameState = GameState.NotStarted;
         }
-        currentUserInterface = userInterface;
-        impManager.RegisterListener(userInterface);
+
+        private void InitManagers()
+        {
+            levelManager = GetComponent<LevelManager>();
+            impManager = GetComponent<ImpManager>();
+            uiManager = GetComponent<UIManager>();
+            inputManager = GetComponent<InputManager>();
+            soundManager = GetComponent<SoundManager>();
+            impManager.SoundMgr = soundManager;
+            persistenceManager = GetComponent<PersistenceManager>();
+        }
+
+        public void Start() 
+        {
+            SetupCommunicationBetweenManagers();
+            levelManager.LoadLevel(LevelConfig.Levels[0]);
+        }
+
+        private void SetupCommunicationBetweenManagers()
+        {
+            levelManager.RegisterListener(this);
+            levelManager.RegisterListener(impManager);
+            levelManager.RegisterListener(soundManager);
+            levelManager.RegisterListener(uiManager);
+            inputManager.RegisterListener(impManager);
+            uiManager.RegisterListener(inputManager);
+            uiManager.RegisterListener(this);
+        }
+
+        public void Update()
+        {
+            if (gameState == GameState.LevelStarted)
+            {
+                impManager.SpawnImps();
+            }
+        }
+
+        # region interface implementation
+
+        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        {
+            gameState = GameState.LevelStarted;
+        }
+
+        #endregion
+
+        void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface.UserInterface userInterface)
+        {
+            if (currentUserInterface != null)
+            {
+                impManager.UnregisterListener(currentUserInterface);
+            }
+            currentUserInterface = userInterface;
+            impManager.RegisterListener(userInterface);
+        }
     }
 }

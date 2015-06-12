@@ -1,14 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-
-[System.Serializable] 
-public class SaveGame
+﻿namespace Assets.Scripts.Persistence
 {
-    // TODO
-
-    public SaveGame()
+    [System.Serializable] 
+    public class SaveGame
     {
-
+        // TODO
     }
-
 }

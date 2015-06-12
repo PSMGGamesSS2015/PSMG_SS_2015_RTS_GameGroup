@@ -52,12 +52,8 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     private void InitComponents()
     {
         animator = GetComponent<Animator>();
-<<<<<<< HEAD
         audioHelper = GetComponent<AudioHelper>();
-        isLeaving = true;
-=======
         isLeaving = false;
->>>>>>> origin/Davids_Branch
     }
 
     private void InitTriggerColliders()
@@ -144,12 +140,8 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
             hitDelay1.Stop();
         }
         animator.Play(AnimationReferences.TROLL_DEAD);
-<<<<<<< HEAD
         audioHelper.Play(SoundReferences.TROLL_DEATH);
-        this.StopAllCounters();
-=======
         //this.StopAllCounters();
->>>>>>> origin/Davids_Branch
 
         yield return new WaitForSeconds(2.15f);
         
@@ -214,20 +206,14 @@ public class EnemyController : MonoBehaviour, TriggerCollider2D.TriggerCollider2
     }
 
     private IEnumerator SmashingRoutine() {
-<<<<<<< HEAD
 
-        animator.Play(AnimationReferences.TROLL_ATTACKING);
         audioHelper.Play(SoundReferences.TROLL_ATTACK2);
 
         yield return new WaitForSeconds(1f);
         
-=======
         if (!isLeaving)
         {
             animator.Play(AnimationReferences.TROLL_ATTACKING);
-
-            yield return new WaitForSeconds(1f);
->>>>>>> origin/Davids_Branch
 
             ImpController coward = SearchForCoward(); // check if there is a coward within striking distance
 

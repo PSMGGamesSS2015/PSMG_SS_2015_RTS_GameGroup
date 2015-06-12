@@ -43,7 +43,7 @@ namespace Assets.Scripts.UserInterface
 
         void ImpManager.IMpManagerListener.OnUpdateMaxProfessions(int[] professions)
         {
-            for (int i = 0; i < impTrainingButtons.Length; i++)
+            for (var i = 0; i < impTrainingButtons.Length; i++)
             {
                 impTrainingButtons[i].Counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
             }

@@ -15,19 +15,26 @@ namespace Assets.Scripts.Utility
 
     public class Counter : MonoBehaviour
     {
+        public static Counter SetCounter(GameObject gameObject, float counterMax, Action action, bool isLoopModeActive)
+        {
+            var counter = gameObject.AddComponent<Counter>();
+            counter.Init(counterMax, action, isLoopModeActive);
+            return counter;
+        }
+
         private float currentCount;
         private float counterMax;
-  
-        private Func<Void> Action;
+
+        private Action action;
 
         private bool isLoopModeActive;
         private bool isPaused;
-        private bool isInitialized = false;
+        private bool isInitialized;
 
-        public void Init(float counterMax, Func<Void> Action, bool isLoopModeActive)
+        public void Init(float counterMax, Action action, bool isLoopModeActive)
         {
             this.counterMax = counterMax;
-            this.Action = Action;
+            this.action = action;
             this.isLoopModeActive = isLoopModeActive;
 
             isInitialized = true;
@@ -38,7 +45,7 @@ namespace Assets.Scripts.Utility
             if (!isInitialized) return;
             if (currentCount >= counterMax)
             {
-                Action();
+                action();
                 if (!isLoopModeActive)
                 {
                     Discard();
@@ -62,7 +69,7 @@ namespace Assets.Scripts.Utility
 
         private void Discard()
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
 
         public void Pause()
@@ -79,7 +86,7 @@ namespace Assets.Scripts.Utility
         {
             isPaused = true;
             isLoopModeActive = false;
-            Action = null;
+            action = null;
             Discard();
         }
 

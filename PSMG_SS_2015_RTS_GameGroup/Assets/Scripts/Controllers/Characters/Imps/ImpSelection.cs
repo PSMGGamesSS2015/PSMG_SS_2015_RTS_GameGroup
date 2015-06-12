@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters
+namespace Assets.Scripts.Controllers.Characters.Imps
 {
     public class ImpSelection : MonoBehaviour {
 

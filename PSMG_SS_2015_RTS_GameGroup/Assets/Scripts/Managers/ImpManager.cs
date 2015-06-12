@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Config;
-using Assets.Scripts.Controllers.Characters;
+using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Types;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace Assets.Scripts.Managers
     /// it spawns imps and gets notified when an imp is selected by the player.
     /// </summary>
 
-    public class ImpManager : MonoBehaviour, ImpController.ImpControllerListener, LevelManager.ILevelManagerListener, InputManager.IInputManagerListener {
+    public class ImpManager : MonoBehaviour, ImpController.IImpControllerListener, LevelManager.ILevelManagerListener, InputManager.IInputManagerListener {
 
         private LevelConfig config;
         private GameObject start;
@@ -195,9 +195,9 @@ namespace Assets.Scripts.Managers
 
         private void SpawnImp()
         {
-            Vector3 spawnPosition = start.transform.position;
-            GameObject imp = (GameObject)Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
-            ImpController impController = imp.GetComponent<ImpController>();
+            var spawnPosition = start.transform.position;
+            var imp = (GameObject)Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
+            var impController = imp.GetComponent<ImpController>();
             impController.RegisterListener(this);
             impController.MoveToSortingLayerPosition(currentImps);
             currentImps++;
@@ -209,7 +209,7 @@ namespace Assets.Scripts.Managers
 
         #region interface implementation
      
-        void ImpController.ImpControllerListener.OnImpSelected(ImpController impController)
+        void ImpController.IImpControllerListener.OnImpSelected(ImpController impController)
         {
             SelectImp(impController);
         }
@@ -221,7 +221,7 @@ namespace Assets.Scripts.Managers
 
         private void HideSelectionOfAllImps()
         {
-            foreach (ImpController imp in imps)
+            foreach (var imp in imps)
             {
                 imp.Selection.Hide();
             }
@@ -234,7 +234,7 @@ namespace Assets.Scripts.Managers
             DisplaySelectionOfSelectedImp();
         }
 
-        void ImpController.ImpControllerListener.OnImpHurt(ImpController impController)
+        void ImpController.IImpControllerListener.OnImpHurt(ImpController impController)
         {
             imps.Remove(impController);
             currentImps--;
@@ -243,7 +243,7 @@ namespace Assets.Scripts.Managers
 
         void InputManager.IInputManagerListener.OnDisplayImpLabels()
         {
-            foreach (ImpController imp in imps)
+            foreach (var imp in imps)
             {
                 imp.DisplayLabel();
             }
@@ -265,7 +265,7 @@ namespace Assets.Scripts.Managers
             }
             else
             {
-                int indexOfCurrentImp = imps.IndexOf(impSelected);
+                var indexOfCurrentImp = imps.IndexOf(impSelected);
                 int indexOfNextImp;
                 if (indexOfCurrentImp >= imps.Count - 1)
                 {
@@ -293,7 +293,7 @@ namespace Assets.Scripts.Managers
 
         void InputManager.IInputManagerListener.OnDismissImpLabels()
         {
-            foreach (ImpController imp in imps)
+            foreach (var imp in imps)
             {
                 imp.DismissLabel();
             }

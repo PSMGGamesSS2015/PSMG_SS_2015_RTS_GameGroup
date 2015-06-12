@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters;
+using Assets.Scripts.Controllers.Characters.Imps;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects

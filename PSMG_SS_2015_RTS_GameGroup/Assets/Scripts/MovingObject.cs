@@ -29,17 +29,16 @@ namespace Assets.Scripts
             hasStartedMoving = false;
         }
 
-        public void FixedUpdate () {
-            if (hasStartedMoving) 
+        public void FixedUpdate ()
+        {
+            if (!hasStartedMoving) return;
+            if (currentDirection == Direction.Vertical)
             {
-                if (currentDirection == Direction.Vertical)
-                {
-                    MoveUpwards();
-                }
-                else
-                {
-                    Move();
-                }   
+                MoveUpwards();
+            }
+            else
+            {
+                Move();
             }
         }
 
@@ -50,12 +49,12 @@ namespace Assets.Scripts
             this.Flip();
         }
 
-        private void Move()
+        public void Move()
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed, 0f);
         }
 
-        private void MoveUpwards()
+        public void MoveUpwards()
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, movementSpeed);
         }

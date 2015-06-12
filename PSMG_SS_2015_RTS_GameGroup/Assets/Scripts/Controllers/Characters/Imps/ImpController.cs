@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ExtensionMethods;
@@ -9,7 +10,7 @@ using Assets.Scripts.Utility;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters
+namespace Assets.Scripts.Controllers.Characters.Imps
 {
     /// <summary>
     /// The ImpController is a component attached to every instance of
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Controllers.Characters
     public class ImpController : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
         #region variables and constants
-
+        
         // animation
         private Animator animator;
         // movement
@@ -29,53 +30,51 @@ namespace Assets.Scripts.Controllers.Characters
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
         private SpriteRenderer[] sprites;
-        private ImpSelection impSelection;
         private float movementSpeed = 0.6f;
         private float formerMovementSpeed;
         private bool facingRight = true;
-        private bool movingUpwards = false;
+        private bool movingUpwards;
         //profession-related
         private TriggerCollider2D attackRange;
         private List<TrollController> enemiesInAttackRange;
         private ImpController commandPartner;
         private bool isAtThrowingPosition;
         //general
-        private ImpType type;
-        private List<ImpControllerListener> listeners;
+        private List<IImpControllerListener> listeners;
         public LayerMask impLayer;
         //prefabs
-        public GameObject verticalLadderPrefab;
-        public GameObject horizontalLadderPrefab;
-        public GameObject counter;
+        public GameObject VerticalLadderPrefab;
+        public GameObject HorizontalLadderPrefab;
         private ImpInventory impInventory;
         // ui
         private bool areLabelsDisplayed;
-        private bool isPlacingLadder;
         // constants
-        private const float MOVEMENT_SPEED_WALKING = 0.6f;
-        private const float MOVEMENT_SPEED_RUNNING = 1.8f;
+        private const float MovementSpeedWalking = 0.6f;
+        private const float MovementSpeedRunning = 1.8f;
         private Counter bombCounter;
         private Counter attackCounter;
-        private bool isTrainable;
         private AudioHelper audioHelper;
+        // services
+        private MovingObject movementService;
+        private ImpTrainingService impTrainingService;
 
         #endregion
 
         # region listener interface
 
-        public interface ImpControllerListener
+        public interface IImpControllerListener
         {
             void OnImpSelected(ImpController impController);
             void OnImpHurt(ImpController impController);
             void OnUntrain(ImpController impController);
         }
 
-        public void RegisterListener(ImpControllerListener listener)
+        public void RegisterListener(IImpControllerListener listener)
         {
             listeners.Add(listener);
         }
 
-        public void UnregisterListener(ImpControllerListener listener)
+        public void UnregisterListener(IImpControllerListener listener)
         {
             listeners.Remove(listener);
         }
@@ -84,9 +83,9 @@ namespace Assets.Scripts.Controllers.Characters
 
         #region initialization, properties, input handling and update
 
-        private void OnMouseDown()
+        public void OnMouseDown()
         {
-            foreach (ImpControllerListener listener in listeners)
+            foreach (var listener in listeners)
             {
                 listener.OnImpSelected(this);
             }
@@ -96,24 +95,31 @@ namespace Assets.Scripts.Controllers.Characters
         {
             if (areLabelsDisplayed)
             {
-                Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), type.ToString());
+                Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), Type.ToString());
             }
         }
 
         public void MoveToSortingLayerPosition(int position)
         {
-            foreach (SpriteRenderer r in sprites)
+            foreach (var r in sprites)
             {
                 r.sortingOrder = position;
             }
         }
 
-        private void Awake()
+        public void Awake()
         {
             InitComponents();
+            InitServices();
             InitAttributes();
             InitTriggerColliders();
             animator.Play(AnimationReferences.ImpWalkingUnemployed);
+        }
+
+        private void InitServices()
+        {
+            //movementService = gameObject.AddComponent<MovingObject>();
+            impTrainingService = gameObject.AddComponent<ImpTrainingService>();
         }
 
         private void InitComponents()
@@ -123,35 +129,36 @@ namespace Assets.Scripts.Controllers.Characters
             animator = GetComponent<Animator>();
             impInventory = GetComponentInChildren<ImpInventory>();
             sprites = GetComponentsInChildren<SpriteRenderer>();
-            impSelection = GetComponentInChildren<ImpSelection>();
+            Selection = GetComponentInChildren<ImpSelection>();
             audioHelper = GetComponent<AudioHelper>();
         }
 
         private void InitAttributes()
         {
             isAtThrowingPosition = false;
-            type = ImpType.Unemployed;
-            isPlacingLadder = false;
-            isTrainable = true;
-            listeners = new List<ImpControllerListener>();
+            Type = ImpType.Unemployed;
+            IsPlacingLadder = false;
+            IsTrainable = true;
+            listeners = new List<IImpControllerListener>();
         }
 
         private void InitTriggerColliders()
         {
-            TriggerCollider2D[] triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
+            var triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
 
-            foreach (TriggerCollider2D c in triggerColliders)
+            foreach (var c in triggerColliders)
             {
-                if (c.tag == TagReferences.ImpAttackRange)
+                switch (c.tag)
                 {
-                    attackRange = c;
-                }
-                else if (c.tag == TagReferences.ImpCollisionCheck)
-                {
-                    impCollisionCheck = c;
-                }
-                else if(c.tag == TagReferences.ImpClickCheck) {
-                    impClickCheck = c;
+                    case TagReferences.ImpAttackRange:
+                        attackRange = c;
+                        break;
+                    case TagReferences.ImpCollisionCheck:
+                        impCollisionCheck = c;
+                        break;
+                    case TagReferences.ImpClickCheck:
+                        impClickCheck = c;
+                        break;
                 }
             }
             impCollisionCheck.RegisterListener(this);
@@ -161,59 +168,37 @@ namespace Assets.Scripts.Controllers.Characters
             enemiesInAttackRange = new List<TrollController>();
         }
 
-        public bool IsPlacingLadder
+        public void Start()
         {
-            get
-            {
-                return isPlacingLadder;
-            }
+            //movementService.StartMoving(true, MovingObject.Direction.Horizontal);
         }
 
-        public ImpType Type
-        {
-            get
-            {
-                return type;
-            }
-        }
+        public bool IsPlacingLadder { get; private set; }
 
-        public ImpSelection Selection
-        {
-            get
-            {
-                return impSelection;
-            }
-        }
+        public ImpType Type { get; private set; }
 
-        public bool IsTrainable
-        {
-            get
-            {
-                return isTrainable;
-            }
-        }
+        public ImpSelection Selection { get; private set; }
 
-        private void FixedUpdate()
-        {
-        
-            if (type != ImpType.Coward && 
-                !IsInCommand())
-            {
-                if (movingUpwards)
-                {
-                    MoveUpwards();
-                }
-                else
-                {
-                    Move();
-                }   
-            }
+        public bool IsTrainable { get; private set; }
 
+        public void FixedUpdate()
+        {
+            if (Type == ImpType.Coward || IsInCommand()) return;
+            if (movingUpwards)
+            {
+                MoveUpwards();
+                //movementService.MoveUpwards();
+            }
+            else
+            {
+                Move();
+                //movementService.Move();
+            }
         }
 
         public void LeaveGame()
         {
-            for (int i = listeners.Count - 1; i >= 0; i--)
+            for (var i = listeners.Count - 1; i >= 0; i--)
             {
                 listeners[i].OnImpHurt(this);
             }
@@ -252,7 +237,7 @@ namespace Assets.Scripts.Controllers.Characters
         private void PlayClimbingAnimation()
         {
             string anim;
-            if (type == ImpType.Spearman)
+            if (Type == ImpType.Spearman)
             {
                 anim = AnimationReferences.ImpClimbingLadderSpearman;
             }
@@ -290,7 +275,7 @@ namespace Assets.Scripts.Controllers.Characters
 
         private void SetupVerticalLadder(Vector3 position)
         {
-            Instantiate(verticalLadderPrefab, position, Quaternion.identity);
+            Instantiate(VerticalLadderPrefab, position, Quaternion.identity);
             Untrain();
         }
 
@@ -301,9 +286,9 @@ namespace Assets.Scripts.Controllers.Characters
 
         private IEnumerator SetupHorizontalLadderRoutine(Vector3 position)
         {
-            float formerMovementSpeed = movementSpeed;
+            var formerMovementSpeed = movementSpeed;
             movementSpeed = 0f;
-            isPlacingLadder = true;
+            IsPlacingLadder = true;
         
             impInventory.DisplayLadder();
         
@@ -313,11 +298,11 @@ namespace Assets.Scripts.Controllers.Characters
             yield return new WaitForSeconds(5.5f);
   
             impInventory.HideAllTools();
-            isPlacingLadder = false;
+            IsPlacingLadder = false;
             Untrain();
             animator.Play(AnimationReferences.ImpWalkingUnemployed);
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-            Instantiate(horizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
+            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
+            Instantiate(HorizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
         }
 
         private void StartMovingAgain(float direction, float speed)
@@ -327,18 +312,17 @@ namespace Assets.Scripts.Controllers.Characters
 
         private void FormCommand(ImpController commandPartner)
         {
-            if (type == ImpType.Spearman)
+            if (Type == ImpType.Spearman)
             {
                 animator.Play(AnimationReferences.ImpStandingWithSpear);
-                attackCounter = Instantiate(counter).GetComponent<Counter>();
-                attackCounter.Init(4f, Pierce, true);
+                attackCounter = Counter.SetCounter(this.gameObject, 4f, Pierce, true);;
             }
             this.commandPartner = commandPartner;
         }
 
         public void DissolveCommand()
         {
-            if (type == ImpType.Spearman)
+            if (Type == ImpType.Spearman)
             {
                 animator.Play(AnimationReferences.ImpWalkingSpear);
                 if (attackCounter != null)
@@ -362,13 +346,12 @@ namespace Assets.Scripts.Controllers.Characters
 
         private IEnumerator DetonatingRoutine()
         {
-            float formerMovementSpeed = movementSpeed;
-            bool isFlippingNecessary = (formerMovementSpeed < 0);
+            var formerMovementSpeed = movementSpeed;
+            var isFlippingNecessary = (formerMovementSpeed < 0);
             movementSpeed = 0f;
 
             if (isFlippingNecessary)
             {
-                //Flip(impInventory.Explo.gameObject);
                 impInventory.Explo.Flip();
             }
 
@@ -380,21 +363,17 @@ namespace Assets.Scripts.Controllers.Characters
 
             if (isFlippingNecessary)
             {
-                // Flip(impInventory.Explo.gameObject);
                 impInventory.Explo.Flip();
             }
 
-            Collider2D[] objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
-            foreach (Collider2D c in objectsWithinRadius)
+            var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
+            foreach (var c in objectsWithinRadius.Where(c => c.gameObject.tag == TagReferences.Obstacle))
             {
-                if (c.gameObject.tag == TagReferences.Obstacle)
-                {
-                    Destroy(c.gameObject);
-                }
+                Destroy(c.gameObject);
             }
 
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
-            isTrainable = true;
+            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
+            IsTrainable = true;
             Untrain();
         }
 
@@ -412,43 +391,40 @@ namespace Assets.Scripts.Controllers.Characters
             return circleCollider2D;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        public void OnCollisionEnter2D(Collision2D collision)
         {
-            string tag = collision.gameObject.tag;
+            var tag = collision.gameObject.tag;
 
             switch (tag)
             {
                 case TagReferences.EnemyTroll:
-                    TrollController enemy = collision.gameObject.GetComponent<TrollController>();
+                    var enemy = collision.gameObject.GetComponent<TrollController>();
                     InteractWith(enemy);
                     break;
                 case TagReferences.Imp:
-                    ImpController imp = collision.gameObject.GetComponent<ImpController>();
+                    var imp = collision.gameObject.GetComponent<ImpController>();
                     InteractWith(imp);
                     break;
                 case TagReferences.Obstacle:
-                    ObstacleController obstacle = collision.gameObject.GetComponent<ObstacleController>();
+                    var obstacle = collision.gameObject.GetComponent<ObstacleController>();
                     InteractWith(obstacle);
                     break;
                 case TagReferences.Impassable:
                     Turn();
                     break;
-            
-                default:
-                    break;
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collider)
+        public void OnTriggerEnter2D(Collider2D collider)
         {
-            string tag = collider.gameObject.tag;
+            var tag = collider.gameObject.tag;
 
             switch (tag)
             {
                 case TagReferences.LadderSpotVertical:
-                    if (type == ImpType.LadderCarrier)
+                    if (Type == ImpType.LadderCarrier)
                     {
-                        LadderSpotController ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
+                        var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
                         {
                             SetupVerticalLadder(collider.gameObject.transform.position);
@@ -457,9 +433,9 @@ namespace Assets.Scripts.Controllers.Characters
                     }
                     break;
                 case TagReferences.LadderSpotHorizontal:
-                    if (type == ImpType.LadderCarrier)
+                    if (Type == ImpType.LadderCarrier)
                     {
-                        LadderSpotController ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
+                        var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
                         {
                             SetupHorizontalLadder(collider.gameObject.transform.position);
@@ -474,15 +450,13 @@ namespace Assets.Scripts.Controllers.Characters
                     movingUpwards = false;
                     PlayWalkingAnimation();
                     break;
-                default:
-                    break;
             }
         }
 
         private void PlayWalkingAnimation()
         {
             string anim;
-            if (type == ImpType.Spearman)
+            if (Type == ImpType.Spearman)
             {
                 anim = AnimationReferences.ImpWalkingSpear;
             }
@@ -494,18 +468,14 @@ namespace Assets.Scripts.Controllers.Characters
             audioHelper.Play(SoundReferences.ImpGoing);
         }
 
-        private void OnCollisionStay2D(Collision2D collision)
+        public void OnCollisionStay2D(Collision2D collision)
         {
-            ImpController imp = collision.gameObject.GetComponent<ImpController>();
-            if (imp != null)
+            var imp = collision.gameObject.GetComponent<ImpController>();
+            if (imp == null) return;
+            if (imp.Type != ImpType.Coward) return;
+            if (Type != ImpType.Spearman)
             {
-                if (imp.Type == ImpType.Coward)
-                {
-                    if (type != ImpType.Spearman)
-                    {
-                        Turn();
-                    }
-                }
+                Turn();
             }
         }
 
@@ -528,24 +498,24 @@ namespace Assets.Scripts.Controllers.Characters
         private void InteractWith(ImpController imp)
         {
             if (commandPartner == null &&
-                ((type == ImpType.Coward && imp.Type == ImpType.Spearman) ||
-                 (type == ImpType.Spearman && imp.Type == ImpType.Coward)))
+                ((Type == ImpType.Coward && imp.Type == ImpType.Spearman) ||
+                 (Type == ImpType.Spearman && imp.Type == ImpType.Coward)))
             {
                 FormCommand(imp);
             }
 
             else if ((imp.Type == ImpType.Coward || imp.IsPlacingLadder)  &&
-                     (type == ImpType.Unemployed ||
-                      type == ImpType.LadderCarrier ||
-                      type == ImpType.Blaster ||
-                      type == ImpType.Firebug ||
-                      type == ImpType.Botcher ||
-                      type == ImpType.Schwarzenegger))
+                     (Type == ImpType.Unemployed ||
+                      Type == ImpType.LadderCarrier ||
+                      Type == ImpType.Blaster ||
+                      Type == ImpType.Firebug ||
+                      Type == ImpType.Botcher ||
+                      Type == ImpType.Schwarzenegger))
             {
                 Turn();
             }
 
-            else if ((type == ImpType.Schwarzenegger) &&
+            else if ((Type == ImpType.Schwarzenegger) &&
                      ((imp.Type != ImpType.Schwarzenegger) ||
                       (imp.Type != ImpType.Coward)))
             {
@@ -571,7 +541,7 @@ namespace Assets.Scripts.Controllers.Characters
 
         private IEnumerator TrainingRoutine(ImpType type)
         {
-            if (this.type != ImpType.Coward)
+            if (this.Type != ImpType.Coward)
             {
                 formerMovementSpeed = movementSpeed;
                 movementSpeed = 0f;
@@ -587,12 +557,12 @@ namespace Assets.Scripts.Controllers.Characters
             {
                 commandPartner.DissolveCommand();
             }
-            if (this.type == ImpType.Spearman || this.type == ImpType.Coward)
+            if (this.Type == ImpType.Spearman || this.Type == ImpType.Coward)
             {
                 DissolveCommand();
             }
 
-            this.type = type;
+            this.Type = type;
 
             if (type == ImpType.Blaster) TrainBlaster(formerMovementSpeed);
         
@@ -609,11 +579,11 @@ namespace Assets.Scripts.Controllers.Characters
         private void TrainUnemployed(float formerMovementSpeed)
         {
             impInventory.HideAllTools();
-            if (formerMovementSpeed < 0)
+            if (formerMovementSpeed < 0f)
             {
                 movementSpeed = -0.6f;
             }
-            else if (formerMovementSpeed == 0)
+            else if (formerMovementSpeed == 0f)
             {
                 if (facingRight)
                 {
@@ -642,20 +612,20 @@ namespace Assets.Scripts.Controllers.Characters
         private void TrainLadderCarrier(float formerMovementSpeed)
         {
             impInventory.Display(TagReferences.ImpInventoryLadder);
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
             animator.Play(AnimationReferences.ImpWalkingLadder);
         }
 
         private void TrainSpearman(float formerMovementSpeed)
         {
             impInventory.Display(TagReferences.ImpInventorySpear);
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_WALKING);
+            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
             animator.Play(AnimationReferences.ImpWalkingSpear);
         }
 
         private void TrainBlaster(float formerMovementSpeed)
         {
-            isTrainable = false;
+            IsTrainable = false;
             SetupBombCounter();
             DisplayBlasterAnimation(formerMovementSpeed);
         }
@@ -663,26 +633,24 @@ namespace Assets.Scripts.Controllers.Characters
         private void SetupBombCounter()
         {
             if (bombCounter != null) Destroy(bombCounter.gameObject);
-
-            bombCounter = Instantiate(counter).GetComponent<Counter>();
-            bombCounter.Init(3f, DetonateBomb, false);
+            bombCounter = Counter.SetCounter(this.gameObject, 3f, DetonateBomb, false);
         }
 
         private void DisplayBlasterAnimation(float formerMovementSpeed)
         {
             impInventory.Display(TagReferences.ImpInventoryBomb);
-            StartMovingAgain(formerMovementSpeed, MOVEMENT_SPEED_RUNNING);
+            StartMovingAgain(formerMovementSpeed, MovementSpeedRunning);
             animator.Play(AnimationReferences.ImpWalkingBomb);
         }
 
         public bool HasJob()
         {
-            return type != ImpType.Unemployed;
+            return Type != ImpType.Unemployed;
         }
 
         public void Untrain()
         {
-            foreach (ImpControllerListener listener in listeners)
+            foreach (var listener in listeners)
             {
                 listener.OnUntrain(this);
             }
@@ -696,7 +664,7 @@ namespace Assets.Scripts.Controllers.Characters
         {
             if (self.GetInstanceID() == impCollisionCheck.GetInstanceID())
             {
-                ImpController imp = collider.gameObject.GetComponent<ImpController>();
+                var imp = collider.gameObject.GetComponent<ImpController>();
 
                 if (imp != null)
                 {
@@ -704,29 +672,21 @@ namespace Assets.Scripts.Controllers.Characters
                 }
             }
 
-            if (self.GetInstanceID() == attackRange.GetInstanceID())
+            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
+            if (Type != ImpType.Spearman) return;
+            if (collider.gameObject.tag == TagReferences.EnemyTroll)
             {
-                if (type == ImpType.Spearman)
-                {
-                    if (collider.gameObject.tag == TagReferences.EnemyTroll)
-                    {
-                        enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
-                    }
-                }
+                enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
             }
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() == attackRange.GetInstanceID())
+            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
+            if (Type != ImpType.Spearman) return;
+            if (collider.gameObject.tag == TagReferences.EnemyTroll)
             {
-                if (type == ImpType.Spearman)
-                {
-                    if (collider.gameObject.tag == TagReferences.EnemyTroll)
-                    {
-                        enemiesInAttackRange.Add(collider.gameObject.GetComponent<TrollController>());
-                    }
-                }
+                enemiesInAttackRange.Add(collider.gameObject.GetComponent<TrollController>());
             }
         }
 

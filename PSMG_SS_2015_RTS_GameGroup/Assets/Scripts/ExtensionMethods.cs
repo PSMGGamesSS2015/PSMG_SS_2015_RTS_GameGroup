@@ -5,11 +5,12 @@ public static class ExtensionMethods
 {
     public static void StopAllCounters(this MonoBehaviour mb)
     {
+        // TODO Get component cannot be used here since GameObjects are spawned
         Counter[] counters = mb.gameObject.GetComponents<Counter>();
 
-        foreach (Counter counter in counters)
+        for (int i = counters.Length - 1; i >= 0; i--)
         {
-            counter.Stop();
+            counters[i].Stop();
         }
     }
 

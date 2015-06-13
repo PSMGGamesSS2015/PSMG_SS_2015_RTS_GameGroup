@@ -7,7 +7,6 @@ using Assets.Scripts.ExtensionMethods;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps
@@ -23,34 +22,28 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         #region variables and constants
         
         // animation
-        private ImpAnimationHelper impAnimationHelper;
+        
         // movement
-        private Rigidbody2D rigidBody2D;
         private CircleCollider2D circleCollider2D;
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
         private SpriteRenderer[] sprites;
-        private bool movingUpwards;
         //profession-related
-        private TriggerCollider2D attackRange;
-        private List<TrollController> enemiesInAttackRange;
-        private ImpController commandPartner;
+        
         private bool isAtThrowingPosition;
         //general
-        private List<IImpControllerListener> listeners;
+        public List<IImpControllerListener> Listeners;
         //prefabs
         public GameObject VerticalLadderPrefab;
         public GameObject HorizontalLadderPrefab;
-        // ui
-        private bool areLabelsDisplayed;
         // constants
-        private Counter bombCounter;
-        private Counter attackCounter;
-        private AudioHelper audioHelper;
-        // movement
-        private ImpMovementService movementService;
-        // training
-        private ImpTrainingService impTrainingService;
+        public Counter bombCounter;
+
+        public AudioHelper ImpAudioService;
+        public ImpMovementService ImpMovementService;
+        public ImpTrainingService ImpTrainingService;
+        public ImpAnimationHelper ImpAnimationService;
+        public ImpUIService ImpUIService;
         
 
         #endregion
@@ -66,12 +59,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void RegisterListener(IImpControllerListener listener)
         {
-            listeners.Add(listener);
+            Listeners.Add(listener);
         }
 
         public void UnregisterListener(IImpControllerListener listener)
         {
-            listeners.Remove(listener);
+            Listeners.Remove(listener);
         }
 
         #endregion
@@ -80,19 +73,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void OnMouseDown()
         {
-            foreach (var listener in listeners)
+            foreach (var listener in Listeners)
             {
                 listener.OnImpSelected(this);
             }
         }
 
-        private void OnGUI()
-        {
-            if (areLabelsDisplayed)
-            {
-                Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), Type.ToString());
-            }
-        }
+        
 
         public void MoveToSortingLayerPosition(int position)
         {
@@ -108,32 +95,32 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             InitServices();
             InitAttributes();
             InitTriggerColliders();
-            impAnimationHelper.Play(AnimationReferences.ImpWalkingUnemployed);
+            ImpAnimationService.Play(AnimationReferences.ImpWalkingUnemployed);
         }
 
         private void InitServices()
         {
-            movementService = gameObject.AddComponent<ImpMovementService>();
-            impTrainingService = gameObject.AddComponent<ImpTrainingService>();
+            ImpMovementService = gameObject.AddComponent<ImpMovementService>();
+            ImpTrainingService = gameObject.AddComponent<ImpTrainingService>();
+            ImpUIService = gameObject.AddComponent<ImpUIService>();
         }
 
         private void InitComponents()
         {
-            rigidBody2D = GetComponent<Rigidbody2D>();
             circleCollider2D = GetComponent<CircleCollider2D>();
             sprites = GetComponentsInChildren<SpriteRenderer>();
             Selection = GetComponentInChildren<ImpSelection>();
-            audioHelper = GetComponent<AudioHelper>();
-            impAnimationHelper = GetComponent<ImpAnimationHelper>();
+            ImpAudioService = GetComponent<AudioHelper>();
+            ImpAnimationService = GetComponent<ImpAnimationHelper>();
         }
 
         private void InitAttributes()
         {
             isAtThrowingPosition = false;
-            Type = ImpType.Unemployed;
+            ImpTrainingService.Type = ImpType.Unemployed;
             IsPlacingLadder = false;
-            IsTrainable = true;
-            listeners = new List<IImpControllerListener>();
+            ImpTrainingService.IsTrainable = true;
+            Listeners = new List<IImpControllerListener>();
         }
 
         private void InitTriggerColliders()
@@ -144,9 +131,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             {
                 switch (c.tag)
                 {
-                    case TagReferences.ImpAttackRange:
-                        attackRange = c;
-                        break;
                     case TagReferences.ImpCollisionCheck:
                         impCollisionCheck = c;
                         break;
@@ -156,27 +140,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 }
             }
             impCollisionCheck.RegisterListener(this);
-            attackRange.RegisterListener(this);
             impClickCheck.RegisterListener(this);
-
-            enemiesInAttackRange = new List<TrollController>();
         }
 
         public bool IsPlacingLadder { get; private set; }
 
-        public ImpType Type { get; private set; }
-
         public ImpSelection Selection { get; private set; }
-
-        public bool IsTrainable { get; private set; }
 
         public void LeaveGame()
         {
-            for (var i = listeners.Count - 1; i >= 0; i--)
+            for (var i = Listeners.Count - 1; i >= 0; i--)
             {
-                listeners[i].OnImpHurt(this);
+                Listeners[i].OnImpHurt(this);
             }
-            listeners.Clear();
+            Listeners.Clear();
             this.StopAllCounters();
             Destroy(gameObject);
         }
@@ -188,13 +165,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         private void ClimbLadder()
         {
             PlayClimbingAnimation();
-            movingUpwards = true;
+            ImpMovementService.MoveUpwards();
         }
 
         private void PlayClimbingAnimation()
         {
             string anim;
-            if (Type == ImpType.Spearman)
+            if (ImpTrainingService.Type == ImpType.Spearman)
             {
                 anim = AnimationReferences.ImpClimbingLadderSpearman;
             }
@@ -202,38 +179,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             {
                 anim = AnimationReferences.ImpClimbingLadderUnemployed;
             }
-            impAnimationHelper.Play(anim);
+            ImpAnimationService.Play(anim);
         }
 
         #endregion
 
         #region profession-specific methods
 
-        private void Pierce()
-        {
-            StartCoroutine(PiercingRoutine());
-        }
-
-        private IEnumerator PiercingRoutine()
-        {
-            impAnimationHelper.Play(AnimationReferences.ImpAttackingWithSpear);
-            audioHelper.Play(SoundReferences.ImpAttack1);
-
-            yield return new WaitForSeconds(0.75f);
-
-            foreach (TrollController enemy in enemiesInAttackRange)
-            {
-                enemy.ReceiveHit();
-            }
-            enemiesInAttackRange.Clear();
-
-            impAnimationHelper.Play(AnimationReferences.ImpStandingWithSpear);
-        }
-
-        private void SetupVerticalLadder(Vector3 position)
+       private void SetupVerticalLadder(Vector3 position)
         {
             Instantiate(VerticalLadderPrefab, position, Quaternion.identity);
-            Untrain();
+            ImpTrainingService.Untrain();
         }
 
         private void SetupHorizontalLadder(Vector3 position)
@@ -243,77 +199,48 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private IEnumerator SetupHorizontalLadderRoutine(Vector3 position)
         {
-            movementService.Stand();
+            ImpMovementService.Stand();
             IsPlacingLadder = true;
         
-            impAnimationHelper.Play(AnimationReferences.ImpPlacingLadderHorizontally);
-            audioHelper.Play(SoundReferences.ImpSetupLadder);
+            ImpAnimationService.Play(AnimationReferences.ImpPlacingLadderHorizontally);
+            ImpAudioService.Play(SoundReferences.ImpSetupLadder);
 
             yield return new WaitForSeconds(5.5f);
 
-            impAnimationHelper.SwitchBackToStandardAnimation();
+            ImpAnimationService.SwitchBackToStandardAnimation();
             IsPlacingLadder = false;
-            Untrain();
-            movementService.Walk();
+            ImpTrainingService.Untrain();
+            ImpMovementService.Walk();
             Instantiate(HorizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
         }
 
-        private void FormCommand(ImpController commandPartner)
-        {
-            if (Type == ImpType.Spearman)
-            {
-                movementService.Stand();
-                impAnimationHelper.Play(AnimationReferences.ImpStandingWithSpear);
-                attackCounter = Counter.SetCounter(this.gameObject, 4f, Pierce, true);;
-            }
-            this.commandPartner = commandPartner;
-        }
+       
 
-        public void DissolveCommand()
-        {
-            if (Type == ImpType.Spearman)
-            {
-                movementService.Walk();
-                impAnimationHelper.Play(AnimationReferences.ImpWalkingSpear);
-                if (attackCounter != null)
-                {
-                    attackCounter.Stop();
-                }
-            
-            }
-            this.commandPartner = null;
-        }
-
-        public bool IsInCommand()
-        {
-            return commandPartner != null;
-        }
-
-        private void DetonateBomb()
+        public void DetonateBomb()
         {
             StartCoroutine(DetonatingRoutine());  
         }
 
         private IEnumerator DetonatingRoutine()
         {
-            var formerMovementSpeed = movementService.movementSpeed;
+            var formerMovementSpeed = ImpMovementService.movementSpeed;
             var isFlippingNecessary = (formerMovementSpeed < 0);
-            movementService.Stand();
+            ImpMovementService.Stand();
 
             if (isFlippingNecessary)
             {
-                impAnimationHelper.ImpInventory.Explosion.Flip();
+                ImpAnimationService.ImpInventory.Explosion.Flip();
             }
 
-            impAnimationHelper.ImpInventory.DisplayExplosion();
-            impAnimationHelper.Play(AnimationReferences.ImpDetonatingBomb);
-            audioHelper.Play(SoundReferences.BombExplosion);
+            ImpAnimationService.ImpInventory.DisplayExplosion();
+            ImpAnimationService.Play(AnimationReferences.ImpDetonatingBomb);
+            ImpAudioService.Play(SoundReferences.BombExplosion);
         
             yield return new WaitForSeconds(1f);
 
             if (isFlippingNecessary)
             {
-                impAnimationHelper.ImpInventory.Explosion.Flip();
+                ImpAnimationService.ImpInventory.Explosion.Flip();
             }
 
             var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
@@ -322,9 +249,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 Destroy(c.gameObject);
             }
 
-            movementService.Walk();
-            IsTrainable = true;
-            Untrain();
+            ImpMovementService.Walk();
+            ImpTrainingService.IsTrainable = true;
+            ImpTrainingService.Untrain();
         }
 
         private void ThrowImp(ImpController projectile)
@@ -348,19 +275,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             switch (tag)
             {
                 case TagReferences.EnemyTroll:
-                    var enemy = collision.gameObject.GetComponent<TrollController>();
-                    InteractWith(enemy);
+                    ImpMovementService.Turn();
                     break;
                 case TagReferences.Imp:
                     var imp = collision.gameObject.GetComponent<ImpController>();
                     InteractWith(imp);
                     break;
                 case TagReferences.Obstacle:
-                    var obstacle = collision.gameObject.GetComponent<ObstacleController>();
-                    InteractWith(obstacle);
+                    ImpMovementService.Turn();
                     break;
                 case TagReferences.Impassable:
-                    movementService.Turn();
+                    ImpMovementService.Turn();
                     break;
             }
         }
@@ -372,7 +297,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             switch (tag)
             {
                 case TagReferences.LadderSpotVertical:
-                    if (Type == ImpType.LadderCarrier)
+                    if (ImpTrainingService.Type == ImpType.LadderCarrier)
                     {
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
@@ -383,7 +308,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                     }
                     break;
                 case TagReferences.LadderSpotHorizontal:
-                    if (Type == ImpType.LadderCarrier)
+                    if (ImpTrainingService.Type == ImpType.LadderCarrier)
                     {
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
@@ -397,9 +322,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                     ClimbLadder();
                     break;
                 case TagReferences.LadderTop:
-                    movingUpwards = false;
-                    audioHelper.Play(SoundReferences.ImpGoing);
-                    impAnimationHelper.PlayWalkingAnimation(Type);
+                    ImpMovementService.Move();
+                    ImpAudioService.Play(SoundReferences.ImpGoing);
+                    ImpAnimationService.PlayWalkingAnimation(ImpTrainingService.Type);
                     break;
             }
         }
@@ -408,10 +333,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             var imp = collision.gameObject.GetComponent<ImpController>();
             if (imp == null) return;
-            if (imp.Type != ImpType.Coward) return;
-            if (Type != ImpType.Spearman)
+            if (imp.ImpTrainingService.Type != ImpType.Coward) return;
+            if (ImpTrainingService.Type != ImpType.Spearman)
             {
-                movementService.Turn();
+                ImpMovementService.Turn();
             }
         }
 
@@ -419,41 +344,46 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         #region interaction logic
 
-        private void InteractWith(ObstacleController obstacle)
-        {
-            movementService.Turn();
-            // TODO
-        }
-
-        private void InteractWith(TrollController enemy)
-        {
-            movementService.Turn();
-            // TODO
-        }
-
         private void InteractWith(ImpController imp)
         {
-            if (commandPartner == null &&
-                ((Type == ImpType.Coward && imp.Type == ImpType.Spearman) ||
-                 (Type == ImpType.Spearman && imp.Type == ImpType.Coward)))
+
+            // TODO refactor
+            if (((ImpTrainingService.Type == ImpType.Spearman && imp.ImpTrainingService.Type == ImpType.Coward) ||
+                 (ImpTrainingService.Type == ImpType.Coward && imp.ImpTrainingService.Type == ImpType.Spearman)))
             {
-                FormCommand(imp);
+
+                if (((ImpTrainingService.Type == ImpType.Spearman) &&
+                    GetComponent<ImpSpearmanService>().CommandPartner == null) ||
+                    ((ImpTrainingService.Type == ImpType.Coward) &&
+                    GetComponent<ImpCowardService>().CommandPartner == null)
+                    )
+                {
+                    if (ImpTrainingService.Type == ImpType.Spearman)
+                    {
+                        GetComponent<ImpSpearmanService>().FormCommand(imp);
+                    }
+                    if (ImpTrainingService.Type == ImpType.Coward)
+                    {
+                        GetComponent<ImpCowardService>().FormCommand(imp);
+                    }
+                }
+                
             }
 
-            else if ((imp.Type == ImpType.Coward || imp.IsPlacingLadder)  &&
-                     (Type == ImpType.Unemployed ||
-                      Type == ImpType.LadderCarrier ||
-                      Type == ImpType.Blaster ||
-                      Type == ImpType.Firebug ||
-                      Type == ImpType.Botcher ||
-                      Type == ImpType.Schwarzenegger))
+            else if ((imp.ImpTrainingService.Type == ImpType.Coward || imp.IsPlacingLadder) &&
+                     (ImpTrainingService.Type == ImpType.Unemployed ||
+                      ImpTrainingService.Type == ImpType.LadderCarrier ||
+                      ImpTrainingService.Type == ImpType.Blaster ||
+                      ImpTrainingService.Type == ImpType.Firebug ||
+                      ImpTrainingService.Type == ImpType.Botcher ||
+                      ImpTrainingService.Type == ImpType.Schwarzenegger))
             {
-                movementService.Turn();
+                ImpMovementService.Turn();
             }
 
-            else if ((Type == ImpType.Schwarzenegger) &&
-                     ((imp.Type != ImpType.Schwarzenegger) ||
-                      (imp.Type != ImpType.Coward)))
+            else if ((ImpTrainingService.Type == ImpType.Schwarzenegger) &&
+                     ((imp.ImpTrainingService.Type != ImpType.Schwarzenegger) ||
+                      (imp.ImpTrainingService.Type != ImpType.Coward)))
             {
                 if (isAtThrowingPosition)
                 {
@@ -468,149 +398,21 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         #endregion
 
-        #region training
-
-        public void Train(ImpType type)
-        {
-            StartCoroutine(TrainingRoutine(type)); 
-        }
-
-        private IEnumerator TrainingRoutine(ImpType type)
-        {
-            if (this.Type != ImpType.Coward)
-            {
-                movementService.Stand();
-            }
-            impAnimationHelper.PlayImpTakingObjectAnimation();
-            
-            audioHelper.Play(SoundReferences.ImpSelect4);
-
-            yield return new WaitForSeconds(1.0f);
-
-            if (commandPartner != null)
-            {
-                commandPartner.DissolveCommand();
-            }
-            if (this.Type == ImpType.Spearman || this.Type == ImpType.Coward)
-            {
-                DissolveCommand();
-            }
-
-            this.Type = type;
-
-            if (type == ImpType.Blaster) TrainBlaster();
-
-            if (type == ImpType.Spearman) TrainSpearman();
-
-            if (type == ImpType.LadderCarrier) TrainLadderCarrier();
-
-            if (type == ImpType.Unemployed) TrainUnemployed();
-
-            if (type == ImpType.Coward) TrainCoward();
-
-        }
-
-        private void TrainUnemployed()
-        {
-            movementService.Walk();
-            impAnimationHelper.SwitchBackToStandardAnimation();
-        }
-
-        private void TrainCoward()
-        {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Coward);
-            audioHelper.Play(SoundReferences.ShieldWood1);
-        }
-
-        private void TrainLadderCarrier()
-        {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.LadderCarrier);
-            movementService.Walk();
-        }
-
-        private void TrainSpearman()
-        {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Spearman);
-            movementService.Walk();
-        }
-
-        private void TrainBlaster()
-        {
-            IsTrainable = false;
-            SetupBombCounter();
-            DisplayBlasterAnimation();
-        }
-
-        private void SetupBombCounter()
-        {
-            if (bombCounter != null) Destroy(bombCounter.gameObject);
-            bombCounter = Counter.SetCounter(this.gameObject, 3f, DetonateBomb, false);
-        }
-
-        private void DisplayBlasterAnimation()
-        {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Blaster);
-            movementService.Run();
-        }
-
-        public bool HasJob()
-        {
-            return Type != ImpType.Unemployed;
-        }
-
-        public void Untrain()
-        {
-            foreach (var listener in listeners)
-            {
-                listener.OnUntrain(this);
-            }
-        }
-
-        #endregion
-
-        # region interface implementation
-
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() == impCollisionCheck.GetInstanceID())
-            {
-                var imp = collider.gameObject.GetComponent<ImpController>();
+            if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
+            
+            var imp = collider.gameObject.GetComponent<ImpController>();
 
-                if (imp != null)
-                {
-                    Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
-                }
-            }
-
-            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
-            if (Type != ImpType.Spearman) return;
-            if (collider.gameObject.tag == TagReferences.EnemyTroll)
+            if (imp != null)
             {
-                enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
+                Physics2D.IgnoreCollision(GetCollider(), imp.GetCollider(), false);
             }
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
-            if (Type != ImpType.Spearman) return;
-            if (collider.gameObject.tag == TagReferences.EnemyTroll)
-            {
-                enemiesInAttackRange.Add(collider.gameObject.GetComponent<TrollController>());
-            }
         }
 
-        #endregion
-
-
-        public void DisplayLabel()
-        {
-            areLabelsDisplayed = true;
-        }
-
-        public void DismissLabel()
-        {
-            areLabelsDisplayed = false;
-        }
     }
 }

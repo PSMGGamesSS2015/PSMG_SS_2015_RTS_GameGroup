@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+// TODO improve listener interface
+
 namespace Assets.Scripts.Controllers
 {
     /// <summary>
@@ -30,11 +32,13 @@ namespace Assets.Scripts.Controllers
 
         public void OnTriggerExit2D(Collider2D collider)
         {
+            if (listener != null)
             listener.OnTriggerExit2D(this, collider);
         }
 
         public void OnTriggerEnter2D(Collider2D collider)
         {
+            if (listener != null)
             listener.OnTriggerEnter2D(this, collider);
         }
 

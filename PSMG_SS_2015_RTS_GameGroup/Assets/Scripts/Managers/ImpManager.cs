@@ -27,8 +27,6 @@ namespace Assets.Scripts.Managers
 
         public GameObject ImpPrefab;
 
-        private SoundManager soundManager;
-
         private List<IMpManagerListener> listeners;
 
         public interface IMpManagerListener
@@ -44,14 +42,6 @@ namespace Assets.Scripts.Managers
         public void UnregisterListener(IMpManagerListener listener) 
         {
             listeners.Remove(listener);
-        }
-
-        public SoundManager SoundMgr
-        {
-            set
-            {
-                soundManager = value;
-            }
         }
 
         public void Awake()
@@ -77,13 +67,13 @@ namespace Assets.Scripts.Managers
             }
             else
             {
-                if (!impSelected.IsTrainable)
+                if (!impSelected.ImpTrainingService.IsTrainable)
                 {
                     Debug.Log("This imp is currently not trainable");
                 }
                 else
                 {
-                    if (impSelected.Type == profession)
+                    if (impSelected.ImpTrainingService.Type == profession)
                     {
                         Debug.Log("The selected imp already has that profession.");
                     }
@@ -94,7 +84,7 @@ namespace Assets.Scripts.Managers
                             if (IsTrainingLimitReached(profession))
                             {
                                 UpdateMaxProfessions(profession);
-                                impSelected.Train(profession);
+                                impSelected.ImpTrainingService.Train(profession);
                             }
                             else
                             {
@@ -104,7 +94,7 @@ namespace Assets.Scripts.Managers
                         else
                         {
                             UpdateMaxProfessions();
-                            impSelected.Train(profession);
+                            impSelected.ImpTrainingService.Train(profession);
                         }
 
                     }
@@ -140,10 +130,10 @@ namespace Assets.Scripts.Managers
 
         private void UpdateMaxProfessions()
         {
-            if (impSelected.Type != ImpType.Unemployed && 
-                professions[(int)impSelected.Type] > 0)
+            if (impSelected.ImpTrainingService.Type != ImpType.Unemployed &&
+                professions[(int)impSelected.ImpTrainingService.Type] > 0)
             {
-                professions[(int)impSelected.Type]--;
+                professions[(int)impSelected.ImpTrainingService.Type]--;
                 foreach (IMpManagerListener listener in listeners)
                 {
                     listener.OnUpdateMaxProfessions(professions);
@@ -154,16 +144,16 @@ namespace Assets.Scripts.Managers
 
         private void UpdateMaxProfessions(ImpController imp)
         {
-            if (imp.Type != ImpType.Unemployed &&
-                professions[(int)imp.Type] > 0)
+            if (imp.ImpTrainingService.Type != ImpType.Unemployed &&
+                professions[(int)imp.ImpTrainingService.Type] > 0)
             {
-                professions[(int)imp.Type]--;
+                professions[(int)imp.ImpTrainingService.Type]--;
                 foreach (IMpManagerListener listener in listeners)
                 {
                     listener.OnUpdateMaxProfessions(professions);
                 }
             }
-            imp.Train(ImpType.Unemployed);
+            imp.ImpTrainingService.Train(ImpType.Unemployed);
         
         }
 
@@ -245,7 +235,7 @@ namespace Assets.Scripts.Managers
         {
             foreach (var imp in imps)
             {
-                imp.DisplayLabel();
+                imp.ImpUIService.DisplayLabel();
             }
         }
 
@@ -295,7 +285,7 @@ namespace Assets.Scripts.Managers
         {
             foreach (var imp in imps)
             {
-                imp.DismissLabel();
+                imp.ImpUIService.DismissLabel();
             }
         }
 

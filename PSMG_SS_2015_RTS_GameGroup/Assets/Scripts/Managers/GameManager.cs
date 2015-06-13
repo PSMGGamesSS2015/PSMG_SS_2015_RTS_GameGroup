@@ -46,7 +46,6 @@ namespace Assets.Scripts.Managers
             uiManager = GetComponent<UIManager>();
             inputManager = GetComponent<InputManager>();
             soundManager = GetComponent<SoundManager>();
-            impManager.SoundMgr = soundManager;
             persistenceManager = GetComponent<PersistenceManager>();
         }
 

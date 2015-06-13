@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Types;
+﻿using Assets.Scripts.Helpers;
+using Assets.Scripts.Types;
 
 namespace Assets.Scripts.Controllers.Characters.Imps
 {
@@ -15,7 +16,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public override void FixedUpdate()
         {
-            if (GetComponent<ImpController>().Type == ImpType.Coward || GetComponent<ImpController>().IsInCommand()) return;
+            if (GetComponent<ImpTrainingService>().Type == ImpType.Coward || (GetComponent<ImpTrainingService>().Type == ImpType.Spearman) && GetComponent<ImpSpearmanService>().IsInCommand()) return;
             if (!HasStartedMoving) return;
             if (CurrentDirection == Direction.Vertical)
             {

@@ -2,7 +2,7 @@
 using Assets.Scripts.ExtensionMethods;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Helpers
 {
     public abstract class MovingObject : MonoBehaviour {
 

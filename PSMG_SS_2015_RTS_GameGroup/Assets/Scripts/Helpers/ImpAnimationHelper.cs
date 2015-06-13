@@ -4,7 +4,7 @@ using Assets.Scripts.Types;
 
 namespace Assets.Scripts.Helpers
 {
-    class ImpAnimationHelper : AnimationHelper
+    public class ImpAnimationHelper : AnimationHelper
     {
         public ImpInventory ImpInventory;
 

@@ -7,7 +7,7 @@ using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters
+namespace Assets.Scripts.Controllers.Characters.Enemies
 {
     public class TrollController : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
@@ -189,7 +189,7 @@ namespace Assets.Scripts.Controllers.Characters
         {
             foreach (ImpController imp in impsInAttackRange)
             {
-                if (imp.Type == ImpType.Coward)
+                if (imp.ImpTrainingService.Type == ImpType.Coward)
                 {
                     return imp;
                 }

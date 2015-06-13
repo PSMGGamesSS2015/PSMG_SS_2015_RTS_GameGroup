@@ -4,25 +4,18 @@ namespace Assets.Scripts.Helpers
 {
     public class AudioHelper : MonoBehaviour
     {
-        private AudioSource audioSource;
-        public AudioSource AudioSrc
-        {
-            get
-            {
-                return audioSource;
-            }
-        }
+        public AudioSource AudioSource { get; private set; }
 
         public void Awake()
         {
-            audioSource = gameObject.AddComponent<AudioSource>();
+            AudioSource = gameObject.AddComponent<AudioSource>();
         }
 
         public void Play(string clipName)
         {
-            AudioClip audioClip = Resources.Load(clipName) as AudioClip;
-            audioSource.clip = audioClip;
-            audioSource.Play();
+            var audioClip = Resources.Load(clipName) as AudioClip;
+            AudioSource.clip = audioClip;
+            AudioSource.Play();
         }
 
     }

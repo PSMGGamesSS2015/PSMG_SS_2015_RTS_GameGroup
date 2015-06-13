@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.AssetReferences;
-using UnityEngine;
+﻿using Assets.Scripts.AssetReferences;
 
 namespace Assets.Scripts.Controllers.Characters.Imps
 {
@@ -9,123 +7,37 @@ namespace Assets.Scripts.Controllers.Characters.Imps
     /// used by an imp. 
     /// </summary>
 
-    public class ImpInventory : MonoBehaviour
+    public class ImpInventory : Inventory
     {
-        private SpriteRenderer spear;
-        private SpriteRenderer shield;
-        private SpriteRenderer bomb;
-        private SpriteRenderer ladder;
-        private Explosion explosion;
-
-        private List<SpriteRenderer> tools;
-
-        #region initialization
-
-        public void Awake()
+        protected override void InitTagNames()
         {
-            tools = new List<SpriteRenderer>();
+            TagNames = new []{
+                TagReferences.ImpInventorySpear, 
+                TagReferences.ImpInventoryShield, 
+                TagReferences.ImpInventoryBomb, 
+                TagReferences.ImpInventoryLadder
+            };
         }
 
-        public void Start()
+        public override void HideItems()
         {
-            RetrieveTools();
-            HideAllTools();
+            base.HideItems();
+
+            Explosion.Hide();
         }
 
-        private void RetrieveTools()
+        protected override void RetrieveItems()
         {
-            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            base.RetrieveItems();
 
-            foreach (var renderer in renderers)
-            {
-                if (renderer.gameObject.tag == TagReferences.ImpInventorySpear)
-                {
-                    spear = renderer;
-                }
-                if (renderer.gameObject.tag == TagReferences.ImpInventoryShield)
-                {
-                    shield = renderer;
-                }
-                if (renderer.gameObject.tag == TagReferences.ImpInventoryBomb)
-                {
-                    bomb = renderer;
-                }
-                if (renderer.gameObject.tag == TagReferences.ImpInventoryLadder)
-                {
-                    ladder = renderer;
-                }
-                tools.Add(renderer);
-            }
-
-            explosion = GetComponentInChildren<Explosion>();
-        }
-    
-        public void HideAllTools()
-        {
-            foreach (var renderer in tools)
-            {
-                renderer.enabled = false;
-            }
+            Explosion = GetComponentInChildren<Explosion>();
         }
 
-        #endregion
-
-        public Explosion Explo
-        {
-            get
-            {
-                return explosion;
-            }
-        }
-
-        public void Display(string item)
-        {
-            HideAllTools();
-            switch (item)
-            {
-                case "Spear":
-                    DisplaySpear();
-                    break;
-                case "Shield":
-                    DisplayShield();
-                    break;
-                case "Ladder":
-                    DisplayLadder();
-                    break;
-                case "Bomb":
-                    DisplayBomb();
-                    break;
-                case "Explosion":
-                    explosion.Display();
-                    break;
-            }
-        
-        }
-
-        public void DisplaySpear()
-        {
-            spear.enabled = true;
-        }
-
-
-        public void DisplayLadder()
-        {
-            ladder.enabled = true;
-        }
-
-        public void DisplayBomb()
-        {
-            bomb.enabled = true;
-        }
-
-        public void DisplayShield()
-        {
-            shield.enabled = true;
-        }
+        public Explosion Explosion { get; private set; }
 
         public void DisplayExplosion()
         {
-            explosion.Display();
+            Explosion.Display();
         }
     }
 }

@@ -23,16 +23,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         #region variables and constants
         
         // animation
-        private Animator animator;
+        private ImpAnimationHelper impAnimationHelper;
         // movement
         private Rigidbody2D rigidBody2D;
         private CircleCollider2D circleCollider2D;
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
         private SpriteRenderer[] sprites;
-        private float movementSpeed = 0.6f;
-        private float formerMovementSpeed;
-        private bool facingRight = true;
         private bool movingUpwards;
         //profession-related
         private TriggerCollider2D attackRange;
@@ -41,22 +38,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         private bool isAtThrowingPosition;
         //general
         private List<IImpControllerListener> listeners;
-        public LayerMask impLayer;
         //prefabs
         public GameObject VerticalLadderPrefab;
         public GameObject HorizontalLadderPrefab;
-        private ImpInventory impInventory;
         // ui
         private bool areLabelsDisplayed;
         // constants
-        private const float MovementSpeedWalking = 0.6f;
-        private const float MovementSpeedRunning = 1.8f;
         private Counter bombCounter;
         private Counter attackCounter;
         private AudioHelper audioHelper;
-        // services
-        private MovingObject movementService;
+        // movement
+        private ImpMovementService movementService;
+        // training
         private ImpTrainingService impTrainingService;
+        
 
         #endregion
 
@@ -113,12 +108,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             InitServices();
             InitAttributes();
             InitTriggerColliders();
-            animator.Play(AnimationReferences.ImpWalkingUnemployed);
+            impAnimationHelper.Play(AnimationReferences.ImpWalkingUnemployed);
         }
 
         private void InitServices()
         {
-            //movementService = gameObject.AddComponent<MovingObject>();
+            movementService = gameObject.AddComponent<ImpMovementService>();
             impTrainingService = gameObject.AddComponent<ImpTrainingService>();
         }
 
@@ -126,11 +121,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             rigidBody2D = GetComponent<Rigidbody2D>();
             circleCollider2D = GetComponent<CircleCollider2D>();
-            animator = GetComponent<Animator>();
-            impInventory = GetComponentInChildren<ImpInventory>();
             sprites = GetComponentsInChildren<SpriteRenderer>();
             Selection = GetComponentInChildren<ImpSelection>();
             audioHelper = GetComponent<AudioHelper>();
+            impAnimationHelper = GetComponent<ImpAnimationHelper>();
         }
 
         private void InitAttributes()
@@ -168,11 +162,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             enemiesInAttackRange = new List<TrollController>();
         }
 
-        public void Start()
-        {
-            //movementService.StartMoving(true, MovingObject.Direction.Horizontal);
-        }
-
         public bool IsPlacingLadder { get; private set; }
 
         public ImpType Type { get; private set; }
@@ -180,21 +169,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         public ImpSelection Selection { get; private set; }
 
         public bool IsTrainable { get; private set; }
-
-        public void FixedUpdate()
-        {
-            if (Type == ImpType.Coward || IsInCommand()) return;
-            if (movingUpwards)
-            {
-                MoveUpwards();
-                //movementService.MoveUpwards();
-            }
-            else
-            {
-                Move();
-                //movementService.Move();
-            }
-        }
 
         public void LeaveGame()
         {
@@ -210,23 +184,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         #endregion
 
         #region basic movement patterns
-
-        private void Move()
-        {
-            rigidBody2D.velocity = new Vector2(movementSpeed, rigidBody2D.velocity.y);
-        }
-    
-        private void Turn()
-        {
-            movementSpeed *= -1;
-            facingRight = !facingRight;
-            this.Flip();
-        }
-
-        private void MoveUpwards()
-        {
-            rigidBody2D.velocity = new Vector2(0f, 1f); 
-        }
 
         private void ClimbLadder()
         {
@@ -245,7 +202,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             {
                 anim = AnimationReferences.ImpClimbingLadderUnemployed;
             }
-            animator.Play(anim);
+            impAnimationHelper.Play(anim);
         }
 
         #endregion
@@ -259,7 +216,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private IEnumerator PiercingRoutine()
         {
-            animator.Play(AnimationReferences.ImpAttackingWithSpear);
+            impAnimationHelper.Play(AnimationReferences.ImpAttackingWithSpear);
             audioHelper.Play(SoundReferences.ImpAttack1);
 
             yield return new WaitForSeconds(0.75f);
@@ -270,7 +227,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             }
             enemiesInAttackRange.Clear();
 
-            animator.Play(AnimationReferences.ImpStandingWithSpear);
+            impAnimationHelper.Play(AnimationReferences.ImpStandingWithSpear);
         }
 
         private void SetupVerticalLadder(Vector3 position)
@@ -286,35 +243,27 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private IEnumerator SetupHorizontalLadderRoutine(Vector3 position)
         {
-            var formerMovementSpeed = movementSpeed;
-            movementSpeed = 0f;
+            movementService.Stand();
             IsPlacingLadder = true;
         
-            impInventory.DisplayLadder();
-        
-            animator.Play(AnimationReferences.ImpPlacingLadderHorizontally);
+            impAnimationHelper.Play(AnimationReferences.ImpPlacingLadderHorizontally);
             audioHelper.Play(SoundReferences.ImpSetupLadder);
 
             yield return new WaitForSeconds(5.5f);
-  
-            impInventory.HideAllTools();
+
+            impAnimationHelper.SwitchBackToStandardAnimation();
             IsPlacingLadder = false;
             Untrain();
-            animator.Play(AnimationReferences.ImpWalkingUnemployed);
-            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
+            movementService.Walk();
             Instantiate(HorizontalLadderPrefab, new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
-        }
-
-        private void StartMovingAgain(float direction, float speed)
-        {
-            movementSpeed = (direction < 0f) ? -speed : speed;
         }
 
         private void FormCommand(ImpController commandPartner)
         {
             if (Type == ImpType.Spearman)
             {
-                animator.Play(AnimationReferences.ImpStandingWithSpear);
+                movementService.Stand();
+                impAnimationHelper.Play(AnimationReferences.ImpStandingWithSpear);
                 attackCounter = Counter.SetCounter(this.gameObject, 4f, Pierce, true);;
             }
             this.commandPartner = commandPartner;
@@ -324,7 +273,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             if (Type == ImpType.Spearman)
             {
-                animator.Play(AnimationReferences.ImpWalkingSpear);
+                movementService.Walk();
+                impAnimationHelper.Play(AnimationReferences.ImpWalkingSpear);
                 if (attackCounter != null)
                 {
                     attackCounter.Stop();
@@ -346,24 +296,24 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private IEnumerator DetonatingRoutine()
         {
-            var formerMovementSpeed = movementSpeed;
+            var formerMovementSpeed = movementService.movementSpeed;
             var isFlippingNecessary = (formerMovementSpeed < 0);
-            movementSpeed = 0f;
+            movementService.Stand();
 
             if (isFlippingNecessary)
             {
-                impInventory.Explo.Flip();
+                impAnimationHelper.ImpInventory.Explosion.Flip();
             }
 
-            impInventory.DisplayExplosion();
-            animator.Play(AnimationReferences.ImpDetonatingBomb);
+            impAnimationHelper.ImpInventory.DisplayExplosion();
+            impAnimationHelper.Play(AnimationReferences.ImpDetonatingBomb);
             audioHelper.Play(SoundReferences.BombExplosion);
         
             yield return new WaitForSeconds(1f);
 
             if (isFlippingNecessary)
             {
-                impInventory.Explo.Flip();
+                impAnimationHelper.ImpInventory.Explosion.Flip();
             }
 
             var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
@@ -372,7 +322,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 Destroy(c.gameObject);
             }
 
-            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
+            movementService.Walk();
             IsTrainable = true;
             Untrain();
         }
@@ -410,7 +360,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                     InteractWith(obstacle);
                     break;
                 case TagReferences.Impassable:
-                    Turn();
+                    movementService.Turn();
                     break;
             }
         }
@@ -448,24 +398,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                     break;
                 case TagReferences.LadderTop:
                     movingUpwards = false;
-                    PlayWalkingAnimation();
+                    audioHelper.Play(SoundReferences.ImpGoing);
+                    impAnimationHelper.PlayWalkingAnimation(Type);
                     break;
             }
-        }
-
-        private void PlayWalkingAnimation()
-        {
-            string anim;
-            if (Type == ImpType.Spearman)
-            {
-                anim = AnimationReferences.ImpWalkingSpear;
-            }
-            else
-            {
-                anim = AnimationReferences.ImpWalkingUnemployed;
-            }
-            animator.Play(anim);
-            audioHelper.Play(SoundReferences.ImpGoing);
         }
 
         public void OnCollisionStay2D(Collision2D collision)
@@ -475,7 +411,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             if (imp.Type != ImpType.Coward) return;
             if (Type != ImpType.Spearman)
             {
-                Turn();
+                movementService.Turn();
             }
         }
 
@@ -485,13 +421,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private void InteractWith(ObstacleController obstacle)
         {
-            Turn();
+            movementService.Turn();
             // TODO
         }
 
         private void InteractWith(TrollController enemy)
         {
-            Turn();
+            movementService.Turn();
             // TODO
         }
 
@@ -512,7 +448,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                       Type == ImpType.Botcher ||
                       Type == ImpType.Schwarzenegger))
             {
-                Turn();
+                movementService.Turn();
             }
 
             else if ((Type == ImpType.Schwarzenegger) &&
@@ -543,12 +479,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             if (this.Type != ImpType.Coward)
             {
-                formerMovementSpeed = movementSpeed;
-                movementSpeed = 0f;
+                movementService.Stand();
             }
-
-            impInventory.HideAllTools();
-            animator.Play(AnimationReferences.ImpTakingObject);
+            impAnimationHelper.PlayImpTakingObjectAnimation();
+            
             audioHelper.Play(SoundReferences.ImpSelect4);
 
             yield return new WaitForSeconds(1.0f);
@@ -564,70 +498,47 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
             this.Type = type;
 
-            if (type == ImpType.Blaster) TrainBlaster(formerMovementSpeed);
-        
-            if (type == ImpType.Spearman) TrainSpearman(formerMovementSpeed);
+            if (type == ImpType.Blaster) TrainBlaster();
 
-            if (type == ImpType.LadderCarrier) TrainLadderCarrier(formerMovementSpeed);
+            if (type == ImpType.Spearman) TrainSpearman();
 
-            if (type == ImpType.Unemployed) TrainUnemployed(formerMovementSpeed);
+            if (type == ImpType.LadderCarrier) TrainLadderCarrier();
+
+            if (type == ImpType.Unemployed) TrainUnemployed();
 
             if (type == ImpType.Coward) TrainCoward();
 
         }
 
-        private void TrainUnemployed(float formerMovementSpeed)
+        private void TrainUnemployed()
         {
-            impInventory.HideAllTools();
-            if (formerMovementSpeed < 0f)
-            {
-                movementSpeed = -0.6f;
-            }
-            else if (formerMovementSpeed == 0f)
-            {
-                if (facingRight)
-                {
-                    movementSpeed = 0.6f;
-                }
-                else
-                {
-                    movementSpeed = -0.6f;
-                }
-            }
-            else
-            {
-                movementSpeed = 0.6f;
-            }
-
-            animator.Play(AnimationReferences.ImpWalkingUnemployed);
+            movementService.Walk();
+            impAnimationHelper.SwitchBackToStandardAnimation();
         }
 
         private void TrainCoward()
         {
-            impInventory.Display(TagReferences.ImpInventoryShield);
-            animator.Play(AnimationReferences.ImpHidingBehindShield);
+            impAnimationHelper.PlayTrainingAnimation(ImpType.Coward);
             audioHelper.Play(SoundReferences.ShieldWood1);
         }
 
-        private void TrainLadderCarrier(float formerMovementSpeed)
+        private void TrainLadderCarrier()
         {
-            impInventory.Display(TagReferences.ImpInventoryLadder);
-            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
-            animator.Play(AnimationReferences.ImpWalkingLadder);
+            impAnimationHelper.PlayTrainingAnimation(ImpType.LadderCarrier);
+            movementService.Walk();
         }
 
-        private void TrainSpearman(float formerMovementSpeed)
+        private void TrainSpearman()
         {
-            impInventory.Display(TagReferences.ImpInventorySpear);
-            StartMovingAgain(formerMovementSpeed, MovementSpeedWalking);
-            animator.Play(AnimationReferences.ImpWalkingSpear);
+            impAnimationHelper.PlayTrainingAnimation(ImpType.Spearman);
+            movementService.Walk();
         }
 
-        private void TrainBlaster(float formerMovementSpeed)
+        private void TrainBlaster()
         {
             IsTrainable = false;
             SetupBombCounter();
-            DisplayBlasterAnimation(formerMovementSpeed);
+            DisplayBlasterAnimation();
         }
 
         private void SetupBombCounter()
@@ -636,11 +547,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             bombCounter = Counter.SetCounter(this.gameObject, 3f, DetonateBomb, false);
         }
 
-        private void DisplayBlasterAnimation(float formerMovementSpeed)
+        private void DisplayBlasterAnimation()
         {
-            impInventory.Display(TagReferences.ImpInventoryBomb);
-            StartMovingAgain(formerMovementSpeed, MovementSpeedRunning);
-            animator.Play(AnimationReferences.ImpWalkingBomb);
+            impAnimationHelper.PlayTrainingAnimation(ImpType.Blaster);
+            movementService.Run();
         }
 
         public bool HasJob()

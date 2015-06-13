@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class MovingObject : MonoBehaviour {
+    public abstract class MovingObject : MonoBehaviour {
 
-        private const float MovementSpeedWalking = 0.6f;
-        private const float MovementSpeedRunning = 1.8f;
+        public const float MovementSpeedWalking = 0.6f;
+        public const float MovementSpeedRunning = 1.8f;
     
-        private float movementSpeed;
-        private float formerMovementSpeed;
+        public float movementSpeed;
+        public float formerMovementSpeed;
     
-        private bool facingRight = true;
-        private Direction currentDirection;
-        private bool hasStartedMoving;
+        public bool facingRight = true;
+        protected Direction CurrentDirection;
+        protected bool HasStartedMoving;
+        protected bool IsStanding;
 
         public bool FacingRight 
         {
@@ -26,21 +27,12 @@ namespace Assets.Scripts
 
         public void Awake()
         {
-            hasStartedMoving = false;
+            HasStartedMoving = false;
         }
 
-        public void FixedUpdate ()
-        {
-            if (!hasStartedMoving) return;
-            if (currentDirection == Direction.Vertical)
-            {
-                MoveUpwards();
-            }
-            else
-            {
-                Move();
-            }
-        }
+        public abstract void Start();
+        public abstract void FixedUpdate();
+
 
         public void Turn()
         {
@@ -70,8 +62,8 @@ namespace Assets.Scripts
                 movementSpeed = MovementSpeedWalking;
             }
             this.facingRight = facingRight;
-            currentDirection = direction;
-            hasStartedMoving = true;
+            CurrentDirection = direction;
+            HasStartedMoving = true;
         }
 
         public void Walk()
@@ -84,6 +76,19 @@ namespace Assets.Scripts
             {
                 movementSpeed = MovementSpeedWalking;
             }
+            else if (IsStanding)
+            {
+                if (facingRight)
+                {
+                    movementSpeed = MovementSpeedWalking;
+                }
+                else
+                {
+                    movementSpeed = -MovementSpeedWalking;
+                }
+                
+            }
+            IsStanding = false;
         }
 
         public void Run()
@@ -96,11 +101,12 @@ namespace Assets.Scripts
             {
                 movementSpeed = MovementSpeedRunning;
             }
+            IsStanding = false;
         }
 
         public void ChangeDirection(Direction direction)
         {
-            currentDirection = direction;
+            CurrentDirection = direction;
         }
 
         public void Stand()
@@ -110,6 +116,7 @@ namespace Assets.Scripts
                 formerMovementSpeed = movementSpeed;
             }
             movementSpeed = 0f;
+            IsStanding = true;
         }
 
         public enum Direction

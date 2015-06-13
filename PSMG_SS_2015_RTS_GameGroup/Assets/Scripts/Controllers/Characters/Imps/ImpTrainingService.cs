@@ -2,7 +2,6 @@
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
-using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps
@@ -21,6 +20,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         public void Awake()
         {
             InitComponents();
+            InitAttributes();
+        }
+
+        private void InitAttributes()
+        {
+            Type = ImpType.Unemployed;
+            IsTrainable = true;
         }
 
         private void InitComponents()
@@ -43,18 +49,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 movementService.Stand();
             }
             impAnimationHelper.PlayImpTakingObjectAnimation();
-
             audioHelper.Play(SoundReferences.ImpSelect4);
 
             yield return new WaitForSeconds(1.0f);
 
-            if ((this.Type == ImpType.Spearman) && GetComponent<ImpSpearmanService>().IsInCommand())
+            if (SpearmanIsInCommand())
             {
                 GetComponent<ImpSpearmanService>().CommandPartner.GetComponent<ImpCowardService>().DissolveCommand();
                 GetComponent<ImpSpearmanService>().DissolveCommand();
             }
 
-            if ((this.Type == ImpType.Coward) && GetComponent<ImpCowardService>().IsInCommand())
+            if (CowardIsInCommand())
             {
                 GetComponent<ImpCowardService>().CommandPartner.GetComponent<ImpSpearmanService>().DissolveCommand();
                 GetComponent<ImpCowardService>().DissolveCommand();
@@ -62,30 +67,58 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
             this.Type = type;
 
-            if (type == ImpType.Blaster) TrainBlaster();
 
-            if (type == ImpType.Spearman) TrainSpearman();
+            RemoveCurrentProfessionService();
+            switch (type)
+            {
+                case ImpType.Spearman:
+                    TrainSpearman();
+                    break;
+                case ImpType.Coward:
+                    TrainCoward();
+                    break;
+                case ImpType.LadderCarrier:
+                    TrainLadderCarrier();
+                    break;
+                case ImpType.Blaster:
+                    TrainBlaster();
+                    break;
+                case ImpType.Firebug:
+                    TrainFirebug();
+                    break;
+                case ImpType.Botcher:
+                    TrainBotcher();
+                    break;
+                case ImpType.Schwarzenegger:
+                    TrainSchwarzenegger();
+                    break;
+                case ImpType.Unemployed:
+                    TrainUnemployed();
+                    break;
+            }
+        }
 
-            if (type == ImpType.LadderCarrier) TrainLadderCarrier();
+        
+        private bool CowardIsInCommand()
+        {
+            return (this.Type == ImpType.Coward) && GetComponent<ImpCowardService>().IsInCommand();
+        }
 
-            if (type == ImpType.Unemployed) TrainUnemployed();
-
-            if (type == ImpType.Coward) TrainCoward();
-
+        private bool SpearmanIsInCommand()
+        {
+            return (this.Type == ImpType.Spearman) && GetComponent<ImpSpearmanService>().IsInCommand();
         }
 
         private void TrainUnemployed()
         {
             movementService.Walk();
             impAnimationHelper.SwitchBackToStandardAnimation();
-            RemoveCurrentProfessionService();
         }
 
         private void TrainCoward()
         {
             impAnimationHelper.PlayTrainingAnimation(ImpType.Coward);
             audioHelper.Play(SoundReferences.ShieldWood1);
-            RemoveCurrentProfessionService();
             currentProfessionService = gameObject.AddComponent<ImpCowardService>();
         }
 
@@ -93,7 +126,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             impAnimationHelper.PlayTrainingAnimation(ImpType.LadderCarrier);
             movementService.Walk();
-            RemoveCurrentProfessionService();
             currentProfessionService = gameObject.AddComponent<ImpLadderCarrierService>();
         }
 
@@ -101,8 +133,35 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             impAnimationHelper.PlayTrainingAnimation(ImpType.Spearman);
             movementService.Walk();
-            RemoveCurrentProfessionService();
             currentProfessionService = gameObject.AddComponent<ImpSpearmanService>();
+        }
+
+        private void TrainBlaster()
+        {
+            IsTrainable = false;
+            DisplayBlasterAnimation();
+            currentProfessionService = gameObject.AddComponent<ImpBlasterService>();
+        }
+
+        private void TrainSchwarzenegger()
+        {
+            movementService.Walk();
+            currentProfessionService = gameObject.AddComponent<ImpSchwarzeneggerService>();
+            // TODO
+        }
+
+        private void TrainBotcher()
+        {
+            movementService.Walk();
+            currentProfessionService = gameObject.AddComponent<ImpBotcherService>();
+            // TODO
+        }
+
+        private void TrainFirebug()
+        {
+            movementService.Walk();
+            currentProfessionService = gameObject.AddComponent<ImpFirebugService>();
+            // TODO
         }
 
         private void RemoveCurrentProfessionService()
@@ -110,20 +169,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             Destroy(currentProfessionService);
         }
 
-        private void TrainBlaster()
-        {
-            IsTrainable = false;
-            SetupBombCounter();
-            DisplayBlasterAnimation();
-            RemoveCurrentProfessionService();
-            currentProfessionService = gameObject.AddComponent<ImpBlasterService>();
-        }
-
-        private void SetupBombCounter()
-        {
-            if (impController.bombCounter != null) Destroy(impController.bombCounter.gameObject);
-            impController.bombCounter = Counter.SetCounter(this.gameObject, 3f, impController.DetonateBomb, false);
-        }
+        
 
         private void DisplayBlasterAnimation()
         {

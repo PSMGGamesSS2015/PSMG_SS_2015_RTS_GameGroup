@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Helpers;
@@ -187,14 +188,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies
 
         private ImpController SearchForCoward()
         {
-            foreach (ImpController imp in impsInAttackRange)
-            {
-                if (imp.ImpTrainingService.Type == ImpType.Coward)
-                {
-                    return imp;
-                }
-            }
-            return null;
+            return impsInAttackRange.FirstOrDefault(imp => imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward);
         }
 
         private void SmashAllImpsInRange()

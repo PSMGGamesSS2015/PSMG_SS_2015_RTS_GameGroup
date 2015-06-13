@@ -7,6 +7,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps
     {
         private bool areLabelsDisplayed;
 
+        public ImpSelection Selection { get; private set; }
+
+        public void Awake()
+        {
+            Selection = GetComponentInChildren<ImpSelection>();
+        }
+
         public void OnGUI()
         {
             if (areLabelsDisplayed)
@@ -23,6 +30,15 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         public void DismissLabel()
         {
             areLabelsDisplayed = false;
+        }
+
+        public void OnMouseDown()
+        {
+            var impController = GetComponent<ImpController>();
+            foreach (var listener in impController.Listeners)
+            {
+                listener.OnImpSelected(impController);
+            }
         }
     }
 }

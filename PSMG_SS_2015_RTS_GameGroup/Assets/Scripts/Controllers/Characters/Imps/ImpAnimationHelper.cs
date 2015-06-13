@@ -1,40 +1,52 @@
 ﻿using Assets.Scripts.AssetReferences;
-using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.ExtensionMethods;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
+using UnityEngine;
 
-namespace Assets.Scripts.Helpers
+namespace Assets.Scripts.Controllers.Characters.Imps
 {
     public class ImpAnimationHelper : AnimationHelper
     {
-        public ImpInventory ImpInventory;
+        private ImpInventory impInventory;
+        private SpriteRenderer[] sprites;
 
         public override void Awake()
         {
             base.Awake();
+            impInventory = GetComponentInChildren<ImpInventory>();
+            Play(AnimationReferences.ImpWalkingUnemployed);
+            sprites = GetComponentsInChildren<SpriteRenderer>();
+        }
 
-            ImpInventory = GetComponentInChildren<ImpInventory>(); 
+        public void MoveToSortingLayerPosition(int position)
+        {
+            foreach (var r in sprites)
+            {
+                r.sortingOrder = position;
+            }
         }
 
         public void PlayTrainingAnimation(ImpType impType)
         {
             if (impType == ImpType.Coward)
             {
-                ImpInventory.Display(TagReferences.ImpInventoryShield);
+                impInventory.Display(TagReferences.ImpInventoryShield);
                 Play(AnimationReferences.ImpHidingBehindShield);
             }
             if (impType == ImpType.Spearman)
             {
-                ImpInventory.Display(TagReferences.ImpInventorySpear);
+                impInventory.Display(TagReferences.ImpInventorySpear);
                 Play(AnimationReferences.ImpWalkingSpear);
             }
             if (impType == ImpType.LadderCarrier)
             {
-                ImpInventory.Display(TagReferences.ImpInventoryLadder);
+                impInventory.Display(TagReferences.ImpInventoryLadder);
                 Play(AnimationReferences.ImpWalkingLadder);
             }
             if (impType == ImpType.Blaster)
             {
-                ImpInventory.Display(TagReferences.ImpInventoryBomb);
+                impInventory.Display(TagReferences.ImpInventoryBomb);
                 Play(AnimationReferences.ImpWalkingBomb);
             }
         }
@@ -56,19 +68,19 @@ namespace Assets.Scripts.Helpers
 
         public void PlayPlacingLadderHorizonallyAnimation()
         {
-            ImpInventory.Display(TagReferences.ImpInventoryLadder);
+            impInventory.Display(TagReferences.ImpInventoryLadder);
             Play(AnimationReferences.ImpPlacingLadderHorizontally);
         }
 
         public void SwitchBackToStandardAnimation()
         {
-            ImpInventory.HideItems();
+            impInventory.HideItems();
             Play(AnimationReferences.ImpWalkingUnemployed);
         }
 
         public void PlayImpTakingObjectAnimation()
         {
-            ImpInventory.HideItems();
+            impInventory.HideItems();
             Play(AnimationReferences.ImpTakingObject);
         }
 
@@ -84,6 +96,16 @@ namespace Assets.Scripts.Helpers
                 anim = AnimationReferences.ImpWalkingUnemployed;
             }
             Play(anim);
+        }
+
+        public void FlipExplosion()
+        {
+            impInventory.Explosion.Flip();
+        }
+
+        public void DisplayExplosion()
+        {
+            impInventory.DisplayExplosion();
         }
     }
 }

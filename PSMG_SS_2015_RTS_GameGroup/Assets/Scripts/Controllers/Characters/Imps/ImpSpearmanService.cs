@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies;
 using Assets.Scripts.Helpers;
-using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -13,7 +12,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
     {
         private ImpAnimationHelper impAnimationService;
         private AudioHelper impAudioService;
-        private ImpTrainingService impTrainingService;
         private ImpMovementService impMovementService;
 
         private Counter attackCounter;
@@ -46,7 +44,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             impAnimationService = GetComponent<ImpAnimationHelper>();
             impAudioService = GetComponent<AudioHelper>();
-            impTrainingService = GetComponent<ImpTrainingService>();
             impMovementService = GetComponent<ImpMovementService>();
         }
 

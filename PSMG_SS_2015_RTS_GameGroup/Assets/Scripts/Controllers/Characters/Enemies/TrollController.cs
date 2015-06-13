@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using Assets.Scripts.Utility;

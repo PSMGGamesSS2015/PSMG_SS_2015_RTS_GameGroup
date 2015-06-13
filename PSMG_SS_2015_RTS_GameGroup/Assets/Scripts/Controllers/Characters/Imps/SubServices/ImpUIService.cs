@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpUIService : MonoBehaviour
     {
@@ -18,7 +18,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             if (areLabelsDisplayed)
             {
-                Handles.Label(new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0), GetComponent<ImpTrainingService>().Type.ToString());
+                Handles.Label(
+                    new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0),
+                    GetComponent<ImpTrainingService>().Type.ToString());
             }
         }
 

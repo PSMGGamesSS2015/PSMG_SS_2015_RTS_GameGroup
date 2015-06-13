@@ -4,7 +4,7 @@ using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpTrainingService : MonoBehaviour
     {
@@ -98,7 +98,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             }
         }
 
-        
+
         private bool CowardIsInCommand()
         {
             return (this.Type == ImpType.Coward) && GetComponent<ImpCowardService>().IsInCommand();
@@ -169,7 +169,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             Destroy(currentProfessionService);
         }
 
-        
 
         private void DisplayBlasterAnimation()
         {

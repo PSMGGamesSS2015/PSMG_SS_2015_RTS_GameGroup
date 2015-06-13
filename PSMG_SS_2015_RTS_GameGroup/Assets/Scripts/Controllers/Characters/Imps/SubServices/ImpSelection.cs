@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
-    public class Explosion : MonoBehaviour
+    public class ImpSelection : MonoBehaviour
     {
-
         private SpriteRenderer[] components;
 
         public void Awake()
@@ -12,6 +11,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             components = GetComponentsInChildren<SpriteRenderer>();
         }
 
+        public void Start()
+        {
+            Hide();
+        }
 
         public void Display()
         {
@@ -26,7 +29,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             foreach (var r in components)
             {
                 r.enabled = false;
-            } 
+            }
         }
     }
 }

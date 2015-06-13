@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Utility;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpCowardService : ImpProfessionService
     {

@@ -3,12 +3,11 @@ using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpLadderCarrierService : ImpProfessionService
     {
 
-        
         private ImpTrainingService impTrainingService;
         private ImpMovementService impMovementService;
         private ImpAnimationHelper impAnimationService;

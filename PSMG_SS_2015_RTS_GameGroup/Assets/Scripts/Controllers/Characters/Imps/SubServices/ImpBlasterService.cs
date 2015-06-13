@@ -5,7 +5,7 @@ using Assets.Scripts.Helpers;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpBlasterService : ImpProfessionService
     {
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private IEnumerator DetonatingRoutine()
         {
-            var formerMovementSpeed = impMovementService.movementSpeed;
+            var formerMovementSpeed = impMovementService.MovementSpeed;
             var isFlippingNecessary = (formerMovementSpeed < 0);
             impMovementService.Stand();
 

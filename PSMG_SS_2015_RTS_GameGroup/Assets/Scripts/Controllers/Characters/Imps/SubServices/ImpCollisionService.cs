@@ -4,11 +4,10 @@ using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpCollisionService : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
-
         private CircleCollider2D circleCollider2D;
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
@@ -16,7 +15,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         private AudioHelper impAudioService;
         private ImpMovementService impMovementService;
         private ImpTrainingService impTrainingService;
-
 
         public void Awake()
         {
@@ -92,7 +90,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
                         {
-                            GetComponent<ImpLadderCarrierService>().SetupVerticalLadder(collider.gameObject.transform.position);
+                            GetComponent<ImpLadderCarrierService>()
+                                .SetupVerticalLadder(collider.gameObject.transform.position);
                             ladderSpotController.PlaceLadder();
                         }
                     }
@@ -103,7 +102,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
                         {
-                            GetComponent<ImpLadderCarrierService>().SetupHorizontalLadder(collider.gameObject.transform.position);
+                            GetComponent<ImpLadderCarrierService>()
+                                .SetupHorizontalLadder(collider.gameObject.transform.position);
                             ladderSpotController.PlaceLadder();
                         }
                     }
@@ -132,7 +132,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
@@ -146,7 +145,5 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
             }
         }
- 
-
     }
 }

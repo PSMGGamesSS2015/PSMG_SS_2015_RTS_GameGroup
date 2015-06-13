@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Helpers;
-using Assets.Scripts.Types;
+﻿using Assets.Scripts.Types;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpInteractionLogicService : MonoBehaviour
     {
@@ -25,7 +24,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void InteractWith(ImpController imp)
         {
-
             if (SpearmanAndCowardMeet(imp))
             {
                 if (!SpearmanAndCowardHaveNoCommandPartner()) return;
@@ -38,7 +36,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 {
                     GetComponent<ImpCowardService>().FormCommand(imp);
                 }
-
             }
 
             else if (MeetingCowardOrIsPlacingALadder(imp) && HasAProfessionThatMoves())
@@ -55,7 +52,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             }
             else
             {
-                Physics2D.IgnoreCollision(impCollisionService.GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), true);
+                Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
+                    imp.GetComponent<ImpCollisionService>().GetCollider(), true);
             }
         }
 
@@ -78,7 +76,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private bool MeetingCowardOrIsPlacingALadder(ImpController imp)
         {
-            return (imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward || (imp.GetComponent<ImpTrainingService>().Type == ImpType.LadderCarrier && GetComponent<ImpLadderCarrierService>().IsPlacingLadder));
+            return (imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward) ||
+                    (imp.GetComponent<ImpTrainingService>().Type == ImpType.LadderCarrier &&
+                     imp.GetComponent<ImpLadderCarrierService>().IsPlacingLadder);
         }
 
         private bool SpearmanAndCowardHaveNoCommandPartner()
@@ -91,8 +91,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private bool SpearmanAndCowardMeet(ImpController imp)
         {
-            return ((impTrainingService.Type == ImpType.Spearman && imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward) ||
-                    (impTrainingService.Type == ImpType.Coward && imp.GetComponent<ImpTrainingService>().Type == ImpType.Spearman));
-        } 
+            return ((impTrainingService.Type == ImpType.Spearman &&
+                     imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward) ||
+                    (impTrainingService.Type == ImpType.Coward &&
+                     imp.GetComponent<ImpTrainingService>().Type == ImpType.Spearman));
+        }
     }
 }

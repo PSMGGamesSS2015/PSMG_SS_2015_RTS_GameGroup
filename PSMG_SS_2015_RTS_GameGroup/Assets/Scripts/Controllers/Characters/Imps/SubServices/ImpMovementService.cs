@@ -2,13 +2,13 @@
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpMovementService : MovingObject
     {
         public override void Start()
         {
-            facingRight = true;
+            FacingRight = true;
             CurrentDirection = Direction.Horizontal;
             HasStartedMoving = true;
             IsStanding = true;
@@ -38,14 +38,19 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         private void PlayClimbingAnimation()
         {
             string anim;
-            if (GetComponent<ImpTrainingService>().Type == ImpType.Spearman)
+            switch (GetComponent<ImpTrainingService>().Type)
             {
-                anim = AnimationReferences.ImpClimbingLadderSpearman;
+                case ImpType.Spearman:
+                    anim = AnimationReferences.ImpClimbingLadderSpearman;
+                    break;
+                case ImpType.Unemployed:
+                    anim = AnimationReferences.ImpClimbingLadderUnemployed;
+                    break;
+                default:
+                    anim = AnimationReferences.ImpClimbingLadderUnemployed;
+                    break;
             }
-            else
-            {
-                anim = AnimationReferences.ImpClimbingLadderUnemployed;
-            }
+
             GetComponent<ImpAnimationHelper>().Play(anim);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.ExtensionMethods;
 using Assets.Scripts.Helpers;
 using UnityEngine;
@@ -6,16 +7,42 @@ using UnityEngine;
 namespace Assets.Scripts.Controllers.Characters.Imps
 {
     /// <summary>
-    /// The ImpController is a component attached to every instance of
-    /// an Imp prefab. It manages movement patterns and collision detection
-    /// of imps and listens for click events on the imps.
+    ///     The ImpController is a component attached to every instance of
+    ///     an Imp prefab. It manages movement patterns and collision detection
+    ///     of imps and listens for click events on the imps.
     /// </summary>
-
     public class ImpController : MonoBehaviour
     {
-        
-        public GameObject VerticalLadderPrefab;
         public GameObject HorizontalLadderPrefab;
+        public GameObject VerticalLadderPrefab;
+
+        public void Awake()
+        {
+            InitServices();
+        }
+
+        private void InitServices()
+        {
+            gameObject.AddComponent<AudioHelper>();
+            gameObject.AddComponent<ImpUIService>();
+            gameObject.AddComponent<ImpMovementService>();
+            gameObject.AddComponent<ImpTrainingService>();
+            gameObject.AddComponent<ImpCollisionService>();
+            gameObject.AddComponent<ImpInteractionLogicService>();
+
+            Listeners = new List<IImpControllerListener>();
+        }
+
+        public void LeaveGame()
+        {
+            for (var i = Listeners.Count - 1; i >= 0; i--)
+            {
+                Listeners[i].OnImpHurt(this);
+            }
+            Listeners.Clear();
+            this.StopAllCounters();
+            Destroy(gameObject);
+        }
 
         # region listener interface
 
@@ -39,33 +66,5 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         }
 
         #endregion
-
-       public void Awake()
-        {
-            InitServices();
-        }
-
-        private void InitServices()
-        {
-            gameObject.AddComponent<AudioHelper>();
-            gameObject.AddComponent<ImpUIService>();
-            gameObject.AddComponent<ImpMovementService>();
-            gameObject.AddComponent<ImpTrainingService>();
-            gameObject.AddComponent<ImpCollisionService>();
-            gameObject.AddComponent<ImpInteractionLogicService>();
-            
-            Listeners = new List<IImpControllerListener>();
-        }
-
-        public void LeaveGame()
-        {
-            for (var i = Listeners.Count - 1; i >= 0; i--)
-            {
-                Listeners[i].OnImpHurt(this);
-            }
-            Listeners.Clear();
-            this.StopAllCounters();
-            Destroy(gameObject);
-        }
     }
 }

@@ -6,7 +6,7 @@ using Assets.Scripts.Helpers;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Imps
+namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpSpearmanService : ImpProfessionService, TriggerCollider2D.ITriggerCollider2DListener
     {
@@ -31,7 +31,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
             foreach (var c in triggerColliders)
             {
-                if (c.tag == TagReferences.ImpAttackRange){
+                if (c.tag == TagReferences.ImpAttackRange)
+                {
                     attackRange = c;
                 }
             }
@@ -73,7 +74,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             impMovementService.Stand();
             impAnimationService.Play(AnimationReferences.ImpStandingWithSpear);
             attackCounter = Counter.SetCounter(this.gameObject, 4f, Pierce, true);
-            
+
             CommandPartner = commandPartner;
         }
 
@@ -81,6 +82,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             impMovementService.Walk();
             impAnimationService.Play(AnimationReferences.ImpWalkingSpear);
+
             if (attackCounter != null)
             {
                 attackCounter.Stop();
@@ -94,23 +96,29 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             return CommandPartner != null;
         }
 
+        public void OnDestroy()
+        {
+            attackRange.UnregisterListener();
+        }
+
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != GetComponent<ImpSpearmanService>().attackRange.GetInstanceID()) return;
 
             if (collider.gameObject.tag == TagReferences.EnemyTroll)
             {
-                GetComponent<ImpSpearmanService>().enemiesInAttackRange.Add(collider.gameObject.GetComponent<TrollController>());
+                GetComponent<ImpSpearmanService>()
+                    .enemiesInAttackRange.Add(collider.gameObject.GetComponent<TrollController>());
             }
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != GetComponent<ImpSpearmanService>().attackRange.GetInstanceID()) return;
+            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
 
             if (collider.gameObject.tag == TagReferences.EnemyTroll)
             {
-                GetComponent<ImpSpearmanService>().enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
+                enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
             }
         }
     }

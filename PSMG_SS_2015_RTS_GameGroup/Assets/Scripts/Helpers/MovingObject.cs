@@ -8,60 +8,53 @@ namespace Assets.Scripts.Helpers
 
         public const float MovementSpeedWalking = 0.6f;
         public const float MovementSpeedRunning = 1.8f;
-    
-        public float movementSpeed;
-        public float formerMovementSpeed;
-    
-        public bool facingRight = true;
+
+        public float MovementSpeed { get; private set; }
+        private float formerMovementSpeed;
+
         protected Direction CurrentDirection;
         protected bool HasStartedMoving;
         protected bool IsStanding;
 
-        public bool FacingRight 
-        {
-            get
-            {
-                return facingRight;
-            }
-        }
+        public bool FacingRight { get; protected set; }
 
         public void Awake()
         {
             HasStartedMoving = false;
+            FacingRight = true;
         }
 
         public abstract void Start();
         public abstract void FixedUpdate();
 
-
         public void Turn()
         {
-            movementSpeed *= -1;
-            facingRight = !facingRight;
+            MovementSpeed *= -1;
+            FacingRight = !FacingRight;
             this.Flip();
         }
 
         public void Move()
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(movementSpeed, 0f);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(MovementSpeed, GetComponent<Rigidbody2D>().velocity.y);
         }
 
         public void MoveUpwards()
         {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, movementSpeed);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, MovementSpeed);
         }
 
         public void StartMoving(bool facingRight, Direction direction) 
         {
             if (!facingRight) 
             {
-                movementSpeed = -MovementSpeedWalking;
+                MovementSpeed = -MovementSpeedWalking;
             }
             else if (facingRight) 
             {
-                movementSpeed = MovementSpeedWalking;
+                MovementSpeed = MovementSpeedWalking;
             }
-            this.facingRight = facingRight;
+            this.FacingRight = facingRight;
             CurrentDirection = direction;
             HasStartedMoving = true;
         }
@@ -70,21 +63,21 @@ namespace Assets.Scripts.Helpers
         {
             if (formerMovementSpeed < 0f)
             {
-                movementSpeed = -MovementSpeedWalking;
+                MovementSpeed = -MovementSpeedWalking;
             }
             else if (formerMovementSpeed > 0f)
             {
-                movementSpeed = MovementSpeedWalking;
+                MovementSpeed = MovementSpeedWalking;
             }
             else if (IsStanding)
             {
-                if (facingRight)
+                if (FacingRight)
                 {
-                    movementSpeed = MovementSpeedWalking;
+                    MovementSpeed = MovementSpeedWalking;
                 }
                 else
                 {
-                    movementSpeed = -MovementSpeedWalking;
+                    MovementSpeed = -MovementSpeedWalking;
                 }
                 
             }
@@ -95,11 +88,11 @@ namespace Assets.Scripts.Helpers
         {
             if (formerMovementSpeed < 0f)
             {
-                movementSpeed = -MovementSpeedRunning;
+                MovementSpeed = -MovementSpeedRunning;
             }
             else if (formerMovementSpeed > 0f)
             {
-                movementSpeed = MovementSpeedRunning;
+                MovementSpeed = MovementSpeedRunning;
             }
             IsStanding = false;
         }
@@ -111,11 +104,11 @@ namespace Assets.Scripts.Helpers
 
         public void Stand()
         {
-            if (Math.Abs(movementSpeed) > 0f)
+            if (Math.Abs(MovementSpeed) > 0f)
             {
-                formerMovementSpeed = movementSpeed;
+                formerMovementSpeed = MovementSpeed;
             }
-            movementSpeed = 0f;
+            MovementSpeed = 0f;
             IsStanding = true;
         }
 

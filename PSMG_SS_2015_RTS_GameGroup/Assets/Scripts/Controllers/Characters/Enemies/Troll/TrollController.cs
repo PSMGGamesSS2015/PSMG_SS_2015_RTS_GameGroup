@@ -9,9 +9,9 @@ using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.Characters.Enemies
+namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 {
-    public class TrollController : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
+    public class TrollController : EnemyController, TriggerCollider2D.ITriggerCollider2DListener
     {
         #region variables and constants
 

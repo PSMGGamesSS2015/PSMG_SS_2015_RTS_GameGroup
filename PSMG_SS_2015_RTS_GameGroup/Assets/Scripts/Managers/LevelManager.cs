@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
-using Assets.Scripts.Controllers.Characters.Enemies;
+using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
 using UnityEngine;
 

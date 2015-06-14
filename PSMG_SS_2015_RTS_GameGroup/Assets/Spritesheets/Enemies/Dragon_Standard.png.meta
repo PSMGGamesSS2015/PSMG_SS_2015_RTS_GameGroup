@@ -1,0 +1,275 @@
+fileFormatVersion: 2
+guid: 021ca4b47506d4f4d9aa6019ba5feb40
+timeCreated: 1434308826
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Dragon_Standard_Lid
+    21300002: Dragon_Standard_Eyeball
+    21300004: Dragon_Standard_Pupil
+    21300006: Dragon_Standard_Skull
+    21300008: Dragon_Standard_LeftPaw
+    21300010: Dragon_Standard_LeftFoot
+    21300012: Dragon_Standard_UpperArm
+    21300014: Dragon_Standard_Nostril
+    21300016: Dragon_Standard_PupilWhiteSpot
+    21300018: Dragon_Standard_RightPaw
+    21300020: Dragon_Standard_RightFoot
+    21300022: Dragon_Standard_Jaw
+    21300024: Dragon_Standard_LeftWing
+    21300026: Dragon_Standard_RightWing
+    21300028: Dragon_Standard_Leg
+    21300030: Dragon_Standard_LowerArn
+    21300032: Dragon_Standard_TailEnd
+    21300034: Dragon_Standard_Body
+    21300036: Dragon_Standard_TailBeginning
+    21300038: Dragon_Standard_TailMiddlePart
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Dragon_Standard_Lid
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 3765
+        width: 346
+        height: 300
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Eyeball
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 3765
+        width: 347
+        height: 300
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Pupil
+      rect:
+        serializedVersion: 2
+        x: 776
+        y: 3849
+        width: 189
+        height: 208
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Skull
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 3061
+        width: 1509
+        height: 1003
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_LeftPaw
+      rect:
+        serializedVersion: 2
+        x: 2919
+        y: 3769
+        width: 313
+        height: 298
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_LeftFoot
+      rect:
+        serializedVersion: 2
+        x: 3309
+        y: 3728
+        width: 372
+        height: 329
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_UpperArm
+      rect:
+        serializedVersion: 2
+        x: 3733
+        y: 3495
+        width: 315
+        height: 561
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Nostril
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 3520
+        width: 88
+        height: 185
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_PupilWhiteSpot
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 3568
+        width: 101
+        height: 99
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_RightPaw
+      rect:
+        serializedVersion: 2
+        x: 2861
+        y: 3411
+        width: 300
+        height: 268
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_RightFoot
+      rect:
+        serializedVersion: 2
+        x: 3256
+        y: 3360
+        width: 432
+        height: 279
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Jaw
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 3151
+        width: 854
+        height: 292
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_LeftWing
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 1411
+        width: 1771
+        height: 1538
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_RightWing
+      rect:
+        serializedVersion: 2
+        x: 2095
+        y: 1493
+        width: 1942
+        height: 1430
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Leg
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 583
+        width: 395
+        height: 620
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_LowerArn
+      rect:
+        serializedVersion: 2
+        x: 736
+        y: 581
+        width: 279
+        height: 531
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_TailEnd
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 536
+        width: 195
+        height: 669
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_Body
+      rect:
+        serializedVersion: 2
+        x: 2167
+        y: 23
+        width: 1908
+        height: 1346
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_TailBeginning
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 537
+        height: 363
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dragon_Standard_TailMiddlePart
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 35
+        width: 724
+        height: 314
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -22,5 +22,4 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
     }
 
-    
 }

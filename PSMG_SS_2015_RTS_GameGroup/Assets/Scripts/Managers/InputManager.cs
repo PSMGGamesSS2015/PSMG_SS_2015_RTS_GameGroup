@@ -15,6 +15,7 @@ namespace Assets.Scripts.Managers
 
         private List<IInputManagerListener> listeners;
         private bool isPaused;
+        // ReSharper disable once NotAccessedField.Local
         private UserInterface.UserInterface userInterface;
 
         public void Awake()
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Managers
             void OnDismissImpLabels();
         }
 
-        private void OnGUI()
+        public void OnGUI()
         {
             var e = Event.current;
             if (e.type == EventType.KeyDown)

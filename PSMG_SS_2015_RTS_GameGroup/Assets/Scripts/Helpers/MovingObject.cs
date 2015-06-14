@@ -9,7 +9,7 @@ namespace Assets.Scripts.Helpers
         public const float MovementSpeedWalking = 0.6f;
         public const float MovementSpeedRunning = 1.8f;
 
-        public float MovementSpeed { get; private set; }
+        public float MovementSpeed { get; protected set; }
         private float formerMovementSpeed;
 
         protected Direction CurrentDirection;
@@ -42,6 +42,11 @@ namespace Assets.Scripts.Helpers
         public void MoveUpwards()
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, MovementSpeed);
+        }
+
+        public void MoveDownwards()
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -MovementSpeed);
         }
 
         public void StartMoving(bool facingRight, Direction direction) 
@@ -117,5 +122,6 @@ namespace Assets.Scripts.Helpers
             Horizontal,
             Vertical
         }
+
     }
 }

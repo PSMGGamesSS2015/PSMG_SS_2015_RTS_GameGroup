@@ -17,6 +17,7 @@ namespace Assets.Scripts.Managers
         public const string StoragePath = "/savedGames.gd";
 
         private List<SaveGame> savedGames;
+        // TODO
         private SaveGame currentGame;
 
         private List<IPersistenceManagerListener> listeners;
@@ -46,13 +47,13 @@ namespace Assets.Scripts.Managers
         public void SaveGame()
         {
             savedGames.Add(currentGame);
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream fileStream = File.Create(Application.persistentDataPath + StoragePath);
+            var binaryFormatter = new BinaryFormatter();
+            var fileStream = File.Create(Application.persistentDataPath + StoragePath);
             binaryFormatter.Serialize(fileStream, savedGames);
             fileStream.Close();
 
             // TODO wait for fileWriting to be completed
-            foreach (IPersistenceManagerListener listener in listeners)
+            foreach (var listener in listeners)
             {
                 listener.OnGameSaved();
             }
@@ -62,14 +63,14 @@ namespace Assets.Scripts.Managers
         {
             if (File.Exists(Application.persistentDataPath + StoragePath))
             {
-                BinaryFormatter binaryFormatter = new BinaryFormatter();
-                FileStream fileStream = File.Open(Application.persistentDataPath + StoragePath, FileMode.Open);
+                var binaryFormatter = new BinaryFormatter();
+                var fileStream = File.Open(Application.persistentDataPath + StoragePath, FileMode.Open);
                 savedGames = (List<SaveGame>)binaryFormatter.Deserialize(fileStream);
                 fileStream.Close();
             }
 
             // TODO wait for fileReading to be completed
-            foreach (IPersistenceManagerListener listener in listeners)
+            foreach (var listener in listeners)
             {
                 listener.OnGameLoaded();
             }

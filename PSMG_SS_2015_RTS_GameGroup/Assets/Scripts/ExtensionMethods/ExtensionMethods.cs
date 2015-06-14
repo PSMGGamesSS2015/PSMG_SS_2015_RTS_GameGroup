@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Utility;
+﻿using Assets.Scripts.Helpers;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.ExtensionMethods
@@ -7,10 +8,9 @@ namespace Assets.Scripts.ExtensionMethods
     {
         public static void StopAllCounters(this MonoBehaviour mb)
         {
-            // TODO Get component cannot be used here since GameObjects are spawned
             var counters = mb.gameObject.GetComponents<Counter>();
 
-            for (int i = counters.Length - 1; i >= 0; i--)
+            for (var i = counters.Length - 1; i >= 0; i--)
             {
                 counters[i].Stop();
             }

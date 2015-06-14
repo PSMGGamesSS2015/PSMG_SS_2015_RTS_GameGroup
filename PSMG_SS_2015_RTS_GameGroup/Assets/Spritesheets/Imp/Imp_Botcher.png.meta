@@ -1,9 +1,12 @@
 fileFormatVersion: 2
-guid: 976fc3b37b5e9ac4f8e12f25b96ab6cd
-timeCreated: 1432140785
+guid: 24e861ce90008924a910a2b35e04aab7
+timeCreated: 1434321107
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Imp_Botcher_Spanner
+    21300002: Imp_Botcher_Helmet
+    21300004: Imp_Botcher_Magnet
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +33,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +51,37 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Imp_Botcher_Spanner
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 3416
+        width: 2372
+        height: 600
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Botcher_Helmet
+      rect:
+        serializedVersion: 2
+        x: 2941
+        y: 3331
+        width: 1052
+        height: 630
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Botcher_Magnet
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 1664
+        width: 1247
+        height: 1339
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

@@ -1,0 +1,165 @@
+fileFormatVersion: 2
+guid: 6f9a0b9671ca95642ab8fb0dc6989b20
+timeCreated: 1434320314
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Troll_Standard_II_RightNostril
+    21300002: Troll_Standard_II_LeftNostril
+    21300004: Troll_Standard_II_PupilSpot
+    21300006: Troll_Standard_II_Pupil
+    21300008: Troll_Standard_II_Lid
+    21300010: Troll_Standard_II_Eyeball
+    21300012: Troll_Standard_II_Jaw
+    21300014: Troll_Standard_II_Brow
+    21300016: Troll_Standard_II_Hammer
+    21300018: Troll_Standard_II_Skull
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Troll_Standard_II_RightNostril
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 3959
+        width: 54
+        height: 94
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_LeftNostril
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 3943
+        width: 64
+        height: 113
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_PupilSpot
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 3944
+        width: 90
+        height: 88
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Pupil
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 3859
+        width: 216
+        height: 206
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Lid
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 3649
+        width: 565
+        height: 359
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Eyeball
+      rect:
+        serializedVersion: 2
+        x: 1533
+        y: 3655
+        width: 564
+        height: 358
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Jaw
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 3185
+        width: 568
+        height: 480
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Brow
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 3213
+        width: 553
+        height: 218
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Hammer
+      rect:
+        serializedVersion: 2
+        x: 2717
+        y: 423
+        width: 1171
+        height: 3190
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_II_Skull
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 1656
+        width: 1282
+        height: 1235
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

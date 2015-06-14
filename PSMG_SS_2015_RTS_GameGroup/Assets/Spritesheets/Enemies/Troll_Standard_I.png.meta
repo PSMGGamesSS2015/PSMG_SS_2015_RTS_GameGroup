@@ -1,0 +1,220 @@
+fileFormatVersion: 2
+guid: 497622d38e141614ebd36825cec0a44e
+timeCreated: 1434320720
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Troll_Standard_I_RightFingers
+    21300002: Troll_Standard_I_LeftHand
+    21300004: Troll_Standard_I_RightFoot
+    21300006: Troll_Standard_I_LeftFoot
+    21300008: Troll_Standard_I_RightPalm
+    21300010: Troll_Standard_I_Fingers
+    21300012: Troll_Standard_I_LeftLowerLeg
+    21300014: Troll_Standard_I_RightLowerArm
+    21300016: Troll_Standard_I_RightUpperArm
+    21300018: Troll_Standard_I_LeftUpperArm
+    21300020: Troll_Standard_I_LeftUpperLeg
+    21300022: Troll_Standard_I_LeftLowerArm
+    21300024: Troll_Standard_I_RightLowerLeg
+    21300026: Troll_Standard_I_RightUpperLeg
+    21300028: Troll_Standard_I_Body
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Troll_Standard_I_RightFingers
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 3497
+        width: 574
+        height: 544
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_LeftHand
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 3472
+        width: 600
+        height: 611
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_RightFoot
+      rect:
+        serializedVersion: 2
+        x: 1439
+        y: 3535
+        width: 698
+        height: 524
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_LeftFoot
+      rect:
+        serializedVersion: 2
+        x: 2315
+        y: 3553
+        width: 701
+        height: 492
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_RightPalm
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 2880
+        width: 507
+        height: 521
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_Fingers
+      rect:
+        serializedVersion: 2
+        x: 784
+        y: 2949
+        width: 161
+        height: 395
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_LeftLowerLeg
+      rect:
+        serializedVersion: 2
+        x: 1976
+        y: 2024
+        width: 629
+        height: 1097
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_RightLowerArm
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 1437
+        width: 696
+        height: 1323
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_RightUpperArm
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 1301
+        width: 708
+        height: 1522
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_LeftUpperArm
+      rect:
+        serializedVersion: 2
+        x: 1637
+        y: 24
+        width: 716
+        height: 1523
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_LeftUpperLeg
+      rect:
+        serializedVersion: 2
+        x: 3317
+        y: 55
+        width: 732
+        height: 1442
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_LeftLowerArm
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 7
+        width: 701
+        height: 1318
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_RightLowerLeg
+      rect:
+        serializedVersion: 2
+        x: 808
+        y: 53
+        width: 627
+        height: 1099
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_RightUpperLeg
+      rect:
+        serializedVersion: 2
+        x: 2454
+        y: 11
+        width: 771
+        height: 1658
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Troll_Standard_I_Body
+      rect:
+        serializedVersion: 2
+        x: 2977
+        y: 1603
+        width: 1119
+        height: 2047
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

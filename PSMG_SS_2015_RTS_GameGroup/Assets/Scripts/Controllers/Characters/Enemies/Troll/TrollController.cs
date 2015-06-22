@@ -19,7 +19,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
         private Animator animator;
         private AudioHelper audioHelper;
         public EnemyType Type;
-        private IEnemyControllerListener listener;
+        private ITrollControllerListener listener;
         public GameObject Counter;
         // troll
         private bool isAngry = false;
@@ -33,12 +33,12 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         #region listener interface
 
-        public interface IEnemyControllerListener
+        public interface ITrollControllerListener
         {
             void OnEnemyHurt(TrollController trollController);
         }
 
-        public void RegisterListener(IEnemyControllerListener listener)
+        public void RegisterListener(ITrollControllerListener listener)
         {
             this.listener = listener;
         }

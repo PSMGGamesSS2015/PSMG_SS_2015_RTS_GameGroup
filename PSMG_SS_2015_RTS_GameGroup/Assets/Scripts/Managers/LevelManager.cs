@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
+using Assets.Scripts.ParameterObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -14,27 +16,24 @@ namespace Assets.Scripts.Managers
     /// interest for the interaction logic.
     /// </summary>
 
-    public class LevelManager : MonoBehaviour, TrollController.IEnemyControllerListener, GoalController.IGoalControllerListener
+    public class LevelManager : MonoBehaviour, TrollController.ITrollControllerListener, GoalController.IGoalControllerListener
     {
 
         private List<ILevelManagerListener> listeners;
 
-        private LevelConfig currentLevelConfig;
-        private List<GameObject> obstacles;
-        private List<GameObject> enemies;
-        private GameObject start;
-        private GameObject goal;
         private GoalController goalController;
+        private Level currentLevel;
+
+        public LevelConfig CurrentLevelConfig { get; set; }
 
         public interface ILevelManagerListener
         {
-            void OnLevelStarted(LevelConfig config, GameObject start);
+            void OnLevelStarted(Level level);
         }
 
         public void Awake() 
         {
-            obstacles = new List<GameObject>();
-            enemies = new List<GameObject>();
+            
             listeners = new List<ILevelManagerListener>();
             SetupCollisionManagement();
         }
@@ -52,110 +51,48 @@ namespace Assets.Scripts.Managers
 
         public void LoadLevel(LevelConfig config)
         {
-            currentLevelConfig = config;
+            CurrentLevelConfig = config;
             Application.LoadLevel(config.Name);
         }
 
         public void OnLevelWasLoaded(int level)
         {
-            RetrieveLevelData();
-            foreach (ILevelManagerListener listener in listeners)
+            CurrentLevel = new Level()
             {
-                listener.OnLevelStarted(currentLevelConfig, start);
+                CurrentLevelConfig = CurrentLevelConfig,
+                MainCamera = GameObject.FindGameObjectWithTag(TagReferences.MainCamera),
+                Obstacles = GameObject.FindGameObjectsWithTag(TagReferences.Obstacle).ToList(),
+                Start = GameObject.FindWithTag(TagReferences.LevelStart),
+                Goal = GameObject.FindWithTag(TagReferences.LevelGoal),
+                Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
+            };
+            RegisterListeners(); // TODO Move somewhere else
+            foreach (var listener in listeners)
+            {
+                listener.OnLevelStarted(CurrentLevel);
             }
         
         }
 
-        public LevelConfig CurrentLevelConfig
+        public Level CurrentLevel { get; set; }
+
+        public void RegisterListeners()
         {
-            get
-            {
-                return currentLevelConfig;
-            }
+            RegisterEnemyListener();
+            RegisterGoalListener();
         }
 
-        public GameObject Start
+        private void RegisterEnemyListener()
         {
-            get 
-            {
-                return start;
-            }
-        
+            CurrentLevel.Enemies.ForEach(x => x.GetComponent<TrollController>().RegisterListener(this));
         }
 
-        public GameObject Goal
+        private void RegisterGoalListener()
         {
-            get 
-            {
-                return goal;
-            }
+            CurrentLevel.Goal.GetComponent<GoalController>().RegisterListener(this);
         }
 
-        public List<GameObject> Enemies
-        {
-            get 
-            {
-                return enemies;
-            }
-        }
-
-        public List<GameObject> Obstacles
-        {
-            get 
-            {
-                return obstacles;
-            }
-        
-        }
-
-        public Vector3 SpawnPosition
-        {
-            get 
-            {
-                return start.transform.position;
-            }
-        }
-
-        public void RetrieveLevelData()
-        {
-            RetrieveObstacles();
-            RetrieveEnemies();
-            RetrieveStart();
-            RetrieveGoal();
-        }
-
-        private void RetrieveObstacles()
-        {
-            var obstacles = GameObject.FindGameObjectsWithTag(TagReferences.Obstacle);
-            for (var i = 0; i < obstacles.Length; i++)
-            {
-                this.obstacles.Add(obstacles[i]);
-            }
-        }
-
-        private void RetrieveEnemies()
-        {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll);
-            for (var i = 0; i < enemies.Length; i++)
-            {
-                this.enemies.Add(enemies[i]);
-                enemies[i].GetComponent<TrollController>().RegisterListener(this);
-            }
-        }
-
-        private void RetrieveStart()
-        {
-            start = GameObject.FindWithTag(TagReferences.LevelStart);
-        }
-
-        private void RetrieveGoal()
-        {
-            goal = GameObject.FindWithTag(TagReferences.LevelGoal);
-            goalController = goal.GetComponent<GoalController>();
-            goalController.RegisterListener(this);
-        }
-
-        void TrollController.IEnemyControllerListener.OnEnemyHurt(TrollController trollController)
+        void TrollController.ITrollControllerListener.OnEnemyHurt(TrollController trollController)
         {
             trollController.UnregisterListener();
         }

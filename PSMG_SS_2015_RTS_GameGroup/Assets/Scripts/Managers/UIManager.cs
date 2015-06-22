@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Config;
+using Assets.Scripts.ParameterObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -25,14 +25,11 @@ namespace Assets.Scripts.Managers
             listeners.Add(listener);
         }
 
-        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
             var userInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface.UserInterface>();
-            userInterface.Setup(config);
-            foreach (var listener in listeners)
-            {
-                listener.OnUserInterfaceLoaded(userInterface);
-            }
+            userInterface.Setup(level.CurrentLevelConfig);
+            listeners.ForEach(x => x.OnUserInterfaceLoaded(userInterface));
         }
     }
 }

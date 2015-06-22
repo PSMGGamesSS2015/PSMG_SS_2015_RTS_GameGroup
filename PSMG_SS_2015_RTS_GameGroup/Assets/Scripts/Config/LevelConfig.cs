@@ -10,53 +10,20 @@ namespace Assets.Scripts.Config
 
     public class LevelConfig  {
 
-        private readonly int maxImps;
-        private readonly float spawnInterval;
-        private readonly string name;
-        private readonly int[] maxProfessions;
-
         public LevelConfig (int maxImps, float spawnInterval, string name, int[] maxProfessions) {
-            this.maxImps = maxImps;
-            this.spawnInterval = spawnInterval;
-            this.name = name;
-            this.maxProfessions = maxProfessions;
+            this.MaxImps = maxImps;
+            this.SpawnInterval = spawnInterval;
+            this.Name = name;
+            this.MaxProfessions = maxProfessions;
         }
 
-        #region properties
+        public int MaxImps { get; private set; }
 
-        public int MaxImps
-        {
-            get
-            {
-                return maxImps;
-            }
-        }
+        public float SpawnInterval { get; private set; }
 
-        public float SpawnInterval
-        {
-            get
-            {
-                return spawnInterval;
-            }
-        }
+        public string Name { get; private set; }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-
-        public int[] MaxProfessions
-        {
-            get
-            {
-                return maxProfessions;
-            }
-        }
-
-        #endregion
+        public int[] MaxProfessions { get; private set; }
 
         /// <summary>
         /// This is a globally usable array of level configurations.

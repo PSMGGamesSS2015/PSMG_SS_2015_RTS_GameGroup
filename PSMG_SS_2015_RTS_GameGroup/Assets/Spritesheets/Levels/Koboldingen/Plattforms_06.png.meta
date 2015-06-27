@@ -1,9 +1,12 @@
 fileFormatVersion: 2
 guid: 6a595343840948244bd945e6eb16588a
-timeCreated: 1435419944
+timeCreated: 1435428708
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Plattforms_06_0
+    21300002: Plattforms_06_1
+    21300004: Plattforms_06_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +33,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +51,37 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Plattforms_06_0
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 1623
+        width: 3667
+        height: 1175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_06_1
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 824
+        width: 2778
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_06_2
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 525
+        width: 2836
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

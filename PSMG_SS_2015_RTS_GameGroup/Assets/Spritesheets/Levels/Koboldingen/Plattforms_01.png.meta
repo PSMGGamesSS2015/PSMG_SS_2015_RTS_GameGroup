@@ -1,9 +1,18 @@
 fileFormatVersion: 2
 guid: fd56c2474675fce47ba7e5b30e042ec3
-timeCreated: 1435420052
+timeCreated: 1435428510
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Plattforms_01_0
+    21300002: Plattforms_01_1
+    21300004: Plattforms_01_2
+    21300006: Plattforms_01_3
+    21300008: Plattforms_01_4
+    21300010: Plattforms_01_5
+    21300012: Plattforms_01_6
+    21300014: Plattforms_01_7
+    21300016: Plattforms_01_8
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +39,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +57,97 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Plattforms_01_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 3088
+        width: 1725
+        height: 960
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_1
+      rect:
+        serializedVersion: 2
+        x: 2065
+        y: 3895
+        width: 1103
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_2
+      rect:
+        serializedVersion: 2
+        x: 1991
+        y: 3627
+        width: 1172
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_3
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 1685
+        width: 1700
+        height: 1222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_4
+      rect:
+        serializedVersion: 2
+        x: 2032
+        y: 2215
+        width: 1439
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_5
+      rect:
+        serializedVersion: 2
+        x: 1951
+        y: 1904
+        width: 1576
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_6
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 199
+        width: 1098
+        height: 918
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_7
+      rect:
+        serializedVersion: 2
+        x: 1795
+        y: 733
+        width: 898
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_01_8
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 469
+        width: 924
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

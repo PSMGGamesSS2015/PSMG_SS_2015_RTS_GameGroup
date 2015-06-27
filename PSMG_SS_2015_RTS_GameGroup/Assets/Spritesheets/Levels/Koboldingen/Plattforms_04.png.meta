@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: 620efb6e0c85d0b4790ee61a1d92a158
-timeCreated: 1435419938
+timeCreated: 1435428628
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Plattforms_04_0
+    21300002: Plattforms_04_1
+    21300004: Plattforms_04_2
+    21300006: Plattforms_04_3
+    21300008: Plattforms_04_4
+    21300010: Plattforms_04_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +36,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +54,67 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Plattforms_04_0
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 2560
+        width: 3996
+        height: 1197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_04_1
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 2217
+        width: 3050
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_04_2
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 1949
+        width: 636
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_04_3
+      rect:
+        serializedVersion: 2
+        x: 1225
+        y: 1759
+        width: 482
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_04_4
+      rect:
+        serializedVersion: 2
+        x: 2119
+        y: 1720
+        width: 426
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Plattforms_04_5
+      rect:
+        serializedVersion: 2
+        x: 2881
+        y: 1848
+        width: 879
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

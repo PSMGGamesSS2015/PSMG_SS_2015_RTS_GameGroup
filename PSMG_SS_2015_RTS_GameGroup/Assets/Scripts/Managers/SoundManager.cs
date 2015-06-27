@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.AssetReferences;
-using Assets.Scripts.Config;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.ParameterObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -15,7 +15,7 @@ namespace Assets.Scripts.Managers
             backgroundMusic = gameObject.AddComponent<AudioHelper>();
         }
 
-        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
             backgroundMusic.Play(SoundReferences.MainTheme);
         }

@@ -28,5 +28,7 @@
 
         public const string UiImpTrainingButton = "ImpTrainingButton";
         public const string UiImpTrainingButtonLabel = "ImpTrainingButtonLabel";
+
+        public const string MainCamera = "MainCamera";
     }
 }

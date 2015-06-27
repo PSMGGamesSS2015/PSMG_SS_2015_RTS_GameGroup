@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Config;
+using Assets.Scripts.ParameterObjects;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -52,7 +53,7 @@ namespace Assets.Scripts.Managers
         public void Start() 
         {
             SetupCommunicationBetweenManagers();
-            levelManager.LoadLevel(LevelConfig.Levels[0]);
+            levelManager.LoadLevel(LevelConfig.Levels[1]);
         }
 
         private void SetupCommunicationBetweenManagers()
@@ -61,6 +62,7 @@ namespace Assets.Scripts.Managers
             levelManager.RegisterListener(impManager);
             levelManager.RegisterListener(soundManager);
             levelManager.RegisterListener(uiManager);
+            levelManager.RegisterListener(inputManager);
             inputManager.RegisterListener(impManager);
             uiManager.RegisterListener(inputManager);
             uiManager.RegisterListener(this);
@@ -74,14 +76,10 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        # region interface implementation
-
-        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
             gameState = GameState.LevelStarted;
         }
-
-        #endregion
 
         void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface.UserInterface userInterface)
         {

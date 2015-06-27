@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
-using Assets.Scripts.UserInterface;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -11,12 +11,13 @@ namespace Assets.Scripts.Managers
     /// It registers input from the keyboard as well as from the user interface.
     /// </summary>
 
-    public class InputManager : MonoBehaviour, UIManager.IUIManagerListener {
+    public class InputManager : MonoBehaviour, UIManager.IUIManagerListener, LevelManager.ILevelManagerListener {
 
         private List<IInputManagerListener> listeners;
         private bool isPaused;
         // ReSharper disable once NotAccessedField.Local
         private UserInterface.UserInterface userInterface;
+        private GameObject mainCamera;
 
         public void Awake()
         {
@@ -72,6 +73,18 @@ namespace Assets.Scripts.Managers
                     case KeyCode.Space:
                         PauseGame();
                         break;
+                    case KeyCode.A:
+                        MoveCameraLeft();
+                        break;
+                    case KeyCode.LeftArrow:
+                        MoveCameraLeft();
+                        break;
+                    case KeyCode.D:
+                        MoveCameraRight();
+                        break;
+                    case KeyCode.RightArrow:
+                        MoveCameraRight();
+                        break;
                 }
             }
             if (e.type != EventType.KeyUp) return;
@@ -79,6 +92,26 @@ namespace Assets.Scripts.Managers
                 case KeyCode.LeftAlt:
                     DismissImpLabels();
                     break;
+            }
+        }
+
+        private void MoveCameraRight()
+        {
+            var pos = mainCamera.transform.position;
+            pos.x++;
+            if (!(pos.x >= GameObject.FindGameObjectWithTag("RightMargin").transform.position.x)) // TODO Refactor
+            {
+                mainCamera.transform.position = pos;
+            }
+        }
+
+        private void MoveCameraLeft()
+        {
+            var pos = mainCamera.transform.position;
+            pos.x--;
+            if (!(pos.x <= GameObject.FindGameObjectWithTag("LeftMargin").transform.position.x)) // TODO Refactor
+            {
+                mainCamera.transform.position = pos;
             }
         }
 
@@ -96,42 +129,27 @@ namespace Assets.Scripts.Managers
 
         private void DismissImpLabels()
         {
-            foreach (var listener in listeners)
-            {
-                listener.OnDismissImpLabels();
-            }
+            listeners.ForEach(x => x.OnDismissImpLabels());
         }
 
         private void SelectNextImp()
         {
-            foreach (var listener in listeners)
-            {
-                listener.OnSelectNextImp();
-            }
+            listeners.ForEach(x => x.OnSelectNextImp());
         }
 
         private void SelectProfession(ImpType impType)
         {
-            foreach (var listener in listeners)
-            {
-                listener.OnProfessionSelected(impType);
-            }
+            listeners.ForEach(x => x.OnProfessionSelected(impType));
         }
 
         private void SelectProfession(int impTypeNumber)
         {
-            foreach (var listener in listeners)
-            {
-                listener.OnProfessionSelected((ImpType) impTypeNumber);
-            }
+            listeners.ForEach(x => x.OnProfessionSelected((ImpType) impTypeNumber));
         }
 
         private void DisplayImpLabels()
         {
-            foreach (var listener in listeners)
-            {
-                listener.OnDisplayImpLabels();
-            }
+            listeners.ForEach(x => x.OnDismissImpLabels());
         }
 
         public void RegisterListener(IInputManagerListener listener)
@@ -141,7 +159,7 @@ namespace Assets.Scripts.Managers
 
         private void RegisterListenersForImpTrainingButtons(UserInterface.UserInterface userInteface)
         {
-            ImpTrainingButton[] buttons = userInteface.ImpTrainingButtons;
+            var buttons = userInteface.ImpTrainingButtons;
             for (var i = 0; i < buttons.Length; i++)
             {
                 var nr = i;
@@ -155,5 +173,10 @@ namespace Assets.Scripts.Managers
             RegisterListenersForImpTrainingButtons(userInteface);
         }
 
+
+        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
+        {
+            mainCamera = level.MainCamera;
+        }
     }
 }

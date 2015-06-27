@@ -2,6 +2,7 @@
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Controllers.Characters.Imps.SubServices;
+using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using UnityEngine;
 
@@ -133,7 +134,7 @@ namespace Assets.Scripts.Managers
                 professions[(int) impSelected.GetComponent<ImpTrainingService>().Type] > 0)
             {
                 professions[(int) impSelected.GetComponent<ImpTrainingService>().Type]--;
-                foreach (IMpManagerListener listener in listeners)
+                foreach (var listener in listeners)
                 {
                     listener.OnUpdateMaxProfessions(professions);
                 }
@@ -146,7 +147,7 @@ namespace Assets.Scripts.Managers
                 professions[(int) imp.GetComponent<ImpTrainingService>().Type] > 0)
             {
                 professions[(int) imp.GetComponent<ImpTrainingService>().Type]--;
-                foreach (IMpManagerListener listener in listeners)
+                foreach (var listener in listeners)
                 {
                     listener.OnUpdateMaxProfessions(professions);
                 }
@@ -266,9 +267,9 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        void LevelManager.ILevelManagerListener.OnLevelStarted(LevelConfig config, GameObject start)
+        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
-            SetLevelConfig(config, start);
+            SetLevelConfig(level.CurrentLevelConfig, level.Start);
         }
 
         #endregion

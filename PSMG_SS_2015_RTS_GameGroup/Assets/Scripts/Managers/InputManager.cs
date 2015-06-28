@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using UnityEngine;
@@ -99,7 +100,7 @@ namespace Assets.Scripts.Managers
         {
             var pos = mainCamera.transform.position;
             pos.x++;
-            if (!(pos.x >= GameObject.FindGameObjectWithTag("RightMargin").transform.position.x)) // TODO Refactor
+            if (!(pos.x >= GameObject.FindGameObjectWithTag(TagReferences.RightMargin).transform.position.x)) // TODO Refactor
             {
                 mainCamera.transform.position = pos;
             }
@@ -109,7 +110,7 @@ namespace Assets.Scripts.Managers
         {
             var pos = mainCamera.transform.position;
             pos.x--;
-            if (!(pos.x <= GameObject.FindGameObjectWithTag("LeftMargin").transform.position.x)) // TODO Refactor
+            if (!(pos.x <= GameObject.FindGameObjectWithTag(TagReferences.LeftMargin).transform.position.x)) // TODO Refactor
             {
                 mainCamera.transform.position = pos;
             }

@@ -78,13 +78,26 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
         }
 
-        public void OnTriggerEnter2D(Collider2D collider)
+        public void OnCollisionStay2D(Collision2D collision)
         {
+            var imp = collision.gameObject.GetComponent<ImpController>();
+            if (imp == null) return;
+            if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
+            if (impTrainingService.Type != ImpType.Spearman)
+            {
+                impMovementService.Turn();
+            }
+        }
+
+        void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
+        {
+            
             var tag = collider.gameObject.tag;
 
             switch (tag)
             {
                 case TagReferences.LadderSpotVertical:
+                    
                     if (impTrainingService.Type == ImpType.LadderCarrier)
                     {
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
@@ -97,6 +110,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderSpotHorizontal:
+                    Debug.Log("Entered horizontal ladder");
                     if (impTrainingService.Type == ImpType.LadderCarrier)
                     {
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
@@ -109,29 +123,15 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderBottom:
+                    Debug.Log("Starting to Climb");
                     GetComponent<ImpMovementService>().ClimbLadder();
                     break;
                 case TagReferences.LadderTop:
-                    impMovementService.Move();
+                    impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
                     impAudioService.Play(SoundReferences.ImpGoing);
                     impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
                     break;
             }
-        }
-
-        public void OnCollisionStay2D(Collision2D collision)
-        {
-            var imp = collision.gameObject.GetComponent<ImpController>();
-            if (imp == null) return;
-            if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
-            if (impTrainingService.Type != ImpType.Spearman)
-            {
-                impMovementService.Turn();
-            }
-        }
-
-        public void OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
-        {
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)

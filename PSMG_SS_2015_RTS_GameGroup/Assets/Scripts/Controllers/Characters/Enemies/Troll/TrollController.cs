@@ -84,50 +84,38 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (collider.gameObject.tag == TagReferences.Imp)
+            if (collider.gameObject.tag != TagReferences.Imp) return;
+            if (isSmashing) return;
+            impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
+            // TODO Work in conditions here: replace old counter with hitcounters
+            if (isAngry)
             {
-                if (!isSmashing)
-                {
-                    impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
-                    // TODO Work in conditions here: replace old counter with hitcounters
-                    if (isAngry)
-                    {
-                        StrikeWithMaul();
-                    }
-                    else
-                    {
-                        if (hitDelay1 == null)
-                        {
-                            hitDelay1 = Instantiate(Counter).GetComponent<Counter>();
-                            hitDelay1.Init(1f, StrikeWithMaul, true);
-                        }
-                    
-                    }
-                }
+                StrikeWithMaul();
+            }
+            else
+            {
+                if (hitDelay1 != null) return;
+                hitDelay1 = Instantiate(Counter).GetComponent<Counter>();
+                hitDelay1.Init(1f, StrikeWithMaul, true);
             }
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (!isSmashing)
+            if (isSmashing) return;
+            if (collider.gameObject.tag != TagReferences.Imp) return;
+            if (!impsInAttackRange.Contains(collider.gameObject.GetComponent<ImpController>())) return;
+            impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
+            if (impsInAttackRange.Count != 0) return;
+            if (hitDelay1 != null)
             {
-                if (collider.gameObject.tag == TagReferences.Imp)
-                {
-                    if (impsInAttackRange.Contains(collider.gameObject.GetComponent<ImpController>()))
-                    {
-                        impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
-                        if (impsInAttackRange.Count == 0)
-                        {
-                            if (hitDelay1 != null)
-                            {
-                                hitDelay1.Stop();
-                            }
-
-                        }
-                    }
-                }
+                hitDelay1.Stop();
             }
-        
+        }
+
+        void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
+        {
+            // TODO
         }
 
         #endregion

@@ -145,5 +145,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
             }
         }
+
+        void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
+        {
+            //
+        }
     }
 }

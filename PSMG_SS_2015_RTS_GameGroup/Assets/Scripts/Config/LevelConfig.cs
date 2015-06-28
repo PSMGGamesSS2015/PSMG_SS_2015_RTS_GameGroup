@@ -30,8 +30,8 @@ namespace Assets.Scripts.Config
         /// </summary>
         public static LevelConfig[] Levels = 
         {                                 
-            new LevelConfig(4, 4.0f, SceneReferences.TestScene, new[] {4,3,3,3,0,0,0,0}),
-            new LevelConfig(4, 4.0f, SceneReferences.Level01Koboldingen, new[] {4,3,3,3,0,0,0,0})              
+            new LevelConfig(4, 4.0f, SceneReferences.TestScene, new[] {4,3,3,3,0,0,0,0}),           // Test Level
+            new LevelConfig(4, 4.0f, SceneReferences.Level01Koboldingen, new[] {4,4,4,4,0,0,0,0})   // Koboldingen           
         };
     }
 }

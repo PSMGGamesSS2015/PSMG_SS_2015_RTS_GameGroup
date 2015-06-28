@@ -12,7 +12,7 @@ namespace Assets.Scripts.Helpers
         public float MovementSpeed { get; protected set; }
         private float formerMovementSpeed;
 
-        protected Direction CurrentDirection;
+        public Direction CurrentDirection;
         protected bool HasStartedMoving;
         protected bool IsStanding;
 

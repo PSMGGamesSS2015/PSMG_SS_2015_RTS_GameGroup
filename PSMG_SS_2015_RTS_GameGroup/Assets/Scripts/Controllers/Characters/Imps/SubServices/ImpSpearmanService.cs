@@ -121,5 +121,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
             }
         }
+
+        void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
+        {
+            // TODO
+        }
     }
 }

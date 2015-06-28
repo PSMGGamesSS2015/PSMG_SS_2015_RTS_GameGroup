@@ -30,5 +30,7 @@
         public const string UiImpTrainingButtonLabel = "ImpTrainingButtonLabel";
 
         public const string MainCamera = "MainCamera";
+        public const string LeftMargin = "LeftMargin";
+        public const string RightMargin = "RightMargin";
     }
 }

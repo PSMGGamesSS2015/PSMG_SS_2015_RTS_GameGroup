@@ -15,7 +15,8 @@ namespace Assets.Scripts.Controllers
         public interface ITriggerCollider2DListener
         {
             void OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider);
-            void OnTriggerExit2D(TriggerCollider2D self, Collider2D collider);    
+            void OnTriggerExit2D(TriggerCollider2D self, Collider2D collider);
+            void OnTriggerStay2D(TriggerCollider2D self, Collider2D collider);
         }
 
         private ITriggerCollider2DListener listener;
@@ -40,6 +41,12 @@ namespace Assets.Scripts.Controllers
         {
             if (listener != null)
             listener.OnTriggerEnter2D(this, collider);
+        }
+
+        public void OnTriggerStay2D(Collider2D collider)
+        {
+            if (listener != null)
+            listener.OnTriggerStay2D(this, collider);
         }
 
     }

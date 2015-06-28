@@ -13,7 +13,8 @@ namespace Assets.Scripts.Controllers.Objects
 
         private List<ImpController> cowardsOnBridge;
         private TriggerCollider2D suspensionBridgeArea;
-        private List<BreakableLink> breakableLinks; 
+        private List<BreakableLink> breakableLinks;
+        private List<BoxCollider2D> colliders; 
 
         public void Awake()
         {
@@ -21,6 +22,7 @@ namespace Assets.Scripts.Controllers.Objects
             suspensionBridgeArea = GetComponent<TriggerCollider2D>();
             suspensionBridgeArea.RegisterListener(this);
             breakableLinks = GetComponentsInChildren<BreakableLink>().ToList();
+            colliders = GetComponentsInChildren<BoxCollider2D>().ToList();
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
@@ -49,8 +51,8 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void Break()
         {
-            Debug.Log("Bridge is breaking");
             breakableLinks.ForEach(breakableLink => breakableLink.Break());
+            colliders.ForEach(Destroy);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)

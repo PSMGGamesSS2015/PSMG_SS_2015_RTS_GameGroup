@@ -34,5 +34,7 @@
         public const string RightMargin = "RightMargin";
 
         public const string Cloud = "Cloud";
+        public const string RockyArc = "RockyArc";
+        public const string FallingRock = "FallingRock";
     }
 }

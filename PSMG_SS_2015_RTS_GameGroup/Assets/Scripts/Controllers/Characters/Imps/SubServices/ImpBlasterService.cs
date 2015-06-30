@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Utility;
 using UnityEngine;
@@ -68,9 +69,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
 
             var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
-            foreach (var c in objectsWithinRadius.Where(c => c.gameObject.tag == TagReferences.Obstacle))
+
+            foreach (var c in objectsWithinRadius.Where(c => c.gameObject.tag == TagReferences.RockyArc))
             {
-                Destroy(c.gameObject);
+                c.GetComponent<RockyArcScript>().Detonate();
             }
 
             impMovementService.Walk();

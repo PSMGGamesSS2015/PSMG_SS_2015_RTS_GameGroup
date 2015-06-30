@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
@@ -18,9 +17,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (areLabelsDisplayed)
             {
-                Handles.Label(
-                    new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0),
-                    GetComponent<ImpTrainingService>().Type.ToString());
+                //Handles.Label(
+                //    new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0),
+                //    GetComponent<ImpTrainingService>().Type.ToString());
             }
         }
 

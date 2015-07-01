@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.UserInterface
+namespace Assets.Scripts.UserInterfaceComponents
 {
     public class ButtonCounter : MonoBehaviour {
 

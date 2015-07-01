@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.LevelScripts
@@ -7,7 +9,7 @@ namespace Assets.Scripts.LevelScripts
     public class Level01Events : MonoBehaviour
     {
 
-        private List<Event> events; 
+        private List<GameObject> events; 
 
         private Event mapStartetMessage;
         private Event shieldCarrierBlockingMessage;
@@ -20,7 +22,7 @@ namespace Assets.Scripts.LevelScripts
 
         public void Awake()
         {
-            events = GetComponentsInChildren<Event>().ToList();
+            events = GameObject.FindGameObjectsWithTag(TagReferences.Event).ToList();
         }
 
         public void Start()
@@ -51,9 +53,13 @@ namespace Assets.Scripts.LevelScripts
 
             laddersCollectedMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
 
+            laddersCollectedMessage.Action = LaddersCollectedAction;
+
             weaponsCollectedMessage = SearchEvent("WeaponsCollectedMessageTrigger");
 
             weaponsCollectedMessage.Message = "Pieks pieks, bumm bumm.";
+
+            weaponsCollectedMessage.Action = WeaponsCollectedAction;
 
             bombNeededMessage = SearchEvent("BombNeededMessageTrigger");
 
@@ -66,7 +72,23 @@ namespace Assets.Scripts.LevelScripts
 
         private Event SearchEvent(string objectName)
         {
-            return events.FirstOrDefault(e => e.gameObject.name.Equals(objectName));
+            var result = events.FirstOrDefault(e => e.gameObject.name.Equals(objectName));
+            return result != null ? result.GetComponent<Event>() : null;
+        }
+
+        private void LaddersCollectedAction()
+        {
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 10;
+            // TODO Refactor; this smells
+            ImpManager.Instance.NotifyMaxProfessions();
+        }
+
+        private void WeaponsCollectedAction()
+        {
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[0] += 10;
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[3] += 10;
+            // TODO Refactor; this smells
+            ImpManager.Instance.NotifyMaxProfessions();
         }
     }
 }

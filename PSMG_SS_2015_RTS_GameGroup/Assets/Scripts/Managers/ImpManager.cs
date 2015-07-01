@@ -31,6 +31,8 @@ namespace Assets.Scripts.Managers
 
         private List<IMpManagerListener> listeners;
 
+        public static ImpManager Instance;
+
         public interface IMpManagerListener
         {
             void OnUpdateMaxProfessions(int[] professions);
@@ -48,6 +50,15 @@ namespace Assets.Scripts.Managers
 
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             currentImps = 0;
             imps = new List<ImpController>();
             listeners = new List<IMpManagerListener>();
@@ -122,23 +133,15 @@ namespace Assets.Scripts.Managers
         {
             UpdateMaxProfessions();
             professions[(int) profession]++;
-            foreach (IMpManagerListener listener in listeners)
-            {
-                listener.OnUpdateMaxProfessions(professions);
-            }
+            listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
         }
 
         private void UpdateMaxProfessions()
         {
-            if (impSelected.GetComponent<ImpTrainingService>().Type != ImpType.Unemployed &&
-                professions[(int) impSelected.GetComponent<ImpTrainingService>().Type] > 0)
-            {
-                professions[(int) impSelected.GetComponent<ImpTrainingService>().Type]--;
-                foreach (var listener in listeners)
-                {
-                    listener.OnUpdateMaxProfessions(professions);
-                }
-            }
+            if (impSelected.GetComponent<ImpTrainingService>().Type == ImpType.Unemployed ||
+                professions[(int) impSelected.GetComponent<ImpTrainingService>().Type] <= 0) return;
+            professions[(int) impSelected.GetComponent<ImpTrainingService>().Type]--;
+            listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
         }
 
         private void UpdateMaxProfessions(ImpController imp)
@@ -147,12 +150,14 @@ namespace Assets.Scripts.Managers
                 professions[(int) imp.GetComponent<ImpTrainingService>().Type] > 0)
             {
                 professions[(int) imp.GetComponent<ImpTrainingService>().Type]--;
-                foreach (var listener in listeners)
-                {
-                    listener.OnUpdateMaxProfessions(professions);
-                }
+                listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
             }
             imp.GetComponent<ImpTrainingService>().Train(ImpType.Unemployed);
+        }
+
+        public void NotifyMaxProfessions()
+        {
+            listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
         }
 
         public void SpawnImps()

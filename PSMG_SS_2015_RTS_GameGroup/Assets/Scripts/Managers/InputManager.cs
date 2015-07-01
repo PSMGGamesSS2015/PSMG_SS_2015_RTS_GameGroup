@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
-using Assets.Scripts.Managers.UIManagerAndServices;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
+using Assets.Scripts.UserInterfaceComponents;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Managers
         private List<IInputManagerListener> listeners;
         private bool isPaused;
         // ReSharper disable once NotAccessedField.Local
-        private UserInterface.UserInterface userInterface;
+        private UserInterface userInterface;
         private GameObject mainCamera;
 
         public void Awake()
@@ -159,7 +159,7 @@ namespace Assets.Scripts.Managers
             listeners.Add(listener);
         }
 
-        private void RegisterListenersForImpTrainingButtons(UserInterface.UserInterface userInteface)
+        private void RegisterListenersForImpTrainingButtons(UserInterface userInteface)
         {
             var buttons = userInteface.ImpTrainingButtons;
             for (var i = 0; i < buttons.Length; i++)
@@ -169,7 +169,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface.UserInterface userInteface)
+        void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface userInteface)
         {
             this.userInterface = userInteface;
             RegisterListenersForImpTrainingButtons(userInteface);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.UserInterface
+namespace Assets.Scripts.UserInterfaceComponents
 {
     public class ImpTrainingButton : MonoBehaviour
     {

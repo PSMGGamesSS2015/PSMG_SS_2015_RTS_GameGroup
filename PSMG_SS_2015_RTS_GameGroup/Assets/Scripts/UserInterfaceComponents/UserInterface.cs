@@ -2,20 +2,13 @@
 using Assets.Scripts.Managers;
 using UnityEngine;
 
-namespace Assets.Scripts.UserInterface
+namespace Assets.Scripts.UserInterfaceComponents
 {
     public class UserInterface : MonoBehaviour, ImpManager.IMpManagerListener
     {
-        private ImpTrainingButton[] impTrainingButtons;
         private int[] currentMaxProfessions;
 
-        public ImpTrainingButton[] ImpTrainingButtons
-        {
-            get
-            {
-                return impTrainingButtons;
-            }
-        }
+        public ImpTrainingButton[] ImpTrainingButtons { get; private set; }
 
         public void Awake()
         {
@@ -24,7 +17,7 @@ namespace Assets.Scripts.UserInterface
 
         private void RetrieveComponents()
         {
-            impTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+            ImpTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
         }
 
         public void Setup(LevelConfig config)
@@ -35,18 +28,19 @@ namespace Assets.Scripts.UserInterface
         public void Start()
         {
             if (currentMaxProfessions == null) return;
-            for (var i = 0; i < impTrainingButtons.Length; i++)
+            for (var i = 0; i < ImpTrainingButtons.Length; i++)
             {
-                impTrainingButtons[i].Counter.text = currentMaxProfessions[i].ToString();
+                ImpTrainingButtons[i].Counter.text = currentMaxProfessions[i].ToString();
             }
         }
 
         void ImpManager.IMpManagerListener.OnUpdateMaxProfessions(int[] professions)
         {
-            for (var i = 0; i < impTrainingButtons.Length; i++)
+            for (var i = 0; i < ImpTrainingButtons.Length; i++)
             {
-                impTrainingButtons[i].Counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
+                ImpTrainingButtons[i].Counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
             }
         }
+
     }
 }

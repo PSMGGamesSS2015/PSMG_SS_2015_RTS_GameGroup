@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.UserInterface
+namespace Assets.Scripts.UserInterfaceComponents
 {
     /// <summary>
     /// The ImpConsole displays a moving portrait of an imp.

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Config;
 using Assets.Scripts.ParameterObjects;
+using Assets.Scripts.UserInterfaceComponents;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -31,7 +32,7 @@ namespace Assets.Scripts.Managers
         private PersistenceManager persistenceManager;
 
         // TODO Move elsewhere
-        private UserInterface.UserInterface currentUserInterface;
+        private UserInterface currentUserInterface;
 
         public void Awake()
         {
@@ -81,7 +82,7 @@ namespace Assets.Scripts.Managers
             gameState = GameState.LevelStarted;
         }
 
-        void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface.UserInterface userInterface)
+        void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface userInterface)
         {
             if (currentUserInterface != null)
             {

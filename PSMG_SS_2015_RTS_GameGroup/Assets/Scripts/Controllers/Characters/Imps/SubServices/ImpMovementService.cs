@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
-using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {

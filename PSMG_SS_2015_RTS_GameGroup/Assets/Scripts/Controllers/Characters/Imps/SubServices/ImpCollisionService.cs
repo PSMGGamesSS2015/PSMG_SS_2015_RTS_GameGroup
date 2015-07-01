@@ -128,12 +128,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     if (GetComponent<ImpMovementService>().FacingRight)
                     {
                         GetComponent<ImpMovementService>().ClimbLadder();
+                        impTrainingService.IsTrainable = false;
                     }
                     break;
                 case TagReferences.LadderTop:
                     impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
                     impAudioService.Play(SoundReferences.ImpGoing);
                     impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
+                    impTrainingService.IsTrainable = true;
                     break;
             }
         }

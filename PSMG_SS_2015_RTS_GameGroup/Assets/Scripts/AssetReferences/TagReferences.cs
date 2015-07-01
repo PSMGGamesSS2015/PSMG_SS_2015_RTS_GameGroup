@@ -40,5 +40,6 @@
 
 
         public const string UICanvas = "UICanvas";
+        public const string Event = "Event";
     }
 }

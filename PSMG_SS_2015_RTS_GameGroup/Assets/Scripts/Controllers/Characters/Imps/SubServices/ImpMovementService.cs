@@ -32,7 +32,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void ClimbLadder()
         {
-            Debug.Log("Climbing Ladder");
             PlayClimbingAnimation();
             CurrentDirection = Direction.Vertical;
         }

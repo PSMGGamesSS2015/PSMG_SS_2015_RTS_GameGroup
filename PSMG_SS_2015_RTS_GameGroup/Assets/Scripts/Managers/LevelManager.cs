@@ -10,30 +10,42 @@ using UnityEngine;
 namespace Assets.Scripts.Managers
 {
     /// <summary>
-    /// The LevelManager is a subcompoment of the GameManager and is responsible for
-    /// loading levels.
-    /// It also loads and holds the GameObjects in a level that are of
-    /// interest for the interaction logic.
+    ///     The LevelManager is a subcompoment of the GameManager and is responsible for
+    ///     loading levels.
+    ///     It also loads and holds the GameObjects in a level that are of
+    ///     interest for the interaction logic.
     /// </summary>
-
-    public class LevelManager : MonoBehaviour, TrollController.ITrollControllerListener, GoalController.IGoalControllerListener
+    public class LevelManager : MonoBehaviour, TrollController.ITrollControllerListener,
+        GoalController.IGoalControllerListener
     {
-
-        private List<ILevelManagerListener> listeners;
-
-        private GoalController goalController;
+        public static LevelManager Instance;
         private Level currentLevel;
-
+        private GoalController goalController;
+        private List<ILevelManagerListener> listeners;
         public LevelConfig CurrentLevelConfig { get; set; }
+        public Level CurrentLevel { get; set; }
 
-        public interface ILevelManagerListener
+        void GoalController.IGoalControllerListener.OnGoalReachedByImp()
         {
-            void OnLevelStarted(Level level);
+            Debug.Log("An imp has reached the goal.");
         }
 
-        public void Awake() 
+        void TrollController.ITrollControllerListener.OnEnemyHurt(TrollController trollController)
         {
-            
+            trollController.UnregisterListener();
+        }
+
+        public void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             listeners = new List<ILevelManagerListener>();
             SetupCollisionManagement();
         }
@@ -57,7 +69,7 @@ namespace Assets.Scripts.Managers
 
         public void OnLevelWasLoaded(int level)
         {
-            CurrentLevel = new Level()
+            CurrentLevel = new Level
             {
                 CurrentLevelConfig = CurrentLevelConfig,
                 MainCamera = GameObject.FindGameObjectWithTag(TagReferences.MainCamera),
@@ -71,10 +83,7 @@ namespace Assets.Scripts.Managers
             {
                 listener.OnLevelStarted(CurrentLevel);
             }
-        
         }
-
-        public Level CurrentLevel { get; set; }
 
         public void RegisterListeners()
         {
@@ -92,14 +101,9 @@ namespace Assets.Scripts.Managers
             CurrentLevel.Goal.GetComponent<GoalController>().RegisterListener(this);
         }
 
-        void TrollController.ITrollControllerListener.OnEnemyHurt(TrollController trollController)
+        public interface ILevelManagerListener
         {
-            trollController.UnregisterListener();
-        }
-
-        void GoalController.IGoalControllerListener.OnGoalReachedByImp()
-        {
-            Debug.Log("An imp has reached the goal.");
+            void OnLevelStarted(Level level);
         }
     }
 }

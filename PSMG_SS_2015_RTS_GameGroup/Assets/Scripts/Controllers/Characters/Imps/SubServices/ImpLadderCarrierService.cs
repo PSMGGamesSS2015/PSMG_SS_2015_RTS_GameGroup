@@ -58,7 +58,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = false;
             impTrainingService.Untrain();
             impMovementService.Walk();
-            Instantiate(GetComponent<ImpController>().HorizontalLadderPrefab, new Vector3(position.x+0.6f, position.y+0.15f, 0), Quaternion.Euler(0, 0, -90));
+            Instantiate(GetComponent<ImpController>().HorizontalLadderPrefab, new Vector3(position.x+0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
         }
     }
 }

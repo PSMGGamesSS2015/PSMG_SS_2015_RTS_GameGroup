@@ -75,6 +75,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 c.GetComponent<RockyArcScript>().Detonate();
             }
 
+            foreach (var c in objectsWithinRadius.Where(c => c.gameObject.tag == TagReferences.FragileRock))
+            {
+                c.GetComponent<SpriteRenderer>().enabled = false;
+                Destroy(c);
+            }
+
             impMovementService.Walk();
             impTrainingService.IsTrainable = true;
             impTrainingService.Untrain();

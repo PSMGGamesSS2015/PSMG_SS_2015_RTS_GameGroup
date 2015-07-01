@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
-using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
@@ -32,7 +31,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void ClimbLadder()
         {
-            Debug.Log("Climbing Ladder");
             PlayClimbingAnimation();
             CurrentDirection = Direction.Vertical;
         }

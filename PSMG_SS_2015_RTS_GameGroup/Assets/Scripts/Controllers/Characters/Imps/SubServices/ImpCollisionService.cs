@@ -72,6 +72,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.Obstacle:
                     impMovementService.Turn();
                     break;
+                case TagReferences.FragileRock:
+                    impMovementService.Turn();
+                    break;
                 case TagReferences.Impassable:
                     impMovementService.Turn();
                     break;
@@ -110,7 +113,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderSpotHorizontal:
-                    Debug.Log("Entered horizontal ladder");
                     if (impTrainingService.Type == ImpType.LadderCarrier)
                     {
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
@@ -123,13 +125,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderBottom:
-                    Debug.Log("Starting to Climb");
-                    GetComponent<ImpMovementService>().ClimbLadder();
+                    if (GetComponent<ImpMovementService>().FacingRight)
+                    {
+                        GetComponent<ImpMovementService>().ClimbLadder();
+                        impTrainingService.IsTrainable = false;
+                    }
                     break;
                 case TagReferences.LadderTop:
                     impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
                     impAudioService.Play(SoundReferences.ImpGoing);
                     impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
+                    impTrainingService.IsTrainable = true;
                     break;
             }
         }

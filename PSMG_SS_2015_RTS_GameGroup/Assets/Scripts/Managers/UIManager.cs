@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.ParameterObjects;
+using Assets.Scripts.UserInterfaceComponents;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -10,14 +11,27 @@ namespace Assets.Scripts.Managers
 
         private List<IUIManagerListener> listeners;
 
+        public static UIManager Instance;
+
+        public UserInterface CurrentUserInterface;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             listeners = new List<IUIManagerListener>();
         }
 
         public interface IUIManagerListener
         {
-            void OnUserInterfaceLoaded(UserInterface.UserInterface userInteface);       
+            void OnUserInterfaceLoaded(UserInterface userInteface);       
         }
 
         public void RegisterListener(IUIManagerListener listener)
@@ -27,9 +41,9 @@ namespace Assets.Scripts.Managers
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
-            var userInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface.UserInterface>();
-            userInterface.Setup(level.CurrentLevelConfig);
-            listeners.ForEach(x => x.OnUserInterfaceLoaded(userInterface));
+            CurrentUserInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface>();
+            CurrentUserInterface.Setup(level.CurrentLevelConfig);
+            listeners.ForEach(x => x.OnUserInterfaceLoaded(CurrentUserInterface));
         }
     }
 }

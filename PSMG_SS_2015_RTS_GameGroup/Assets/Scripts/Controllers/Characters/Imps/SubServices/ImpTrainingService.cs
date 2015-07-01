@@ -67,7 +67,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             this.Type = type;
 
-
             RemoveCurrentProfessionService();
             switch (type)
             {
@@ -166,6 +165,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void RemoveCurrentProfessionService()
         {
+            
             Destroy(currentProfessionService);
         }
 

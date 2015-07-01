@@ -36,7 +36,10 @@
         public const string Cloud = "Cloud";
         public const string RockyArc = "RockyArc";
         public const string FallingRock = "FallingRock";
+        public const string FragileRock = "FragileRock";
+
 
         public const string UICanvas = "UICanvas";
+        public const string Event = "Event";
     }
 }

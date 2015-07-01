@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Managers.UIManagerAndServices;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using UnityEngine;
@@ -150,7 +151,6 @@ namespace Assets.Scripts.Managers
 
         private void DisplayImpLabels()
         {
-            GUI.Label(new Rect(0, 0, Screen.width, Screen.height), "TESTESTESTESTESTEST");
             listeners.ForEach(x => x.OnDismissImpLabels());
         }
 

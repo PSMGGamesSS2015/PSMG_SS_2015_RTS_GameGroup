@@ -11,6 +11,10 @@ namespace Assets.Scripts.Controllers.Objects
         public void Awake()
         {
             collectionItems = GetComponentsInChildren<CollectableObject>().ToList();
+        }
+
+        public void Start()
+        {
             collectionItems.ForEach(ci => ci.RegisterListener(this));
         }
 

@@ -25,7 +25,6 @@ namespace Assets.Scripts.LevelScripts
 
             if (Action != null)
             {
-                Debug.Log("Executing action");
                 Action();
             }
             

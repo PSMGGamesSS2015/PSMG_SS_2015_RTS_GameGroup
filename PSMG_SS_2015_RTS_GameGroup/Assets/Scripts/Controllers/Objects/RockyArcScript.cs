@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Detonate()
         {
+            DestroyLadders();
             // hide current sprite renderer
            childRenderers.ForEach(cr => cr.enabled = false);
             // disable collider
@@ -48,6 +50,20 @@ namespace Assets.Scripts.Controllers.Objects
                 .ToList()
                 .ForEach(cr => cr.isKinematic = false);
         }
+
+        private void DestroyLadders()
+        {
+            foreach(var renderer in GetComponentsInChildren<SpriteRenderer>().ToList())
+            {
+                if (renderer.gameObject.tag == TagReferences.VerticalLadder)
+                {
+                    Destroy(renderer.gameObject);
+                }
+            }
+
+        }
+
+        
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {

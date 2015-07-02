@@ -33,10 +33,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = false;
         }
 
-        public void SetupVerticalLadder(Vector3 position)
+        public GameObject SetupVerticalLadder(Vector3 position)
         {
-            Instantiate(GetComponent<ImpController>().VerticalLadderPrefab, position, Quaternion.identity);
+            var ladder = (GameObject) Instantiate(GetComponent<ImpController>().VerticalLadderPrefab, position, Quaternion.identity);
             impTrainingService.Untrain();
+            return ladder;
         }
 
         public void SetupHorizontalLadder(Vector3 position)

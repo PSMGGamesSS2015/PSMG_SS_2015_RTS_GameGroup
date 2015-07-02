@@ -35,11 +35,10 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             msg.GetComponent<Text>().text = message;
 
             msg.transform.parent = this.transform;
-            msg.transform.localPosition = new Vector3(this.transform.position.x - GetComponent<RectTransform>().rect.width / 2f, this.transform.position.y - GetComponent<RectTransform>().rect.height / 2f, this.transform.position.z);
+            msg.transform.localPosition = new Vector3(this.transform.position.x - GetComponent<RectTransform>().rect.width / 6f, this.transform.position.y - GetComponent<RectTransform>().rect.height / 6f, this.transform.position.z);
             // TODO Refactor
 
-
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(5f);
 
             Destroy(msg);
         }

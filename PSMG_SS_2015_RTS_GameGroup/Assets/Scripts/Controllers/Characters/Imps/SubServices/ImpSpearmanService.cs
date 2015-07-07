@@ -62,7 +62,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             foreach (var enemy in enemiesInAttackRange)
             {
-                enemy.ReceiveHit();
+                enemy.GetComponent<TrollAttackService>().ReceiveHit();
             }
             enemiesInAttackRange.Clear();
 

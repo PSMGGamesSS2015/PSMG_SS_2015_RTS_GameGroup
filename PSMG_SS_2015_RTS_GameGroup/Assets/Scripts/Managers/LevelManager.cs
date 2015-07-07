@@ -97,6 +97,8 @@ namespace Assets.Scripts.Managers
             {
                 CurrentLevelConfig = CurrentLevelConfig,
                 MainCamera = GameObject.FindGameObjectWithTag(TagReferences.MainCamera),
+                TopMargin = GameObject.FindGameObjectWithTag(TagReferences.TopMargin),
+                BottomMargin = GameObject.FindGameObjectWithTag(TagReferences.BottomMargin),
                 LeftMargin = GameObject.FindGameObjectWithTag(TagReferences.LeftMargin),
                 RightMargin = GameObject.FindGameObjectWithTag(TagReferences.RightMargin),
                 Obstacles = GameObject.FindGameObjectsWithTag(TagReferences.Obstacle).ToList(),

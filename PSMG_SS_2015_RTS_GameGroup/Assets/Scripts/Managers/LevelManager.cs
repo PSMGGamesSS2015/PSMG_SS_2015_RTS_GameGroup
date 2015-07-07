@@ -19,8 +19,6 @@ namespace Assets.Scripts.Managers
         GoalController.IGoalControllerListener
     {
         public static LevelManager Instance;
-        private Level currentLevel;
-        private GoalController goalController;
         private List<ILevelManagerListener> listeners;
         public LevelConfig CurrentLevelConfig { get; set; }
         public Level CurrentLevel { get; set; }
@@ -69,6 +67,32 @@ namespace Assets.Scripts.Managers
 
         public void OnLevelWasLoaded(int level)
         {
+            switch (CurrentLevelConfig.Type)
+            {
+                case LevelConfig.LevelType.InGame:
+                    LoadInGameLevel();
+                    break;
+                case LevelConfig.LevelType.Menu:
+                    LoadMenuLevel();
+                    break;
+                case LevelConfig.LevelType.Narrative:
+                    LoadNarrativeLevel();
+                    break;
+            }
+        }
+
+        private void LoadNarrativeLevel()
+        {
+            // TODO
+        }
+
+        private void LoadMenuLevel()
+        {
+            // TODO 
+        }
+
+        public void LoadInGameLevel()
+        {
             CurrentLevel = new Level
             {
                 CurrentLevelConfig = CurrentLevelConfig,
@@ -81,10 +105,7 @@ namespace Assets.Scripts.Managers
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
             RegisterListeners(); // TODO Move somewhere else
-            foreach (var listener in listeners)
-            {
-                listener.OnLevelStarted(CurrentLevel);
-            }
+            listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
         }
 
         public void RegisterListeners()
@@ -108,4 +129,5 @@ namespace Assets.Scripts.Managers
             void OnLevelStarted(Level level);
         }
     }
+
 }

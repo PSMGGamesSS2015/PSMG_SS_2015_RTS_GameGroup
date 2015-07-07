@@ -47,8 +47,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void OnGUI()
         {
-            Debug.Log(screenPosOfTopMargin.y);
-            
             GUI.Label(new Rect(screenPos.x, screenPosOfTopMargin.y - screenPos.y - 100, 100, 25), ((int) bombCounter.CurrentCount).ToString());
         }
 

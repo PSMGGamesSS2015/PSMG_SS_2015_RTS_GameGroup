@@ -9,8 +9,8 @@ namespace Assets.Scripts
     public class Loader : MonoBehaviour {
 
         public GameObject GameManager;
-    
-        private void Awake()
+
+        public void Awake()
         {
             Instantiate(GameManager);
         }

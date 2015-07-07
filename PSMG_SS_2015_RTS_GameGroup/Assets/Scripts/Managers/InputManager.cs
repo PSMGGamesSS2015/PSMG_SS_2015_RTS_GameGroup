@@ -21,8 +21,19 @@ namespace Assets.Scripts.Managers
         private UserInterface userInterface;
         private GameObject mainCamera;
 
+        public static InputManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             isPaused = false;
             listeners = new List<IInputManagerListener>();
         }

@@ -34,8 +34,19 @@ namespace Assets.Scripts.Managers
         // TODO Move elsewhere
         private UserInterface currentUserInterface;
 
+        public static GameManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             DontDestroyOnLoad(gameObject);
             InitManagers();
             gameState = GameState.NotStarted;

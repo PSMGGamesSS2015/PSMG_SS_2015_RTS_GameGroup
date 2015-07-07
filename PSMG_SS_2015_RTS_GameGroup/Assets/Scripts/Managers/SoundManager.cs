@@ -9,8 +9,19 @@ namespace Assets.Scripts.Managers
     {   
         AudioHelper backgroundMusic;
 
+        public static SoundManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             DontDestroyOnLoad(gameObject);
             backgroundMusic = gameObject.AddComponent<AudioHelper>();
         }

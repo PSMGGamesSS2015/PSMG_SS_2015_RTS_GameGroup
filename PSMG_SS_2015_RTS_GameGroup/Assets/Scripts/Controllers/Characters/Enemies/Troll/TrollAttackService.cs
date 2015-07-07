@@ -14,7 +14,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 {
     public class TrollAttackService : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
-
         private TriggerCollider2D triggerCollider2D;
         private List<ImpController> impsInAttackRange;
         private bool isSmashing;
@@ -25,14 +24,14 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         public void Awake()
         {
-            triggerCollider2D = GetComponent<TriggerCollider2D>();
-            triggerCollider2D.RegisterListener(this);
-
+            triggerCollider2D = GetComponentInChildren<TriggerCollider2D>();
+            
             impsInAttackRange = new List<ImpController>();
         }
 
         public void Start()
         {
+            triggerCollider2D.RegisterListener(this);
             isLeaving = false;
         }
 

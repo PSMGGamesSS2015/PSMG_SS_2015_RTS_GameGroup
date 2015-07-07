@@ -107,6 +107,12 @@ namespace Assets.Scripts.Managers
                     case KeyCode.N:
                         SelectNextUnemployedImp();
                         break;
+                    case KeyCode.F:
+                        IncreaseGameSpeed();
+                        break;
+                    case KeyCode.S:
+                        DecreaseGameSpeed();
+                        break;
                 }
             }
             if (e.type != EventType.KeyUp) return;
@@ -115,6 +121,22 @@ namespace Assets.Scripts.Managers
                 case KeyCode.LeftAlt:
                     DismissImpLabels();
                     break;
+            }
+        }
+
+        private void DecreaseGameSpeed()
+        {
+            if (Time.timeScale >= 0.1f && Time.timeScale <= 2.0f)
+            {
+                Time.timeScale -= 0.1f;
+            }
+        }
+
+        private void IncreaseGameSpeed()
+        {
+            if (Time.timeScale >= 0.0f && Time.timeScale <= 1.9f)
+            {
+                Time.timeScale += 0.1f;
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Managers.UIManagerAndServices;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.UserInterfaceComponents;
 using UnityEngine;
@@ -13,7 +14,9 @@ namespace Assets.Scripts.Managers
 
         public static UIManager Instance;
 
-        public UserInterface CurrentUserInterface;
+        public UserInterface CurrentUserInterface { get; set; }
+
+        public UIMessageService UIMessageService { get; private set; }
 
         public void Awake()
         {
@@ -27,6 +30,12 @@ namespace Assets.Scripts.Managers
             }
 
             listeners = new List<IUIManagerListener>();
+            InitComponents();
+        }
+
+        private void InitComponents()
+        {
+            UIMessageService = GetComponent<UIMessageService>();
         }
 
         public interface IUIManagerListener

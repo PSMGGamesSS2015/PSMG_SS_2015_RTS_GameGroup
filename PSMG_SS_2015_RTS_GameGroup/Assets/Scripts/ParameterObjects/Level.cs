@@ -36,5 +36,8 @@ namespace Assets.Scripts.ParameterObjects
                 return Start.transform.position;
             }
         }
+
+        public GameObject TopMargin { get; set; }
+        public GameObject BottomMargin { get; set; }
     }
 }

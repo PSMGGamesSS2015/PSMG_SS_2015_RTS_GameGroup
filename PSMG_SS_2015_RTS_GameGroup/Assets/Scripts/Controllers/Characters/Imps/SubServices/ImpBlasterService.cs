@@ -3,6 +3,7 @@ using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private ImpMovementService impMovementService;
         private ImpAnimationHelper impAnimationService;
         private AudioHelper impAudioService;
+        private Vector3 screenPos;
+        private Vector3 screenPosOfTopMargin;
+        public int yOffset = 20;
 
         public void Awake()
         {
@@ -33,6 +37,19 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void Start()
         {
             SetupBombCounter();
+            screenPosOfTopMargin = Camera.main.WorldToScreenPoint(LevelManager.Instance.CurrentLevel.TopMargin.transform.position);
+        }
+
+        public void Update()
+        {
+            screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        }
+
+        public void OnGUI()
+        {
+            Debug.Log(screenPosOfTopMargin.y);
+            
+            GUI.Label(new Rect(screenPos.x, screenPosOfTopMargin.y - screenPos.y - 100, 100, 25), ((int) bombCounter.CurrentCount).ToString());
         }
 
         private void SetupBombCounter()

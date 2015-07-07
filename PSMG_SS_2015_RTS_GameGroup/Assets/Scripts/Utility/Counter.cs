@@ -22,7 +22,7 @@ namespace Assets.Scripts.Utility
             return counter;
         }
 
-        private float currentCount;
+        public float CurrentCount { get; private set; }
         private float counterMax;
 
         private Action action;
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Utility
         public void Update()
         {
             if (!isInitialized) return;
-            if (currentCount >= counterMax)
+            if (CurrentCount >= counterMax)
             {
                 action();
                 if (!isLoopModeActive)
@@ -58,13 +58,13 @@ namespace Assets.Scripts.Utility
 
             if (!isPaused)
             {
-                currentCount += Time.deltaTime;
+                CurrentCount += Time.deltaTime;
             }
         }
 
         private void ResetCounter()
         {
-            currentCount = 0f;
+            CurrentCount = 0f;
         }
 
         private void Discard()

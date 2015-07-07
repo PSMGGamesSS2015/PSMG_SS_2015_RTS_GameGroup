@@ -42,6 +42,7 @@ namespace Assets.Scripts.Managers
             void OnDisplayImpLabels();
             void OnProfessionSelected(ImpType profession);
             void OnSelectNextImp();
+            void OnSelectNextUnemployedImp();
             void OnDismissImpLabels();
         }
 
@@ -103,6 +104,9 @@ namespace Assets.Scripts.Managers
                     case KeyCode.RightArrow:
                         MoveCameraRight();
                         break;
+                    case KeyCode.N:
+                        SelectNextUnemployedImp();
+                        break;
                 }
             }
             if (e.type != EventType.KeyUp) return;
@@ -112,6 +116,11 @@ namespace Assets.Scripts.Managers
                     DismissImpLabels();
                     break;
             }
+        }
+
+        private void SelectNextUnemployedImp()
+        {
+            listeners.ForEach(x => x.OnSelectNextUnemployedImp());
         }
 
         private void CheckScrollInput(Event e)

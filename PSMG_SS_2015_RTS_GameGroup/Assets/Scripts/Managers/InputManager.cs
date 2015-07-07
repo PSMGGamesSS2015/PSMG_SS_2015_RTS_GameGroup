@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.AssetReferences;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using Assets.Scripts.UserInterfaceComponents;
@@ -21,8 +20,19 @@ namespace Assets.Scripts.Managers
         private UserInterface userInterface;
         private GameObject mainCamera;
 
+        public static InputManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             isPaused = false;
             listeners = new List<IInputManagerListener>();
         }
@@ -32,12 +42,19 @@ namespace Assets.Scripts.Managers
             void OnDisplayImpLabels();
             void OnProfessionSelected(ImpType profession);
             void OnSelectNextImp();
+            void OnSelectNextUnemployedImp();
             void OnDismissImpLabels();
         }
 
         public void OnGUI()
         {
             var e = Event.current;
+            CheckScrollInput(e);
+            CheckKeyInput(e);
+        }
+
+        private void CheckKeyInput(Event e)
+        {
             if (e.type == EventType.KeyDown)
             {
                 switch (e.keyCode)
@@ -87,13 +104,35 @@ namespace Assets.Scripts.Managers
                     case KeyCode.RightArrow:
                         MoveCameraRight();
                         break;
+                    case KeyCode.N:
+                        SelectNextUnemployedImp();
+                        break;
                 }
             }
             if (e.type != EventType.KeyUp) return;
-            switch (e.keyCode) {
+            switch (e.keyCode)
+            {
                 case KeyCode.LeftAlt:
                     DismissImpLabels();
                     break;
+            }
+        }
+
+        private void SelectNextUnemployedImp()
+        {
+            listeners.ForEach(x => x.OnSelectNextUnemployedImp());
+        }
+
+        private void CheckScrollInput(Event e)
+        {
+            if (e.type != EventType.ScrollWheel) return;
+            if (e.delta.y > 0)
+            {
+                MoveCameraRight();
+            }
+            else
+            {
+                MoveCameraLeft();
             }
         }
 
@@ -101,7 +140,7 @@ namespace Assets.Scripts.Managers
         {
             var pos = mainCamera.transform.position;
             pos.x++;
-            if (!(pos.x >= GameObject.FindGameObjectWithTag(TagReferences.RightMargin).transform.position.x)) // TODO Refactor
+            if (!(pos.x >= GetComponent<LevelManager>().CurrentLevel.RightMargin.transform.position.x))
             {
                 mainCamera.transform.position = pos;
             }
@@ -111,7 +150,7 @@ namespace Assets.Scripts.Managers
         {
             var pos = mainCamera.transform.position;
             pos.x--;
-            if (!(pos.x <= GameObject.FindGameObjectWithTag(TagReferences.LeftMargin).transform.position.x)) // TODO Refactor
+            if (!(pos.x <= GetComponent<LevelManager>().CurrentLevel.LeftMargin.transform.position.x))
             {
                 mainCamera.transform.position = pos;
             }

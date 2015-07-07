@@ -42,5 +42,6 @@
 
         public const string UICanvas = "UICanvas";
         public const string Event = "Event";
+        public const string UISimpleTextMessageBox = "UISimpleTextMessageBox";
     }
 }

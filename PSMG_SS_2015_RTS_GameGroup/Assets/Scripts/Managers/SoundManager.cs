@@ -6,18 +6,29 @@ using UnityEngine;
 namespace Assets.Scripts.Managers
 {
     public class SoundManager : MonoBehaviour, LevelManager.ILevelManagerListener
-    {   
-        AudioHelper backgroundMusic;
+    {
+        public AudioHelper BackgroundMusic { get; private set; }
+
+        public static SoundManager Instance;
 
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             DontDestroyOnLoad(gameObject);
-            backgroundMusic = gameObject.AddComponent<AudioHelper>();
+            BackgroundMusic = gameObject.AddComponent<AudioHelper>();
         }
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
-            backgroundMusic.Play(SoundReferences.MainTheme);
+            BackgroundMusic.Play(SoundReferences.MainTheme);
         }
     }
 }

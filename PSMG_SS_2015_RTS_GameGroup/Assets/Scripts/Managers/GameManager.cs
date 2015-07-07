@@ -34,8 +34,19 @@ namespace Assets.Scripts.Managers
         // TODO Move elsewhere
         private UserInterface currentUserInterface;
 
+        public static GameManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             DontDestroyOnLoad(gameObject);
             InitManagers();
             gameState = GameState.NotStarted;
@@ -54,7 +65,7 @@ namespace Assets.Scripts.Managers
         public void Start() 
         {
             SetupCommunicationBetweenManagers();
-            levelManager.LoadLevel(LevelConfig.Levels[1]);
+            levelManager.LoadLevel(LevelConfig.Levels[0]);
         }
 
         private void SetupCommunicationBetweenManagers()

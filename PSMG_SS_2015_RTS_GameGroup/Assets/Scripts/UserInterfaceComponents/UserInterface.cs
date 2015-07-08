@@ -3,7 +3,6 @@ using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Managers;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.UserInterfaceComponents
 {
@@ -22,6 +21,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         private void RetrieveComponents()
         {
             ImpTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+
             UICanvas = GetComponentsInChildren<Canvas>().ToList().Find(c => c.tag == TagReferences.UICanvas);
         }
 
@@ -46,6 +46,5 @@ namespace Assets.Scripts.UserInterfaceComponents
                 ImpTrainingButtons[i].Counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
             }
         }
-
     }
 }

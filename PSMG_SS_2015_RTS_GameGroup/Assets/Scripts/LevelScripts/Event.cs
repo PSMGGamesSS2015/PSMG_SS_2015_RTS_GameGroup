@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Controllers.Characters.Imps;
-using Assets.Scripts.Managers.UIManagerAndServices;
+﻿using System;
+using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Managers;
 using UnityEngine;
-using System;
 
 namespace Assets.Scripts.LevelScripts
 {
@@ -21,15 +21,13 @@ namespace Assets.Scripts.LevelScripts
             if (collider.isTrigger) return;
             if (collider.gameObject.GetComponent<ImpController>() == null) return;
 
-            UIMessageService.Instance.CreateSimpleTextMessage(Message);
+            UIManager.Instance.UIMessageService.CreateSimpleTextMessage(Message);
 
             if (Action != null)
             {
                 Action();
             }
             
-            
-
             Destroy(this);
         }
 

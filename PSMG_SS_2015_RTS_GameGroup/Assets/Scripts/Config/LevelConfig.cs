@@ -10,11 +10,19 @@ namespace Assets.Scripts.Config
 
     public class LevelConfig  {
 
-        public LevelConfig (int maxImps, float spawnInterval, string name, int[] maxProfessions) {
-            this.MaxImps = maxImps;
-            this.SpawnInterval = spawnInterval;
-            this.Name = name;
-            this.MaxProfessions = maxProfessions;
+        public enum LevelType
+        {
+            Menu,
+            InGame,
+            Narrative
+        }
+
+        public LevelConfig (int maxImps, float spawnInterval, string name, int[] maxProfessions, LevelType levelType) {
+            MaxImps = maxImps;
+            SpawnInterval = spawnInterval;
+            Name = name;
+            MaxProfessions = maxProfessions;
+            Type = levelType;
         }
 
         public int MaxImps { get; private set; }
@@ -25,13 +33,15 @@ namespace Assets.Scripts.Config
 
         public int[] MaxProfessions { get; private set; }
 
+        public LevelType Type { get; private set; }
+
         /// <summary>
         /// This is a globally usable array of level configurations.
         /// </summary>
         public static LevelConfig[] Levels = 
-        {                                 
-            new LevelConfig(4, 4.0f, SceneReferences.TestScene, new[] {4,3,3,3,0,0,0,0}),           // Test Level
-            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0})   // Koboldingen           
+        {               
+            new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu),   // Koboldingen                 
+            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0}, LevelType.InGame)   // Koboldingen           
         };
     }
 }

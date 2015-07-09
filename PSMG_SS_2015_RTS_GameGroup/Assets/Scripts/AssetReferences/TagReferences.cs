@@ -42,5 +42,8 @@
 
         public const string UICanvas = "UICanvas";
         public const string Event = "Event";
+        public const string UISimpleTextMessageBox = "UISimpleTextMessageBox";
+        public const string TopMargin = "TopMargin";
+        public const string BottomMargin = "BottomMargin";
     }
 }

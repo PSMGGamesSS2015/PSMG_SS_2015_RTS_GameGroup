@@ -21,6 +21,10 @@ namespace Assets.Scripts.ParameterObjects
 
         public GameObject MainCamera { get; set; }
 
+        public GameObject LeftMargin { get; set; }
+
+        public GameObject RightMargin { get; set; }
+
         public List<GameObject> Enemies { get; set; }
 
         public List<GameObject> Obstacles { get; set; }
@@ -32,5 +36,8 @@ namespace Assets.Scripts.ParameterObjects
                 return Start.transform.position;
             }
         }
+
+        public GameObject TopMargin { get; set; }
+        public GameObject BottomMargin { get; set; }
     }
 }

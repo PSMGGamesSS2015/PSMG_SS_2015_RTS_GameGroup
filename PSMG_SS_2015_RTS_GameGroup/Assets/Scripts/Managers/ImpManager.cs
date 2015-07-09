@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Controllers.Characters.Imps.SubServices;
@@ -269,6 +270,33 @@ namespace Assets.Scripts.Managers
                     indexOfNextImp = indexOfCurrentImp + 1;
                 }
                 SelectImp(imps[indexOfNextImp]);
+            }
+        }
+
+        void InputManager.IInputManagerListener.OnSelectNextUnemployedImp()
+        {
+            if (impSelected == null)
+            {
+                foreach (var ic in imps.Where(ic => ic.GetComponent<ImpTrainingService>().Type == ImpType.Unemployed))
+                {
+                    SelectImp(ic);
+                    return;
+                }
+            }
+            else
+            {
+                for (var i = imps.IndexOf(impSelected); i < imps.IndexOf(impSelected) + imps.Count; i++)
+                {
+                    var y = i;
+                    if (i >= imps.Count)
+                    {
+                        y = i - imps.Count;
+                    }
+                    if (imps[y].GetComponent<ImpTrainingService>().Type != ImpType.Unemployed) continue;
+                    if (imps[y].GetInstanceID() == impSelected.GetInstanceID()) continue;
+                    SelectImp(imps[y]);
+                    return;
+                }
             }
         }
 

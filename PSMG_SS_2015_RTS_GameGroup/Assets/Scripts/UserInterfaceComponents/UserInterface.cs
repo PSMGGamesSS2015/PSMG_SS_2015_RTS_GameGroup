@@ -1,6 +1,9 @@
-﻿using Assets.Scripts.Config;
+﻿using System.Linq;
+using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Config;
 using Assets.Scripts.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UserInterfaceComponents
 {
@@ -9,6 +12,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         private int[] currentMaxProfessions;
 
         public ImpTrainingButton[] ImpTrainingButtons { get; private set; }
+        public Canvas UICanvas { get; private set; }
 
         public void Awake()
         {
@@ -18,6 +22,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         private void RetrieveComponents()
         {
             ImpTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+            UICanvas = GetComponentsInChildren<Canvas>().ToList().Find(c => c.tag == TagReferences.UICanvas);
         }
 
         public void Setup(LevelConfig config)

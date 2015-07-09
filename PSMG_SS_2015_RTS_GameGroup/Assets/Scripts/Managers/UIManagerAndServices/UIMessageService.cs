@@ -7,38 +7,34 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
     public class UIMessageService : MonoBehaviour
     {
 
+        public const float SimpleTextMessageDuration = 5f;
+
         public GameObject SimpleTextMessagePrefab;
         public GameObject SpeechBubbleMessagePrefab;
 
-        public static UIMessageService Instance;
-
-        public void Awake()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(this);
-            }
-        }
-
         public void CreateSimpleTextMessage(string message)
         {
-            StartCoroutine(SimpleTextMessageroutine(message));
+            StartCoroutine(SimpleTextMessageRoutine(message));
         }
 
-        private IEnumerator SimpleTextMessageroutine(string message)
+        private IEnumerator SimpleTextMessageRoutine(string message)
         {
             var msg = Instantiate(SimpleTextMessagePrefab);
             msg.GetComponent<Text>().text = message;
 
-            msg.transform.parent = this.transform;
-            msg.transform.localPosition = new Vector3(this.transform.position.x - GetComponent<RectTransform>().rect.width / 6f, this.transform.position.y - GetComponent<RectTransform>().rect.height / 6f, this.transform.position.z);
-            // TODO Refactor
+            var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
+            var pos = canvas.transform.position;
+            var width = canvas.GetComponent<RectTransform>().rect.width;
+            var height = canvas.GetComponent<RectTransform>().rect.height;
 
-            yield return new WaitForSeconds(5f);
+            msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
+
+            msg.transform.localPosition = new Vector3( // position message within canvas
+                pos.x - width / 6f, 
+                pos.y - height / 6f, 
+                pos.z);
+
+            yield return new WaitForSeconds(SimpleTextMessageDuration);
 
             Destroy(msg);
         }

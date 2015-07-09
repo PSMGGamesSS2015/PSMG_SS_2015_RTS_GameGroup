@@ -28,8 +28,19 @@ namespace Assets.Scripts.Managers
             void OnGameLoaded();
         }
 
+        public static PersistenceManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             savedGames = new List<SaveGame>();
             listeners = new List<IPersistenceManagerListener>();
         }

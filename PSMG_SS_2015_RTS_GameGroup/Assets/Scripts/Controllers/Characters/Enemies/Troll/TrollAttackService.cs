@@ -4,7 +4,6 @@ using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Controllers.Characters.Imps.SubServices;
-using Assets.Scripts.ExtensionMethods;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
@@ -17,9 +16,11 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
         private TriggerCollider2D triggerCollider2D;
         private List<ImpController> impsInAttackRange;
         private bool isSmashing;
-        private bool isAngry = false;
 
-        private Counter hitDelay1;
+        public bool IsAngry { get; private set; }
+
+        private Counter hitDelayCounter;
+        private Counter angryCounter;
         private bool isLeaving;
 
         public void Awake()
@@ -32,23 +33,26 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
         public void Start()
         {
             triggerCollider2D.RegisterListener(this);
+            IsAngry = false;
             isLeaving = false;
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (collider.gameObject.tag != TagReferences.Imp) return;
-            if (isSmashing) return;
+            if (self.GetInstanceID() != triggerCollider2D.GetInstanceID()) return; // check if the triggered collider is attack range
+            if (collider.gameObject.tag != TagReferences.Imp) return; // check if an imp enters the troll's attack range
+            if (isSmashing) return; // check if the troll is striking with his weapon at this very moment
+
             impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
-            // TODO Work in conditions here: replace old counter with hitcounters
-            if (isAngry)
+
+            if (IsAngry) // if the troll is angry he attacks as soon as an imp enters his field of sight
             {
                 StrikeWithMaul();
             }
             else
             {
-                if (hitDelay1 != null) return;
-                hitDelay1 = Counter.SetCounter(gameObject, 4.0f, StrikeWithMaul, true);
+                if (hitDelayCounter != null) return;
+                hitDelayCounter = Counter.SetCounter(gameObject, 2.0f, StrikeWithMaul, true);
             }
         }
 
@@ -56,12 +60,16 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
         {
             if (isSmashing) return;
             if (collider.gameObject.tag != TagReferences.Imp) return;
+
             if (!impsInAttackRange.Contains(collider.gameObject.GetComponent<ImpController>())) return;
+            
             impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
+            
             if (impsInAttackRange.Count != 0) return;
-            if (hitDelay1 != null)
+            
+            if (hitDelayCounter != null) // stop the counter when no more imps are in a trolls attack range
             {
-                hitDelay1.Stop();
+                hitDelayCounter.Stop();
             }
         }
 
@@ -86,9 +94,12 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
                 impsInAttackRange.Remove(imp);
                 imp.LeaveGame(); // actually hit the imps
             }
-            if (hitDelay1 != null)
+
+            if (impsInAttackRange.Count != 0) return;
+
+            if (hitDelayCounter != null) // stop hitting if no more imps are in attack range
             {
-                hitDelay1.Stop();
+                hitDelayCounter.Stop();
             }
         }
 
@@ -106,23 +117,22 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
             impsInAttackRange.Clear();
 
-            if (hitDelay1 != null)
+            if (hitDelayCounter != null)
             {
-                hitDelay1.Stop();
+                hitDelayCounter.Stop();
             }
         }
 
         public IEnumerator SmashingRoutine()
         {
-
             GetComponent<AudioHelper>().Play(SoundReferences.TrollAttack2);
+            GetComponent<AnimationHelper>().Play(AnimationReferences.TrollAttacking);
 
             yield return new WaitForSeconds(1f);
 
             if (!isLeaving)
             {
-                GetComponent<AnimationHelper>().Play(AnimationReferences.TrollAttacking);
-
+                
                 var coward = SearchForCoward(); // check if there is a coward within striking distance
 
                 isSmashing = true;
@@ -146,22 +156,41 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         public void ReceiveHit()
         {
-            isLeaving = true;
-            StopCoroutine(GetComponent<TrollAttackService>().SmashingRoutine());
-            GetComponent<AnimationHelper>().Play(AnimationReferences.TrollStanding);
-            StartCoroutine(LeavingRoutine());
+            if (!IsAngry)
+            {
+                IsAngry = true;
+                hitDelayCounter.Stop();
+                StrikeWithMaul();
+                angryCounter = Counter.SetCounter(gameObject, 10f, CalmDown, false);
+            }
+            else
+            {
+                isLeaving = true;
+                StopCoroutine(GetComponent<TrollAttackService>().SmashingRoutine());
+                GetComponent<AnimationHelper>().Play(AnimationReferences.TrollStanding);
+                StartCoroutine(LeavingRoutine());
+            }
+            
+        }
+
+        private void CalmDown()
+        {
+            IsAngry = false;
         }
 
         private IEnumerator LeavingRoutine()
         {
-            if (hitDelay1 != null)
+            if (hitDelayCounter != null)
             {
-                hitDelay1.Stop();
+                hitDelayCounter.Stop();
             }
+            if (angryCounter != null)
+            {
+                angryCounter.Stop();
+            }
+
             GetComponent<AnimationHelper>().Play(AnimationReferences.TrollDead);
             GetComponent<AudioHelper>().Play(SoundReferences.TrollDeath);
-            // TODO Check if this works
-            this.StopAllCounters();
 
             yield return new WaitForSeconds(2.15f);
 

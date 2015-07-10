@@ -60,14 +60,24 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             yield return new WaitForSeconds(0.75f);
 
-            foreach (var enemy in enemiesInAttackRange)
-            {
-                enemy.GetComponent<TrollAttackService>().ReceiveHit();
-            }
-            enemiesInAttackRange.Clear();
+            enemiesInAttackRange.ForEach(AttackTroll);
 
             impAnimationService.Play(AnimationReferences.ImpStandingWithSpear);
         }
+
+        private void AttackTroll(TrollController trollController)
+        {
+            if (trollController.GetComponent<TrollAttackService>().IsAngry)
+            {
+                trollController.GetComponent<TrollAttackService>().ReceiveHit();
+                enemiesInAttackRange.Remove(trollController);
+            }
+            else
+            {
+                trollController.GetComponent<TrollAttackService>().ReceiveHit();
+            }
+        }
+
 
         public void FormCommand(ImpController commandPartner)
         {
@@ -99,6 +109,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void OnDestroy()
         {
             attackRange.UnregisterListener();
+            enemiesInAttackRange.Clear();
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)

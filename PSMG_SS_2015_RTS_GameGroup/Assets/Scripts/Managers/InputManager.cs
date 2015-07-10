@@ -158,7 +158,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void MoveCameraRight()
+        public void MoveCameraRight()
         {
             var pos = mainCamera.transform.position;
             pos.x++;
@@ -168,7 +168,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void MoveCameraLeft()
+        public void MoveCameraLeft()
         {
             var pos = mainCamera.transform.position;
             pos.x--;

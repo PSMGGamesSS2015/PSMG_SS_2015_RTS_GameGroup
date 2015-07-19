@@ -65,6 +65,11 @@ namespace Assets.Scripts.Managers
             Application.LoadLevel(config.Name);
         }
 
+        public void LoadLevel(int level)
+        {
+            LoadLevel(LevelConfig.Levels[level]);
+        }
+
         public void OnLevelWasLoaded(int level)
         {
             switch (CurrentLevelConfig.Type)
@@ -106,7 +111,7 @@ namespace Assets.Scripts.Managers
                 Goal = GameObject.FindWithTag(TagReferences.LevelGoal),
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
-            RegisterListeners(); // TODO Move somewhere else
+            RegisterListeners();
             listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
         }
 

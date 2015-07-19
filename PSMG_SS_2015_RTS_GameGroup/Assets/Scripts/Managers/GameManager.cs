@@ -54,12 +54,7 @@ namespace Assets.Scripts.Managers
         public void Start() 
         {
             SetupCommunicationBetweenManagers();
-            LoadLevel(0);
-        }
-
-        public void LoadLevel(int level)
-        {
-            levelManager.LoadLevel(LevelConfig.Levels[level]);
+            levelManager.LoadLevel(LevelConfig.Levels[0]);
         }
         
         private void SetupCommunicationBetweenManagers()

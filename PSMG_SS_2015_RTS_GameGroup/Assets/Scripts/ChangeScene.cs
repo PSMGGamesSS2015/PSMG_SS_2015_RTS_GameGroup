@@ -1,31 +1,15 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
+﻿using Assets.Scripts.Managers;
+using UnityEngine;
 
-namespace Assets.Scripts.Managers
+namespace Assets.Scripts
 {
 
     public class ChangeScene : MonoBehaviour
     {
 
-        private GameObject gameManagerObject;
-        public GameManager gameManager;
-        // Use this for initialization
-        void Start()
-        {
-            gameManagerObject = GameObject.Find("GameManager(Clone)");
-            gameManager = gameManagerObject.GetComponent<GameManager>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void ChangeLevel(int sceneNumber)
         {
-            gameManager.LoadLevel(sceneNumber);
+            LevelManager.Instance.LoadLevel(sceneNumber);
         }
 
         public void QuitGame()

@@ -1,0 +1,363 @@
+fileFormatVersion: 2
+guid: d4d41e9230127f94599b7a0b02470ca9
+timeCreated: 1438258445
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Knight_Standard_0
+    21300002: Knight_Standard_1
+    21300004: Knight_Standard_2
+    21300006: Knight_Standard_3
+    21300008: Knight_Standard_4
+    21300010: Knight_Standard_5
+    21300012: Knight_Standard_6
+    21300014: Knight_Standard_7
+    21300016: Knight_Standard_8
+    21300018: Knight_Standard_9
+    21300020: Knight_Standard_10
+    21300022: Knight_Standard_11
+    21300024: Knight_Standard_12
+    21300026: Knight_Standard_13
+    21300028: Knight_Standard_14
+    21300030: Knight_Standard_15
+    21300032: Knight_Standard_16
+    21300034: Knight_Standard_17
+    21300036: Knight_Standard_18
+    21300038: Knight_Standard_19
+    21300040: Knight_Standard_20
+    21300042: Knight_Standard_21
+    21300044: Knight_Standard_22
+    21300046: Knight_Standard_23
+    21300048: Knight_Standard_24
+    21300050: Knight_Standard_25
+    21300052: Knight_Standard_26
+    21300054: Knight_Standard_27
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Knight_Standard_0
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 1949
+        width: 788
+        height: 2126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_1
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 1355
+        width: 667
+        height: 2714
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_2
+      rect:
+        serializedVersion: 2
+        x: 1827
+        y: 3581
+        width: 968
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_3
+      rect:
+        serializedVersion: 2
+        x: 2919
+        y: 3121
+        width: 450
+        height: 928
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_4
+      rect:
+        serializedVersion: 2
+        x: 3399
+        y: 3779
+        width: 297
+        height: 264
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_5
+      rect:
+        serializedVersion: 2
+        x: 3760
+        y: 3849
+        width: 297
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_6
+      rect:
+        serializedVersion: 2
+        x: 3775
+        y: 3592
+        width: 281
+        height: 201
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_7
+      rect:
+        serializedVersion: 2
+        x: 1815
+        y: 3037
+        width: 969
+        height: 446
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_8
+      rect:
+        serializedVersion: 2
+        x: 3759
+        y: 3297
+        width: 168
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_9
+      rect:
+        serializedVersion: 2
+        x: 1809
+        y: 2607
+        width: 720
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_10
+      rect:
+        serializedVersion: 2
+        x: 2885
+        y: 2169
+        width: 448
+        height: 906
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_11
+      rect:
+        serializedVersion: 2
+        x: 3543
+        y: 2235
+        width: 534
+        height: 941
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_12
+      rect:
+        serializedVersion: 2
+        x: 1795
+        y: 1605
+        width: 701
+        height: 827
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_13
+      rect:
+        serializedVersion: 2
+        x: 2873
+        y: 1607
+        width: 534
+        height: 434
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_14
+      rect:
+        serializedVersion: 2
+        x: 3589
+        y: 1077
+        width: 488
+        height: 1030
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_15
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 109
+        width: 723
+        height: 1275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_16
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 503
+        width: 619
+        height: 850
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_17
+      rect:
+        serializedVersion: 2
+        x: 2423
+        y: 1249
+        width: 340
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_18
+      rect:
+        serializedVersion: 2
+        x: 2911
+        y: 743
+        width: 150
+        height: 636
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_19
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 47
+        width: 553
+        height: 1098
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_20
+      rect:
+        serializedVersion: 2
+        x: 3328
+        y: 413
+        width: 625
+        height: 540
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_21
+      rect:
+        serializedVersion: 2
+        x: 1784
+        y: 29
+        width: 309
+        height: 190
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_22
+      rect:
+        serializedVersion: 2
+        x: 2168
+        y: 3
+        width: 329
+        height: 237
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_23
+      rect:
+        serializedVersion: 2
+        x: 2615
+        y: 24
+        width: 182
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_24
+      rect:
+        serializedVersion: 2
+        x: 2843
+        y: 23
+        width: 189
+        height: 308
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_25
+      rect:
+        serializedVersion: 2
+        x: 3073
+        y: 19
+        width: 104
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_26
+      rect:
+        serializedVersion: 2
+        x: 3224
+        y: 25
+        width: 64
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Standard_27
+      rect:
+        serializedVersion: 2
+        x: 3383
+        y: 16
+        width: 193
+        height: 311
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

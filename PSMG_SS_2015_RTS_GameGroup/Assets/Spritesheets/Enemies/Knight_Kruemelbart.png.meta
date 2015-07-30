@@ -1,0 +1,231 @@
+fileFormatVersion: 2
+guid: 4ecc0da18ccee60448a5d8afa48469f9
+timeCreated: 1438258512
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Knight_Kruemelbart_0
+    21300002: Knight_Kruemelbart_1
+    21300004: Knight_Kruemelbart_2
+    21300006: Knight_Kruemelbart_3
+    21300008: Knight_Kruemelbart_4
+    21300010: Knight_Kruemelbart_5
+    21300012: Knight_Kruemelbart_6
+    21300014: Knight_Kruemelbart_7
+    21300016: Knight_Kruemelbart_8
+    21300018: Knight_Kruemelbart_9
+    21300020: Knight_Kruemelbart_10
+    21300022: Knight_Kruemelbart_11
+    21300024: Knight_Kruemelbart_12
+    21300026: Knight_Kruemelbart_13
+    21300028: Knight_Kruemelbart_14
+    21300030: Knight_Kruemelbart_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Knight_Kruemelbart_0
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 3439
+        width: 387
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_1
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 3811
+        width: 246
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_2
+      rect:
+        serializedVersion: 2
+        x: 1181
+        y: 3983
+        width: 132
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_3
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 3941
+        width: 227
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_4
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 3481
+        width: 246
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_5
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 3601
+        width: 249
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_6
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 3287
+        width: 249
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_7
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 2997
+        width: 560
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_8
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 1981
+        width: 587
+        height: 836
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_9
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 1693
+        width: 721
+        height: 1275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_10
+      rect:
+        serializedVersion: 2
+        x: 2031
+        y: 1231
+        width: 458
+        height: 968
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_11
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 1400
+        width: 535
+        height: 435
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_12
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 221
+        width: 491
+        height: 995
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_13
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 71
+        width: 451
+        height: 929
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_14
+      rect:
+        serializedVersion: 2
+        x: 1968
+        y: 31
+        width: 451
+        height: 906
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Knight_Kruemelbart_15
+      rect:
+        serializedVersion: 2
+        x: 2723
+        y: 71
+        width: 296
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

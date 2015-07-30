@@ -1,9 +1,24 @@
 fileFormatVersion: 2
 guid: 01ac5031727a1a849b86031b78d541c0
-timeCreated: 1438254933
+timeCreated: 1438261566
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Imp_Koboldigunde_0
+    21300002: Imp_Koboldigunde_1
+    21300004: Imp_Koboldigunde_2
+    21300006: Imp_Koboldigunde_3
+    21300008: Imp_Koboldigunde_4
+    21300010: Imp_Koboldigunde_5
+    21300012: Imp_Koboldigunde_6
+    21300014: Imp_Koboldigunde_7
+    21300016: Imp_Koboldigunde_8
+    21300018: Imp_Koboldigunde_9
+    21300020: Imp_Koboldigunde_10
+    21300022: Imp_Koboldigunde_11
+    21300024: Imp_Koboldigunde_12
+    21300026: Imp_Koboldigunde_13
+    21300028: Imp_Koboldigunde_14
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +45,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +63,157 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Imp_Koboldigunde_0
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 2525
+        width: 598
+        height: 1508
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_1
+      rect:
+        serializedVersion: 2
+        x: 983
+        y: 2685
+        width: 476
+        height: 1358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_2
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 2663
+        width: 454
+        height: 1337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_3
+      rect:
+        serializedVersion: 2
+        x: 3233
+        y: 2831
+        width: 762
+        height: 1121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 101
+        width: 1000
+        height: 2140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_5
+      rect:
+        serializedVersion: 2
+        x: 2015
+        y: 1391
+        width: 1028
+        height: 1033
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_6
+      rect:
+        serializedVersion: 2
+        x: 3489
+        y: 2207
+        width: 202
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_7
+      rect:
+        serializedVersion: 2
+        x: 3855
+        y: 2232
+        width: 128
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_8
+      rect:
+        serializedVersion: 2
+        x: 3413
+        y: 1664
+        width: 675
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_9
+      rect:
+        serializedVersion: 2
+        x: 3455
+        y: 1221
+        width: 146
+        height: 270
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_10
+      rect:
+        serializedVersion: 2
+        x: 3791
+        y: 1247
+        width: 140
+        height: 258
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_11
+      rect:
+        serializedVersion: 2
+        x: 1641
+        y: 376
+        width: 455
+        height: 523
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_12
+      rect:
+        serializedVersion: 2
+        x: 2328
+        y: 367
+        width: 435
+        height: 488
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_13
+      rect:
+        serializedVersion: 2
+        x: 3504
+        y: 752
+        width: 104
+        height: 263
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Koboldigunde_14
+      rect:
+        serializedVersion: 2
+        x: 3832
+        y: 831
+        width: 120
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

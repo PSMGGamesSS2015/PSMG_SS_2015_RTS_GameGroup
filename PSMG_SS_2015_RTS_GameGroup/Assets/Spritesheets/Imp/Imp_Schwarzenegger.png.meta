@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: 2aecb705fb3153542812874b45ebc4e6
-timeCreated: 1438254939
+timeCreated: 1438260655
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Imp_Schwarzenegger_0
+    21300002: Imp_Schwarzenegger_1
+    21300004: Imp_Schwarzenegger_2
+    21300006: Imp_Schwarzenegger_3
+    21300008: Imp_Schwarzenegger_4
+    21300010: Imp_Schwarzenegger_5
+    21300012: Imp_Schwarzenegger_6
+    21300014: Imp_Schwarzenegger_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +38,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +56,87 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Imp_Schwarzenegger_0
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 3585
+        width: 459
+        height: 447
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_1
+      rect:
+        serializedVersion: 2
+        x: 615
+        y: 3645
+        width: 432
+        height: 422
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_2
+      rect:
+        serializedVersion: 2
+        x: 2608
+        y: 2941
+        width: 632
+        height: 1028
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_3
+      rect:
+        serializedVersion: 2
+        x: 3440
+        y: 2837
+        width: 605
+        height: 1174
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_4
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 3175
+        width: 340
+        height: 288
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_5
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 1621
+        width: 1003
+        height: 1094
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_6
+      rect:
+        serializedVersion: 2
+        x: 1913
+        y: 1608
+        width: 508
+        height: 1059
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Imp_Schwarzenegger_7
+      rect:
+        serializedVersion: 2
+        x: 2967
+        y: 69
+        width: 1002
+        height: 2140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

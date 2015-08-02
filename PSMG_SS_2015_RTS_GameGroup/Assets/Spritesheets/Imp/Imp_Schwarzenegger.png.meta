@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2aecb705fb3153542812874b45ebc4e6
-timeCreated: 1438260655
+timeCreated: 1438517251
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,7 +65,7 @@ TextureImporter:
         width: 459
         height: 447
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_1
       rect:
@@ -75,27 +75,27 @@ TextureImporter:
         width: 432
         height: 422
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_2
       rect:
         serializedVersion: 2
-        x: 2608
-        y: 2941
-        width: 632
-        height: 1028
+        x: 2734
+        y: 2904
+        width: 511
+        height: 1092
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_3
       rect:
         serializedVersion: 2
-        x: 3440
-        y: 2837
-        width: 605
-        height: 1174
+        x: 3505
+        y: 2836
+        width: 587
+        height: 1215
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_4
       rect:
@@ -105,37 +105,37 @@ TextureImporter:
         width: 340
         height: 288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_5
       rect:
         serializedVersion: 2
-        x: 760
-        y: 1621
-        width: 1003
-        height: 1094
+        x: 919
+        y: 1478
+        width: 621
+        height: 1331
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_6
       rect:
         serializedVersion: 2
         x: 1913
         y: 1608
-        width: 508
-        height: 1059
+        width: 534
+        height: 1064
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: Imp_Schwarzenegger_7
       rect:
         serializedVersion: 2
-        x: 2967
+        x: 2974
         y: 69
-        width: 1002
-        height: 2140
+        width: 1008
+        height: 2289
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

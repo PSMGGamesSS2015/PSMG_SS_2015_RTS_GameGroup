@@ -40,8 +40,11 @@ namespace Assets.Scripts.Config
         /// </summary>
         public static LevelConfig[] Levels = 
         {               
-            new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu),               // Main Menu                 
-            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,10,10}, LevelType.InGame)     // Koboldingen           
+            new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu),                                   
+            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0}, LevelType.InGame),           
+            new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {10,10,10,10,0,0,0,0}, LevelType.InGame),
+            new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame),
+            new LevelConfig(6, 4.0f, SceneReferences.Level04TrollVillage, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame),
         };
     }
 }

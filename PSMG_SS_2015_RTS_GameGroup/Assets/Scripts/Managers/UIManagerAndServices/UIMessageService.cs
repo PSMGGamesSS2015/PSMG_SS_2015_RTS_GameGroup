@@ -14,12 +14,6 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
         public GameObject SimpleTextMessagePrefab;
         public GameObject SpeechBubbleMessagePrefab;
 
-        public Sprite WilburSprite;
-        public Sprite KruemelbartSprite;
-        public Sprite KnightSprite;
-        public Sprite TrollSprite;
-        public Sprite KoboldigundeSprite;
-
         public void CreateSimpleTextMessage(string message)
         {
             StartCoroutine(SimpleTextMessageRoutine(message));
@@ -57,51 +51,52 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
         {
             var msg = Instantiate(SpeechBubbleMessagePrefab);
 
-            var text= 
+            var text = 
                 msg.GetComponentsInChildren<Text>().ToList().First(t => t.gameObject.name == "Text");
 
             text.text = message;
-
-            var speakerSpriteRenderer =
-                msg.GetComponentsInChildren<SpriteRenderer>().ToList().First(sr => sr.gameObject.name == "Speaker_Image");
-
+            
             var speakerLabel =
-               msg.GetComponentsInChildren<Text>().ToList().First(sr => sr.gameObject.name == "Speaker_Label");
+                msg.GetComponentsInChildren<Text>().ToList().First(sr => sr.gameObject.name == "Speaker_Label");
 
+            var nameOfSpeaker = "";
             switch (speaker)
             {
                 case Speaker.Knight:
-                    speakerSpriteRenderer.sprite = KnightSprite;
+                    nameOfSpeaker = "Knight_Image";
                     speakerLabel.text = "Knight";
                     break;
                 case Speaker.Wilbur:
-                    speakerSpriteRenderer.sprite = WilburSprite;
+                    nameOfSpeaker = "Wilbur_Image";
                     speakerLabel.text = "Wilbur";
                     break;
                 case Speaker.Koboldigunde:
-                    speakerSpriteRenderer.sprite = KoboldigundeSprite;
+                    nameOfSpeaker = "Koboldigunde_Image";
                     speakerLabel.text = "Koboldigunde";
                     break;
                 case Speaker.KruemelBart:
-                    speakerSpriteRenderer.sprite = KruemelbartSprite;
+                    nameOfSpeaker = "Kruemelbart_Image";
                     speakerLabel.text = "Kruemelbart";
                     break;
                 case Speaker.Troll:
-                    speakerSpriteRenderer.sprite = TrollSprite;
+                    nameOfSpeaker = "Troll_Image";
                     speakerLabel.text = "Troll";
                     break;
             }
-        
+
+            var img =
+                msg.GetComponentsInChildren<Image>().ToList().First(sr => sr.gameObject.name == nameOfSpeaker);
+            img.enabled = true;
+
             var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
             var pos = canvas.transform.position;
             var width = canvas.GetComponent<RectTransform>().rect.width;
-            var height = canvas.GetComponent<RectTransform>().rect.height;
 
             msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
 
             msg.transform.localPosition = new Vector3( // position message within canvas
-                pos.x - width / 6f,
-                pos.y - height / 6f,
+                pos.x - width / 20f,
+                pos.y + 85, 
                 pos.z
                 );
 

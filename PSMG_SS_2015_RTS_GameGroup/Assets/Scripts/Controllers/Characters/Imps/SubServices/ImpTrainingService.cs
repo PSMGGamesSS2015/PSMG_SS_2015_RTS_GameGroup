@@ -44,6 +44,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator TrainingRoutine(ImpType type)
         {
+
+            if (this.Type == ImpType.Schwarzenegger)
+            {
+                GetComponent<ImpAnimationHelper>().SwapSprites();
+            }
+
             if (this.Type != ImpType.Coward)
             {
                 movementService.Stand();
@@ -147,6 +153,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             movementService.Walk();
             currentProfessionService = gameObject.AddComponent<ImpSchwarzeneggerService>();
             // TODO
+            impAnimationHelper.PlayWalkingAnimation(ImpType.Unemployed);
         }
 
         private void TrainBotcher()

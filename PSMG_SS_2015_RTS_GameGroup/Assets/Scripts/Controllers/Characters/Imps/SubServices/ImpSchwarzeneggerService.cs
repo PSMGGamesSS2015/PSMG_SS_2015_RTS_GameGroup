@@ -7,6 +7,7 @@
         public void Awake()
         {
             InitAttributes();
+            GetComponent<ImpAnimationHelper>().SwapSprites();
         }
 
         private void InitAttributes()
@@ -18,5 +19,7 @@
         {
             // TODO 
         }
+
+        
     }
 }

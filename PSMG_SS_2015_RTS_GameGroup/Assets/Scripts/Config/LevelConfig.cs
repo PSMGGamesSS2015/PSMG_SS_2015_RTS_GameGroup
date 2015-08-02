@@ -41,7 +41,7 @@ namespace Assets.Scripts.Config
         public static LevelConfig[] Levels = 
         {               
             new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu),               // Main Menu                 
-            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0}, LevelType.InGame)     // Koboldingen           
+            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,10,10}, LevelType.InGame)     // Koboldingen           
         };
     }
 }

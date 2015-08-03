@@ -18,6 +18,8 @@ namespace Assets.Scripts.Managers
 
         public UIMessageService UIMessageService { get; private set; }
 
+        public UIImpOutOfSightService UIImpOutOfSightService { get; private set; }
+
         public void Awake()
         {
             if (Instance == null)
@@ -36,11 +38,12 @@ namespace Assets.Scripts.Managers
         private void InitComponents()
         {
             UIMessageService = GetComponent<UIMessageService>();
+            UIImpOutOfSightService = GetComponent<UIImpOutOfSightService>();
         }
 
         public interface IUIManagerListener
         {
-            void OnUserInterfaceLoaded(UserInterface userInteface);       
+            void OnUserInterfaceLoaded(UserInterface userInteface);
         }
 
         public void RegisterListener(IUIManagerListener listener)

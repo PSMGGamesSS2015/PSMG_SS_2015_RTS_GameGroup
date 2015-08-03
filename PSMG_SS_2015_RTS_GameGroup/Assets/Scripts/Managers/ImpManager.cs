@@ -20,7 +20,7 @@ namespace Assets.Scripts.Managers
         private LevelConfig config;
         private GameObject start;
 
-        private List<ImpController> imps;
+        public List<ImpController> Imps;
 
         private float spawnCounter;
         private int currentImps;
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Managers
             }
 
             currentImps = 0;
-            imps = new List<ImpController>();
+            Imps = new List<ImpController>();
             listeners = new List<IMpManagerListener>();
         }
 
@@ -196,7 +196,7 @@ namespace Assets.Scripts.Managers
             impController.gameObject.GetComponent<ImpAnimationHelper>().MoveToSortingLayerPosition(currentImps);
             currentImps++;
 
-            imps.Add(impController);
+            Imps.Add(impController);
 
             spawnCounter = 0f;
         }
@@ -215,7 +215,7 @@ namespace Assets.Scripts.Managers
 
         private void HideSelectionOfAllImps()
         {
-            foreach (var imp in imps)
+            foreach (var imp in Imps)
             {
                 imp.gameObject.GetComponent<ImpUIService>().Selection.Hide();
             }
@@ -230,14 +230,14 @@ namespace Assets.Scripts.Managers
 
         void ImpController.IImpControllerListener.OnImpHurt(ImpController impController)
         {
-            imps.Remove(impController);
+            Imps.Remove(impController);
             currentImps--;
             impController.UnregisterListener(this);
         }
 
         void InputManager.IInputManagerListener.OnDisplayImpLabels()
         {
-            foreach (var imp in imps)
+            foreach (var imp in Imps)
             {
                 imp.GetComponent<ImpUIService>().DisplayLabel();
             }
@@ -252,16 +252,16 @@ namespace Assets.Scripts.Managers
         {
             if (impSelected == null)
             {
-                if (imps.Count != 0)
+                if (Imps.Count != 0)
                 {
-                    SelectImp(imps[Random.Range(0, imps.Count - 1)]);
+                    SelectImp(Imps[Random.Range(0, Imps.Count - 1)]);
                 }
             }
             else
             {
-                var indexOfCurrentImp = imps.IndexOf(impSelected);
+                var indexOfCurrentImp = Imps.IndexOf(impSelected);
                 int indexOfNextImp;
-                if (indexOfCurrentImp >= imps.Count - 1)
+                if (indexOfCurrentImp >= Imps.Count - 1)
                 {
                     indexOfNextImp = 0;
                 }
@@ -269,7 +269,7 @@ namespace Assets.Scripts.Managers
                 {
                     indexOfNextImp = indexOfCurrentImp + 1;
                 }
-                SelectImp(imps[indexOfNextImp]);
+                SelectImp(Imps[indexOfNextImp]);
             }
         }
 
@@ -277,7 +277,7 @@ namespace Assets.Scripts.Managers
         {
             if (impSelected == null)
             {
-                foreach (var ic in imps.Where(ic => ic.GetComponent<ImpTrainingService>().Type == ImpType.Unemployed))
+                foreach (var ic in Imps.Where(ic => ic.GetComponent<ImpTrainingService>().Type == ImpType.Unemployed))
                 {
                     SelectImp(ic);
                     return;
@@ -285,16 +285,16 @@ namespace Assets.Scripts.Managers
             }
             else
             {
-                for (var i = imps.IndexOf(impSelected); i < imps.IndexOf(impSelected) + imps.Count; i++)
+                for (var i = Imps.IndexOf(impSelected); i < Imps.IndexOf(impSelected) + Imps.Count; i++)
                 {
                     var y = i;
-                    if (i >= imps.Count)
+                    if (i >= Imps.Count)
                     {
-                        y = i - imps.Count;
+                        y = i - Imps.Count;
                     }
-                    if (imps[y].GetComponent<ImpTrainingService>().Type != ImpType.Unemployed) continue;
-                    if (imps[y].GetInstanceID() == impSelected.GetInstanceID()) continue;
-                    SelectImp(imps[y]);
+                    if (Imps[y].GetComponent<ImpTrainingService>().Type != ImpType.Unemployed) continue;
+                    if (Imps[y].GetInstanceID() == impSelected.GetInstanceID()) continue;
+                    SelectImp(Imps[y]);
                     return;
                 }
             }
@@ -314,7 +314,7 @@ namespace Assets.Scripts.Managers
 
         void InputManager.IInputManagerListener.OnDismissImpLabels()
         {
-            foreach (var imp in imps)
+            foreach (var imp in Imps)
             {
                 imp.GetComponent<ImpUIService>().DismissLabel();
             }

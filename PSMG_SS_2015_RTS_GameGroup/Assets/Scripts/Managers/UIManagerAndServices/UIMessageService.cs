@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +10,20 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
     {
 
         public const float SimpleTextMessageDuration = 5f;
-        public const float SpeechBubbleMessageDuration = 5f;
+        public const float SpeechBubbleMessageDuration = 10f;
+
+        public const int MaxSimpleMessages = 1;
+        public const int MaxSpeechBubbleMessages = 3;
+
+        private List<GameObject> speechBubbleMessages;
 
         public GameObject SimpleTextMessagePrefab;
         public GameObject SpeechBubbleMessagePrefab;
+
+        public void Awake()
+        {
+            speechBubbleMessages = new List<GameObject>();
+        }
 
         public void CreateSimpleTextMessage(string message)
         {
@@ -49,17 +60,19 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         private IEnumerator SpeechBubbleMessageRoutine(string message, Speaker speaker)
         {
+            CheckForMaxListSize();
+
             var msg = Instantiate(SpeechBubbleMessagePrefab);
 
-            var text = 
-                msg.GetComponentsInChildren<Text>().ToList().First(t => t.gameObject.name == "Text");
+            speechBubbleMessages.Add(msg);
 
-            text.text = message;
+            SetMessageText(message, msg);
             
             var speakerLabel =
                 msg.GetComponentsInChildren<Text>().ToList().First(sr => sr.gameObject.name == "Speaker_Label");
 
             var nameOfSpeaker = "";
+
             switch (speaker)
             {
                 case Speaker.Knight:
@@ -84,10 +97,44 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
                     break;
             }
 
+            SelectSpeakerImage(msg, nameOfSpeaker);
+
+            positionElementWithinCanvas(msg);
+
+            yield return new WaitForSeconds(SpeechBubbleMessageDuration);
+
+            UpdateDisplayedList(msg);
+            Destroy(msg);
+        }
+
+        private static void SetMessageText(string message, GameObject msg)
+        {
+            msg.GetComponentsInChildren<Text>().ToList().First(t => t.gameObject.name == "Text").text = message;
+        }
+
+        private void CheckForMaxListSize()
+        {
+            if (speechBubbleMessages.Count < MaxSpeechBubbleMessages) return;
+            speechBubbleMessages.Remove(speechBubbleMessages[0]); // remove oldest item
+            speechBubbleMessages.Sort(); // sort items
+        }
+
+        private static void SelectSpeakerImage(GameObject msg, string nameOfSpeaker)
+        {
             var img =
                 msg.GetComponentsInChildren<Image>().ToList().First(sr => sr.gameObject.name == nameOfSpeaker);
             img.enabled = true;
+        }
 
+        private void UpdateDisplayedList(GameObject msg)
+        {
+            speechBubbleMessages.Remove(msg);
+            speechBubbleMessages.Sort();
+            speechBubbleMessages.ForEach(positionElementWithinCanvas);
+        }
+
+        private void positionElementWithinCanvas(GameObject msg)
+        {
             var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
             var pos = canvas.transform.position;
             var width = canvas.GetComponent<RectTransform>().rect.width;
@@ -95,14 +142,10 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
 
             msg.transform.localPosition = new Vector3( // position message within canvas
-                pos.x - width / 20f,
-                pos.y + 85, 
+                pos.x - width/20f,
+                pos.y + 85 - 125*(speechBubbleMessages.Count - 1),
                 pos.z
                 );
-
-            yield return new WaitForSeconds(SpeechBubbleMessageDuration);
-
-            Destroy(msg);
         }
     }
 }

@@ -11,7 +11,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
     public class ImpAnimationHelper : AnimationHelper
     {
         private ImpInventory impInventory;
-        private SpriteRenderer[] sprites;
+
+        public SpriteRenderer[] Sprites { get; private set; }
 
         public Sprite SchwarzeneggerRightLowerArm;
         public Sprite SchwarzeneggerRightUpperArm;
@@ -35,12 +36,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             base.Awake();
             impInventory = GetComponentInChildren<ImpInventory>();
             Play(AnimationReferences.ImpWalkingUnemployed);
-            sprites = GetComponentsInChildren<SpriteRenderer>();
+            Sprites = GetComponentsInChildren<SpriteRenderer>();
         }
 
         public void MoveToSortingLayerPosition(int position)
         {
-            foreach (var r in sprites)
+            foreach (var r in Sprites)
             {
                 r.sortingOrder = position;
             }

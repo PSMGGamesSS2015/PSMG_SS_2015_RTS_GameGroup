@@ -231,6 +231,10 @@ namespace Assets.Scripts.Managers
         void ImpController.IImpControllerListener.OnImpHurt(ImpController impController)
         {
             Imps.Remove(impController);
+            
+            // TODO Refactor
+            UIManager.Instance.UIImpOutOfSightService.impOutOfSightIcons.Remove(impController);
+
             currentImps--;
             impController.UnregisterListener(this);
         }

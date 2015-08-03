@@ -7,10 +7,10 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
     public class ImpOutOfSightIconController : MonoBehaviour
     {
         private Image icon;
-        private Image pointerUp;
-        private Image pointerDown;
-        private Image pointerLeft;
-        private Image pointerRight;
+        public Image pointerUp;
+        public Image pointerDown;
+        public Image pointerLeft;
+        public Image pointerRight;
 
         public void Awake()
         {

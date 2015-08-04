@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
+using Assets.Scripts.Types;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers.UIManagerAndServices
@@ -10,7 +12,7 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
         public GameObject ImpOfSightIconPrefab;
         
         private List<ImpController> impReference;
-        private int[] positionsRelativeToCanvas = new int[4];
+        private readonly int[] positionsRelativeToCanvas = new int[4];
 
         private const int LeftOfCanvas = 0;
         private const int RightOfCanvas = 1;
@@ -35,8 +37,6 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
             UpdateIconPositions();
         }
-
-        
 
         private void UpdateIconList()
         {
@@ -66,6 +66,32 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
                     var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
                     impOutOfSightIcon.transform.SetParent(canvas.transform, false); // set canvas as parent element
+
+                    switch (impController.GetComponent<ImpTrainingService>().Type)
+                    {
+                        case ImpType.Unemployed:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_Default.enabled = true;
+                            break;
+                        case ImpType.Spearman:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_Spearman.enabled = true;
+                            break;
+                        case ImpType.Coward:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_Coward.enabled = true;
+                            break;
+                        case ImpType.LadderCarrier:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_LadderCarrier.enabled = true;
+                            break;
+                        case ImpType.Blaster:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_Blaster.enabled = true;
+                            break;
+                        case ImpType.Firebug:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_Firebug.enabled = true;
+                            break;
+                        case ImpType.Schwarzenegger:
+                            impOutOfSightIcon.GetComponent<ImpOutOfSightIconController>().Icon_Schwarzenegger.enabled = true;
+                            break;
+                    }
+                    
 
                     impOutOfSightIcons.Add(impController, impOutOfSightIcon);
                 }

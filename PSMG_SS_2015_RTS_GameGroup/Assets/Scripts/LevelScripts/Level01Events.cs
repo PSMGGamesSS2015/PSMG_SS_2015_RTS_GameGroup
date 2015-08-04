@@ -78,6 +78,7 @@ namespace Assets.Scripts.LevelScripts
 
         private void LaddersCollectedAction()
         {
+            Debug.Log("Ladders Collected");
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 10;
             // TODO Refactor; this smells
             ImpManager.Instance.NotifyMaxProfessions();

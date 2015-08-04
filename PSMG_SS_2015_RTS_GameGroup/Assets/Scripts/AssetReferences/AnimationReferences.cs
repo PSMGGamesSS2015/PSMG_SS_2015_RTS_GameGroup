@@ -18,6 +18,15 @@
         public const string ImpDetonatingBomb = "Explosion";
         public const string ImpSelected = "Selection";
         public const string ImpClimbingLadderSpearman = "Imp Climbing Ladder with Spear";
+        public const string ImpStandingWithShield = "Imp Standing with Shield";
+        public const string ImpDead = "Imp Dead";
+        public const string ImpStanding = "Imp Standing";
+        public const string ImpStandingWithSpear = "Imp Standing Spear";
+        public const string ImpStanding2 = "Imp Standing 2";
+        public const string ImpTalk = "Imp Talk";
+        public const string ImpWin = "Imp Win";
+        public const string ImpWinLoop = "Imp Win Loop";
+
 
         #endregion
 

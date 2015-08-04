@@ -51,5 +51,15 @@
 
         #endregion
 
+        #region Knight
+
+        public const string KnightStanding = "Knight_Standing";
+        public const string KnightAttack = "Knight_Attack";
+        public const string KnightDead = "Knight_Dead";
+        public const string KnightWalking = "Knight_Walking";
+        public const string KnightEating = "Knight_Eating";
+
+
+        #endregion
     }
 }

@@ -17,14 +17,6 @@ namespace Assets.Scripts.Config
             Narrative
         }
 
-        public LevelConfig (int maxImps, float spawnInterval, string name, int[] maxProfessions, LevelType levelType) {
-            MaxImps = maxImps;
-            SpawnInterval = spawnInterval;
-            Name = name;
-            MaxProfessions = maxProfessions;
-            Type = levelType;
-        }
-
         public LevelConfig(int maxImps, float spawnInterval, string name, int[] maxProfessions, LevelType levelType, string[] playList)
         {
             MaxImps = maxImps;

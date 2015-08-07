@@ -9,12 +9,20 @@ namespace Assets.Scripts.Config
     /// </summary>
 
     public class LevelConfig  {
+        private readonly LevelType levelType;
 
         public enum LevelType
         {
             Menu,
             InGame,
             Narrative
+        }
+
+        public LevelConfig(string name, LevelType levelType, string[] playList)
+        {
+            Name = name;
+            Type = levelType;
+            PlayList = playList;
         }
 
         public LevelConfig(int maxImps, float spawnInterval, string name, int[] maxProfessions, LevelType levelType, string[] playList)
@@ -45,6 +53,7 @@ namespace Assets.Scripts.Config
         public static LevelConfig[] Levels = 
         {               
             new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu, new []{SoundReferences.MainTheme}),                                   
+            new LevelConfig(SceneReferences.StarWarsIntro, LevelType.Narrative, new []{SoundReferences.StarWarsTheme}), 
             new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),           
             new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {10,10,10,10,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame, new []{SoundReferences.ForestTheme}),

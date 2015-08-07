@@ -17,10 +17,5 @@ namespace Assets.Scripts.Helpers
             AudioSource.clip = audioClip;
             AudioSource.Play();
         }
-
-        public void PlayNextClip()
-        {
-            // TODO
-        }
     }
 }

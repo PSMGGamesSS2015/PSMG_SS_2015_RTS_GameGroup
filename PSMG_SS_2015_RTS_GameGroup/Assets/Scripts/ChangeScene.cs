@@ -12,6 +12,11 @@ namespace Assets.Scripts
             LevelManager.Instance.LoadLevel(sceneNumber);
         }
 
+        public void LoadIntro()
+        {
+            LevelManager.Instance.LoadNextLevel();
+        }
+
         public void QuitGame()
         {
             Application.Quit();

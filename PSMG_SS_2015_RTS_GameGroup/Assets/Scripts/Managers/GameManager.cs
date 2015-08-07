@@ -63,6 +63,7 @@ namespace Assets.Scripts.Managers
             levelManager.RegisterListener(impManager);
             levelManager.RegisterListener(soundManager);
             levelManager.RegisterMenuSceneListener(soundManager);
+            levelManager.RegisterNarrativeSceneListener(soundManager);
             levelManager.RegisterListener(uiManager);
             levelManager.RegisterListener(inputManager);
             inputManager.RegisterListener(impManager);

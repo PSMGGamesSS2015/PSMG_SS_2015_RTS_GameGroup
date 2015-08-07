@@ -46,6 +46,7 @@ namespace Assets.Scripts.Managers
 
             listeners = new List<ILevelManagerListener>();
             menuSceneListeners = new List<ILevelManagerMenuSceneListener>();
+            narrativeSceneListeners = new List<ILevelManagerNarrativeSceneListener>();
 
             SetupCollisionManagement();
         }
@@ -69,7 +70,18 @@ namespace Assets.Scripts.Managers
 
         public void LoadLevel(int level)
         {
+            CurrentLevelNumber = level;
             LoadLevel(LevelConfig.Levels[level]);
+        }
+
+        public int CurrentLevelNumber { get; private set; }
+
+        public void LoadNextLevel()
+        {
+            if (CurrentLevelNumber < LevelConfig.Levels.Length - 1)
+            {
+                LoadLevel(CurrentLevelNumber + 1);
+            }
         }
 
         public void OnLevelWasLoaded(int level)
@@ -90,7 +102,11 @@ namespace Assets.Scripts.Managers
 
         private void LoadNarrativeLevel()
         {
-            // TODO
+            CurrentLevel = new Level
+            {
+                CurrentLevelConfig = CurrentLevelConfig
+            };
+            narrativeSceneListeners.ForEach(nsl => nsl.OnNarrativeLevelStarted(CurrentLevel));
         }
 
         private void LoadMenuLevel()
@@ -152,6 +168,18 @@ namespace Assets.Scripts.Managers
         public interface ILevelManagerMenuSceneListener
         {
             void OnMenuLevelStarted(Level level);
+        }
+
+        public void RegisterNarrativeSceneListener(ILevelManagerNarrativeSceneListener listener)
+        {
+            narrativeSceneListeners.Add(listener);
+        }
+
+        private List<ILevelManagerNarrativeSceneListener> narrativeSceneListeners;
+
+        public interface ILevelManagerNarrativeSceneListener
+        {
+            void OnNarrativeLevelStarted(Level level);
         }
     }
 

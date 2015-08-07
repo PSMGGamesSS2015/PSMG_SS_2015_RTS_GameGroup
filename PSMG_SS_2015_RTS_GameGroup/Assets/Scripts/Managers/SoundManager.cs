@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets.Scripts.Managers
 {
     public class SoundManager : MonoBehaviour, LevelManager.ILevelManagerListener,
-        LevelManager.ILevelManagerMenuSceneListener
+        LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener
     {
         public AudioHelper BackgroundMusic { get; private set; }
 
@@ -51,16 +51,25 @@ namespace Assets.Scripts.Managers
             BackgroundMusic.Play(playList[indexOfCurrentClipInPlaylist]);
         }
 
-        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
+        private void StartPlaylist(Level level)
         {
             BackgroundMusic.Play(level.CurrentLevelConfig.PlayList[0]);
             indexOfCurrentClipInPlaylist = 0;
         }
 
+        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
+        {
+            StartPlaylist(level);
+        }
+
         void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
         {
-            BackgroundMusic.Play(level.CurrentLevelConfig.PlayList[0]);
-            indexOfCurrentClipInPlaylist = 0;
+            StartPlaylist(level);
+        }
+
+        void LevelManager.ILevelManagerNarrativeSceneListener.OnNarrativeLevelStarted(Level level)
+        {
+            StartPlaylist(level);
         }
     }
 }

@@ -4,8 +4,8 @@
     {
         #region Theme
 
-        public const string BackgroundTheme = "Theme/BackgroundTheme(Loop)";
-        public const string MainTheme = "Theme/MainTheme(Loop)";
+        public const string BackgroundTheme = "Theme/BackgroundTheme";
+        public const string MainTheme = "Theme/MainTheme";
         public const string WonTheme = "Theme/WonLevel";
         public const string ForestTheme = "Theme/ForestTheme";
         public const string CaveTheme = "Theme/CaveTheme";

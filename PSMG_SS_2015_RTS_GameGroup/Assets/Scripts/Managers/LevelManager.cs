@@ -45,6 +45,8 @@ namespace Assets.Scripts.Managers
             }
 
             listeners = new List<ILevelManagerListener>();
+            menuSceneListeners = new List<ILevelManagerMenuSceneListener>();
+
             SetupCollisionManagement();
         }
 
@@ -93,7 +95,11 @@ namespace Assets.Scripts.Managers
 
         private void LoadMenuLevel()
         {
-            // TODO 
+            CurrentLevel = new Level
+            {
+                CurrentLevelConfig = CurrentLevelConfig
+            };
+            menuSceneListeners.ForEach(msl => msl.OnMenuLevelStarted(CurrentLevel));
         }
 
         public void LoadInGameLevel()
@@ -134,6 +140,18 @@ namespace Assets.Scripts.Managers
         public interface ILevelManagerListener
         {
             void OnLevelStarted(Level level);
+        }
+
+        private List<ILevelManagerMenuSceneListener> menuSceneListeners;
+
+        public void RegisterMenuSceneListener(ILevelManagerMenuSceneListener listener)
+        {
+            menuSceneListeners.Add(listener);
+        }
+
+        public interface ILevelManagerMenuSceneListener
+        {
+            void OnMenuLevelStarted(Level level);
         }
     }
 

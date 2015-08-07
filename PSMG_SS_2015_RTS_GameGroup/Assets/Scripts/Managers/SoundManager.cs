@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
-    public class SoundManager : MonoBehaviour, LevelManager.ILevelManagerListener
+    public class SoundManager : MonoBehaviour, LevelManager.ILevelManagerListener, LevelManager.ILevelManagerMenuSceneListener
     {
         public AudioHelper BackgroundMusic { get; private set; }
 
@@ -36,7 +36,12 @@ namespace Assets.Scripts.Managers
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
-            BackgroundMusic.Play(SoundReferences.MainTheme);
+            BackgroundMusic.Play(level.CurrentLevelConfig.PlayList[0]);
+        }
+
+        void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
+        {
+            BackgroundMusic.Play(level.CurrentLevelConfig.PlayList[0]);
         }
     }
 }

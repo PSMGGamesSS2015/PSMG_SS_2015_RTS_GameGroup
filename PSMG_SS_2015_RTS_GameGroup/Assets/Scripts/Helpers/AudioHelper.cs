@@ -18,5 +18,9 @@ namespace Assets.Scripts.Helpers
             AudioSource.Play();
         }
 
+        public void PlayNextClip()
+        {
+            // TODO
+        }
     }
 }

@@ -25,6 +25,16 @@ namespace Assets.Scripts.Config
             Type = levelType;
         }
 
+        public LevelConfig(int maxImps, float spawnInterval, string name, int[] maxProfessions, LevelType levelType, string[] playList)
+        {
+            MaxImps = maxImps;
+            SpawnInterval = spawnInterval;
+            Name = name;
+            MaxProfessions = maxProfessions;
+            Type = levelType;
+            PlayList = playList;
+        }
+
         public int MaxImps { get; private set; }
 
         public float SpawnInterval { get; private set; }
@@ -35,16 +45,18 @@ namespace Assets.Scripts.Config
 
         public LevelType Type { get; private set; }
 
+        public string[] PlayList { get; set; }
+
         /// <summary>
         /// This is a globally usable array of level configurations.
         /// </summary>
         public static LevelConfig[] Levels = 
         {               
-            new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu),                                   
-            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0}, LevelType.InGame),           
-            new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {10,10,10,10,0,0,0,0}, LevelType.InGame),
-            new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame),
-            new LevelConfig(6, 4.0f, SceneReferences.Level04TrollVillage, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame),
+            new LevelConfig(1, 0f, SceneReferences.Level00MainMenu, new[] {0,0,0,0,0,0,0,0}, LevelType.Menu, new []{SoundReferences.MainTheme}),                                   
+            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,0,0,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),           
+            new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {10,10,10,10,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),
+            new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
+            new LevelConfig(6, 4.0f, SceneReferences.Level04TrollVillage, new[] {10,10,10,10,10,0,10,0}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
         };
     }
 }

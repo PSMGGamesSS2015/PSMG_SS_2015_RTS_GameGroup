@@ -26,6 +26,14 @@ namespace Assets.Scripts.Managers
             BackgroundMusic = gameObject.AddComponent<AudioHelper>();
         }
 
+        public void Update()
+        {
+            if (!BackgroundMusic.AudioSource.isPlaying)
+            {
+                BackgroundMusic.PlayNextClip();
+            }
+        }
+
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
             BackgroundMusic.Play(SoundReferences.MainTheme);

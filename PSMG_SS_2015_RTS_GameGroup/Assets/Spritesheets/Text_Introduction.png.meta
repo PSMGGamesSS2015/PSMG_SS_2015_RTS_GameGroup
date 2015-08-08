@@ -1,13 +1,13 @@
 fileFormatVersion: 2
 guid: b3ff216762adcd24b93ad53b7c89939b
-timeCreated: 1439023599
+timeCreated: 1439026826
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Line_03
     21300002: Line_01
     21300004: Line_02
-    21300006: Text_Introduction_3
+    21300006: Line_03b
     21300008: Line_04
     21300010: Line_05
     21300012: Line_06
@@ -110,7 +110,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Text_Introduction_3
+    - name: Line_03b
       rect:
         serializedVersion: 2
         x: 1478

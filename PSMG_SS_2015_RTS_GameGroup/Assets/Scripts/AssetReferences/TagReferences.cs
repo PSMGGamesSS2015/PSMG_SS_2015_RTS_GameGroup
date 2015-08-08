@@ -45,5 +45,7 @@
         public const string UISimpleTextMessageBox = "UISimpleTextMessageBox";
         public const string TopMargin = "TopMargin";
         public const string BottomMargin = "BottomMargin";
+        public const string IntroTextLine = "IntroTextLine";
+        public const string Paragraph = "Paragraph";
     }
 }

@@ -1,26 +1,37 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.AssetReferences;
 using UnityEngine;
 
 namespace Assets.Scripts.LevelScripts
 {
     public class IntroController : MonoBehaviour
     {
-        private List<TextLineController> textLineControllers;
+        private List<SpriteRenderer> textLines;
 
         public void Awake()
         {
-            textLineControllers = GetComponentsInChildren<TextLineController>().ToList();
+            textLines = GetComponentsInChildren<SpriteRenderer>().Where(sr => sr.gameObject.tag == TagReferences.Paragraph).ToList();
         }
 
         public void FixedUpdate()
         {
-            textLineControllers.ForEach(Move);
+            textLines.ForEach(Move);
         }
 
-        private void Move(TextLineController textLineController)
+        private void Move(SpriteRenderer textLine)
         {
-            // TODO
+            var currentPositionOfText = textLine.gameObject.transform.position;
+
+            var newPositionOfText = new Vector3(currentPositionOfText.x, currentPositionOfText.y + 0.005f, currentPositionOfText.z);
+
+            textLine.gameObject.transform.position = newPositionOfText;
+
+            var currentScaleOfText = textLine.gameObject.transform.localScale;
+
+            var newScaleOfText = new Vector3(currentScaleOfText.x - 0.00045f, currentScaleOfText.y - 0.00045f, currentScaleOfText.z);
+
+            textLine.gameObject.transform.localScale = newScaleOfText;
         }
     }
 }

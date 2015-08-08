@@ -47,5 +47,6 @@
         public const string BottomMargin = "BottomMargin";
         public const string IntroTextLine = "IntroTextLine";
         public const string Paragraph = "Paragraph";
+        public const string IntroText = "IntroText";
     }
 }

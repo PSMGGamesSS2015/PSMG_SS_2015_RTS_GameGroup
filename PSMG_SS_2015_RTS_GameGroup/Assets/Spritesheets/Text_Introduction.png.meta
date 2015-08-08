@@ -1,0 +1,396 @@
+fileFormatVersion: 2
+guid: b3ff216762adcd24b93ad53b7c89939b
+timeCreated: 1439023599
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Line_03
+    21300002: Line_01
+    21300004: Line_02
+    21300006: Text_Introduction_3
+    21300008: Line_04
+    21300010: Line_05
+    21300012: Line_06
+    21300014: Line_07
+    21300016: Line_08
+    21300018: Line_09
+    21300020: Line_10
+    21300022: Line_11
+    21300024: Line_12
+    21300026: Line_13
+    21300028: Line_14
+    21300030: Line_15
+    21300032: Line_16
+    21300034: Line_17
+    21300036: Line_18
+    21300038: Line_19
+    21300040: Line_20
+    21300042: Line_21
+    21300044: Line_22
+    21300046: Line_23
+    21300048: Line_24
+    21300050: Line_25
+    21300052: Line_26
+    21300054: Line_27
+    21300056: Line_28
+    21300058: Line_29
+    21300060: Line_30
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Line_03
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3677
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_01
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3921
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_02
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3801
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Text_Introduction_3
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 3557
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_04
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3431
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_05
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3311
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_06
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3197
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_07
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 3077
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_08
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2951
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_09
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2825
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_10
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2711
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_11
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2594
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_12
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2471
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_13
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2233
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_14
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 2114
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_15
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1997
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_16
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1877
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_17
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1755
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_18
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1633
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_19
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1509
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_20
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1385
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_21
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1278
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_22
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1154
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_23
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 1033
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_24
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 912
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_25
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 674
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_26
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 551
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_27
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 431
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_28
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 319
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_29
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 196
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Line_30
+      rect:
+        serializedVersion: 2
+        x: 1481
+        y: 81
+        width: 1411
+        height: 112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

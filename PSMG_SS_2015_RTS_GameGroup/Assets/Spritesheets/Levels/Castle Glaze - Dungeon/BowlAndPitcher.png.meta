@@ -1,0 +1,110 @@
+fileFormatVersion: 2
+guid: 2e6930cc74ef5624cb98d3c9d2d89c28
+timeCreated: 1439051018
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Bowl_Back
+    21300002: Pitcher_Back
+    21300004: Bowl_Front
+    21300006: Pitcher_Front
+    21300008: Pitcher_Handle
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Bowl_Back
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 3117
+        width: 1755
+        height: 854
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pitcher_Back
+      rect:
+        serializedVersion: 2
+        x: 2622
+        y: 3525
+        width: 1022
+        height: 364
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Bowl_Front
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 2312
+        width: 1756
+        height: 721
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pitcher_Front
+      rect:
+        serializedVersion: 2
+        x: 2623
+        y: 1467
+        width: 1056
+        height: 1925
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Pitcher_Handle
+      rect:
+        serializedVersion: 2
+        x: 1427
+        y: 183
+        width: 738
+        height: 1418
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

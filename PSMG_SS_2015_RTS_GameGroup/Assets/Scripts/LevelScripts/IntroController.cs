@@ -30,8 +30,6 @@ namespace Assets.Scripts.LevelScripts
         {
             Counter.SetCounter(gameObject, 20f, DisplayKoboldigunde, false);
 
-
-
             Counter.SetCounter(gameObject, 38f, DisplayKruemelbart, false);
 
             Counter.SetCounter(gameObject, 62f, DisplayImp, false);

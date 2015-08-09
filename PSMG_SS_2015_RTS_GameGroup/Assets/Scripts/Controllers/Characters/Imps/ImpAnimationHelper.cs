@@ -72,7 +72,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             if (impType == ImpType.Firebug)
             {
                 impInventory.TorchController.Display();
-                // TODO
+                Play(AnimationReferences.ImpWalkingTorch);
             }
         }
 

@@ -8,6 +8,7 @@
         public const string ImpWalkingSpear = "Imp Walking with Spear";
         public const string ImpWalkingLadder = "Imp Walking with Ladder";
         public const string ImpWalkingBomb = "Imp Walking with Bomb";
+        public const string ImpWalkingTorch = "Imp Walking with Torch";
 
         public const string ImpTakingObject = "Imp Taking Object";
         public const string ImpAttackingWithSpear = "Imp Attacking with Spear";

@@ -13,6 +13,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
     /// </summary>
     public class ImpController : MonoBehaviour
     {
+
+        // TODO Outsource
         public GameObject HorizontalLadderPrefab;
         public GameObject VerticalLadderPrefab;
 

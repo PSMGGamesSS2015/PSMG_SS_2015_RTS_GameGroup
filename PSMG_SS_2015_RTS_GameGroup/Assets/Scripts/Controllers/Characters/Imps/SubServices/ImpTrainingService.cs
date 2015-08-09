@@ -166,6 +166,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void TrainFirebug()
         {
             movementService.Walk();
+            impAnimationHelper.PlayTrainingAnimation(ImpType.Firebug);
             currentProfessionService = gameObject.AddComponent<ImpFirebugService>();
             // TODO
         }

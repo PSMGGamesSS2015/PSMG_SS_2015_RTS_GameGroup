@@ -25,6 +25,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             base.HideItems();
 
             Explosion.Hide();
+
+            TorchController.Hide();
         }
 
         protected override void RetrieveItems()
@@ -32,9 +34,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             base.RetrieveItems();
 
             Explosion = GetComponentInChildren<Explosion>();
+            TorchController = GetComponentInChildren<TorchController>();
         }
 
         public Explosion Explosion { get; private set; }
+
+        public TorchController TorchController { get; private set; }
 
         public void DisplayExplosion()
         {

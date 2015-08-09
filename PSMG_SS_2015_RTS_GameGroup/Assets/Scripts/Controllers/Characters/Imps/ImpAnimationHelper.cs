@@ -69,8 +69,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 impInventory.Display(TagReferences.ImpInventoryBomb);
                 Play(AnimationReferences.ImpWalkingBomb);
             }
+            if (impType == ImpType.Firebug)
+            {
+                impInventory.TorchController.Display();
+                // TODO
+            }
         }
 
+        // TODO
         public void PlayActionAnimation(ImpType impType)
         {
             switch (impType)
@@ -141,6 +147,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
                 hasSchwarzeneggerSprites = true;
             }
         }
+        
+        // TODO Outsource
 
         private void SwitchToStandardSprites()
         {

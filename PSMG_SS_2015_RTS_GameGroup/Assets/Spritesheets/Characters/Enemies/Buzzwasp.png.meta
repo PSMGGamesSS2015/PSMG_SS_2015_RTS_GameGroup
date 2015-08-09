@@ -1,9 +1,21 @@
 fileFormatVersion: 2
 guid: d371f34df0811564ca791fd686796649
-timeCreated: 1438708353
+timeCreated: 1439145000
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Buzzwasp_Antenna
+    21300002: Buzzwasp_Body_Middle
+    21300004: Buzzwasp_EyeBall
+    21300006: Buzzwasp_LeftWing
+    21300008: Buzzwasp_RightWing
+    21300010: Buzzwasp_Pupil
+    21300012: Buzzwasp_Head
+    21300014: Buzzwasp_Pincer
+    21300016: Buzzwasp_Limb
+    21300018: Buzzwasp_Sting
+    21300020: Buzzwasp_Body_Back
+    21300022: Buzzwasp_LimbFront
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +42,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +60,127 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Buzzwasp_Antenna
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 3795
+        width: 772
+        height: 182
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Body_Middle
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 3277
+        width: 996
+        height: 738
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_EyeBall
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 2771
+        width: 641
+        height: 856
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_LeftWing
+      rect:
+        serializedVersion: 2
+        x: 2379
+        y: 1400
+        width: 694
+        height: 2169
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_RightWing
+      rect:
+        serializedVersion: 2
+        x: 3319
+        y: 1360
+        width: 633
+        height: 2217
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Pupil
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 2328
+        width: 171
+        height: 240
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Head
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 1123
+        width: 744
+        height: 992
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Pincer
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 408
+        width: 157
+        height: 549
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Limb
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 432
+        width: 195
+        height: 467
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Sting
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 77
+        width: 174
+        height: 780
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_Body_Back
+      rect:
+        serializedVersion: 2
+        x: 2207
+        y: 197
+        width: 1721
+        height: 902
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Buzzwasp_LimbFront
+      rect:
+        serializedVersion: 2
+        x: 853
+        y: 87
+        width: 156
+        height: 254
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

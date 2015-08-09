@@ -12,13 +12,13 @@
         public const string Level03CinnamonWood = "Level_03_CinnamonWood";
         public const string Level02CherryTopMountains = "Level_02_CherryTopMountains";
         public const string Level01Koboldingen = "Level_01_Koboldingen";
-        public const string MainMenu = "MainMenu";
-
+        
         #endregion
 
         #region MenuScenes
 
         public const string LoadingScreen = "LoadingScreen";
+        public const string MainMenu = "MainMenu";
         public const string TestScene = "Test Level";
 
         #endregion
@@ -26,6 +26,7 @@
         #region NarrativeScenes
 
         public const string StarWarsIntro = "Intro";
+        public const string Credits = "Credits";
 
         #endregion
     }

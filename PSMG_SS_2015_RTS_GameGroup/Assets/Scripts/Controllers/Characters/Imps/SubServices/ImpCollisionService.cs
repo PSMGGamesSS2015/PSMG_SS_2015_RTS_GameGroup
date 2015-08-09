@@ -142,6 +142,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
                     impTrainingService.IsTrainable = true;
                     break;
+                case TagReferences.Gaslight:
+                    if (GetComponent<ImpFirebugService>() == null) return;
+                    GetComponent<ImpFirebugService>().LightGaslight(collider.gameObject.GetComponent<GaslightController>());
+                    break;
             }
         }
 

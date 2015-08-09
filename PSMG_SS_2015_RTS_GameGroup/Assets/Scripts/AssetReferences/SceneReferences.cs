@@ -12,7 +12,7 @@
         public const string Level03CinnamonWood = "Level_03_CinnamonWood";
         public const string Level02CherryTopMountains = "Level_02_CherryTopMountains";
         public const string Level01Koboldingen = "Level_01_Koboldingen";
-        public const string Level00MainMenu = "Level_00_MainMenu";
+        public const string MainMenu = "MainMenu";
 
         #endregion
 

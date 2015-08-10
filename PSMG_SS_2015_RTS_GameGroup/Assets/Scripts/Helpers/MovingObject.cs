@@ -120,7 +120,11 @@ namespace Assets.Scripts.Helpers
         public enum Direction
         {
             Horizontal,
-            Vertical
+            Vertical,
+            Upwards,
+            Downwards,
+            Left,
+            Right
         }
 
     }

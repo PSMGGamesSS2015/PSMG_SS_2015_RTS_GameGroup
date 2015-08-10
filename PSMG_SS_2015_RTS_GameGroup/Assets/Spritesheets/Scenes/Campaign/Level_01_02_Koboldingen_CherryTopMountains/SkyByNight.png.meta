@@ -1,0 +1,99 @@
+fileFormatVersion: 2
+guid: 021f13a8ec3aed341b7319aa7ca7fcb7
+timeCreated: 1439198211
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SkyByNight_DarkCloud
+    21300002: SkyByNight_Drop
+    21300004: SkyByNight_Star
+    21300006: SkyByNight_Skybox
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: SkyByNight_DarkCloud
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 1407
+        width: 1230
+        height: 756
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: SkyByNight_Drop
+      rect:
+        serializedVersion: 2
+        x: 1973
+        y: 1365
+        width: 515
+        height: 916
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: SkyByNight_Star
+      rect:
+        serializedVersion: 2
+        x: 3091
+        y: 1441
+        width: 642
+        height: 612
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: SkyByNight_Skybox
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 121
+        width: 3762
+        height: 1112
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

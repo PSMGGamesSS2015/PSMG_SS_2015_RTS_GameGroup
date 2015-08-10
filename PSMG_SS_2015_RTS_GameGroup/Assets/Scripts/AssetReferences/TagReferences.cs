@@ -50,5 +50,9 @@
         public const string IntroText = "IntroText";
 
         public const string Gaslight = "Gaslight";
+
+        public const string RedFlameTongue = "RedFlameTongue";
+        public const string OrangeFlameTongue = "OrangeFlameTongue";
+        public const string YellowFlameTongue = "YellowFlameTongue";
     }
 }

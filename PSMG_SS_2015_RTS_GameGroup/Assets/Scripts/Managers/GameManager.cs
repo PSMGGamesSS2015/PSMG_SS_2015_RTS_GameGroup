@@ -29,6 +29,7 @@ namespace Assets.Scripts.Managers
         private UIManager uiManager;
         private InputManager inputManager;
         private SoundManager soundManager;
+        private SpecialEffectsManager specialEffectsManager;
         private PersistenceManager persistenceManager;
 
         // TODO Move elsewhere
@@ -49,12 +50,14 @@ namespace Assets.Scripts.Managers
             inputManager = GetComponent<InputManager>();
             soundManager = GetComponent<SoundManager>();
             persistenceManager = GetComponent<PersistenceManager>();
+            specialEffectsManager = GetComponent<SpecialEffectsManager>();
+
         }
 
         public void Start() 
         {
             SetupCommunicationBetweenManagers();
-            levelManager.LoadLevel(LevelConfig.Levels[0]);
+            levelManager.LoadLevel(LevelConfig.Levels[3]);
         }
         
         private void SetupCommunicationBetweenManagers()

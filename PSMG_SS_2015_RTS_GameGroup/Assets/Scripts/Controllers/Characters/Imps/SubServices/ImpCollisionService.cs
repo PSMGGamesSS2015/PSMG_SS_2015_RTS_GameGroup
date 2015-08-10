@@ -146,6 +146,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     if (GetComponent<ImpFirebugService>() == null) return;
                     GetComponent<ImpFirebugService>().LightGaslight(collider.gameObject.GetComponent<GaslightController>());
                     break;
+                case TagReferences.BurningObject:
+                    if (GetComponent<ImpFirebugService>() == null) return;
+                    GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject);
+                    break;
             }
         }
 

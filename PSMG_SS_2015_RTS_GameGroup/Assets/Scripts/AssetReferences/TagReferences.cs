@@ -2,6 +2,7 @@
 {
     public class TagReferences
     {
+        public const string BurningObject = "BurningObject";
 
         public const string ImpInventorySpear = "Spear";
         public const string ImpInventoryShield = "Shield";

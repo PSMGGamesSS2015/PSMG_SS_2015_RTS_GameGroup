@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.BuzzWasp.Subservices
@@ -14,10 +15,17 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.BuzzWasp.Subservices
 
         public override void Start()
         {
-            // TODO Refactor --> get information from LevelManager
-            topMargin = GameObject.FindGameObjectWithTag(TagReferences.TopMargin);
-            bottomMargin = GameObject.FindGameObjectWithTag(TagReferences.BottomMargin);
-
+            if (LevelManager.Instance == null)
+            {
+                topMargin = GameObject.FindGameObjectWithTag(TagReferences.TopMargin);
+                bottomMargin = GameObject.FindGameObjectWithTag(TagReferences.BottomMargin);
+            }
+            else
+            {
+                topMargin = LevelManager.Instance.CurrentLevel.TopMargin;
+                bottomMargin = LevelManager.Instance.CurrentLevel.BottomMargin;
+            }
+            
             MovementSpeed = CurrentDirection == Direction.Downwards ? MovementSpeedDownwards : MovementSpeedUpwards;
         }
 

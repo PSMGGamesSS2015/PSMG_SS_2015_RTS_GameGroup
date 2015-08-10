@@ -60,6 +60,11 @@
         public const string KnightWalking = "Knight_Walking";
         public const string KnightEating = "Knight_Eating";
 
+        #endregion
+
+        #region BuzzWasp
+
+        public const string BuzzWaspFlyUpAndDown = "BuzzWasp FlyUpAndDown";
 
         #endregion
     }

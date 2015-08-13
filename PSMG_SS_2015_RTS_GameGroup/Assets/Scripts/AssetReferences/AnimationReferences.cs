@@ -18,6 +18,7 @@
 
         public const string ImpClimbingLadderSpearman = "Imp Climbing Ladder with Spear";     
         public const string ImpClimbingLadderUnemployed = "Imp Climbing Ladder";
+        public const string ImpClimbingLadderEnd = "Imp End of Ladder";
 
         public const string ImpDetonatingBomb = "Explosion";
         public const string ImpSelected = "Selection";     
@@ -32,7 +33,6 @@
 
         public const string ImpWin = "Imp Win";
         public const string ImpWinLoop = "Imp Win Loop";
-
 
         #endregion
 
@@ -67,5 +67,15 @@
         public const string BuzzWaspFlyUpAndDown = "BuzzWasp FlyUpAndDown";
 
         #endregion
+
+        #region BlueTroll
+
+        public const string BlueTrollAttack = "BlueTroll Attack";
+        public const string BlueTrollDead = "BlueTroll Dead";
+        public const string BlueTrollStanding = "BlueTroll Standing";
+
+        #endregion
+
+
     }
 }

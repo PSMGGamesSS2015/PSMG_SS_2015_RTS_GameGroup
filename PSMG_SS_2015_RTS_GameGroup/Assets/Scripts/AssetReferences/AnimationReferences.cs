@@ -33,7 +33,6 @@
         public const string ImpWin = "Imp Win";
         public const string ImpWinLoop = "Imp Win Loop";
 
-
         #endregion
 
         #region Troll
@@ -67,5 +66,15 @@
         public const string BuzzWaspFlyUpAndDown = "BuzzWasp FlyUpAndDown";
 
         #endregion
+
+        #region BlueTroll
+
+        public const string BlueTrollAttack = "BlueTroll Attack";
+        public const string BlueTrollDead = "BlueTroll Dead";
+        public const string BlueTrollStanding = "BlueTroll Standing";
+
+        #endregion
+
+
     }
 }

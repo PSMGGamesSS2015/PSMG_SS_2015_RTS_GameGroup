@@ -2,7 +2,7 @@
 {
     public class ImpSchwarzeneggerService : ImpProfessionService
     {
-        public bool IsAtThrowingPosition { get; private set; }
+        public bool IsAtThrowingPosition { get; set; }
 
         public void Awake()
         {
@@ -17,7 +17,7 @@
 
         public void ThrowImp(ImpController projectile)
         {
-            // TODO 
+            projectile.GetComponent<ImpMovementService>().GetThrown();
         }
 
         

@@ -18,6 +18,8 @@
         public const string LadderSpotVertical = "VerticalLadderSpot";
         public const string VerticalLadder = "VerticalLadder";
 
+        public const string SchwarzeneggerSpot = "SchwarzeneggerSpot";
+
         public const string Obstacle = "Obstacle";
         public const string Impassable = "Impassable";
 

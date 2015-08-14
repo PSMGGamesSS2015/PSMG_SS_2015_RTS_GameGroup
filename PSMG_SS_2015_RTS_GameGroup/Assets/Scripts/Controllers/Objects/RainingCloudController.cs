@@ -9,7 +9,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Awake()
         {
-            rain = GetComponent<ParticleSystem>().gameObject;
+            rain = GetComponentInChildren<ParticleSystem>().gameObject;
         }
 
         public void StartRaining()

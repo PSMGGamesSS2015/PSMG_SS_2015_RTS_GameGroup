@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Helpers;
@@ -27,15 +28,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void InitTriggerCollider()
         {
-            var triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
-
-            foreach (var c in triggerColliders)
-            {
-                if (c.tag == TagReferences.ImpAttackRange)
-                {
-                    attackRange = c;
-                }
-            }
+            attackRange = GetComponentsInChildren<TriggerCollider2D>().First(c => c.tag == TagReferences.ImpAttackRange);
+            
             attackRange.RegisterListener(this);
 
             enemiesInAttackRange = new List<TrollController>();

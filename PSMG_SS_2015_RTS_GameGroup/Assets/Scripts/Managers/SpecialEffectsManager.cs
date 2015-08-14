@@ -11,7 +11,7 @@ namespace Assets.Scripts.Managers
         public const float StandardScale = 0.1f;
         public const float StandardRotation = 0.1f;
 
-        public const float VariationFactor = 0.35f;
+        private const float VariationLimiter = 0.35f;
 
         public void Awake()
         {
@@ -44,9 +44,9 @@ namespace Assets.Scripts.Managers
 
             for (var i = 0; i < nrOfFlameTongues - 1; i++)
             {
-                var xVaration = Random.value - VariationFactor;
+                var xVaration = Random.value - VariationLimiter;
 
-                var yVaration = Random.value - VariationFactor;
+                var yVaration = Random.value - VariationLimiter;
 
                 Instantiate(FirePrefab, new Vector3(position.x + xVaration, position.y + yVaration, position.z), rotation);
             }

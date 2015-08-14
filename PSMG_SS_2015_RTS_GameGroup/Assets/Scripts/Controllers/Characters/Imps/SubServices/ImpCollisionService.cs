@@ -94,7 +94,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            
+            if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
+
             var tag = collider.gameObject.tag;
 
             switch (tag)

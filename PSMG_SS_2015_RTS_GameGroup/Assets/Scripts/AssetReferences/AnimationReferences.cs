@@ -27,12 +27,16 @@
         public const string ImpStandingWithShield = "Imp Standing with Shield";
         public const string ImpStandingWithSpear = "Imp Standing with Spear";
         public const string ImpStanding2 = "Imp Standing 2";
+        public const string ImpSchwarzeneggerStanding = "Imp Standing Schwarzenegger";
  
         public const string ImpTalk = "Imp Talk";
         public const string ImpDead = "Imp Dead";
 
         public const string ImpWin = "Imp Win";
         public const string ImpWinLoop = "Imp Win Loop";
+
+        public const string ImpSchwarzeneggerThrowing = "Imp Schwarzenegger Throwing";
+
 
         #endregion
 

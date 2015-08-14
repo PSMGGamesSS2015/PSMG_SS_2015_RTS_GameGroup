@@ -157,6 +157,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     break;
                 case TagReferences.SchwarzeneggerSpot:
                     if (GetComponent<ImpSchwarzeneggerService>() == null) return;
+                    if (collider.GetComponent<SchwarzeneggerSpotController>() == null) return;
                     GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
                     break;
             }

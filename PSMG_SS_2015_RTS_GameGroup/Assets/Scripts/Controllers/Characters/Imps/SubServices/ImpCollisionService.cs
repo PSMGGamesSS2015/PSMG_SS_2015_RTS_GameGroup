@@ -194,6 +194,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     ClimbALittleHigher();
                     impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
                     break;
+                case TagReferences.LadderMiddle:
+                    GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
+                    break;
             }
 
         }
@@ -216,6 +219,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 Physics2D.IgnoreCollision(circleCollider2D, ci, false);
             }
             collidersIgnoredWhileClimbing.Clear();
+            GetComponent<ImpAnimationHelper>().MoveToDefaultSortingLayer();
             
         }
 

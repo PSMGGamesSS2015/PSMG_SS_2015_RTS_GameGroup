@@ -39,6 +39,28 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             Sprites = GetComponentsInChildren<SpriteRenderer>();
         }
 
+        public void MoveToSortingLayer(string sortingLayerName)
+        {
+            var spriteRenderers = Sprites.Where(sr => sr.sortingLayerName != SortingLayerReferences.Explosion).ToList();
+
+            foreach (var sr in spriteRenderers)
+            {
+                sr.sortingLayerName = sortingLayerName;
+                sr.sortingOrder += 10;
+            }
+        }
+
+        public void MoveToDefaultSortingLayer()
+        {
+            var spriteRenderers = Sprites.Where(sr => sr.sortingLayerName != SortingLayerReferences.Explosion).ToList();
+
+            foreach (var sr in spriteRenderers)
+            {
+                sr.sortingLayerName = SortingLayerReferences.Imp;
+                sr.sortingOrder -= 10;
+            }
+        }
+
         public void MoveToSortingLayerPosition(int position)
         {
             foreach (var r in Sprites)

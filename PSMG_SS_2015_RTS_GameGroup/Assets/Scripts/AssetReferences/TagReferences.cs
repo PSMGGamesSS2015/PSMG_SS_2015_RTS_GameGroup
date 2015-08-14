@@ -14,6 +14,7 @@
 
         public const string LadderBottom = "LadderBottom";
         public const string LadderTop = "LadderTop";
+        public const string LadderMiddle = "LadderMiddle";
         public const string LadderSpotHorizontal = "HorizontalLadderSpot";
         public const string LadderSpotVertical = "VerticalLadderSpot";
         public const string VerticalLadder = "VerticalLadder";

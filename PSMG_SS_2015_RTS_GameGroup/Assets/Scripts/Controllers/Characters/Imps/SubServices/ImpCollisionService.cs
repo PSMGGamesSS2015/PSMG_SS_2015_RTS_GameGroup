@@ -155,19 +155,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     if (GetComponent<ImpFirebugService>() == null) return;
                     GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject, 5);
                     break;
-
-
                 case TagReferences.SchwarzeneggerSpot:
                     if (GetComponent<ImpSchwarzeneggerService>() == null) return;
                     GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
-                    // TODO Play Standing animation
-                    break;
-
-                // TODO coordinate this with imp interaction logic service
-                case TagReferences.Imp:
-                    if (GetComponent<ImpSchwarzeneggerService>() == null) return;
-                    if (!GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition) return;
-                    GetComponent<ImpSchwarzeneggerService>().ThrowImp(collider.GetComponent<ImpController>());
                     break;
             }
         }

@@ -25,16 +25,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public override void FixedUpdate()
         {
-            if (isBeingThrown) return;
-            // TODO refactor
+            if (isBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving) return;
 
-            if (GetComponent<ImpTrainingService>().Type == ImpType.Coward ||
-                ((GetComponent<ImpTrainingService>().Type == ImpType.Spearman) &&
-                 GetComponent<ImpSpearmanService>().IsInCommand())) return;
-            if (GetComponent<ImpSchwarzeneggerService>() != null &&
-                GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition) return;
-
-            if (!HasStartedMoving) return;
             if (CurrentDirection == Direction.Vertical)
             {
                 MoveUpwards();
@@ -45,16 +37,29 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
         }
 
+        private bool IsThrowing()
+        {
+            return GetComponent<ImpSchwarzeneggerService>() != null &&
+                   GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition;
+        }
+
+        private bool IsFighting()
+        {
+            return GetComponent<ImpTrainingService>().Type == ImpType.Coward ||
+                   ((GetComponent<ImpTrainingService>().Type == ImpType.Spearman) &&
+                    GetComponent<ImpSpearmanService>().IsInCommand());
+        }
+
         public void GetThrown()
         {
-            // TODO consider facing direction
-
             isBeingThrown = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(ThrowingSpeedX, ThrowingSpeedY);
         }
 
         public void OnCollisionEnter2D(Collision2D collider)
         {
+            if (collider.gameObject.tag == TagReferences.Imp) return;
+
             if (isBeingThrown)
             {
                 isBeingThrown = false;

@@ -148,7 +148,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     break;
                 case TagReferences.BurningObject:
                     if (GetComponent<ImpFirebugService>() == null) return;
-                    GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject);
+                    GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject, 5);
                     break;
             }
         }

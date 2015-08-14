@@ -16,5 +16,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             SpecialEffectsManager.Instance.SpawnFire(target.transform.position);
         }
+
+        public void SetOnFire(GameObject target, int nrOfFlameTongues)
+        {
+            SpecialEffectsManager.Instance.SpawnFire(target.transform.position, nrOfFlameTongues);
+        }
     }
 }

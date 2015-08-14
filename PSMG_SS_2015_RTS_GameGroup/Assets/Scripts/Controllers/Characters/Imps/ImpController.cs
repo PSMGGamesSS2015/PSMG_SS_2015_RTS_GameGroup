@@ -16,7 +16,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         // TODO Outsource
         public GameObject HorizontalLadderPrefab;
-        public GameObject VerticalLadderPrefab;
+        public GameObject VerticalLadderMediumPrefab;
+        public GameObject VerticalLadderLongPrefab;
 
         public void Awake()
         {

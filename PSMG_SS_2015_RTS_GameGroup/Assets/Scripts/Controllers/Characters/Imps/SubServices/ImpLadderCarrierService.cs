@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 
@@ -34,14 +35,28 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = false;
         }
 
-        public GameObject SetupVerticalLadder()
+        public GameObject SetupVerticalLadder(VerticalLadderSpotController.LadderLength ladderLength)
         {
-            var ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffset,
+            GameObject prefab = null;
+            var ladderPosition = new Vector3();
+
+            switch (ladderLength)
+            {
+                case VerticalLadderSpotController.LadderLength.Long:
+                    prefab = GetComponent<ImpController>().VerticalLadderLongPrefab;
+                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffset,
                 gameObject.transform.position.y + VerticalLadderPlacementOffset, gameObject.transform.position.z);
+                    break;
+                case VerticalLadderSpotController.LadderLength.Medium:
+                    prefab = GetComponent<ImpController>().VerticalLadderMediumPrefab;
+                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffset,
+                    gameObject.transform.position.y, gameObject.transform.position.z);
+                    break;
+            }
 
             var ladder =
                 (GameObject)
-                    Instantiate(GetComponent<ImpController>().VerticalLadderPrefab, ladderPosition, Quaternion.identity);
+                    Instantiate(prefab, ladderPosition, Quaternion.identity);
             impTrainingService.Untrain();
             return ladder;
         }

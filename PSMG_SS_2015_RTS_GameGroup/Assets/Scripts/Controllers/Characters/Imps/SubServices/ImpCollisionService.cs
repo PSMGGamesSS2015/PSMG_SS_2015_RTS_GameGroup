@@ -127,11 +127,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     if (impTrainingService.Type == ImpType.LadderCarrier)
                     {
                         
-                        var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
+                        var ladderSpotController = collider.gameObject.GetComponent<VerticalLadderSpotController>();
                         if (!ladderSpotController.IsLadderPlaced)
                         {
                             var ladder = GetComponent<ImpLadderCarrierService>()
-                                .SetupVerticalLadder();
+                                .SetupVerticalLadder(ladderSpotController.LengthOfLadder);
 
                             // TODO refactor
                             ladder.transform.parent = collider.gameObject.transform.parent;

@@ -71,6 +71,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             PlayClimbingAnimation();
             CurrentDirection = Direction.Vertical;
+           
         }
 
         private void PlayClimbingAnimation()

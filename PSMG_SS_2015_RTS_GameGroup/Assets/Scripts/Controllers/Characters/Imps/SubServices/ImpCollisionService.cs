@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
@@ -17,6 +17,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private AudioHelper impAudioService;
         private ImpMovementService impMovementService;
         private ImpTrainingService impTrainingService;
+        private bool isClimbing;
+
+        private List<Collider2D> collidersIgnoredWhileClimbing; 
 
         public void Awake()
         {
@@ -26,6 +29,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void InitComponents()
         {
+            collidersIgnoredWhileClimbing = new List<Collider2D>();
+            isClimbing = false;
+
             circleCollider2D = GetComponent<CircleCollider2D>();
             impAnimationService = GetComponent<ImpAnimationHelper>();
             impAudioService = GetComponent<AudioHelper>();
@@ -62,6 +68,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void OnCollisionEnter2D(Collision2D collision)
         {
+            if (isClimbing)
+            {
+                collidersIgnoredWhileClimbing.Add(collision.gameObject.GetComponent<Collider2D>());
+                Physics2D.IgnoreCollision(circleCollider2D, collision.gameObject.GetComponent<Collider2D>(), true);
+                return;
+            }
+
             var tag = collision.gameObject.tag;
 
             switch (tag)
@@ -84,6 +97,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     break;
             }
         }
+
+        // TODO refactor
 
         public void OnCollisionStay2D(Collision2D collision)
         {
@@ -140,16 +155,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.LadderBottom:
                     if (GetComponent<ImpMovementService>().FacingRight)
                     {
+                        
                         GetComponent<ImpMovementService>().ClimbLadder();
                         impTrainingService.IsTrainable = false;
+                        isClimbing = true;
                     }
-                    break;
-                case TagReferences.LadderTop:
-                    // TODO change all this
-                    //impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
-                    //impAudioService.Play(SoundReferences.ImpGoing);
-                    //impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
-                    //impTrainingService.IsTrainable = true;
                     break;
                 case TagReferences.Gaslight:
                     if (GetComponent<ImpFirebugService>() == null) return;
@@ -167,8 +177,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
         }
 
-        // TODO Check
-
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
@@ -182,12 +190,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
                     break;
                 case TagReferences.LadderTop:
-                    Debug.Log("Has reached top of ladder");
-                    // TODO climb a little higher
-                    Counter.SetCounter(gameObject, 2f, ClimbALittleHigher, false);
-                    // TODO play reaching end of ladder animation
+                    // TODO setup proper timing
+                    ClimbALittleHigher();
                     impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
-                    // TODO then start moving again
                     break;
             }
 
@@ -195,10 +200,23 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void ClimbALittleHigher()
         {
+            Counter.SetCounter(gameObject, 5f, StopClimbing, false);
+        }
+
+        private void StopClimbing()
+        {
             impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
             impAudioService.Play(SoundReferences.ImpGoing);
             impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
             impTrainingService.IsTrainable = true;
+            isClimbing = false;
+
+            foreach (var ci in collidersIgnoredWhileClimbing)
+            {
+                Physics2D.IgnoreCollision(circleCollider2D, ci, false);
+            }
+            collidersIgnoredWhileClimbing.Clear();
+            
         }
 
         

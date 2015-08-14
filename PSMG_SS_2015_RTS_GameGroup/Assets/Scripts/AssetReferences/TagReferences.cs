@@ -2,6 +2,7 @@
 {
     public class TagReferences
     {
+        public const string BurningObject = "BurningObject";
 
         public const string ImpInventorySpear = "Spear";
         public const string ImpInventoryShield = "Shield";
@@ -16,6 +17,8 @@
         public const string LadderSpotHorizontal = "HorizontalLadderSpot";
         public const string LadderSpotVertical = "VerticalLadderSpot";
         public const string VerticalLadder = "VerticalLadder";
+
+        public const string SchwarzeneggerSpot = "SchwarzeneggerSpot";
 
         public const string Obstacle = "Obstacle";
         public const string Impassable = "Impassable";

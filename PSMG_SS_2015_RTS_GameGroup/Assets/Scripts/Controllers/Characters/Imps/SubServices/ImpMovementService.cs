@@ -1,13 +1,21 @@
 ﻿using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
+using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpMovementService : MovingObject
     {
+        private bool isBeingThrown;
+
+        private const float ThrowingSpeedX = 5f;
+        private const float ThrowingSpeedY = 5f;
+
         public override void Start()
         {
+            isBeingThrown = false;
+
             FacingRight = true;
             CurrentDirection = Direction.Horizontal;
             HasStartedMoving = true;
@@ -17,8 +25,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public override void FixedUpdate()
         {
-            if (GetComponent<ImpTrainingService>().Type == ImpType.Coward || ((GetComponent<ImpTrainingService>().Type == ImpType.Spearman) && GetComponent<ImpSpearmanService>().IsInCommand())) return;
-            if (!HasStartedMoving) return;
+            if (isBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving) return;
+
             if (CurrentDirection == Direction.Vertical)
             {
                 MoveUpwards();
@@ -27,6 +35,36 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             {
                 Move();
             }
+        }
+
+        private bool IsThrowing()
+        {
+            return GetComponent<ImpSchwarzeneggerService>() != null &&
+                   GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition;
+        }
+
+        private bool IsFighting()
+        {
+            return GetComponent<ImpTrainingService>().Type == ImpType.Coward ||
+                   ((GetComponent<ImpTrainingService>().Type == ImpType.Spearman) &&
+                    GetComponent<ImpSpearmanService>().IsInCommand());
+        }
+
+        public void GetThrown()
+        {
+            isBeingThrown = true;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(ThrowingSpeedX, ThrowingSpeedY);
+        }
+
+        public void OnCollisionEnter2D(Collision2D collider)
+        {
+            if (collider.gameObject.tag == TagReferences.Imp) return;
+
+            if (isBeingThrown)
+            {
+                isBeingThrown = false;
+            }
+
         }
 
         public void ClimbLadder()

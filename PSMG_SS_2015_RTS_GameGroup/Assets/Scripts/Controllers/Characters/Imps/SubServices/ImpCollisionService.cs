@@ -35,6 +35,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             var triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
 
+            // TODO Refactor using linq
+
             foreach (var c in triggerColliders)
             {
                 switch (c.tag)
@@ -92,9 +94,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
         }
 
+        // TODO Refactor this method
+
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            
+            if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
+
             var tag = collider.gameObject.tag;
 
             switch (tag)
@@ -146,8 +151,19 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     if (GetComponent<ImpFirebugService>() == null) return;
                     GetComponent<ImpFirebugService>().LightGaslight(collider.gameObject.GetComponent<GaslightController>());
                     break;
+                case TagReferences.BurningObject:
+                    if (GetComponent<ImpFirebugService>() == null) return;
+                    GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject, 5);
+                    break;
+                case TagReferences.SchwarzeneggerSpot:
+                    if (GetComponent<ImpSchwarzeneggerService>() == null) return;
+                    if (collider.GetComponent<SchwarzeneggerSpotController>() == null) return;
+                    GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
+                    break;
             }
         }
+
+        // TODO Check
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {

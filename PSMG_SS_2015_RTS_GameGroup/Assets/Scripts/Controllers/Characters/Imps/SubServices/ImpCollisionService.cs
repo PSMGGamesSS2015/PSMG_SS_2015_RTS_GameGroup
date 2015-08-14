@@ -224,6 +224,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             impMovementService.IsJumping = true;
             impMovementService.Jump();
+            // TODO Play jumping animation
 
             yield return new WaitForSeconds(2f);
 

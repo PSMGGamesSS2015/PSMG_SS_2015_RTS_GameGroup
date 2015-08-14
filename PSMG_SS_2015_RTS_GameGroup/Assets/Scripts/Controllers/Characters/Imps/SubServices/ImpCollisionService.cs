@@ -163,6 +163,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderTop:
+                    if (!isClimbing) return;
                     ClimbALittleHigher();
                     impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
                     break;

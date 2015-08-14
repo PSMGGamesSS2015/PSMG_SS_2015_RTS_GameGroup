@@ -70,7 +70,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     impTrainingService.Type == ImpType.LadderCarrier ||
                     impTrainingService.Type == ImpType.Blaster ||
                     impTrainingService.Type == ImpType.Firebug ||
-                    impTrainingService.Type == ImpType.Botcher ||
                     impTrainingService.Type == ImpType.Schwarzenegger);
         }
 

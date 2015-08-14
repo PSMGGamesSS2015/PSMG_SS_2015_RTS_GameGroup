@@ -91,9 +91,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case ImpType.Firebug:
                     TrainFirebug();
                     break;
-                case ImpType.Botcher:
-                    TrainBotcher();
-                    break;
                 case ImpType.Schwarzenegger:
                     TrainSchwarzenegger();
                     break;
@@ -154,13 +151,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             currentProfessionService = gameObject.AddComponent<ImpSchwarzeneggerService>();
             // TODO
             impAnimationHelper.PlayWalkingAnimation(ImpType.Unemployed);
-        }
-
-        private void TrainBotcher()
-        {
-            movementService.Walk();
-            currentProfessionService = gameObject.AddComponent<ImpBotcherService>();
-            // TODO
         }
 
         private void TrainFirebug()

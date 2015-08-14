@@ -81,12 +81,9 @@ namespace Assets.Scripts.Managers
                         SelectProfession(ImpType.Firebug);
                         break;
                     case KeyCode.Alpha6:
-                        SelectProfession(ImpType.Botcher);
-                        break;
-                    case KeyCode.Alpha7:
                         SelectProfession(ImpType.Schwarzenegger);
                         break;
-                    case KeyCode.Alpha0:
+                    case KeyCode.Alpha7:
                         SelectProfession(ImpType.Unemployed);
                         break;
                     case KeyCode.Space:

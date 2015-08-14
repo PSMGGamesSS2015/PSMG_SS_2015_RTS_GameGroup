@@ -13,7 +13,6 @@
         LadderCarrier,
         Blaster,
         Firebug,
-        Botcher,
         Schwarzenegger,
 
         Unemployed // Default

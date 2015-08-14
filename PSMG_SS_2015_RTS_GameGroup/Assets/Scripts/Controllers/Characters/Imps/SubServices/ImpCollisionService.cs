@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.AssetReferences;
+﻿using System.Collections;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
@@ -123,9 +125,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderSpotHorizontal:
-                    Debug.Log("Found horizontal ladder spot");
-                    Debug.Log(self.GetInstanceID() == impCollisionCheck.GetInstanceID());
-                    Debug.Log(self.GetInstanceID() == impClickCheck.GetInstanceID());
 
                     if (impTrainingService.Type == ImpType.LadderCarrier)
                     {
@@ -146,10 +145,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderTop:
-                    impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
-                    impAudioService.Play(SoundReferences.ImpGoing);
-                    impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
-                    impTrainingService.IsTrainable = true;
+                    // TODO change all this
+                    //impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
+                    //impAudioService.Play(SoundReferences.ImpGoing);
+                    //impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
+                    //impTrainingService.IsTrainable = true;
                     break;
                 case TagReferences.Gaslight:
                     if (GetComponent<ImpFirebugService>() == null) return;
@@ -173,13 +173,35 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
 
-            var imp = collider.gameObject.GetComponent<ImpController>();
+            var tag = collider.gameObject.tag;
 
-            if (imp != null)
+            switch (tag)
             {
-                Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
+                case TagReferences.Imp:
+                    var imp = collider.gameObject.GetComponent<ImpController>();
+                    Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
+                    break;
+                case TagReferences.LadderTop:
+                    Debug.Log("Has reached top of ladder");
+                    // TODO climb a little higher
+                    Counter.SetCounter(gameObject, 2f, ClimbALittleHigher, false);
+                    // TODO play reaching end of ladder animation
+                    impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
+                    // TODO then start moving again
+                    break;
             }
+
         }
+
+        private void ClimbALittleHigher()
+        {
+            impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
+            impAudioService.Play(SoundReferences.ImpGoing);
+            impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
+            impTrainingService.IsTrainable = true;
+        }
+
+        
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {

@@ -7,6 +7,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpLadderCarrierService : ImpProfessionService
     {
+        private const float VerticalLadderPlacementOffset = 1f;
 
         private ImpTrainingService impTrainingService;
         private ImpMovementService impMovementService;
@@ -35,10 +36,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public GameObject SetupVerticalLadder()
         {
+            var ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffset,
+                gameObject.transform.position.y + VerticalLadderPlacementOffset, gameObject.transform.position.z);
 
-            var ladderPosition = new Vector3(gameObject.transform.position.x + 1, gameObject.transform.position.y + 1, gameObject.transform.position.z);
-
-            var ladder = (GameObject)Instantiate(GetComponent<ImpController>().VerticalLadderPrefab, ladderPosition, Quaternion.identity);
+            var ladder =
+                (GameObject)
+                    Instantiate(GetComponent<ImpController>().VerticalLadderPrefab, ladderPosition, Quaternion.identity);
             impTrainingService.Untrain();
             return ladder;
         }
@@ -63,7 +66,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = false;
             impTrainingService.Untrain();
             impMovementService.Walk();
-            Instantiate(GetComponent<ImpController>().HorizontalLadderPrefab, new Vector3(position.x+0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
+            Instantiate(GetComponent<ImpController>().HorizontalLadderPrefab,
+                new Vector3(position.x + 0.6f, position.y, 0), Quaternion.Euler(0, 0, -90));
             GetComponent<ImpTrainingService>().IsTrainable = true;
         }
     }

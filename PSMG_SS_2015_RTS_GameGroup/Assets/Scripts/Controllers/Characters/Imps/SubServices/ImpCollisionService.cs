@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
@@ -161,6 +162,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                         isClimbing = true;
                     }
                     break;
+                case TagReferences.LadderTop:
+                    ClimbALittleHigher();
+                    impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
+                    break;
                 case TagReferences.Gaslight:
                     if (GetComponent<ImpFirebugService>() == null) return;
                     GetComponent<ImpFirebugService>().LightGaslight(collider.gameObject.GetComponent<GaslightController>());
@@ -189,11 +194,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     var imp = collider.gameObject.GetComponent<ImpController>();
                     Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
                     break;
-                case TagReferences.LadderTop:
-                    // TODO setup proper timing
-                    ClimbALittleHigher();
-                    impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
-                    break;
                 case TagReferences.LadderMiddle:
                     GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
                     break;
@@ -203,27 +203,38 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void ClimbALittleHigher()
         {
-            Counter.SetCounter(gameObject, 5f, StopClimbing, false);
+            Counter.SetCounter(gameObject, 6f, StopClimbing, false);
         }
 
         private void StopClimbing()
         {
-            impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
-            impAudioService.Play(SoundReferences.ImpGoing);
-            impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
-            impTrainingService.IsTrainable = true;
-            isClimbing = false;
+            StartCoroutine(StopClimbingRoutine());
+        }
 
+        private IEnumerator StopClimbingRoutine()
+        {
+            isClimbing = false;
             foreach (var ci in collidersIgnoredWhileClimbing)
             {
                 Physics2D.IgnoreCollision(circleCollider2D, ci, false);
             }
             collidersIgnoredWhileClimbing.Clear();
+
             GetComponent<ImpAnimationHelper>().MoveToDefaultSortingLayer();
+
+            impMovementService.IsJumping = true;
+            impMovementService.Jump();
+
+            yield return new WaitForSeconds(2f);
+
+            impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
+            impAudioService.Play(SoundReferences.ImpGoing);
+            impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
+            impTrainingService.IsTrainable = true;
+
+            impMovementService.IsJumping = false;
             
         }
-
-        
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {

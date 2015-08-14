@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
@@ -15,7 +16,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public override void Start()
         {
             isBeingThrown = false;
-
+            IsJumping = false;
             FacingRight = true;
             CurrentDirection = Direction.Horizontal;
             HasStartedMoving = true;
@@ -25,7 +26,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public override void FixedUpdate()
         {
-            if (isBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving) return;
+            if (isBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping) return;
 
             if (CurrentDirection == Direction.Vertical)
             {
@@ -36,6 +37,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 Move();
             }
         }
+
+        public bool IsJumping { get; set; }
 
         private bool IsThrowing()
         {
@@ -91,5 +94,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             GetComponent<ImpAnimationHelper>().Play(anim);
         }
+
+        // TODO refactor
+        public void Jump()
+        {
+            IsJumping = true;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(2f, 2f);
+        }
+
     }
 }

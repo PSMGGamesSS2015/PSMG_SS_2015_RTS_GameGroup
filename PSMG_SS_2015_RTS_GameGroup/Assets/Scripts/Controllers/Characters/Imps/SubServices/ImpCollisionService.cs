@@ -113,7 +113,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                         if (!ladderSpotController.IsLadderPlaced)
                         {
                             var ladder = GetComponent<ImpLadderCarrierService>()
-                                .SetupVerticalLadder(collider.gameObject.transform.position);
+                                .SetupVerticalLadder();
 
                             // TODO refactor
                             ladder.transform.parent = collider.gameObject.transform.parent;
@@ -123,6 +123,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     }
                     break;
                 case TagReferences.LadderSpotHorizontal:
+                    Debug.Log("Found horizontal ladder spot");
+                    Debug.Log(self.GetInstanceID() == impCollisionCheck.GetInstanceID());
+                    Debug.Log(self.GetInstanceID() == impClickCheck.GetInstanceID());
+
                     if (impTrainingService.Type == ImpType.LadderCarrier)
                     {
                         var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();

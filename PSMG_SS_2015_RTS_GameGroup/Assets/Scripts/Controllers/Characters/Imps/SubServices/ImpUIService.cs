@@ -35,6 +35,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void OnMouseDown()
         {
+            Debug.Log("Imp Selected");
             var impController = GetComponent<ImpController>();
             foreach (var listener in impController.Listeners)
             {

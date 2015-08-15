@@ -8,13 +8,16 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpLadderCarrierService : ImpProfessionService
     {
-        private const float VerticalLadderPlacementOffset = 1f;
+        private const float VerticalLadderPlacementOffsetVertical = 1f;
+        private const float VerticalLadderPlacementOffsetHorizontal = 0.5f;
 
         private ImpTrainingService impTrainingService;
         private ImpMovementService impMovementService;
         private ImpAnimationHelper impAnimationService;
         private AudioHelper impAudioService;
         public bool IsPlacingLadder { get; private set; }
+        public GameObject CurrentLadder { get; private set; }
+
 
         public void Awake()
         {
@@ -35,30 +38,47 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = false;
         }
 
-        public GameObject SetupVerticalLadder(VerticalLadderSpotController.LadderLength ladderLength)
+        public void SetupVerticalLadder(VerticalLadderSpotController.LadderLength ladderLength)
         {
+            StartCoroutine(SetupVerticalLadderRoutine(ladderLength));
+        }
+
+        private IEnumerator SetupVerticalLadderRoutine(VerticalLadderSpotController.LadderLength ladderLength)
+        {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
+            impMovementService.Stand();
+            IsPlacingLadder = true;
+            
+            impAnimationService.Play(AnimationReferences.ImpPlacingLadderVertically);
+            impAudioService.Play(SoundReferences.ImpSetupLadder);
+
             GameObject prefab = null;
             var ladderPosition = new Vector3();
+
 
             switch (ladderLength)
             {
                 case VerticalLadderSpotController.LadderLength.Long:
                     prefab = GetComponent<ImpController>().VerticalLadderLongPrefab;
-                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffset,
-                gameObject.transform.position.y + VerticalLadderPlacementOffset, gameObject.transform.position.z);
+                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal,
+                        gameObject.transform.position.y + VerticalLadderPlacementOffsetVertical, gameObject.transform.position.z);
                     break;
                 case VerticalLadderSpotController.LadderLength.Medium:
                     prefab = GetComponent<ImpController>().VerticalLadderMediumPrefab;
-                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffset,
-                    gameObject.transform.position.y, gameObject.transform.position.z);
+                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal,
+                        gameObject.transform.position.y, gameObject.transform.position.z);
                     break;
             }
 
-            var ladder =
-                (GameObject)
-                    Instantiate(prefab, ladderPosition, Quaternion.identity);
+            yield return new WaitForSeconds(4f);
+
+            CurrentLadder = (GameObject) Instantiate(prefab, ladderPosition, Quaternion.identity);
+
+            impAnimationService.SwitchBackToStandardAnimation();
+            IsPlacingLadder = false;
             impTrainingService.Untrain();
-            return ladder;
+            impMovementService.Walk();
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
         public void SetupHorizontalLadder(Vector3 position)

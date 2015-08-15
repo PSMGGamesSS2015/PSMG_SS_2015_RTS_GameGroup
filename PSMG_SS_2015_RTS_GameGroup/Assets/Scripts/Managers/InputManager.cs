@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using Assets.Scripts.UserInterfaceComponents;
@@ -60,7 +61,7 @@ namespace Assets.Scripts.Managers
                 switch (e.keyCode)
                 {
                     case KeyCode.LeftAlt:
-                        DisplayImpLabels();
+                        HighlightObjects(true);
                         break;
                     case KeyCode.Tab:
                         SelectNextImp();
@@ -116,8 +117,22 @@ namespace Assets.Scripts.Managers
             switch (e.keyCode)
             {
                 case KeyCode.LeftAlt:
-                    DismissImpLabels();
+                    HighlightObjects(false);
                     break;
+            }
+        }
+
+        private void HighlightObjects(bool highlighted)
+        {
+            var highlightableObjects = LevelManager.Instance.CurrentLevel.HighlightableObjects;
+            
+            if (highlighted)
+            {
+                highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = true);
+            }
+            else
+            {
+                highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = false);
             }
         }
 

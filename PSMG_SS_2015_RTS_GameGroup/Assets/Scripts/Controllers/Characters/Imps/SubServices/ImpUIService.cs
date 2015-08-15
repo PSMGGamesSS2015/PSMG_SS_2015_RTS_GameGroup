@@ -13,6 +13,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             Selection = GetComponentInChildren<ImpSelection>();
         }
 
+        // TODO Remove function to display imp labels
+
         public void OnGUI()
         {
             if (areLabelsDisplayed)

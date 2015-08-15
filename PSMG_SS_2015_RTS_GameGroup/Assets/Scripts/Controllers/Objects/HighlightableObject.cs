@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -11,8 +10,9 @@ namespace Assets.Scripts.Controllers.Objects
         private List<SpriteRenderer> spriteRenderers;
 
         private bool isHighlighted;
-
         private Counter blinkingCounter;
+
+        private bool isBlinking;
 
         private Color defaultColor;
 
@@ -31,6 +31,20 @@ namespace Assets.Scripts.Controllers.Objects
             isHighlighted = false;
         }
 
+        public bool IsBlinking
+        {
+            get
+            {
+                return isBlinking;
+            }
+            set
+            {
+                isBlinking = value;
+                if (value) return;
+                spriteRenderers.ForEach(sr => sr.color = defaultColor);
+                isHighlighted = false;
+            }
+        }
 
         public void Start()
         {
@@ -39,16 +53,18 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void Highlight()
         {
-            if (isHighlighted)
+            if (!IsBlinking) return;
+
+            if (!isHighlighted)
             {
                 spriteRenderers.ForEach(sr => sr.color = Color.gray);
+                isHighlighted = true;
             }
             else
             {
                 spriteRenderers.ForEach(sr => sr.color = defaultColor);
+                isHighlighted = false;
             }
-
-            isHighlighted = !isHighlighted;
         }
     }
 }

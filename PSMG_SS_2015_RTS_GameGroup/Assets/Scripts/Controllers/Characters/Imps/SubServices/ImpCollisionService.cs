@@ -195,7 +195,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
                     break;
                 case TagReferences.LadderMiddle:
-                    GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
+                    if (isClimbing)
+                    {
+                        GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
+                    }
                     break;
             }
 

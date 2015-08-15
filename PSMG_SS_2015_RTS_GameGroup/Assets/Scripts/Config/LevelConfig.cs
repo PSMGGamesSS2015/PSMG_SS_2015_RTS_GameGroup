@@ -54,8 +54,8 @@ namespace Assets.Scripts.Config
         {               
             new LevelConfig(1, 0f, SceneReferences.MainMenu, new[] {0,0,0,0,0,0,0}, LevelType.Menu, new []{SoundReferences.MainTheme}),                                   
             new LevelConfig(SceneReferences.StarWarsIntro, LevelType.Narrative, new []{SoundReferences.StarWarsTheme}), 
-            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,10,10,10,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),           
-            new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {10,10,10,10,10,10,10}, LevelType.InGame, new []{SoundReferences.MountainTheme}),
+            new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,6,0,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),           
+            new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {1,6,3,1,2,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level04TrollVillage, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level05CastleGlazeArrival, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.CaveTheme}),

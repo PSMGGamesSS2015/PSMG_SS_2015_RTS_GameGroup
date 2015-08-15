@@ -1,23 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using Assets.Scripts.Types;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UserInterfaceComponents
 {
     public class ImpTrainingButton : MonoBehaviour
     {
-        public Text Counter;
-        public Button Button;
+        private const string CounterName = "Counter";
 
         public void Awake()
         {
-            RetrieveComponents();
-        }
-
-        private void RetrieveComponents()
-        {
             Button = GetComponent<Button>();
-            Counter = GetComponentInChildren<ButtonCounter>().gameObject.GetComponent<Text>();
+            Counter = GetComponentsInChildren<Text>().First(t => t.gameObject.name == CounterName);
         }
 
+        public Button Button { get; private set; }
+        public Text Counter { get; set; }
+
+        public ImpType ImpType;
     }
 }

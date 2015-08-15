@@ -35,7 +35,7 @@ namespace Assets.Scripts.UserInterfaceComponents
             if (currentMaxProfessions == null) return;
             for (var i = 0; i < ImpTrainingButtons.Length; i++)
             {
-                ImpTrainingButtons[i].Counter.text = currentMaxProfessions[i].ToString();
+                ImpTrainingButtons[i].Counter.text = "0/" + currentMaxProfessions[i];
             }
         }
 
@@ -43,7 +43,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         {
             for (var i = 0; i < ImpTrainingButtons.Length; i++)
             {
-                ImpTrainingButtons[i].Counter.text = (currentMaxProfessions[i] - professions[i]).ToString();
+                ImpTrainingButtons[i].Counter.text = professions[i] + "/" + currentMaxProfessions[i];
             }
         }
     }

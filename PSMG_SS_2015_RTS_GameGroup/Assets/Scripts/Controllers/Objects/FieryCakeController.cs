@@ -13,7 +13,12 @@ namespace Assets.Scripts.Controllers.Objects
         public void Awake()
         {
             hasBeenExtinguished = false;
+        }
+
+        public void Start()
+        {
             flames = GetComponentsInChildren<FireController>().ToList();
+            flames.ForEach(f => f.Hide());
         }
 
         public void OnTriggerEnter2D(Collider2D other)
@@ -28,12 +33,12 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void LightFires()
         {
-            flames.ForEach(f => f.gameObject.SetActive(true));
+            flames.ForEach(f => f.Display());
         }
 
         public void Extinguish()
         {
-            flames.ForEach(f => f.gameObject.SetActive(false));
+            flames.ForEach(f => f.Hide());
         }
     }
 }

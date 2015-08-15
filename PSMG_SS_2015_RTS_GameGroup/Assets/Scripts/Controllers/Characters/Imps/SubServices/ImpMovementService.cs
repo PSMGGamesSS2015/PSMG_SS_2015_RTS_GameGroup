@@ -9,8 +9,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
     {
         private bool isBeingThrown;
 
-        private const float ThrowingSpeedX = 5f;
-        private const float ThrowingSpeedY = 5f;
+        private const float ThrowingSpeedX = 7f;
+        private const float ThrowingSpeedY = 7f;
 
         public override void Start()
         {

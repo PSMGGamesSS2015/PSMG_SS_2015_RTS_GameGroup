@@ -32,10 +32,7 @@ namespace Assets.Scripts.Controllers.Objects
                GetComponentsInChildren<SpriteRenderer>()
                    .Where(sr => sr.tag == TagReferences.YellowFlameTongue)
                    .ToList();
-        }
 
-        public void Start()
-        {
             if (SortingLayerName == "") return;
 
             foreach (var ft in redFlameTongues)
@@ -55,6 +52,20 @@ namespace Assets.Scripts.Controllers.Objects
                 ft.sortingLayerName = SortingLayerName;
                 ft.sortingOrder = OrderInSortingLayer + 2;
             }
+        }
+
+        public void Hide()
+        {
+            redFlameTongues.ForEach(ft => ft.enabled = false);
+            orangeFlameTongues.ForEach(ft => ft.enabled = false);
+            yellowFlameTongues.ForEach(ft => ft.enabled = false);
+        }
+
+        public void Display()
+        {
+            redFlameTongues.ForEach(ft => ft.enabled = true);
+            orangeFlameTongues.ForEach(ft => ft.enabled = true);
+            yellowFlameTongues.ForEach(ft => ft.enabled = true);
         }
 
     }

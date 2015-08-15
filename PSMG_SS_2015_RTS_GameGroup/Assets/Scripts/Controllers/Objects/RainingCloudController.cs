@@ -5,21 +5,21 @@ namespace Assets.Scripts.Controllers.Objects
     public class RainingCloudController : MonoBehaviour
     {
 
-        private GameObject rain;
+        private ParticleSystem rain;
 
         public void Awake()
         {
-            rain = GetComponentInChildren<ParticleSystem>().gameObject;
+            rain = GetComponentInChildren<ParticleSystem>();
         }
 
         public void StartRaining()
         {
-            rain.SetActive(true);
+            rain.Play();
         }
 
         public void StopRaining()
         {
-            rain.SetActive(false);
+            rain.Stop();
         }
 
     }

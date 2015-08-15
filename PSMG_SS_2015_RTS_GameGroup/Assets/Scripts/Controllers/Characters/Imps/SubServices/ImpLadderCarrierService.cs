@@ -55,7 +55,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GameObject prefab = null;
             var ladderPosition = new Vector3();
 
-
             switch (ladderLength)
             {
                 case VerticalLadderSpotController.LadderLength.Long:

@@ -2,6 +2,7 @@
 {
     public class AnimationReferences
     {
+        
         #region Imp
     
         public const string ImpWalkingUnemployed = "Imp Walking";
@@ -16,7 +17,8 @@
         public const string ImpPlacingLadderHorizontally = "Imp Placing Ladder Horizontally";
         public const string ImpPlacingLadderVertically = "Imp Placing Ladder Vertically";
 
-        public const string ImpClimbingLadderSpearman = "Imp Climbing Ladder with Spear";     
+        public const string ImpClimbingLadderSpearman = "Imp Climbing Ladder with Spear";
+        public const string ImpClimbingLadderFirebug = "Imp Climbing Ladder with Torch";
         public const string ImpClimbingLadderUnemployed = "Imp Climbing Ladder";
         public const string ImpClimbingLadderEnd = "Imp End of Ladder";
 

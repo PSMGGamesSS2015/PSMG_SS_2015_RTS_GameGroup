@@ -86,6 +86,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case ImpType.Unemployed:
                     anim = AnimationReferences.ImpClimbingLadderUnemployed;
                     break;
+                case ImpType.Firebug:
+                    anim = AnimationReferences.ImpClimbingLadderFirebug;
+                    break;
                 default:
                     anim = AnimationReferences.ImpClimbingLadderUnemployed;
                     break;

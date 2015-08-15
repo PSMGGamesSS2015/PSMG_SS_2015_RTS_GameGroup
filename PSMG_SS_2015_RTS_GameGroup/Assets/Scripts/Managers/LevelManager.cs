@@ -25,6 +25,7 @@ namespace Assets.Scripts.Managers
 
         void GoalController.IGoalControllerListener.OnGoalReachedByImp()
         {
+            // TODO
             Debug.Log("An imp has reached the goal.");
         }
 
@@ -123,6 +124,7 @@ namespace Assets.Scripts.Managers
             CurrentLevel = new Level
             {
                 CurrentLevelConfig = CurrentLevelConfig,
+                // TODO Refactor: Camera
                 MainCamera = GameObject.FindGameObjectWithTag(TagReferences.MainCamera),
                 TopMargin = GameObject.FindGameObjectWithTag(TagReferences.TopMargin),
                 BottomMargin = GameObject.FindGameObjectWithTag(TagReferences.BottomMargin),
@@ -131,6 +133,8 @@ namespace Assets.Scripts.Managers
                 Obstacles = GameObject.FindGameObjectsWithTag(TagReferences.Obstacle).ToList(),
                 Start = GameObject.FindWithTag(TagReferences.LevelStart),
                 Goal = GameObject.FindWithTag(TagReferences.LevelGoal),
+                HighlightableObjects = GameObject.FindGameObjectsWithTag(TagReferences.HighlightableObject).ToList(),
+                // TODO why are enemies needed?
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
             RegisterListeners();

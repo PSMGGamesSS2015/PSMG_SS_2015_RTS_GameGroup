@@ -175,9 +175,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject, 5);
                     break;
                 case TagReferences.SchwarzeneggerSpot:
+                    // TODO Refactor
                     if (GetComponent<ImpSchwarzeneggerService>() == null) return;
                     if (collider.GetComponent<SchwarzeneggerSpotController>() == null) return;
                     GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
+                    GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpStanding);
                     break;
             }
         }

@@ -59,5 +59,7 @@
         public const string RedFlameTongue = "RedFlameTongue";
         public const string OrangeFlameTongue = "OrangeFlameTongue";
         public const string YellowFlameTongue = "YellowFlameTongue";
+
+        public const string HighlightableObject = "HighlightableObject";
     }
 }

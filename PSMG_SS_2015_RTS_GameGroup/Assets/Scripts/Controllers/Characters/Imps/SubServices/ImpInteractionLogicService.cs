@@ -43,11 +43,25 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 impMovementService.Turn();
             }
 
+            else if (MeetingSchwarzeneggerWhoIsThrowing(imp) && HasAProfessionThatMoves())
+            {
+                // if not projectile then turn
+
+                if (imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile != null &&
+                    GetComponent<ImpController>().GetInstanceID() !=
+                    imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile.GetInstanceID())
+                {
+                    impMovementService.Turn();
+                }
+            }
+
             else if (SchwarzeneggerMeetsMovingImp(imp))
             {
-                if (GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition)
+                if (GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition || (!GetComponent<ImpSchwarzeneggerService>().IsThrowing))
                 {
                     GetComponent<ImpSchwarzeneggerService>().ThrowImp(imp);
+                    Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
+                    imp.GetComponent<ImpCollisionService>().GetCollider(), true);
                 }
             }
             else
@@ -55,6 +69,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
                     imp.GetComponent<ImpCollisionService>().GetCollider(), true);
             }
+        }
+
+        private bool MeetingSchwarzeneggerWhoIsThrowing(ImpController imp)
+        {
+            return imp.GetComponent<ImpSchwarzeneggerService>() != null &&
+                   imp.GetComponent<ImpSchwarzeneggerService>().IsThrowing;
         }
 
         private bool SchwarzeneggerMeetsMovingImp(ImpController imp)

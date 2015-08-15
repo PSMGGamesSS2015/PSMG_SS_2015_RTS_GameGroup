@@ -11,6 +11,7 @@ namespace Assets.Scripts.ParameterObjects
         {
             Obstacles = new List<GameObject>();
             Enemies = new List<GameObject>();
+            HighlightableObjects = new List<GameObject>();
         }
 
         public LevelConfig CurrentLevelConfig { get; set; }
@@ -27,7 +28,10 @@ namespace Assets.Scripts.ParameterObjects
 
         public List<GameObject> Enemies { get; set; }
 
+        // TODO is this really needed?
         public List<GameObject> Obstacles { get; set; }
+
+        public List<GameObject> HighlightableObjects; 
 
         public Vector3 SpawnPosition
         {

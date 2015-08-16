@@ -22,62 +22,91 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impCollisionService = GetComponent<ImpCollisionService>();
         }
 
-        public void InteractWith(ImpController imp)
+        public void OnCollisionEnterWithImp(ImpController imp)
         {
+
             if (SpearmanAndCowardMeet(imp))
             {
-                if (!SpearmanAndCowardHaveNoCommandPartner()) return;
-                if (impTrainingService.Type == ImpType.Spearman)
-                {
-                    GetComponent<ImpSpearmanService>().FormCommand(imp);
-                }
-
-                if (impTrainingService.Type == ImpType.Coward)
-                {
-                    GetComponent<ImpCowardService>().FormCommand(imp);
-                }
+                OnSpearmanMeetsCoward(imp);
             }
 
-            else if (MeetingCowardOrIsPlacingALadder(imp) && HasAProfessionThatMoves())
+            else if (WalkingIntoImpThatIsBlockingTheWay(imp) )
             {
-                impMovementService.Turn();
+                OnWalkingIntoImpThatIsBlockingTheWay();
             }
 
-            else if (MeetingSchwarzeneggerWhoIsThrowing(imp) && HasAProfessionThatMoves())
+            else if (WalkingIntoThrowingSchwarzenegger(imp))
             {
-                // if not projectile then turn
-
-                if (imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile != null &&
-                    GetComponent<ImpController>().GetInstanceID() !=
-                    imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile.GetInstanceID())
-                {
-                    impMovementService.Turn();
-                }
+                OnWalkingIntoThrowingSchwarzenegger(imp);
             }
 
-            else if (SchwarzeneggerMeetsMovingImp(imp))
+            else if (MeetingMovingImpAsSchwarzenegger(imp))
             {
-                if (GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition || (!GetComponent<ImpSchwarzeneggerService>().IsThrowing))
-                {
-                    GetComponent<ImpSchwarzeneggerService>().ThrowImp(imp);
-                    Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
-                    imp.GetComponent<ImpCollisionService>().GetCollider(), true);
-                }
+                OnMeetMovingImpAsSchwarzenegger(imp);
             }
             else
             {
+                OnDefaultInteraction(imp);
+            }
+        }
+
+        private void OnWalkingIntoImpThatIsBlockingTheWay()
+        {
+            impMovementService.Turn();
+        }
+
+        private void OnWalkingIntoThrowingSchwarzenegger(ImpController imp)
+        {
+            // TODO Does not work
+            if (imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile != null &&
+                GetComponent<ImpController>().GetInstanceID() !=
+                imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile.GetInstanceID())
+            {
+                impMovementService.Turn();
+            }
+        }
+
+        private void OnDefaultInteraction(ImpController imp)
+        {
+            Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
+                imp.GetComponent<ImpCollisionService>().GetCollider(), true);
+        }
+
+        private void OnMeetMovingImpAsSchwarzenegger(ImpController imp)
+        {
+            if (GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition ||
+                (!GetComponent<ImpSchwarzeneggerService>().IsThrowing))
+            {
+                GetComponent<ImpSchwarzeneggerService>().ThrowImp(imp);
                 Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
                     imp.GetComponent<ImpCollisionService>().GetCollider(), true);
             }
         }
 
-        private bool MeetingSchwarzeneggerWhoIsThrowing(ImpController imp)
+        private void OnSpearmanMeetsCoward(ImpController imp)
         {
-            return imp.GetComponent<ImpSchwarzeneggerService>() != null &&
-                   imp.GetComponent<ImpSchwarzeneggerService>().IsThrowing;
+            if (!SpearmanAndCowardHaveNoCommandPartner()) return;
+
+            switch (impTrainingService.Type)
+            {
+                case ImpType.Spearman:
+                    GetComponent<ImpSpearmanService>().FormCommand(imp);
+                    break;
+                case ImpType.Coward:
+                    GetComponent<ImpCowardService>().FormCommand(imp);
+                    break;
+            }
         }
 
-        private bool SchwarzeneggerMeetsMovingImp(ImpController imp)
+
+        private bool WalkingIntoThrowingSchwarzenegger(ImpController imp)
+        {
+            return (imp.GetComponent<ImpSchwarzeneggerService>() != null &&
+                   imp.GetComponent<ImpSchwarzeneggerService>().IsThrowing) &&
+                   HasAProfessionThatMoves();
+        }
+
+        private bool MeetingMovingImpAsSchwarzenegger(ImpController imp)
         {
             return (impTrainingService.Type == ImpType.Schwarzenegger) &&
                    ((imp.GetComponent<ImpTrainingService>().Type != ImpType.Schwarzenegger) ||
@@ -93,11 +122,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     impTrainingService.Type == ImpType.Schwarzenegger);
         }
 
-        private bool MeetingCowardOrIsPlacingALadder(ImpController imp)
+        private bool WalkingIntoImpThatIsBlockingTheWay(ImpController imp)
         {
-            return (imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward) ||
-                    (imp.GetComponent<ImpTrainingService>().Type == ImpType.LadderCarrier &&
-                     imp.GetComponent<ImpLadderCarrierService>().IsPlacingLadder);
+            return ((imp.GetComponent<ImpTrainingService>().Type == ImpType.Coward) ||
+                   (imp.GetComponent<ImpTrainingService>().Type == ImpType.LadderCarrier &&
+                    imp.GetComponent<ImpLadderCarrierService>().IsPlacingLadder)) &&
+                    HasAProfessionThatMoves();
         }
 
         private bool SpearmanAndCowardHaveNoCommandPartner()

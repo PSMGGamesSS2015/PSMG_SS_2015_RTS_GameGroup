@@ -19,23 +19,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void Awake()
         {
-            InitComponents();
-            InitAttributes();
-        }
-
-        private void InitAttributes()
-        {
-            Type = ImpType.Unemployed;
-            IsTrainable = true;
-        }
-
-        private void InitComponents()
-        {
             impController = GetComponent<ImpController>();
             movementService = GetComponent<ImpMovementService>();
             impAnimationHelper = GetComponent<ImpAnimationHelper>();
             audioHelper = GetComponent<AudioHelper>();
-        }
+
+            Type = ImpType.Unemployed;
+            IsTrainable = true;
+        }  
 
         public void Train(ImpType type)
         {
@@ -59,17 +50,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             yield return new WaitForSeconds(1.0f);
 
-            if (SpearmanIsInCommand())
-            {
-                GetComponent<ImpSpearmanService>().CommandPartner.GetComponent<ImpCowardService>().DissolveCommand();
-                GetComponent<ImpSpearmanService>().DissolveCommand();
-            }
-
-            if (CowardIsInCommand())
-            {
-                GetComponent<ImpCowardService>().CommandPartner.GetComponent<ImpSpearmanService>().DissolveCommand();
-                GetComponent<ImpCowardService>().DissolveCommand();
-            }
+            CheckIfCommandIsToBeDissolved();
 
             this.Type = type;
 
@@ -100,15 +81,37 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
         }
 
-
-        private bool CowardIsInCommand()
+        public bool SpearmanIsInCommand
         {
-            return (this.Type == ImpType.Coward) && GetComponent<ImpCowardService>().IsInCommand();
+            get
+            {
+                return Type == ImpType.Coward &&
+                    GetComponent<ImpCowardService>().IsInCommand();
+            }
         }
 
-        private bool SpearmanIsInCommand()
+        public bool CowardIsInCommand
         {
-            return (this.Type == ImpType.Spearman) && GetComponent<ImpSpearmanService>().IsInCommand();
+            get
+            {
+                return (Type == ImpType.Spearman) &&
+                    GetComponent<ImpSpearmanService>().IsInCommand();
+            }
+        }
+
+        public void CheckIfCommandIsToBeDissolved()
+        {
+            if (SpearmanIsInCommand)
+            {
+                GetComponent<ImpSpearmanService>().CommandPartner.GetComponent<ImpCowardService>().DissolveCommand();
+                GetComponent<ImpSpearmanService>().DissolveCommand();
+            }
+
+            if (CowardIsInCommand)
+            {
+                GetComponent<ImpCowardService>().CommandPartner.GetComponent<ImpSpearmanService>().DissolveCommand();
+                GetComponent<ImpCowardService>().DissolveCommand();
+            }
         }
 
         private void TrainUnemployed()
@@ -149,7 +152,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             movementService.Walk();
             currentProfessionService = gameObject.AddComponent<ImpSchwarzeneggerService>();
-            // TODO
             impAnimationHelper.PlayWalkingAnimation();
         }
 
@@ -158,7 +160,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             movementService.Walk();
             impAnimationHelper.PlayTrainingAnimation();
             currentProfessionService = gameObject.AddComponent<ImpFirebugService>();
-            // TODO
         }
 
         private void RemoveCurrentProfessionService()
@@ -181,10 +182,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void Untrain()
         {
-            foreach (var listener in impController.Listeners)
-            {
-                listener.OnUntrain(impController);
-            }
+            impController.Listeners.ForEach(l => l.OnUntrain(impController));
         }
     }
 }

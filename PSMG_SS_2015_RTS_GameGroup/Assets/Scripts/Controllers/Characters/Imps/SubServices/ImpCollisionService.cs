@@ -66,7 +66,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     break;
                 case TagReferences.Imp:
                     var imp = collision.gameObject.GetComponent<ImpController>();
-                    GetComponent<ImpInteractionLogicService>().InteractWith(imp);
+                    GetComponent<ImpInteractionLogicService>().OnCollisionEnterWithImp(imp);
                     break;
                 case TagReferences.Obstacle:
                     impMovementService.Turn();
@@ -233,5 +233,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             //
         }
+
+
     }
 }

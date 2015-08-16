@@ -9,11 +9,7 @@ namespace Assets.Scripts.Controllers.Objects
             IsLadderPlaced = false;
         }
 
-        public bool IsLadderPlaced { get; private set; }
-
-        public void PlaceLadder() {
-            IsLadderPlaced = true;
-        }
+        public bool IsLadderPlaced { get; set; }
 
     }
 }

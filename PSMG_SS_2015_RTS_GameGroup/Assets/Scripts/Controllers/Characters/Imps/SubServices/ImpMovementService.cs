@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.AssetReferences;
+﻿using System.Collections;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
@@ -8,6 +10,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
     public class ImpMovementService : MovingObject
     {
         private bool isBeingThrown;
+        public bool IsClimbing { get; set; }
 
         private const float ThrowingSpeedX = 7f;
         private const float ThrowingSpeedY = 7f;
@@ -15,6 +18,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public override void Start()
         {
             isBeingThrown = false;
+            IsClimbing = false;
             IsJumping = false;
             FacingRight = true;
             CurrentDirection = Direction.Horizontal;
@@ -75,6 +79,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             CurrentDirection = Direction.Vertical;
         }
 
+        // TODO refactor
+
         private void PlayClimbingAnimation()
         {
             string anim;
@@ -97,11 +103,40 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpAnimationHelper>().Play(anim);
         }
 
-        // TODO refactor
         public void Jump()
         {
             IsJumping = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(2f, 2f);
+            // TODO Play jumping animation
+        }
+
+        public void ClimbALittleHigher()
+        {
+            Counter.SetCounter(gameObject, 6f, StopClimbing, false);
+        }
+
+        private void StopClimbing()
+        {
+            StartCoroutine(StopClimbingRoutine());
+        }
+
+        private IEnumerator StopClimbingRoutine()
+        {
+            IsClimbing = false;
+            GetComponent<ImpCollisionService>().StopIgnoringCollisions();
+            GetComponent<ImpAnimationHelper>().MoveToDefaultSortingLayer();
+
+            Jump();
+            
+            yield return new WaitForSeconds(2f);
+
+            CurrentDirection = Direction.Horizontal;
+            GetComponent<AudioHelper>().Play(SoundReferences.ImpGoing);
+            // TODO refactor
+            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation(GetComponent<ImpTrainingService>().Type);
+            GetComponent<ImpTrainingService>().IsTrainable = true;
+
+            IsJumping = false;
         }
 
     }

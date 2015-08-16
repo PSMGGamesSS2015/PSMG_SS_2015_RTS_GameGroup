@@ -16,7 +16,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private ImpAnimationHelper impAnimationService;
         private AudioHelper impAudioService;
         public bool IsPlacingLadder { get; private set; }
-        public GameObject CurrentLadder { get; private set; }
 
 
         public void Awake()
@@ -40,6 +39,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void SetupVerticalLadder(VerticalLadderSpotController verticalLadderSpotController)
         {
+            if (verticalLadderSpotController.IsLadderPlaced) return;
+            verticalLadderSpotController.IsLadderPlaced = true;
             StartCoroutine(SetupVerticalLadderRoutine(verticalLadderSpotController));
         }
 
@@ -73,13 +74,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             yield return new WaitForSeconds(4f);
 
-            CurrentLadder = (GameObject) Instantiate(prefab, ladderPosition, Quaternion.identity);
-            // TODO refactor
-            var ladder = GetComponent<ImpLadderCarrierService>().CurrentLadder;
-            
+            var ladder = (GameObject)Instantiate(prefab, ladderPosition, Quaternion.identity);
             ladder.transform.parent = verticalLadderSpotController.GetComponent<Collider2D>().gameObject.transform.parent;
-
-            verticalLadderSpotController.PlaceLadder();
 
             impAnimationService.SwitchBackToStandardAnimation();
             IsPlacingLadder = false;
@@ -88,13 +84,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
-        public void SetupHorizontalLadder(Vector3 position)
+        public void SetupHorizontalLadder(LadderSpotController ladderSpotController)
         {
-            StartCoroutine(SetupHorizontalLadderRoutine(position));
+            if (ladderSpotController.IsLadderPlaced) return;
+            ladderSpotController.IsLadderPlaced = true;
+            StartCoroutine(SetupHorizontalLadderRoutine(ladderSpotController));
         }
 
-        private IEnumerator SetupHorizontalLadderRoutine(Vector3 position)
+        private IEnumerator SetupHorizontalLadderRoutine(LadderSpotController ladderSpotController)
         {
+            var position = ladderSpotController.gameObject.transform.position;
+            
             GetComponent<ImpTrainingService>().IsTrainable = false;
             impMovementService.Stand();
             IsPlacingLadder = true;

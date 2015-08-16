@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
-using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
-using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
@@ -15,12 +13,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
         private ImpAnimationHelper impAnimationService;
-        private AudioHelper impAudioService;
         private ImpMovementService impMovementService;
         private ImpTrainingService impTrainingService;
-        private bool isClimbing;
 
-        private List<Collider2D> collidersIgnoredWhileClimbing; 
+        private List<Collider2D> collidersIgnoredWhileClimbing;
 
         public void Awake()
         {
@@ -31,11 +27,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void InitComponents()
         {
             collidersIgnoredWhileClimbing = new List<Collider2D>();
-            isClimbing = false;
 
             circleCollider2D = GetComponent<CircleCollider2D>();
             impAnimationService = GetComponent<ImpAnimationHelper>();
-            impAudioService = GetComponent<AudioHelper>();
             impMovementService = GetComponent<ImpMovementService>();
             impTrainingService = GetComponent<ImpTrainingService>();
         }
@@ -44,20 +38,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             var triggerColliders = GetComponentsInChildren<TriggerCollider2D>();
 
-            // TODO Refactor using linq
+            impCollisionCheck = triggerColliders.First(tc => tc.gameObject.tag == TagReferences.ImpCollisionCheck);
+            impClickCheck = triggerColliders.First(tc => tc.gameObject.tag == TagReferences.ImpClickCheck);
 
-            foreach (var c in triggerColliders)
-            {
-                switch (c.tag)
-                {
-                    case TagReferences.ImpCollisionCheck:
-                        impCollisionCheck = c;
-                        break;
-                    case TagReferences.ImpClickCheck:
-                        impClickCheck = c;
-                        break;
-                }
-            }
             impCollisionCheck.RegisterListener(this);
             impClickCheck.RegisterListener(this);
         }
@@ -69,16 +52,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void OnCollisionEnter2D(Collision2D collision)
         {
-            if (isClimbing)
+            if (GetComponent<ImpMovementService>().IsClimbing)
             {
                 collidersIgnoredWhileClimbing.Add(collision.gameObject.GetComponent<Collider2D>());
                 Physics2D.IgnoreCollision(circleCollider2D, collision.gameObject.GetComponent<Collider2D>(), true);
                 return;
             }
 
-            var tag = collision.gameObject.tag;
-
-            switch (tag)
+            switch (collision.gameObject.tag)
             {
                 case TagReferences.EnemyTroll:
                     impMovementService.Turn();
@@ -99,142 +80,153 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             }
         }
 
-        // TODO refactor
-
         public void OnCollisionStay2D(Collision2D collision)
         {
-            var imp = collision.gameObject.GetComponent<ImpController>();
-            if (imp == null) return;
-            if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
-            if (impTrainingService.Type != ImpType.Spearman)
+            var tag = collision.gameObject.tag;
+
+            switch (tag)
             {
-                impMovementService.Turn();
+                case TagReferences.Imp:
+                    OnCollisionStayWithImp(collision.gameObject.GetComponent<ImpController>());
+                    break;
             }
         }
 
-        // TODO Refactor this method
+        private void OnCollisionStayWithImp(ImpController imp)
+        {
+            CheckIfSpearmanLeavesCommand(imp);
+        }
+
+        private void CheckIfSpearmanLeavesCommand(ImpController imp)
+        {
+            if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
+
+            if (impTrainingService.Type == ImpType.Spearman) return;
+
+            impMovementService.Turn();
+        }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
 
-            var tag = collider.gameObject.tag;
-
-            switch (tag)
+            switch (collider.gameObject.tag)
             {
                 case TagReferences.LadderSpotVertical:
-                    
-                    if (impTrainingService.Type == ImpType.LadderCarrier)
-                    {
-                        
-                        var ladderSpotController = collider.gameObject.GetComponent<VerticalLadderSpotController>();
-                        if (!ladderSpotController.IsLadderPlaced)
-                        {
-                            GetComponent<ImpLadderCarrierService>().SetupVerticalLadder(ladderSpotController);
-                        }
-                    }
+                    OnEnterVerticalLadderSpot(collider);
                     break;
                 case TagReferences.LadderSpotHorizontal:
-
-                    if (impTrainingService.Type == ImpType.LadderCarrier)
-                    {
-                        var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
-                        if (!ladderSpotController.IsLadderPlaced)
-                        {
-                            GetComponent<ImpLadderCarrierService>()
-                                .SetupHorizontalLadder(collider.gameObject.transform.position);
-                            ladderSpotController.PlaceLadder();
-                        }
-                    }
+                    OnEnterHorizontalLadderSpot(collider);
                     break;
                 case TagReferences.LadderBottom:
-                    if (GetComponent<ImpMovementService>().FacingRight)
-                    {
-                        
-                        GetComponent<ImpMovementService>().ClimbLadder();
-                        impTrainingService.IsTrainable = false;
-                        isClimbing = true;
-                    }
+                    OnEnterLadderBottom();
                     break;
                 case TagReferences.LadderTop:
-                    if (!isClimbing) return;
-                    ClimbALittleHigher();
-                    impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
+                    OnEnterLadderTop();
                     break;
                 case TagReferences.Gaslight:
-                    if (GetComponent<ImpFirebugService>() == null) return;
-                    GetComponent<ImpFirebugService>().LightGaslight(collider.gameObject.GetComponent<GaslightController>());
+                    OnEnterGaslight(collider);
                     break;
                 case TagReferences.BurningObject:
-                    if (GetComponent<ImpFirebugService>() == null) return;
-                    GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject, 5);
+                    OnEnterBurningObject(collider);
                     break;
                 case TagReferences.SchwarzeneggerSpot:
-                    // TODO Refactor
-                    if (GetComponent<ImpSchwarzeneggerService>() == null) return;
-                    if (collider.GetComponent<SchwarzeneggerSpotController>() == null) return;
-                    GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
-                    GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpStanding);
+                    OnEnterSchwarzeneggerSpot(collider);
                     break;
             }
+        }
+
+        private void OnEnterSchwarzeneggerSpot(Collider2D collider)
+        {
+            if (GetComponent<ImpSchwarzeneggerService>() == null) return;
+            if (collider.GetComponent<SchwarzeneggerSpotController>() == null) return;
+            GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpStanding);
+        }
+
+        private void OnEnterBurningObject(Collider2D collider)
+        {
+            if (GetComponent<ImpFirebugService>() == null) return;
+
+            GetComponent<ImpFirebugService>().SetOnFire(collider.gameObject, 5);
+        }
+
+        private void OnEnterGaslight(Collider2D collider)
+        {
+            if (GetComponent<ImpFirebugService>() == null) return;
+
+            GetComponent<ImpFirebugService>().LightGaslight(collider.gameObject.GetComponent<GaslightController>());
+        }
+
+        private void OnEnterLadderTop()
+        {
+            if (!GetComponent<ImpMovementService>().IsClimbing) return;
+
+            impMovementService.ClimbALittleHigher();
+            impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
+        }
+
+        private void OnEnterLadderBottom()
+        {
+            if (!GetComponent<ImpMovementService>().FacingRight ||
+                GetComponent<ImpTrainingService>().Type == ImpType.Coward) return;
+
+            GetComponent<ImpMovementService>().ClimbLadder();
+            impTrainingService.IsTrainable = false;
+            GetComponent<ImpMovementService>().IsClimbing = true;
+        }
+
+        private void OnEnterHorizontalLadderSpot(Collider2D collider)
+        {
+            if (impTrainingService.Type != ImpType.LadderCarrier) return;
+
+            var ladderSpotController = collider.gameObject.GetComponent<LadderSpotController>();
+            GetComponent<ImpLadderCarrierService>().SetupHorizontalLadder(ladderSpotController);
+        }
+
+        private void OnEnterVerticalLadderSpot(Collider2D collider)
+        {
+            if (impTrainingService.Type != ImpType.LadderCarrier) return;
+
+            var ladderSpotController = collider.gameObject.GetComponent<VerticalLadderSpotController>();
+            GetComponent<ImpLadderCarrierService>().SetupVerticalLadder(ladderSpotController);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != impCollisionCheck.GetInstanceID()) return;
 
-            var tag = collider.gameObject.tag;
-
-            switch (tag)
+            switch (collider.gameObject.tag)
             {
                 case TagReferences.Imp:
-                    var imp = collider.gameObject.GetComponent<ImpController>();
-                    Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
+                    OnTriggerExitImp(collider.gameObject.GetComponent<ImpController>());
                     break;
                 case TagReferences.LadderMiddle:
-                    if (isClimbing)
-                    {
-                        GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
-                    }
+                    OnTriggerExitLadderMiddle();
                     break;
             }
-
         }
 
-        private void ClimbALittleHigher()
+        private void OnTriggerExitLadderMiddle()
         {
-            Counter.SetCounter(gameObject, 6f, StopClimbing, false);
+            if (GetComponent<ImpMovementService>().IsClimbing)
+            {
+                GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
+            }
         }
 
-        private void StopClimbing()
+        public void StopIgnoringCollisions()
         {
-            StartCoroutine(StopClimbingRoutine());
-        }
-
-        private IEnumerator StopClimbingRoutine()
-        {
-            isClimbing = false;
             foreach (var ci in collidersIgnoredWhileClimbing)
             {
                 Physics2D.IgnoreCollision(circleCollider2D, ci, false);
             }
             collidersIgnoredWhileClimbing.Clear();
+        }
 
-            GetComponent<ImpAnimationHelper>().MoveToDefaultSortingLayer();
-
-            impMovementService.IsJumping = true;
-            impMovementService.Jump();
-            // TODO Play jumping animation
-
-            yield return new WaitForSeconds(2f);
-
-            impMovementService.CurrentDirection = MovingObject.Direction.Horizontal;
-            impAudioService.Play(SoundReferences.ImpGoing);
-            impAnimationService.PlayWalkingAnimation(impTrainingService.Type);
-            impTrainingService.IsTrainable = true;
-
-            impMovementService.IsJumping = false;
-            
+        private void OnTriggerExitImp(ImpController imp)
+        {
+            Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)

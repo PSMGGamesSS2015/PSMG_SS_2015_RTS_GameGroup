@@ -38,17 +38,19 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = false;
         }
 
-        public void SetupVerticalLadder(VerticalLadderSpotController.LadderLength ladderLength)
+        public void SetupVerticalLadder(VerticalLadderSpotController verticalLadderSpotController)
         {
-            StartCoroutine(SetupVerticalLadderRoutine(ladderLength));
+            StartCoroutine(SetupVerticalLadderRoutine(verticalLadderSpotController));
         }
 
-        private IEnumerator SetupVerticalLadderRoutine(VerticalLadderSpotController.LadderLength ladderLength)
+        private IEnumerator SetupVerticalLadderRoutine(VerticalLadderSpotController verticalLadderSpotController)
         {
             GetComponent<ImpTrainingService>().IsTrainable = false;
             impMovementService.Stand();
             IsPlacingLadder = true;
-            
+
+            var ladderLength = verticalLadderSpotController.LengthOfLadder;
+
             impAnimationService.Play(AnimationReferences.ImpPlacingLadderVertically);
             impAudioService.Play(SoundReferences.ImpSetupLadder);
 
@@ -72,6 +74,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             yield return new WaitForSeconds(4f);
 
             CurrentLadder = (GameObject) Instantiate(prefab, ladderPosition, Quaternion.identity);
+            // TODO refactor
+            var ladder = GetComponent<ImpLadderCarrierService>().CurrentLadder;
+            
+            ladder.transform.parent = verticalLadderSpotController.GetComponent<Collider2D>().gameObject.transform.parent;
+
+            verticalLadderSpotController.PlaceLadder();
 
             impAnimationService.SwitchBackToStandardAnimation();
             IsPlacingLadder = false;

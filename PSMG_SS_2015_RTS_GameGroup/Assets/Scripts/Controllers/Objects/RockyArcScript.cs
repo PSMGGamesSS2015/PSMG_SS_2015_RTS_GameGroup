@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
@@ -53,11 +52,12 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void DestroyLadders()
         {
-            foreach(var renderer in GetComponentsInChildren<SpriteRenderer>().ToList())
+
+            foreach(var t in GetComponentsInChildren<Transform>().ToList())
             {
-                if (renderer.gameObject.tag == TagReferences.VerticalLadder)
+                if (t.gameObject.tag == TagReferences.VerticalLadder)
                 {
-                    Destroy(renderer.gameObject);
+                    Destroy(t.gameObject);
                 }
             }
 

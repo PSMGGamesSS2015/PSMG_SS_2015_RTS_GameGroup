@@ -198,9 +198,21 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         public void OnImpHurt(ImpController impController)
         {
-            var impOutOfSightIcon = ImpOutOfSightIcons[impController];
-            ImpOutOfSightIcons.Remove(impController);
-            if (impOutOfSightIcon != null) Destroy(impOutOfSightIcon);
+            GameObject value;
+
+            var isGettingValue = ImpOutOfSightIcons.TryGetValue(impController, out value);
+
+            if (isGettingValue)
+            {
+                var impOutOfSightIcon = ImpOutOfSightIcons[impController];
+                ImpOutOfSightIcons.Remove(impController);
+                if (impOutOfSightIcon != null) Destroy(impOutOfSightIcon);
+            }
+            else
+            {
+                ImpOutOfSightIcons.Values.ToList().ForEach(v => Destroy(v.gameObject));
+                ImpOutOfSightIcons.Clear();
+            }
         }
     }
 }

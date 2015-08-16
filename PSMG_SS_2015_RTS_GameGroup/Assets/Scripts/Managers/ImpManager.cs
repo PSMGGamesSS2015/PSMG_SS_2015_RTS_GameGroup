@@ -230,13 +230,10 @@ namespace Assets.Scripts.Managers
 
         void ImpController.IImpControllerListener.OnImpHurt(ImpController impController)
         {
-            // TODO Refactor
             UIManager.Instance.UIImpOutOfSightService.OnImpHurt(impController);
             
             Imps.Remove(impController);
             
-            
-
             currentImps--;
             impController.UnregisterListener(this);
         }

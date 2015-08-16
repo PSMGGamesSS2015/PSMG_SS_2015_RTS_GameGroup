@@ -22,6 +22,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impCollisionService = GetComponent<ImpCollisionService>();
         }
 
+        /// <summary>
+        /// This is  main method where all interactions between imps
+        /// are defined.
+        /// </summary>
+        /// <param name="imp"></param>
+
         public void OnCollisionEnterWithImp(ImpController imp)
         {
 

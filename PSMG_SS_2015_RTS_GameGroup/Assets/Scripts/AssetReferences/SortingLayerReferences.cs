@@ -12,5 +12,6 @@
         public const string Explosion = "Explosion Sorting Layer";
         public const string MiddleForeground = "Middle_Foreground";
         public const string Foreground = "Foreground";
+        public const string UI = "UI Sorting Layer";
     }
 }

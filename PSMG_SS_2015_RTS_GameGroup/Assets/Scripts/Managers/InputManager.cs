@@ -202,11 +202,6 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void DismissImpLabels()
-        {
-            listeners.ForEach(x => x.OnDismissImpLabels());
-        }
-
         private void SelectNextImp()
         {
             listeners.ForEach(x => x.OnSelectNextImp());
@@ -220,11 +215,6 @@ namespace Assets.Scripts.Managers
         private void SelectProfession(int impTypeNumber)
         {
             listeners.ForEach(x => x.OnProfessionSelected((ImpType) impTypeNumber));
-        }
-
-        private void DisplayImpLabels()
-        {
-            listeners.ForEach(x => x.OnDismissImpLabels());
         }
 
         public void RegisterListener(IInputManagerListener listener)

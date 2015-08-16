@@ -6,7 +6,6 @@ using Assets.Scripts.Controllers.Characters.Enemies;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
-using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -190,7 +189,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             enemiesInAttackRange.ForEach(Attack);
 
-            impAnimationService.PlayWalkingAnimation(ImpType.Spearman);
+            impAnimationService.PlayWalkingAnimation();
             impMovementService.Walk();
         }
     }

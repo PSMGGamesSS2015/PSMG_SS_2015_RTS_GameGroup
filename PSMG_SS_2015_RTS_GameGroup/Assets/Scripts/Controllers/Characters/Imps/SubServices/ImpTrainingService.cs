@@ -47,7 +47,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             if (this.Type == ImpType.Schwarzenegger)
             {
-                GetComponent<ImpAnimationHelper>().SwapSprites();
+                GetComponent<ImpSpriteManagerService>().SwapSprites();
             }
 
             if (this.Type != ImpType.Coward)
@@ -119,21 +119,21 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void TrainCoward()
         {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Coward);
+            impAnimationHelper.PlayTrainingAnimation();
             audioHelper.Play(SoundReferences.ShieldWood1);
             currentProfessionService = gameObject.AddComponent<ImpCowardService>();
         }
 
         private void TrainLadderCarrier()
         {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.LadderCarrier);
+            impAnimationHelper.PlayTrainingAnimation();
             movementService.Walk();
             currentProfessionService = gameObject.AddComponent<ImpLadderCarrierService>();
         }
 
         private void TrainSpearman()
         {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Spearman);
+            impAnimationHelper.PlayTrainingAnimation();
             movementService.Walk();
             currentProfessionService = gameObject.AddComponent<ImpSpearmanService>();
         }
@@ -150,13 +150,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             movementService.Walk();
             currentProfessionService = gameObject.AddComponent<ImpSchwarzeneggerService>();
             // TODO
-            impAnimationHelper.PlayWalkingAnimation(ImpType.Unemployed);
+            impAnimationHelper.PlayWalkingAnimation();
         }
 
         private void TrainFirebug()
         {
             movementService.Walk();
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Firebug);
+            impAnimationHelper.PlayTrainingAnimation();
             currentProfessionService = gameObject.AddComponent<ImpFirebugService>();
             // TODO
         }
@@ -170,7 +170,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void DisplayBlasterAnimation()
         {
-            impAnimationHelper.PlayTrainingAnimation(ImpType.Blaster);
+            impAnimationHelper.PlayTrainingAnimation();
             movementService.Run();
         }
 

@@ -101,7 +101,7 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         private bool IsWithinCanvas(ImpController impController)
         {
-            return impController.GetComponent<ImpAnimationHelper>().Sprites[0].isVisible;
+            return impController.GetComponent<ImpSpriteManagerService>().Sprites[0].isVisible;
         }
 
         private void UpdateIconPositions()

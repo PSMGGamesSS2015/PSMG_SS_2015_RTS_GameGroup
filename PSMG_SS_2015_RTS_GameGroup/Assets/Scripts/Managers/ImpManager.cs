@@ -193,7 +193,7 @@ namespace Assets.Scripts.Managers
             var imp = (GameObject) Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
             var impController = imp.GetComponent<ImpController>();
             impController.RegisterListener(this);
-            impController.gameObject.GetComponent<ImpAnimationHelper>().MoveToSortingLayerPosition(currentImps);
+            impController.gameObject.GetComponent<ImpSpriteManagerService>().MoveToSortingLayerPosition(currentImps);
             currentImps++;
 
             Imps.Add(impController);

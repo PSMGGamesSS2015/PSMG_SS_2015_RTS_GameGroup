@@ -211,7 +211,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (GetComponent<ImpMovementService>().IsClimbing)
             {
-                GetComponent<ImpAnimationHelper>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
+                GetComponent<ImpSpriteManagerService>().MoveToSortingLayer(SortingLayerReferences.MiddleForeground);
             }
         }
 

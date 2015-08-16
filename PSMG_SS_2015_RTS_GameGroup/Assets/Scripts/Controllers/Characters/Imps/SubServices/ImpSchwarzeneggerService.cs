@@ -15,7 +15,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void Awake()
         {
             InitAttributes();
-            GetComponent<ImpAnimationHelper>().SwapSprites();
+            GetComponent<ImpSpriteManagerService>().SwapSprites();
         }
 
         private void InitAttributes()

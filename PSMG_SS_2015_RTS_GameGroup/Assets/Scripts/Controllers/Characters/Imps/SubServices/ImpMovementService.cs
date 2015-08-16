@@ -124,7 +124,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             IsClimbing = false;
             GetComponent<ImpCollisionService>().StopIgnoringCollisions();
-            GetComponent<ImpAnimationHelper>().MoveToDefaultSortingLayer();
+            GetComponent<ImpSpriteManagerService>().MoveToDefaultSortingLayer();
 
             Jump();
             
@@ -132,8 +132,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             CurrentDirection = Direction.Horizontal;
             GetComponent<AudioHelper>().Play(SoundReferences.ImpGoing);
-            // TODO refactor
-            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation(GetComponent<ImpTrainingService>().Type);
+
+            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
             GetComponent<ImpTrainingService>().IsTrainable = true;
 
             IsJumping = false;

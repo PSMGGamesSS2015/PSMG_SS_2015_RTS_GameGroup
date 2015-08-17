@@ -56,19 +56,27 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impAudioService.Play(SoundReferences.ImpSetupLadder);
 
             GameObject prefab = null;
-            var ladderPosition = new Vector3();
+
+            float ladderPositionX;
+            if (GetComponent<ImpMovementService>().FacingRight)
+            {
+                ladderPositionX = gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal;
+            }
+            else
+            {
+                ladderPositionX = (gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal * -1f);
+            }
+            var ladderPosition = new Vector3(ladderPositionX + VerticalLadderPlacementOffsetHorizontal,
+                        gameObject.transform.position.y, gameObject.transform.position.z);
 
             switch (ladderLength)
             {
                 case VerticalLadderSpotController.LadderLength.Long:
                     prefab = GetComponent<ImpController>().VerticalLadderLongPrefab;
-                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal,
-                        gameObject.transform.position.y + VerticalLadderPlacementOffsetVertical, gameObject.transform.position.z);
                     break;
                 case VerticalLadderSpotController.LadderLength.Medium:
                     prefab = GetComponent<ImpController>().VerticalLadderMediumPrefab;
-                    ladderPosition = new Vector3(gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal,
-                        gameObject.transform.position.y, gameObject.transform.position.z);
+                    
                     break;
             }
 

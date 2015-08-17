@@ -136,15 +136,14 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
         private void positionElementWithinCanvas(GameObject msg)
         {
             var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
-            var pos = canvas.transform.position;
-            var width = canvas.GetComponent<RectTransform>().rect.width;
+            var screenPositionOfCanvas = canvas.transform.position;
 
             msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
 
-            msg.transform.localPosition = new Vector3( // position message within canvas
-                pos.x - width/20f,
-                pos.y + 85 - 125*(speechBubbleMessages.Count - 1),
-                pos.z
+            msg.transform.position = new Vector3( // position message within canvas
+                screenPositionOfCanvas.x + Screen.width/2f - 280,
+                screenPositionOfCanvas.y + Screen.height/2.0f -  75 * speechBubbleMessages.Count-1,
+                screenPositionOfCanvas.z
                 );
         }
     }

@@ -82,9 +82,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void OnCollisionStay2D(Collision2D collision)
         {
-            var tag = collision.gameObject.tag;
-
-            switch (tag)
+            switch (collision.gameObject.tag)
             {
                 case TagReferences.Imp:
                     OnCollisionStayWithImp(collision.gameObject.GetComponent<ImpController>());
@@ -180,7 +178,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void OnEnterLadderBottom()
         {
             if (!GetComponent<ImpMovementService>().FacingRight ||
-                GetComponent<ImpTrainingService>().Type == ImpType.Coward) return;
+                GetComponent<ImpTrainingService>().Type == ImpType.Coward ||
+                GetComponent<ImpTrainingService>().Type == ImpType.Blaster) return;
 
             GetComponent<ImpMovementService>().ClimbLadder();
             impTrainingService.IsTrainable = false;

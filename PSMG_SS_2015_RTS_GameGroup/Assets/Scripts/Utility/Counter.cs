@@ -13,10 +13,28 @@ namespace Assets.Scripts.Utility
             return counter;
         }
 
+        public static Counter SetCounter(GameObject gameObject, float counterMax, Action<GameObject> action, GameObject parameter, bool isLoopModeActive)
+        {
+            var counter = gameObject.AddComponent<Counter>();
+            counter.Init(counterMax, action, parameter, isLoopModeActive);
+            return counter;
+        }
+
+        public void Init(float counterMax, Action<GameObject> action, GameObject parameter, bool isLoopModeActive)
+        {
+            this.counterMax = counterMax;
+            actionWithOneParameter = action;
+            this.isLoopModeActive = isLoopModeActive;
+            this.parameter = parameter;
+            isInitialized = true;
+        }
+
         public float CurrentCount { get; private set; }
         private float counterMax;
 
         private Action action;
+        private Action<GameObject> actionWithOneParameter;
+        private GameObject parameter;
 
         private bool isLoopModeActive;
         private bool isPaused;
@@ -36,7 +54,15 @@ namespace Assets.Scripts.Utility
             if (!isInitialized) return;
             if (CurrentCount >= counterMax)
             {
-                action();
+                if (action != null)
+                {
+                    action();
+                }
+                else
+                {
+                    actionWithOneParameter(parameter);
+                }
+                
                 if (!isLoopModeActive)
                 {
                     Discard();

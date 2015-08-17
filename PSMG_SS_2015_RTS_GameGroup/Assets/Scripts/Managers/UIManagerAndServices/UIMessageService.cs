@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,9 +21,11 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         public GameObject SimpleTextMessagePrefab;
         public GameObject SpeechBubbleMessagePrefab;
+        private bool isCheckingForMaxListSize;
 
         public void Awake()
         {
+            isCheckingForMaxListSize = false;
             speechBubbleMessages = new List<GameObject>();
         }
 
@@ -55,19 +59,24 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         public void CreateSpeechBubbleMessage(string message, Speaker speaker)
         {
-            StartCoroutine((SpeechBubbleMessageRoutine(message, speaker)));
-        }
-
-        private IEnumerator SpeechBubbleMessageRoutine(string message, Speaker speaker)
-        {
             CheckForMaxListSize();
 
             var msg = Instantiate(SpeechBubbleMessagePrefab);
-
             speechBubbleMessages.Add(msg);
 
-            SetMessageText(message, msg);
+            ConfigureMessageTextAndImage(message, speaker, msg);
+
+            positionElementWithinCanvas(msg);
             
+            Counter.SetCounter(gameObject, SpeechBubbleMessageDuration, UpdateDisplayedList, msg, false);
+        }
+
+        private void ConfigureMessageTextAndImage(string message, Speaker speaker, GameObject msg)
+        {
+            
+
+            SetMessageText(message, msg);
+
             var speakerLabel =
                 msg.GetComponentsInChildren<Text>().ToList().First(sr => sr.gameObject.name == "Speaker_Label");
 
@@ -98,13 +107,6 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             }
 
             SelectSpeakerImage(msg, nameOfSpeaker);
-
-            positionElementWithinCanvas(msg);
-
-            yield return new WaitForSeconds(SpeechBubbleMessageDuration);
-
-            UpdateDisplayedList(msg);
-            Destroy(msg);
         }
 
         private static void SetMessageText(string message, GameObject msg)
@@ -114,9 +116,12 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         private void CheckForMaxListSize()
         {
+            if (isCheckingForMaxListSize) return;
+            isCheckingForMaxListSize = true;
             if (speechBubbleMessages.Count < MaxSpeechBubbleMessages) return;
             speechBubbleMessages.Remove(speechBubbleMessages[0]); // remove oldest item
             speechBubbleMessages.Sort(); // sort items
+            isCheckingForMaxListSize = false;
         }
 
         private static void SelectSpeakerImage(GameObject msg, string nameOfSpeaker)
@@ -131,6 +136,8 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             speechBubbleMessages.Remove(msg);
             speechBubbleMessages.Sort();
             speechBubbleMessages.ForEach(positionElementWithinCanvas);
+
+            Destroy(msg);
         }
 
         private void positionElementWithinCanvas(GameObject msg)

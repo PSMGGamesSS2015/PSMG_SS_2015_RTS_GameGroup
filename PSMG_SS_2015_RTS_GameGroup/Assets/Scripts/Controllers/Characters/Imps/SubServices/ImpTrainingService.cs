@@ -85,8 +85,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             get
             {
-                return Type == ImpType.Coward &&
-                    GetComponent<ImpCowardService>().IsInCommand();
+                return (Type == ImpType.Spearman) &&
+                    GetComponent<ImpSpearmanService>().IsInCommand();
             }
         }
 
@@ -94,8 +94,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             get
             {
-                return (Type == ImpType.Spearman) &&
-                    GetComponent<ImpSpearmanService>().IsInCommand();
+                return Type == ImpType.Coward &&
+                    GetComponent<ImpCowardService>().IsInCommand();
             }
         }
 

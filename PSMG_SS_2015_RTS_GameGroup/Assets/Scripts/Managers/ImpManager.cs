@@ -3,6 +3,7 @@ using System.Linq;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Controllers.Characters.Imps.SubServices;
+using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Assets.Scripts.Managers
     {
         private LevelConfig config;
         private GameObject start;
+        private Vector3 spawnPosition;
 
         public List<ImpController> Imps;
 
@@ -65,14 +67,17 @@ namespace Assets.Scripts.Managers
             listeners = new List<IMpManagerListener>();
         }
 
+        // TODO refactor
         public void SetLevelConfig(LevelConfig config, GameObject start)
         {
             currentImps = 0;
             this.config = config;
             this.start = start;
             professions = new int[9];
+            spawnPosition = start.transform.position;
         }
 
+        // TODO refactor
         private void SelectProfession(ImpType profession)
         {
             if (impSelected == null)
@@ -189,7 +194,6 @@ namespace Assets.Scripts.Managers
 
         private void SpawnImp()
         {
-            var spawnPosition = start.transform.position;
             var imp = (GameObject) Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
             var impController = imp.GetComponent<ImpController>();
             impController.RegisterListener(this);
@@ -320,6 +324,11 @@ namespace Assets.Scripts.Managers
         public void OnUntrain(ImpController impController)
         {
             UpdateMaxProfessions(impController);
+        }
+
+        void ImpController.IImpControllerListener.OnCheckpointReached(CheckPointController checkPointController)
+        {
+            spawnPosition = checkPointController.transform.position;
         }
 
         void InputManager.IInputManagerListener.OnDismissImpLabels()

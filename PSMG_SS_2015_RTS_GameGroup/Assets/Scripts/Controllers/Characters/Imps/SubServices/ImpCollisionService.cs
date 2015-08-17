@@ -133,7 +133,18 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.SchwarzeneggerSpot:
                     OnEnterSchwarzeneggerSpot(collider);
                     break;
+                case TagReferences.LevelCheckPoint:
+                    OnEnterLevelCheckPoint(collider);
+                    break;
             }
+        }
+
+        private void OnEnterLevelCheckPoint(Collider2D collider)
+        {
+            var checkPointController = collider.GetComponent<CheckPointController>();
+            if (checkPointController.IsPassed) return;
+            checkPointController.IsPassed = true;
+            GetComponent<ImpController>().Listeners.ForEach(l => l.OnCheckpointReached(checkPointController));
         }
 
         private void OnEnterSchwarzeneggerSpot(Collider2D collider)

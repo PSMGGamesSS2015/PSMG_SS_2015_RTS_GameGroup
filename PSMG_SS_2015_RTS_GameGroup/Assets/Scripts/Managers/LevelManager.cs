@@ -133,6 +133,7 @@ namespace Assets.Scripts.Managers
                 Obstacles = GameObject.FindGameObjectsWithTag(TagReferences.Obstacle).ToList(),
                 Start = GameObject.FindWithTag(TagReferences.LevelStart),
                 Goal = GameObject.FindWithTag(TagReferences.LevelGoal),
+                CheckPoints = GameObject.FindGameObjectsWithTag(TagReferences.LevelCheckPoint).ToList(),
                 HighlightableObjects = GameObject.FindGameObjectsWithTag(TagReferences.HighlightableObject).ToList(),
                 // TODO why are enemies needed?
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()

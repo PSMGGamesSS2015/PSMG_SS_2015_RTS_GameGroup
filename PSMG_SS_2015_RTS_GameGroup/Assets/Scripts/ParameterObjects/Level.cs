@@ -43,5 +43,6 @@ namespace Assets.Scripts.ParameterObjects
 
         public GameObject TopMargin { get; set; }
         public GameObject BottomMargin { get; set; }
+        public List<GameObject> CheckPoints { get; set; }
     }
 }

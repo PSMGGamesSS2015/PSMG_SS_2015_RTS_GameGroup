@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Controllers.Characters.Imps.SubServices;
+using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ExtensionMethods;
 using Assets.Scripts.Helpers;
 using UnityEngine;
@@ -56,6 +57,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             void OnImpSelected(ImpController impController);
             void OnImpHurt(ImpController impController);
             void OnUntrain(ImpController impController);
+            void OnCheckpointReached(CheckPointController checkPointController);
         }
 
         public void RegisterListener(IImpControllerListener listener)

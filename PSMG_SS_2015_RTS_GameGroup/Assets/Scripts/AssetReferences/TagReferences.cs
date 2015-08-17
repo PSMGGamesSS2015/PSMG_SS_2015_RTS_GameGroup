@@ -30,6 +30,7 @@
 
         public const string LevelStart = "Start";
         public const string LevelGoal = "Goal";
+        public const string LevelCheckPoint = "CheckPoint";
 
         public const string UiImpTrainingButton = "ImpTrainingButton";
         public const string UiImpTrainingButtonLabel = "ImpTrainingButtonLabel";

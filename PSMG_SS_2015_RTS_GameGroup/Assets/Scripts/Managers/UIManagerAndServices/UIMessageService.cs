@@ -26,6 +26,10 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             speechBubbleMessages = new List<GameObject>();
         }
         
+        public void OnLevelWasLoaded(int level)
+        {
+            speechBubbleMessages.ForEach(Destroy);
+        }
 
         public void CreateSimpleTextMessage(string message)
         {

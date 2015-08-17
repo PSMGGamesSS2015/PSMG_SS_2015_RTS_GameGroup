@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Utility;
@@ -21,13 +20,12 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         public GameObject SimpleTextMessagePrefab;
         public GameObject SpeechBubbleMessagePrefab;
-        private bool isCheckingForMaxListSize;
 
         public void Awake()
         {
-            isCheckingForMaxListSize = false;
             speechBubbleMessages = new List<GameObject>();
         }
+        
 
         public void CreateSimpleTextMessage(string message)
         {
@@ -62,13 +60,14 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             CheckForMaxListSize();
 
             var msg = Instantiate(SpeechBubbleMessagePrefab);
+
             speechBubbleMessages.Add(msg);
 
             ConfigureMessageTextAndImage(message, speaker, msg);
 
             positionElementWithinCanvas(msg);
-            
-            Counter.SetCounter(gameObject, SpeechBubbleMessageDuration, UpdateDisplayedList, msg, false);
+
+            Counter.SetCounter(gameObject, SpeechBubbleMessageDuration, UpdateDisplayedList, false);
         }
 
         private void ConfigureMessageTextAndImage(string message, Speaker speaker, GameObject msg)
@@ -116,12 +115,9 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         private void CheckForMaxListSize()
         {
-            if (isCheckingForMaxListSize) return;
-            isCheckingForMaxListSize = true;
             if (speechBubbleMessages.Count < MaxSpeechBubbleMessages) return;
             speechBubbleMessages.Remove(speechBubbleMessages[0]); // remove oldest item
             speechBubbleMessages.Sort(); // sort items
-            isCheckingForMaxListSize = false;
         }
 
         private static void SelectSpeakerImage(GameObject msg, string nameOfSpeaker)
@@ -131,13 +127,17 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             img.enabled = true;
         }
 
-        private void UpdateDisplayedList(GameObject msg)
+        private void UpdateDisplayedList()
         {
-            speechBubbleMessages.Remove(msg);
-            speechBubbleMessages.Sort();
-            speechBubbleMessages.ForEach(positionElementWithinCanvas);
+            if (speechBubbleMessages.Count <= 1) return;
 
-            Destroy(msg);
+            var oldestSpeechBubbleMessage = speechBubbleMessages[0];
+            speechBubbleMessages.Remove(speechBubbleMessages[0]);
+            Destroy(oldestSpeechBubbleMessage);
+
+            speechBubbleMessages.Where(sbm => sbm != null).ToList().Sort();
+            speechBubbleMessages.Where(sbm => sbm != null).ToList().ForEach(positionElementWithinCanvas);
+            
         }
 
         private void positionElementWithinCanvas(GameObject msg)

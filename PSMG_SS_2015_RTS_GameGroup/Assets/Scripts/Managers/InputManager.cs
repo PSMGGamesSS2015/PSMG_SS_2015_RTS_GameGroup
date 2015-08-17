@@ -40,11 +40,9 @@ namespace Assets.Scripts.Managers
 
         public interface IInputManagerListener
         {
-            void OnDisplayImpLabels();
             void OnProfessionSelected(ImpType profession);
             void OnSelectNextImp();
             void OnSelectNextUnemployedImp();
-            void OnDismissImpLabels();
         }
 
         public void OnGUI()

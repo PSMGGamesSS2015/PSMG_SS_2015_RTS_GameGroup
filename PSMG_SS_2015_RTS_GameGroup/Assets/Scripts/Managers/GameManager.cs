@@ -30,7 +30,6 @@ namespace Assets.Scripts.Managers
         private InputManager inputManager;
         private SoundManager soundManager;
         private SpecialEffectsManager specialEffectsManager;
-        private PersistenceManager persistenceManager;
 
         // TODO Move elsewhere
         private UserInterface currentUserInterface;
@@ -49,7 +48,6 @@ namespace Assets.Scripts.Managers
             uiManager = GetComponent<UIManager>();
             inputManager = GetComponent<InputManager>();
             soundManager = GetComponent<SoundManager>();
-            persistenceManager = GetComponent<PersistenceManager>();
             specialEffectsManager = GetComponent<SpecialEffectsManager>();
 
         }

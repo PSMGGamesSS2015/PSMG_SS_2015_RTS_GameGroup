@@ -4,8 +4,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpUIService : MonoBehaviour
     {
-        private bool areLabelsDisplayed;
-
         public ImpSelection Selection { get; private set; }
 
         public void Awake()
@@ -13,36 +11,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             Selection = GetComponentInChildren<ImpSelection>();
         }
 
-        // TODO Remove function to display imp labels
-
-        public void OnGUI()
-        {
-            if (areLabelsDisplayed)
-            {
-                //Handles.Label(
-                //    new Vector3(gameObject.transform.position.x - 0.5f, gameObject.transform.position.y + 0.75f, 0),
-                //    GetComponent<ImpTrainingService>().Type.ToString());
-            }
-        }
-
-        public void DisplayLabel()
-        {
-            areLabelsDisplayed = true;
-        }
-
-        public void DismissLabel()
-        {
-            areLabelsDisplayed = false;
-        }
-
         public void OnMouseDown()
         {
-            Debug.Log("Imp Selected");
             var impController = GetComponent<ImpController>();
-            foreach (var listener in impController.Listeners)
-            {
-                listener.OnImpSelected(impController);
-            }
+            impController.Listeners.ForEach(l => l.OnImpSelected(impController));
         }
     }
 }

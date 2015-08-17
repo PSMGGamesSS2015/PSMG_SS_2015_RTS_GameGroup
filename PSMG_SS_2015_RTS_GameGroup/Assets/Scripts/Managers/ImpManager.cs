@@ -19,7 +19,6 @@ namespace Assets.Scripts.Managers
         InputManager.IInputManagerListener
     {
         private LevelConfig config;
-        private GameObject start;
         private Vector3 spawnPosition;
 
         public List<ImpController> Imps;
@@ -67,14 +66,12 @@ namespace Assets.Scripts.Managers
             listeners = new List<IMpManagerListener>();
         }
 
-        // TODO refactor
-        public void SetLevelConfig(LevelConfig config, GameObject start)
+        public void SetLevel(Level level)
         {
             currentImps = 0;
-            this.config = config;
-            this.start = start;
+            config = level.CurrentLevelConfig;
             professions = new int[9];
-            spawnPosition = start.transform.position;
+            spawnPosition = level.Start.transform.position;
         }
 
         // TODO refactor
@@ -249,14 +246,6 @@ namespace Assets.Scripts.Managers
             impController.UnregisterListener(this);
         }
 
-        void InputManager.IInputManagerListener.OnDisplayImpLabels()
-        {
-            foreach (var imp in Imps)
-            {
-                imp.GetComponent<ImpUIService>().DisplayLabel();
-            }
-        }
-
         void InputManager.IInputManagerListener.OnProfessionSelected(ImpType profession)
         {
             SelectProfession(profession);
@@ -316,7 +305,7 @@ namespace Assets.Scripts.Managers
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
-            SetLevelConfig(level.CurrentLevelConfig, level.Start);
+            SetLevel(level);
         }
 
         #endregion
@@ -329,14 +318,6 @@ namespace Assets.Scripts.Managers
         void ImpController.IImpControllerListener.OnCheckpointReached(CheckPointController checkPointController)
         {
             spawnPosition = checkPointController.transform.position;
-        }
-
-        void InputManager.IInputManagerListener.OnDismissImpLabels()
-        {
-            foreach (var imp in Imps)
-            {
-                imp.GetComponent<ImpUIService>().DismissLabel();
-            }
         }
     }
 }

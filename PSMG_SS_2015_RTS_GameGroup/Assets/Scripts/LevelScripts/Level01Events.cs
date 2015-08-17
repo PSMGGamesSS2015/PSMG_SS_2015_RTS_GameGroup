@@ -40,10 +40,9 @@ namespace Assets.Scripts.LevelScripts
 
             shieldCarrierBlockingMessage.Message = "Feiglinge verschanzen sich hinter ihren dicken Holzschilden. Daran kommt man nicht so leicht vorbei";
 
-            shieldCarrierHeavyMessage = SearchEvent("ShieldCarrierHeavyMessageTrigger");
+            shieldCarrierHeavyMessage = SearchEvent("ShieldCarrierHeavyMessage");
 
-            shieldCarrierHeavyMessage.Message =
-                "Unsere Holzschilde sind wuchtig und schwer. Stellt mehrere Feiglinge auf eine Oberfläche, um bestimmte Effekte zu bewirken.";
+            shieldCarrierHeavyMessage.Message = "Unsere Schilde sind wuchtig und schwer. Ob die Brücke das aushält?";
 
             laddersNeededMessage = SearchEvent("LaddersNeededMessageTrigger");
 
@@ -79,15 +78,15 @@ namespace Assets.Scripts.LevelScripts
         private void LaddersCollectedAction()
         {
             Debug.Log("Ladders Collected");
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 10;
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 2;
             // TODO Refactor; this smells
             ImpManager.Instance.NotifyMaxProfessions();
         }
 
         private void WeaponsCollectedAction()
         {
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[0] += 10;
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[3] += 10;
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[0] += 1;
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[3] += 2;
             // TODO Refactor; this smells
             ImpManager.Instance.NotifyMaxProfessions();
         }

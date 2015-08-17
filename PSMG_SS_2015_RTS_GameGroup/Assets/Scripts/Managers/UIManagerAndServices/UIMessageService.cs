@@ -138,6 +138,7 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
             var screenPositionOfCanvas = canvas.transform.position;
 
+
             msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
 
             msg.transform.position = new Vector3( // position message within canvas

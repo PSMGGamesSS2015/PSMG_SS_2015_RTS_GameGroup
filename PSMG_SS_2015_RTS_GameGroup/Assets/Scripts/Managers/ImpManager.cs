@@ -231,9 +231,16 @@ namespace Assets.Scripts.Managers
         void ImpController.IImpControllerListener.OnImpHurt(ImpController impController)
         {
             UIManager.Instance.UIImpOutOfSightService.OnImpHurt(impController);
+            var type = impController.GetComponent<ImpTrainingService>().Type;
+            if (type != ImpType.Unemployed)
+            {
+                professions[(int) type]--;
+            }
             
+            NotifyMaxProfessions();
+
             Imps.Remove(impController);
-            
+
             currentImps--;
             impController.UnregisterListener(this);
         }

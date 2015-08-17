@@ -32,9 +32,17 @@ namespace Assets.Scripts.LevelScripts
 
         private void RegisterEvents()
         {
+            var narrator = SoundManager.Instance.Narrator;
+
             mapStartetMessage = SearchEvent("MapStartedMessageTrigger");
 
             mapStartetMessage.Message = "Macht euch auf die Socken! Die Prinzessin wurde entführt.";
+            /*
+             *  Servus Jan: In der folgenden auskommentierten Zeile siehst du, wie du die Sounds
+             *  für die Sprechtexte des Erzählers abspielst. 
+             */
+            // narrator.Play(SoundReferences.FÜGEHIERDEINENNAMENEIN);
+
 
             shieldCarrierBlockingMessage = SearchEvent("ShieldCarrierBlockingMessageTrigger");
 

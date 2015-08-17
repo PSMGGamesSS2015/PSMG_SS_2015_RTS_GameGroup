@@ -8,6 +8,7 @@ namespace Assets.Scripts.Managers
         LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener
     {
         public AudioHelper BackgroundMusic { get; private set; }
+        public AudioHelper Narrator { get; private set; }
 
         private int indexOfCurrentClipInPlaylist;
 
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Managers
 
             DontDestroyOnLoad(gameObject);
             BackgroundMusic = gameObject.AddComponent<AudioHelper>();
+            Narrator = gameObject.AddComponent<AudioHelper>();
         }
 
         public void Update()

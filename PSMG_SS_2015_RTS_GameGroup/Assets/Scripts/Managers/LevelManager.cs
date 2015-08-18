@@ -132,7 +132,6 @@ namespace Assets.Scripts.Managers
             CurrentLevel = new Level
             {
                 CurrentLevelConfig = CurrentLevelConfig,
-                // TODO Refactor: Camera
                 MainCamera = GameObject.FindGameObjectWithTag(TagReferences.MainCamera),
                 TopMargin = GameObject.FindGameObjectWithTag(TagReferences.TopMargin),
                 BottomMargin = GameObject.FindGameObjectWithTag(TagReferences.BottomMargin),
@@ -143,7 +142,6 @@ namespace Assets.Scripts.Managers
                 Goal = GameObject.FindWithTag(TagReferences.LevelGoal),
                 CheckPoints = GameObject.FindGameObjectsWithTag(TagReferences.LevelCheckPoint).ToList(),
                 HighlightableObjects = GameObject.FindGameObjectsWithTag(TagReferences.HighlightableObject).ToList(),
-                // TODO why are enemies needed?
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
             RegisterListeners();
@@ -154,9 +152,20 @@ namespace Assets.Scripts.Managers
 
         private void LoadLevelEvents()
         {
-            if (CurrentLevel.CurrentLevelConfig.Name == SceneReferences.Level01Koboldingen)
+            switch (CurrentLevel.CurrentLevelConfig.Name)
             {
-                currentLevelEvents = gameObject.AddComponent<Level01Events>();
+                case SceneReferences.Level01Koboldingen:
+                    currentLevelEvents = gameObject.AddComponent<Level01Events>();
+                    break;
+                case SceneReferences.Level02CherryTopMountains:
+                    currentLevelEvents = gameObject.AddComponent<Level02Events>();
+                    break;
+                case SceneReferences.Level05CastleGlazeArrival:
+                    currentLevelEvents = gameObject.AddComponent<Level03Events>();
+                    break;
+                case SceneReferences.Level06CastleGlazeDungenon:
+                    currentLevelEvents = gameObject.AddComponent<Level04Events>();
+                    break;
             }
         }
 

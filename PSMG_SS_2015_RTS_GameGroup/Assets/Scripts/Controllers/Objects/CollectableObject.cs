@@ -40,7 +40,7 @@ namespace Assets.Scripts.Controllers.Objects
         {
             if (listeners.Count == 0)
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
             else
             {

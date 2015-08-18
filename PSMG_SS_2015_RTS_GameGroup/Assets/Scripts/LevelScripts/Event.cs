@@ -10,6 +10,7 @@ namespace Assets.Scripts.LevelScripts
     {
         public string Message { get; set; }
         public Action Action { get; set; }
+        public int Nr; // To be set in the editor
 
         public void Awake()
         {

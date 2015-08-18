@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.AssetReferences;
+﻿using System.Linq;
 using Assets.Scripts.Managers;
-using UnityEngine;
 
 namespace Assets.Scripts.LevelScripts
 {
-    public class Level01Events : MonoBehaviour
-    {
-
-        private List<GameObject> events; 
+    public class Level01Events : LevelEvents
+    { 
 
         private Event mapStartetMessage;
         private Event shieldCarrierBlockingMessage;
@@ -20,21 +15,12 @@ namespace Assets.Scripts.LevelScripts
         private Event bombNeededMessage;
         private Event trollMetMessage;
 
-        public void Awake()
-        {
-            events = GameObject.FindGameObjectsWithTag(TagReferences.Event).ToList();
-        }
 
-        public void Start()
-        {
-            RegisterEvents();
-        }
-
-        private void RegisterEvents()
+        protected override void RegisterEvents()
         {
             var narrator = SoundManager.Instance.Narrator;
 
-            mapStartetMessage = SearchEvent("MapStartedMessageTrigger");
+            mapStartetMessage = events.First(e => e.Nr == 1);
 
             mapStartetMessage.Message = "Macht euch auf die Socken! Die Prinzessin wurde entführt.";
             /*
@@ -44,50 +30,42 @@ namespace Assets.Scripts.LevelScripts
             // narrator.Play(SoundReferences.FÜGEHIERDEINENNAMENEIN);
 
 
-            shieldCarrierBlockingMessage = SearchEvent("ShieldCarrierBlockingMessageTrigger");
+            shieldCarrierBlockingMessage = events.First(e => e.Nr == 2);
 
             shieldCarrierBlockingMessage.Message = "Feiglinge verschanzen sich hinter ihren dicken Holzschilden. Daran kommt man nicht so leicht vorbei";
 
-            shieldCarrierHeavyMessage = SearchEvent("ShieldCarrierHeavyMessage");
+            shieldCarrierHeavyMessage = events.First(e => e.Nr == 3);
 
             shieldCarrierHeavyMessage.Message = "Unsere Schilde sind wuchtig und schwer. Ob die Brücke das aushält?";
 
-            laddersNeededMessage = SearchEvent("LaddersNeededMessageTrigger");
+            laddersNeededMessage = events.First(e => e.Nr == 4);
 
             laddersNeededMessage.Message = "Legt Leitern über die Abgründe, um auf die andere Seite zu kommen.";
 
-            laddersCollectedMessage = SearchEvent("LaddersCollectedMessageTrigger");
+            laddersCollectedMessage = events.First(e => e.Nr == 5);
 
             laddersCollectedMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
 
             laddersCollectedMessage.Action = LaddersCollectedAction;
 
-            weaponsCollectedMessage = SearchEvent("WeaponsCollectedMessageTrigger");
+            bombNeededMessage = events.First(e => e.Nr == 6);
+
+            bombNeededMessage.Message = "Der Fels ist brüchig. Mit einer Bombe können wir in wegsprengen.";
+
+            weaponsCollectedMessage = events.First(e => e.Nr == 7);
 
             weaponsCollectedMessage.Message = "Pieks pieks, bumm bumm.";
 
             weaponsCollectedMessage.Action = WeaponsCollectedAction;
 
-            bombNeededMessage = SearchEvent("BombNeededMessageTrigger");
-
-            bombNeededMessage.Message = "Der Fels ist brüchig. Mit einer Bombe können wir in wegsprengen.";
-
-            trollMetMessage = SearchEvent("TrollMetMessageTrigger");
+            trollMetMessage = events.First(e => e.Nr == 8);
 
             trollMetMessage.Message = "Ein Troll! Vorsichtig, die sind stark und schnell sauer!";
         }
 
-        private Event SearchEvent(string objectName)
-        {
-            var result = events.FirstOrDefault(e => e.gameObject.name.Equals(objectName));
-            return result != null ? result.GetComponent<Event>() : null;
-        }
-
         private void LaddersCollectedAction()
         {
-            Debug.Log("Ladders Collected");
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 2;
-            // TODO Refactor; this smells
             ImpManager.Instance.NotifyMaxProfessions();
         }
 
@@ -95,7 +73,6 @@ namespace Assets.Scripts.LevelScripts
         {
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[0] += 1;
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[3] += 2;
-            // TODO Refactor; this smells
             ImpManager.Instance.NotifyMaxProfessions();
         }
     }

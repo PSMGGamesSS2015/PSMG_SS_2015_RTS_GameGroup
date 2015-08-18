@@ -4,6 +4,7 @@ using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
+using Assets.Scripts.LevelScripts;
 using Assets.Scripts.ParameterObjects;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace Assets.Scripts.Managers
         private List<ILevelManagerListener> listeners;
         public LevelConfig CurrentLevelConfig { get; set; }
         public Level CurrentLevel { get; set; }
+        private LevelEvents currentLevelEvents;
 
         void GoalController.IGoalControllerListener.OnGoalReachedByImp()
         {
@@ -81,8 +83,14 @@ namespace Assets.Scripts.Managers
         {
             if (CurrentLevelNumber < LevelConfig.Levels.Length - 1)
             {
+                Reset();
                 LoadLevel(CurrentLevelNumber + 1);
             }
+        }
+
+        private void Reset()
+        {
+            Destroy(currentLevelEvents);
         }
 
         public void OnLevelWasLoaded(int level)
@@ -140,6 +148,16 @@ namespace Assets.Scripts.Managers
             };
             RegisterListeners();
             listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
+
+            LoadLevelEvents();
+        }
+
+        private void LoadLevelEvents()
+        {
+            if (CurrentLevel.CurrentLevelConfig.Name == SceneReferences.Level01Koboldingen)
+            {
+                currentLevelEvents = gameObject.AddComponent<Level01Events>();
+            }
         }
 
         public void RegisterListeners()

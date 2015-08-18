@@ -66,8 +66,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             {
                 ladderPositionX = (gameObject.transform.position.x + VerticalLadderPlacementOffsetHorizontal * -1f);
             }
-            var ladderPosition = new Vector3(ladderPositionX + VerticalLadderPlacementOffsetHorizontal,
-                        gameObject.transform.position.y, gameObject.transform.position.z);
+            Vector3 ladderPosition;
+            if (verticalLadderSpotController.LengthOfLadder == VerticalLadderSpotController.LadderLength.Long)
+            {
+                ladderPosition = new Vector3(ladderPositionX + VerticalLadderPlacementOffsetHorizontal,
+                        gameObject.transform.position.y + VerticalLadderPlacementOffsetVertical, gameObject.transform.position.z);
+            }
+            else
+            {
+                ladderPosition = new Vector3(ladderPositionX + VerticalLadderPlacementOffsetHorizontal,
+                       gameObject.transform.position.y, gameObject.transform.position.z);
+            } 
 
             switch (ladderLength)
             {

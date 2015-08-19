@@ -35,6 +35,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator TrainingRoutine(ImpType type)
         {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            GetComponent<Rigidbody2D>().freezeRotation = true;
 
             if (this.Type == ImpType.Schwarzenegger)
             {
@@ -125,6 +127,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impAnimationHelper.PlayTrainingAnimation();
             audioHelper.Play(SoundReferences.ShieldWood1);
             currentProfessionService = gameObject.AddComponent<ImpCowardService>();
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+            GetComponent<Rigidbody2D>().freezeRotation = true;
         }
 
         private void TrainLadderCarrier()

@@ -1,24 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects
 {
     public class FieryCakeController : MonoBehaviour
     {
-        private List<FireController> flames;
         private bool hasBeenExtinguished;
+         
 
         public void Awake()
         {
             hasBeenExtinguished = false;
-        }
-
-        public void Start()
-        {
-            flames = GetComponentsInChildren<FireController>().ToList();
-            flames.ForEach(f => f.Hide());
         }
 
         public void OnTriggerEnter2D(Collider2D other)
@@ -33,12 +27,13 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void LightFires()
         {
-            flames.ForEach(f => f.Display());
+            var spawnPosition = new Vector3(gameObject.transform.position.x - 1, gameObject.transform.position.y, gameObject.transform.position.z);
+            SpecialEffectsManager.Instance.SpawnFire(spawnPosition, SortingLayerReferences.MiddleForeground);
         }
 
         public void Extinguish()
         {
-            flames.ForEach(f => f.Hide());
+            // TODO
         }
     }
 }

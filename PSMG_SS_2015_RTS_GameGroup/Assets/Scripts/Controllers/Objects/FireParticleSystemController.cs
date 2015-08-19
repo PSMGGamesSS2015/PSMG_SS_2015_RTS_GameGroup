@@ -8,6 +8,7 @@ namespace Assets.Scripts.Controllers.Objects
     public class FireParticleSystemController : MonoBehaviour
     {
         private List<ParticleSystem> particleSystems;
+        public string SortLayerName;
 
         public void Awake()
         {
@@ -16,7 +17,13 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Start()
         {
-            particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = SortingLayerReferences.MiddleForeground);
+            if (SortLayerName == "") SortLayerName = SortingLayerReferences.Default;
+            particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = SortLayerName);
+        }
+
+        public void MoveToSortingLayer(string sortingLAyerName)
+        {
+            particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = sortingLAyerName);
         }
     }
 }

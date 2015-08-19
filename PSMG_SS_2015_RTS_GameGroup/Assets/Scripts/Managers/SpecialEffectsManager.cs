@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Controllers.Objects;
+using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
@@ -26,19 +27,20 @@ namespace Assets.Scripts.Managers
         }
 
         // position in world coordinates
-        public void SpawnFire(Vector3 position)
+        public void SpawnFire(Vector3 position, string sortingLayerName)
         {
-            SpawnFire(new Vector3(position.x + 1f, position.y + 0.5f, position.z), new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, 1);   
+            SpawnFire(new Vector3(position.x + 1f, position.y + 0.5f, position.z), sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, 1);   
         }
 
-        public void SpawnFire(Vector3 position, int nrOfFlameTongues)
+        public void SpawnFire(Vector3 position, string sortingLayerName, int nrOfFlameTongues)
         {
-            SpawnFire(new Vector3(position.x + 1f, position.y + 0.5f, position.z), new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, nrOfFlameTongues);   
+            SpawnFire(new Vector3(position.x + 1f, position.y + 0.5f, position.z), sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, nrOfFlameTongues);   
         }
 
-        public void SpawnFire(Vector3 position, Vector3 scale, Quaternion rotation, int nrOfFlameTongues)
+        public void SpawnFire(Vector3 position, string sortingLayerName, Vector3 scale, Quaternion rotation, int nrOfFlameTongues)
         {
-            Instantiate(FirePrefab, position, rotation);
+            var fire = (GameObject) Instantiate(FirePrefab, position, rotation);
+            fire.GetComponent<FireParticleSystemController>().MoveToSortingLayer(sortingLayerName);
 
             if (nrOfFlameTongues <= 1) return;
 

@@ -91,11 +91,11 @@ namespace Assets.Scripts.Helpers
 
         public void Run()
         {
-            if (formerMovementSpeed < 0f)
+            if (formerMovementSpeed < 0f || !FacingRight)
             {
                 MovementSpeed = -MovementSpeedRunning;
             }
-            else if (formerMovementSpeed > 0f)
+            else if (formerMovementSpeed > 0f || FacingRight)
             {
                 MovementSpeed = MovementSpeedRunning;
             }

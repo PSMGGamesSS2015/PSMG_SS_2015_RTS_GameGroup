@@ -8,12 +8,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 {
     public class ImpAnimationHelper : AnimationHelper
     {
-        private ImpInventory impInventory;
+        public ImpInventory ImpInventory { get; private set; }
 
         public override void Awake()
         {
             base.Awake();
-            impInventory = GetComponentInChildren<ImpInventory>();
+            ImpInventory = GetComponentInChildren<ImpInventory>();
             Play(AnimationReferences.ImpWalkingUnemployed);
         }
 
@@ -24,23 +24,23 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             switch (impType)
             {
                 case ImpType.Spearman:
-                    impInventory.Display(TagReferences.ImpInventorySpear);
+                    ImpInventory.Display(TagReferences.ImpInventorySpear);
                     Play(AnimationReferences.ImpWalkingSpear);
                     break;
                 case ImpType.Coward:
-                    impInventory.Display(TagReferences.ImpInventoryShield);
+                    ImpInventory.Display(TagReferences.ImpInventoryShield);
                     Play(AnimationReferences.ImpHidingBehindShield);
                     break;
                 case ImpType.LadderCarrier:
-                    impInventory.Display(TagReferences.ImpInventoryLadder);
+                    ImpInventory.Display(TagReferences.ImpInventoryLadder);
                     Play(AnimationReferences.ImpWalkingLadder); 
                     break;
                 case ImpType.Blaster:
-                    impInventory.Display(TagReferences.ImpInventoryBomb);
+                    ImpInventory.Display(TagReferences.ImpInventoryBomb);
                     Play(AnimationReferences.ImpWalkingBomb);
                     break;
                 case ImpType.Firebug:
-                    impInventory.TorchController.Display();
+                    ImpInventory.TorchController.Display();
                     Play(AnimationReferences.ImpWalkingTorch);
                     break;
             }
@@ -48,19 +48,19 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void PlayPlacingLadderHorizonallyAnimation()
         {
-            impInventory.Display(TagReferences.ImpInventoryLadder);
+            ImpInventory.Display(TagReferences.ImpInventoryLadder);
             Play(AnimationReferences.ImpPlacingLadderHorizontally);
         }
 
         public void SwitchBackToStandardAnimation()
         {
-            impInventory.HideItems();
+            ImpInventory.HideItems();
             Play(AnimationReferences.ImpWalkingUnemployed);
         }
 
         public void PlayImpTakingObjectAnimation()
         {
-            impInventory.HideItems();
+            ImpInventory.HideItems();
             Play(AnimationReferences.ImpTakingObject);
         }
 
@@ -84,12 +84,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void FlipExplosion()
         {
-            impInventory.Explosion.Flip();
+            ImpInventory.Explosion.Flip();
         }
 
         public void DisplayExplosion()
         {
-            impInventory.DisplayExplosion();
+            ImpInventory.DisplayExplosion();
         }
     }
 }

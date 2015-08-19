@@ -33,6 +33,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             gameObject.AddComponent<ImpTrainingService>();
             gameObject.AddComponent<ImpCollisionService>();
             gameObject.AddComponent<ImpInteractionLogicService>();
+            gameObject.AddComponent<ImpPwnedService>();
 
             Listeners = new List<IImpControllerListener>();
         }

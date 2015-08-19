@@ -74,8 +74,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void OnDefaultInteraction(ImpController imp)
         {
-            Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
-                imp.GetComponent<ImpCollisionService>().GetCollider(), true);
+            Physics2D.IgnoreCollision(impCollisionService.CircleCollider2D,
+                imp.GetComponent<ImpCollisionService>().CircleCollider2D, true);
         }
 
         private void OnMeetMovingImpAsSchwarzenegger(ImpController imp)
@@ -84,8 +84,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 (!GetComponent<ImpSchwarzeneggerService>().IsThrowing))
             {
                 GetComponent<ImpSchwarzeneggerService>().ThrowImp(imp);
-                Physics2D.IgnoreCollision(impCollisionService.GetCollider(),
-                    imp.GetComponent<ImpCollisionService>().GetCollider(), true);
+                Physics2D.IgnoreCollision(impCollisionService.CircleCollider2D,
+                    imp.GetComponent<ImpCollisionService>().CircleCollider2D, true);
             }
         }
 

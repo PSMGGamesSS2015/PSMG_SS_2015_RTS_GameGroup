@@ -11,7 +11,7 @@ namespace Assets.Scripts.Controllers.Objects
         {
             var tag = collider.gameObject.tag;
 
-            if (tag == TagReferences.Imp)
+            if (tag == TagReferences.Imp || tag == TagReferences.ImpCollisionCheck)
             {
                 collider.gameObject.GetComponent<ImpController>().LeaveGame();
             }

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpCollisionService : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
-        private CircleCollider2D circleCollider2D;
+        public CircleCollider2D CircleCollider2D { get; private set; }
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
         private ImpAnimationHelper impAnimationService;
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             collidersIgnoredWhileClimbing = new List<Collider2D>();
 
-            circleCollider2D = GetComponent<CircleCollider2D>();
+            CircleCollider2D = GetComponent<CircleCollider2D>();
             impAnimationService = GetComponent<ImpAnimationHelper>();
             impMovementService = GetComponent<ImpMovementService>();
             impTrainingService = GetComponent<ImpTrainingService>();
@@ -46,17 +46,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impClickCheck.RegisterListener(this);
         }
 
-        public CircleCollider2D GetCollider()
-        {
-            return circleCollider2D;
-        }
-
         public void OnCollisionEnter2D(Collision2D collision)
         {
             if (GetComponent<ImpMovementService>().IsClimbing)
             {
                 collidersIgnoredWhileClimbing.Add(collision.gameObject.GetComponent<Collider2D>());
-                Physics2D.IgnoreCollision(circleCollider2D, collision.gameObject.GetComponent<Collider2D>(), true);
+                Physics2D.IgnoreCollision(CircleCollider2D, collision.gameObject.GetComponent<Collider2D>(), true);
                 return;
             }
 
@@ -135,7 +130,16 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.LevelCheckPoint:
                     OnEnterLevelCheckPoint(collider);
                     break;
+                case TagReferences.FieryCake:
+                    OnEnterFieryCake();
+                    break;
             }
+
+        }
+
+        private void OnEnterFieryCake()
+        {
+            GetComponent<ImpPwnedService>().Pwn(ImpPwnedService.PwningType.Scorching); // TODO Test
         }
 
         private void OnEnterLevelCheckPoint(Collider2D collider)
@@ -150,7 +154,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             var schwarzenEggerSpotController = collider.GetComponent<SchwarzeneggerSpotController>();
             if (GetComponent<ImpSchwarzeneggerService>() == null) return;
-            if (!(impMovementService.CurrentDirection == MovingObject.Direction.Horizontal)) return;
+            if (impMovementService.CurrentDirection != MovingObject.Direction.Horizontal) return;
 
             GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpStanding);
@@ -240,14 +244,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             foreach (var ci in collidersIgnoredWhileClimbing)
             {
-                Physics2D.IgnoreCollision(circleCollider2D, ci, false);
+                Physics2D.IgnoreCollision(CircleCollider2D, ci, false);
             }
             collidersIgnoredWhileClimbing.Clear();
         }
 
         private void OnTriggerExitImp(ImpController imp)
         {
-            Physics2D.IgnoreCollision(GetCollider(), imp.GetComponent<ImpCollisionService>().GetCollider(), false);
+            Physics2D.IgnoreCollision(CircleCollider2D, imp.GetComponent<ImpCollisionService>().CircleCollider2D, false);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)

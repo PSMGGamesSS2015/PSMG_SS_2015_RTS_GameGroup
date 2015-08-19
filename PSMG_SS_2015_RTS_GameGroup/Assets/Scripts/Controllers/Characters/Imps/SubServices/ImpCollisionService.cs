@@ -131,15 +131,16 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     OnEnterLevelCheckPoint(collider);
                     break;
                 case TagReferences.FieryCake:
-                    OnEnterFieryCake();
+                    OnEnterFieryCake(collider);
                     break;
             }
 
         }
 
-        private void OnEnterFieryCake()
+        private void OnEnterFieryCake(Collider2D collider)
         {
-            GetComponent<ImpPwnedService>().Pwn(ImpPwnedService.PwningType.Scorching); // TODO Test
+            if (collider.GetComponent<FieryCakeController>().HasBeenExtinguished) return;
+            GetComponent<ImpPwnedService>().Pwn(ImpPwnedService.PwningType.Scorching);
         }
 
         private void OnEnterLevelCheckPoint(Collider2D collider)

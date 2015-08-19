@@ -123,15 +123,7 @@ namespace Assets.Scripts.Managers
         private void HighlightObjects(bool highlighted)
         {
             var highlightableObjects = LevelManager.Instance.CurrentLevel.HighlightableObjects;
-            
-            if (highlighted)
-            {
-                highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = true);
-            }
-            else
-            {
-                highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = false);
-            }
+            highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = highlighted);
         }
 
         private void DecreaseGameSpeed()
@@ -178,10 +170,30 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        public void MoveCameraRight(float distance)
+        {
+            var pos = mainCamera.transform.position;
+            pos.x += distance;
+            if (!(pos.x >= GetComponent<LevelManager>().CurrentLevel.RightMargin.transform.position.x))
+            {
+                mainCamera.transform.position = pos;
+            }
+        }
+
         public void MoveCameraLeft()
         {
             var pos = mainCamera.transform.position;
             pos.x--;
+            if (!(pos.x <= GetComponent<LevelManager>().CurrentLevel.LeftMargin.transform.position.x))
+            {
+                mainCamera.transform.position = pos;
+            }
+        }
+
+        public void MoveCameraLeft(float distance)
+        {
+            var pos = mainCamera.transform.position;
+            pos.x -= distance;
             if (!(pos.x <= GetComponent<LevelManager>().CurrentLevel.LeftMargin.transform.position.x))
             {
                 mainCamera.transform.position = pos;

@@ -56,6 +56,7 @@
 
         public const string Gaslight = "Gaslight";
         public const string RainingCloud = "RainingCloud";
+        public const string FieryCake = "FieryCake";
 
         public const string RedFlameTongue = "RedFlameTongue";
         public const string OrangeFlameTongue = "OrangeFlameTongue";

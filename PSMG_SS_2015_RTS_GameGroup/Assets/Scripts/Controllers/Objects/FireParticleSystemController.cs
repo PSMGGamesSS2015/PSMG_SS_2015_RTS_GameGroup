@@ -21,6 +21,11 @@ namespace Assets.Scripts.Controllers.Objects
             particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = SortLayerName);
         }
 
+        public void Extinguish()
+        {
+            particleSystems.ForEach(ps => ps.Stop());
+        }
+
         public void MoveToSortingLayer(string sortingLAyerName)
         {
             particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = sortingLAyerName);

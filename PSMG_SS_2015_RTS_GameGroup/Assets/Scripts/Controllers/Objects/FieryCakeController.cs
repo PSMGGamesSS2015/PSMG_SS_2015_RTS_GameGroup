@@ -8,7 +8,7 @@ namespace Assets.Scripts.Controllers.Objects
     public class FieryCakeController : MonoBehaviour
     {
         private bool hasBeenExtinguished;
-         
+        private List<GameObject> fire; 
 
         public void Awake()
         {
@@ -28,12 +28,14 @@ namespace Assets.Scripts.Controllers.Objects
         private void LightFires()
         {
             var spawnPosition = new Vector3(gameObject.transform.position.x - 1, gameObject.transform.position.y, gameObject.transform.position.z);
-            SpecialEffectsManager.Instance.SpawnFire(spawnPosition, SortingLayerReferences.MiddleForeground);
+            fire = SpecialEffectsManager.Instance.SpawnFire(spawnPosition, SortingLayerReferences.MiddleForeground);
+
+            hasBeenExtinguished = true;
         }
 
         public void Extinguish()
         {
-            // TODO
+            fire.ForEach(f => f.GetComponent<FireParticleSystemController>().Extinguish());
         }
     }
 }

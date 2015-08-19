@@ -144,23 +144,28 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void FormCommand(ImpController commandPartner)
         {
-            impMovementService.Stand();
-            impAnimationService.Play(AnimationReferences.ImpStandingWithSpear);
-            attackCounter = Counter.SetCounter(this.gameObject, 4f, Pierce, true);
-
+            StandAndAttack();
             CommandPartner = commandPartner;
         }
 
-        public void DissolveCommand()
+        public void StandAndAttack()
+        {
+            impMovementService.Stand();
+            impAnimationService.Play(AnimationReferences.ImpStandingWithSpear);
+            attackCounter = Counter.SetCounter(this.gameObject, 4f, Pierce, true);
+        }
+
+        public void StopAttacking()
         {
             impMovementService.Walk();
             impAnimationService.Play(AnimationReferences.ImpWalkingSpear);
 
-            if (attackCounter != null)
-            {
-                attackCounter.Stop();
-            }
+            if (attackCounter != null) attackCounter.Stop();
+        }
 
+        public void DissolveCommand()
+        {
+            StopAttacking();
             CommandPartner = null;
         }
 

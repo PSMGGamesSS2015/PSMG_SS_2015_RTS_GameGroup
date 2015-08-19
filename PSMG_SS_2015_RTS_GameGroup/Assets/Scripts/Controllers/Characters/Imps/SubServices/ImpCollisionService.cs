@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
+using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using UnityEngine;
 
@@ -147,10 +148,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void OnEnterSchwarzeneggerSpot(Collider2D collider)
         {
+            var schwarzenEggerSpotController = collider.GetComponent<SchwarzeneggerSpotController>();
             if (GetComponent<ImpSchwarzeneggerService>() == null) return;
-            if (collider.GetComponent<SchwarzeneggerSpotController>() == null) return;
+            if (!(impMovementService.CurrentDirection == MovingObject.Direction.Horizontal)) return;
+
             GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition = true;
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpStanding);
+
+            if ((schwarzenEggerSpotController.Direction == MovingObject.Direction.Right &&
+                !impMovementService.FacingRight) ||
+                (schwarzenEggerSpotController.Direction == MovingObject.Direction.Left &&
+                impMovementService.FacingRight))
+            {
+                impMovementService.Turn();
+            }
         }
 
         private void OnEnterBurningObject(Collider2D collider)

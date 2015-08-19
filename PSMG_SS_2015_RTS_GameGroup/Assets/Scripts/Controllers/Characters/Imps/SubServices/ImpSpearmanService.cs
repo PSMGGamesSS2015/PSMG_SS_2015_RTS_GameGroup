@@ -24,7 +24,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != GetComponent<ImpSpearmanService>().attackRange.GetInstanceID()) return;
+            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
 
             if (collider.gameObject.tag == TagReferences.EnemyTroll)
             {
@@ -36,25 +36,49 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
 
-            if (collider.gameObject.tag == TagReferences.EnemyTroll)
+            switch (collider.gameObject.tag)
             {
-                enemiesInAttackRange.Remove(collider.gameObject.GetComponent<TrollController>());
+                case TagReferences.EnemyTroll:
+                    OnTriggerExitTroll(collider.GetComponent<TrollController>());
+                    break;
             }
+        }
+
+        private void OnTriggerExitTroll(TrollController trollController)
+        {
+            enemiesInAttackRange.Remove(trollController);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != GetComponent<ImpSpearmanService>().attackRange.GetInstanceID()) return;
+            if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
 
-            if (collider.gameObject.tag == TagReferences.RainingCloud)
+            switch (collider.gameObject.tag)
             {
-                var rainingCloudController = collider.gameObject.GetComponent<RainingCloudController>();
-
-                if (IsWithinStrikingDistance(rainingCloudController) || rainingCloudController.IsAlreadyBeingAttacked ||
-                    rainingCloudController.HasReceivedHit) return;
-
-                PierceCloud(rainingCloudController);
+                case TagReferences.RainingCloud:
+                    OnTriggerStayRainingCloud(collider.GetComponent<RainingCloudController>());
+                    break;
+                case TagReferences.EnemyTroll:
+                    OnTriggerStayTroll(collider.GetComponent<TrollController>());
+                    break;
             }
+        }
+
+        private void OnTriggerStayTroll(TrollController trollController)
+        {
+            if (enemiesInAttackRange.Contains(trollController)) return;
+            if (trollController.IsLeaving) return;
+
+            enemiesInAttackRange.Add(trollController);
+        }
+
+        private void OnTriggerStayRainingCloud(RainingCloudController rainingCloudController)
+        {
+            if (IsWithinStrikingDistance(rainingCloudController)) return; 
+            if(rainingCloudController.IsAlreadyBeingAttacked) return;
+            if(rainingCloudController.HasReceivedHit) return;
+
+            PierceCloud(rainingCloudController);
         }
 
         public void Awake()
@@ -66,9 +90,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void InitTriggerCollider()
         {
             attackRange = GetComponentsInChildren<TriggerCollider2D>().First(c => c.tag == TagReferences.ImpAttackRange);
-
             attackRange.RegisterListener(this);
-
             enemiesInAttackRange = new List<EnemyController>();
         }
 
@@ -116,15 +138,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void AttackTroll(TrollController trollController)
         {
-            if (trollController.GetComponent<TrollAttackService>().IsAngry)
-            {
-                trollController.GetComponent<TrollAttackService>().ReceiveHit();
-                enemiesInAttackRange.Remove(trollController);
-            }
-            else
-            {
-                trollController.GetComponent<TrollAttackService>().ReceiveHit();
-            }
+            trollController.ReceiveHit();
+            if (trollController.GetComponent<TrollMoodService>().IsAngry) enemiesInAttackRange.Remove(trollController);
         }
 
         public void FormCommand(ImpController commandPartner)

@@ -194,7 +194,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (!GetComponent<ImpMovementService>().FacingRight ||
                 GetComponent<ImpTrainingService>().Type == ImpType.Coward ||
-                GetComponent<ImpTrainingService>().Type == ImpType.Blaster) return;
+                GetComponent<ImpTrainingService>().Type == ImpType.Blaster ||
+                impMovementService.IsBeingThrown) return;
 
             GetComponent<ImpMovementService>().ClimbLadder();
             impTrainingService.IsTrainable = false;

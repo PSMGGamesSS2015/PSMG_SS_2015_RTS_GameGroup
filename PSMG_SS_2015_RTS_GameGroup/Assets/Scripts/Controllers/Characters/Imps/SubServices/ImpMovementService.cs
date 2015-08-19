@@ -9,7 +9,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
     public class ImpMovementService : MovingObject
     {
-        private bool isBeingThrown;
+        public bool IsBeingThrown { get; private set; }
         public bool IsClimbing { get; set; }
 
         private const float ThrowingSpeedX = 7f;
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public override void Start()
         {
-            isBeingThrown = false;
+            IsBeingThrown = false;
             IsClimbing = false;
             IsJumping = false;
             FacingRight = true;
@@ -29,7 +29,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public override void FixedUpdate()
         {
-            if (isBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping) return;
+            if (IsBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping) return;
 
             if (CurrentDirection == Direction.Vertical)
             {
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void GetThrown()
         {
-            isBeingThrown = true;
+            IsBeingThrown = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(ThrowingSpeedX, ThrowingSpeedY);
         }
 
@@ -66,9 +66,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (collider.gameObject.tag == TagReferences.Imp) return;
 
-            if (isBeingThrown)
+            if (IsBeingThrown)
             {
-                isBeingThrown = false;
+                IsBeingThrown = false;
             }
 
         }

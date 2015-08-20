@@ -163,5 +163,15 @@
 
         #endregion
 
+        #region Soundausgabe Level 5
+
+        public const string SoundLvl5_01 = "Sprachausgabe/Level_5/5_01_Spieler_betritt_die_Karte";
+        public const string SoundLvl5_02 = "Sprachausgabe/Level_5/5_02_Spieler_steht_an_verschlossenem_Tor";
+        public const string SoundLvl5_03 = "Sprachausgabe/Level_5/5_03_Imp_sammelt_Fackeln_auf";
+        public const string SoundLvl5_04 = "Sprachausgabe/Level_5/5_04_Imp_sammelt_Zaubertrank_auf";
+        public const string SoundLVl5_05 = "Sprachausgabe/Level_5/5_05_Kanone_feuert";
+
+        #endregion
+
     }
 }

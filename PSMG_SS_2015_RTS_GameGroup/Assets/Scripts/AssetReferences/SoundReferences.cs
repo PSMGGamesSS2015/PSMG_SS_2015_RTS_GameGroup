@@ -44,8 +44,8 @@
 
         #region Imp
 
-        public const string ImpGoing = "Imp/FX_imp schlendern";
-        public const string ImpSetupLadder = "Imp/FX_leiter aufstellen";
+        public const string ImpGoing = "Imp/FX_imp_schlendern";
+        public const string ImpSetupLadder = "Imp/FX_leiter_aufstellen";
         public const string ImpAttack1 = "Imp/FX_speerstich1";
         public const string ImpAttack2 = "Imp/FX_speerstich2";
         public const string ImpWork = "Imp/Goblins_arbeit";
@@ -56,17 +56,17 @@
         public const string ImpComment3 = "Imp/Goblins_hmm";
         public const string ImpComment4 = "Imp/Goblins_hmmhehe";
         public const string ImpSelect1 = "Imp/Goblin_ich";
-        public const string ImpSelect2 = "Imp/Goblin_ ihr wuenscht";
-        public const string ImpSelect3 = "Imp/Goblin_ja 2";
-        public const string ImpSelect4 = "Imp/Goblin_ja meister";
+        public const string ImpSelect2 = "Imp/Goblin_ ihr_wuenscht";
+        public const string ImpSelect3 = "Imp/Goblin_ja_2";
+        public const string ImpSelect4 = "Imp/Goblin_ja_meister";
         public const string ImpSelect5 = "Imp/Goblin_ja";
         public const string ImpSelect6 = "Imp/Goblin_jiaa";
-        public const string ImpSelect7 = "Imp/Goblins_mmmn 2";
+        public const string ImpSelect7 = "Imp/Goblins_mmmn_2";
         public const string ImpSelect8 = "Imp/Goblins_mmmn";
-        public const string ImpSelect9 = "Imp/Goblins_was begehrt ihr";
-        public const string ImpSelect10 = "Imp/Goblins_was gibts 2";
-        public const string ImpSelect11 = "Imp/Goblins_was gibts";
-        public const string ImpSelect12 = "Imp/Goblins_was liegt an";
+        public const string ImpSelect9 = "Imp/Goblins_was_begehrt_ihr";
+        public const string ImpSelect10 = "Imp/Goblins_was_gibts 2";
+        public const string ImpSelect11 = "Imp/Goblins_was_gibts";
+        public const string ImpSelect12 = "Imp/Goblins_was_liegt an";
 
         #endregion
 
@@ -102,7 +102,7 @@
         public const string DragonComment7 = "Dragon/Dragon_schnief2";
         public const string DragonComment8 = "Dragon/Dragon_schnief3";
         public const string DragonComment9 = "Dragon/Dragon_woaah";
-        public const string DragonComment10 = "Dragon/Dragon_woooah lang";
+        public const string DragonComment10 = "Dragon/Dragon_woooah_lang";
 
         #endregion
 

@@ -85,18 +85,6 @@
 
         #endregion
 
-        #region Explosiver
-
-        public const string ExplosiveDeath = "Explosiver/Explosiver_death";
-        public const string ExplosivePotionSound = "Explosiver/Explosiver_trankblubbern";
-        public const string ExplosiveComment1 = "Explosiver/Explosiver_kaliumflourid";
-        public const string ExplosiveComment2 = "Explosiver/Explosiver_lachen";
-        public const string ExplosiveComment3 = "Explosiver/Explosiver_piff paff puff";
-        public const string ExplosiveComment4 = "Explosiver/Explosiver_plutoniumammorgen";
-        public const string ExplosiveComment5 = "Explosiver/Explosiver_uran, uran";
-
-        #endregion
-
         #region Dragon
 
         public const string DragonAttack1 = "Dragon/Dragon_attack1";
@@ -118,25 +106,6 @@
 
         #endregion
 
-        #region Werwolf
-
-        public const string WerwolfAttack1 = "Werwolf/Werwolf_attack1";
-        public const string WerwolfAttack2 = "Werwolf/Werwolf_attack2";
-        public const string WerwolfHowl = "Werwolf/Werwolf_heulen";
-        public const string WerwolfHumanDamage = "Werwolf/Werwolf_menschliches autsch";
-
-        #endregion
-
-        #region Worm
-
-        public const string WormEat1 = "Worm/Wurm_fressen";
-        public const string WormEat2 = "Worm/Wurm_verschlingen";
-        public const string WormStomach1 = "Worm/Wurm_magen1";
-        public const string WormStomach2 = "Worm/Wurm_magen2";
-        public const string WormStomach3 = "Worm/Wurm_magen3";
-
-        #endregion
-
         #region King
 
         public const string KingAttack1 = "King/King_attack1";
@@ -147,5 +116,20 @@
 
         #endregion
 
+        #region Soundausgabe Level 1
+
+        public const string SoundLvl101 = "Sprachausgabe/Level 1/1.01_Level 01 gestartet";
+        public const string SoundLvl102 = "Sprachausgabe/Level 1/1.02_Kobold auswählen";
+        public const string SoundLvl103 = "Sprachausgabe/Level 1/1.03_Beruf zuweisen";
+        public const string SoundLvl104 = "Sprachausgabe/Level 1/1.04_Feigling ausgebildet";
+        public const string SoundLvl105 = "Sprachausgabe/Level 1/1.05_Beide Hängebrücken überquert";
+        public const string SoundLvl106 = "Sprachausgabe/Level 1/1.06_Leitern benötigt";
+        public const string SoundLvl107 = "Sprachausgabe/Level 1/1.07_Leitern gefunden";
+        public const string SoundLvl108 = "Sprachausgabe/Level 1/1.08_Felsbrocken erreicht";
+        public const string SoundLvl109 = "Sprachausgabe/Level 1/1.09_Waffen gefunden";
+        public const string SoundLvl110 = "Sprachausgabe/Level 1/1.10_Troll gesichtet";
+        public const string SoundLvl111 = "Sprachausgabe/Level 1/1.11_Karte erfolgreich abgeschlossen";
+
+        #endregion
     }
 }

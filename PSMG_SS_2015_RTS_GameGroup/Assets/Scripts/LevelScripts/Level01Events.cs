@@ -29,6 +29,8 @@ namespace Assets.Scripts.LevelScripts
              */
             // narrator.Play(SoundReferences.FÜGEHIERDEINENNAMENEIN);
 
+            //narrator.Play(SoundReferences.SoundLvl101); SoundReferences nicht gefunden
+
 
             shieldCarrierBlockingMessage = events.First(e => e.Nr == 2);
 

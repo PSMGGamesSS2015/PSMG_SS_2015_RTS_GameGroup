@@ -52,7 +52,7 @@ namespace Assets.Scripts.Config
         /// </summary>
         public static LevelConfig[] Levels = 
         {               
-            new LevelConfig(1, 0f, SceneReferences.MainMenu, new[] {0,0,0,0,0,0,0}, LevelType.Menu, new []{SoundReferences.MainTheme}),                                   
+            new LevelConfig(0, 0f, SceneReferences.MainMenu, new[] {0,0,0,0,0,0,0}, LevelType.Menu, new []{SoundReferences.MainTheme}),                                   
             new LevelConfig(SceneReferences.StarWarsIntro, LevelType.Narrative, new []{SoundReferences.StarWarsTheme}), 
             new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,6,0,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),           
             new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {1,6,3,1,2,1,0}, LevelType.InGame, new []{SoundReferences.MountainTheme}),

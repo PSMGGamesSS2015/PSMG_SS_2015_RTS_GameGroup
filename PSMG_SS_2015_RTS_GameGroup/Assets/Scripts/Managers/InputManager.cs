@@ -188,7 +188,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void PauseGame()
+        public void PauseGame()
         {
             if (isPaused)
             {

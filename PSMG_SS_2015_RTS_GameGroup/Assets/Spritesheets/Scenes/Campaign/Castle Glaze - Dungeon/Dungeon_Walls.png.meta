@@ -1,9 +1,23 @@
 fileFormatVersion: 2
 guid: 8f0e90fc17cfa5542819fd1ac2835db4
-timeCreated: 1440080776
+timeCreated: 1440093745
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Dungeon_Doorway
+    21300002: Dungeon_DiagonalWall
+    21300004: Dungeon_DarkBrick3D_Diagonal
+    21300006: Dungeon_DarkBrick3D
+    21300008: Dungeon_DarkBrick2D
+    21300010: Dungeon_MediumBrick3D_Diagonal
+    21300012: Dungeon_MediumBrick3D
+    21300014: Dungeon_MediumBrick2D
+    21300016: Dungeon_BrightBrick3D_Diagonal
+    21300018: Dungeon_BrightBrick3D
+    21300020: Dungeon_BrightBrick2D
+    21300022: Dungeon_Pillar
+    21300024: Dungeon_SmallWall
+    21300026: Dungeon_BigWall
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,14 +44,14 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -48,7 +62,147 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Dungeon_Doorway
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 2149
+        width: 1206
+        height: 1934
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_DiagonalWall
+      rect:
+        serializedVersion: 2
+        x: 1544
+        y: 3007
+        width: 1049
+        height: 998
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_DarkBrick3D_Diagonal
+      rect:
+        serializedVersion: 2
+        x: 2864
+        y: 3795
+        width: 281
+        height: 237
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_DarkBrick3D
+      rect:
+        serializedVersion: 2
+        x: 3258
+        y: 3840
+        width: 332
+        height: 185
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_DarkBrick2D
+      rect:
+        serializedVersion: 2
+        x: 3719
+        y: 3843
+        width: 286
+        height: 165
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_MediumBrick3D_Diagonal
+      rect:
+        serializedVersion: 2
+        x: 2837
+        y: 3537
+        width: 280
+        height: 239
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_MediumBrick3D
+      rect:
+        serializedVersion: 2
+        x: 3235
+        y: 3584
+        width: 333
+        height: 192
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_MediumBrick2D
+      rect:
+        serializedVersion: 2
+        x: 3712
+        y: 3591
+        width: 299
+        height: 166
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_BrightBrick3D_Diagonal
+      rect:
+        serializedVersion: 2
+        x: 2840
+        y: 3253
+        width: 283
+        height: 237
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_BrightBrick3D
+      rect:
+        serializedVersion: 2
+        x: 3227
+        y: 3305
+        width: 333
+        height: 184
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_BrightBrick2D
+      rect:
+        serializedVersion: 2
+        x: 3704
+        y: 3320
+        width: 303
+        height: 168
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_Pillar
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 40
+        width: 549
+        height: 1720
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_SmallWall
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 1605
+        width: 3106
+        height: 546
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Dungeon_BigWall
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 13
+        width: 3166
+        height: 1572
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 

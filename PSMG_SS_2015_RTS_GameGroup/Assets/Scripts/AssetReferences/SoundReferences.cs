@@ -150,5 +150,18 @@
         public const string SoundLvl1_11 = "Sprachausgabe/Level_1/1_11_Karte_erfolgreich_abgeschlossen";
 
         #endregion
+
+        #region Soundausgabe Level 2
+
+        public const string SoundLvl2_01 = "Sprachausgabe/Level_2/2_01_Level02_gestartet";
+        public const string SoundLvl2_02 = "Sprachausgabe/Level_2/2_02_Dunkelheit";
+        public const string SoundLvl2_03 = "Sprachausgabe/Level_2/2_03_Weiter_Abgrund";
+        public const string SoundLvl2_04 = "Sprachausgabe/Level_2/2_04_Hanteln_gefunden";
+        public const string SoundLvl2_05 = "Sprachausgabe/Level_2/2_05_Brummwespe";
+        public const string SoundLvl2_06 = "Sprachausgabe/Level_2/2_06_Levelende_mit_einem_Kobold_erreicht";
+        public const string SoundLvl2_07 = "Sprachausgabe/Level_2/2_07_Kruemelspur_gefunden";
+
+        #endregion
+
     }
 }

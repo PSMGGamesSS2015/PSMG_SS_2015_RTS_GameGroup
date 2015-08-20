@@ -19,7 +19,6 @@ namespace Assets.Scripts.Managers
         {
             NotStarted,
             LevelStarted
-            // TODO
         }
 
         private GameState gameState;
@@ -29,10 +28,8 @@ namespace Assets.Scripts.Managers
         private UIManager uiManager;
         private InputManager inputManager;
         private SoundManager soundManager;
+        // ReSharper disable once NotAccessedField.Local
         private SpecialEffectsManager specialEffectsManager;
-
-        // TODO Move elsewhere
-        private UserInterface currentUserInterface;
 
         public void Awake()
         {
@@ -74,10 +71,7 @@ namespace Assets.Scripts.Managers
 
         public void Update()
         {
-            if (gameState == GameState.LevelStarted)
-            {
-                impManager.SpawnImps();
-            }
+            if (gameState == GameState.LevelStarted) impManager.SpawnImps();
         }
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
@@ -85,12 +79,13 @@ namespace Assets.Scripts.Managers
             gameState = GameState.LevelStarted;
         }
 
+        // The following parts need to be placed here to avoid a circular base class reference.
+
+        private UserInterface currentUserInterface;
+
         void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface userInterface)
         {
-            if (currentUserInterface != null)
-            {
-                impManager.UnregisterListener(currentUserInterface);
-            }
+            if (currentUserInterface != null) impManager.UnregisterListener(currentUserInterface);
             currentUserInterface = userInterface;
             impManager.RegisterListener(userInterface);
         }

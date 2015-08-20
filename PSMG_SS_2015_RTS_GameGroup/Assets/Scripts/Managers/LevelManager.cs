@@ -159,6 +159,8 @@ namespace Assets.Scripts.Managers
                     break;
                 case SceneReferences.Level02CherryTopMountains:
                     currentLevelEvents = gameObject.AddComponent<Level02Events>();
+                    // TODO
+                    //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
                     break;
                 case SceneReferences.Level05CastleGlazeArrival:
                     currentLevelEvents = gameObject.AddComponent<Level03Events>();

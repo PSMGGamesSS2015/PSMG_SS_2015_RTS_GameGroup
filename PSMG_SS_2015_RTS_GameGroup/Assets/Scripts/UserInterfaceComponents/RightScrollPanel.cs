@@ -17,7 +17,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         {
             if (isMouseOverPanel)
             {
-                InputManager.Instance.MoveCameraRight();
+                InputManager.Instance.MoveCameraRight(0.5f);
             }
         }
 

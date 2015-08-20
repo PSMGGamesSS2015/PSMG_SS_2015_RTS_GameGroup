@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 93fdfdc876ab6a4459f3ed100f04b3b6
+timeCreated: 1440056857
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - SplashPrefab: {fileID: 100000, guid: 47bfa965e40c98948a14a77841013404, type: 2}
+  - Mat: {fileID: 2100000, guid: bf40bc66694cfac489565a26c7f71564, type: 2}
+  - Watermesh: {fileID: 100000, guid: bd7d08261984f0f47981e1d04ab665d1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

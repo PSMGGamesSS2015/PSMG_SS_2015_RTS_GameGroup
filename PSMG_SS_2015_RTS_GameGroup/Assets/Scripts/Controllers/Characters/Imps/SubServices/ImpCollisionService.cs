@@ -58,11 +58,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             switch (collision.gameObject.tag)
             {
                 case TagReferences.EnemyTroll:
-                    impMovementService.Turn();
+                    OnCollisionEnterWithTroll();
                     break;
                 case TagReferences.Imp:
-                    var imp = collision.gameObject.GetComponent<ImpController>();
-                    GetComponent<ImpInteractionLogicService>().OnCollisionEnterWithImp(imp);
+                    GetComponent<ImpInteractionLogicService>()
+                        .OnCollisionEnterWithImp(collision.gameObject.GetComponent<ImpController>());
                     break;
                 case TagReferences.Obstacle:
                     impMovementService.Turn();
@@ -73,6 +73,18 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.Impassable:
                     impMovementService.Turn();
                     break;
+            }
+        }
+
+        private void OnCollisionEnterWithTroll()
+        {
+            if (impTrainingService.Type == ImpType.Spearman)
+            {
+                GetComponent<ImpSpearmanService>().StandAndAttack();
+            }
+            else
+            {
+                impMovementService.Turn();
             }
         }
 
@@ -94,7 +106,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void CheckIfSpearmanLeavesCommand(ImpController imp)
         {
             if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
-
             if (impTrainingService.Type == ImpType.Spearman) return;
 
             impMovementService.Turn();
@@ -134,7 +145,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     OnEnterFieryCake(collider);
                     break;
             }
-
         }
 
         private void OnEnterFieryCake(Collider2D collider)
@@ -161,9 +171,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpStanding);
 
             if ((schwarzenEggerSpotController.Direction == MovingObject.Direction.Right &&
-                !impMovementService.FacingRight) ||
+                 !impMovementService.FacingRight) ||
                 (schwarzenEggerSpotController.Direction == MovingObject.Direction.Left &&
-                impMovementService.FacingRight))
+                 impMovementService.FacingRight))
             {
                 impMovementService.Turn();
             }
@@ -260,7 +270,5 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             //
         }
-
-
     }
 }

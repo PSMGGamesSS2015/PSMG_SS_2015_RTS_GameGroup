@@ -17,42 +17,38 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
         private List<ImpController> impsInAttackRange;
         private bool isSmashing;
 
-        public bool IsAngry { get; private set; }
-
-        private Counter hitDelayCounter;
-        private Counter angryCounter;
-        private bool isLeaving;
+        public Counter HitDelayCounter;
+        public Counter AngryCounter;
 
         public void Awake()
         {
             triggerCollider2D = GetComponentInChildren<TriggerCollider2D>();
-            
             impsInAttackRange = new List<ImpController>();
         }
 
         public void Start()
         {
             triggerCollider2D.RegisterListener(this);
-            IsAngry = false;
-            isLeaving = false;
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != triggerCollider2D.GetInstanceID()) return; // check if the triggered collider is attack range
+            if (self.GetInstanceID() != triggerCollider2D.GetInstanceID())
+                return; // check if the triggered collider is attack range
             if (collider.gameObject.tag != TagReferences.Imp) return; // check if an imp enters the troll's attack range
             if (isSmashing) return; // check if the troll is striking with his weapon at this very moment
 
             impsInAttackRange.Add(collider.gameObject.GetComponent<ImpController>());
 
-            if (IsAngry) // if the troll is angry he attacks as soon as an imp enters his field of sight
+            if (GetComponent<TrollMoodService>().IsAngry)
+                // if the troll is angry he attacks as soon as an imp enters his field of sight
             {
                 StrikeWithMaul();
             }
             else
             {
-                if (hitDelayCounter != null) return;
-                hitDelayCounter = Counter.SetCounter(gameObject, 2.0f, StrikeWithMaul, true);
+                if (HitDelayCounter != null) return;
+                HitDelayCounter = Counter.SetCounter(gameObject, 2.0f, StrikeWithMaul, true);
             }
         }
 
@@ -62,14 +58,14 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
             if (collider.gameObject.tag != TagReferences.Imp) return;
 
             if (!impsInAttackRange.Contains(collider.gameObject.GetComponent<ImpController>())) return;
-            
+
             impsInAttackRange.Remove(collider.gameObject.GetComponent<ImpController>());
-            
+
             if (impsInAttackRange.Count != 0) return;
-            
-            if (hitDelayCounter != null) // stop the counter when no more imps are in a trolls attack range
+
+            if (HitDelayCounter != null) // stop the counter when no more imps are in a trolls attack range
             {
-                hitDelayCounter.Stop();
+                HitDelayCounter.Stop();
             }
         }
 
@@ -78,16 +74,20 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
             // not needed here
         }
 
-        private void StrikeWithMaul()
+        public void StrikeWithMaul()
         {
             StartCoroutine(SmashingRoutine());
         }
 
         private void SmashImpsBetweenCowardAndTroll(ImpController coward)
         {
-            var distanceBetweenCowardAndTroll = Vector2.Distance(gameObject.transform.position, coward.gameObject.transform.position);
+            var distanceBetweenCowardAndTroll = Vector2.Distance(gameObject.transform.position,
+                coward.gameObject.transform.position);
 
-            var impsToBeHit = (from imp in impsInAttackRange let currentDistance = Vector2.Distance(gameObject.transform.position, imp.gameObject.transform.position) where currentDistance < distanceBetweenCowardAndTroll select imp).ToList();
+            var impsToBeHit = (from imp in impsInAttackRange
+                let currentDistance = Vector2.Distance(gameObject.transform.position, imp.gameObject.transform.position)
+                where currentDistance < distanceBetweenCowardAndTroll
+                select imp).ToList();
 
             foreach (var imp in impsToBeHit)
             {
@@ -97,10 +97,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
             if (impsInAttackRange.Count != 0) return;
 
-            if (hitDelayCounter != null) // stop hitting if no more imps are in attack range
-            {
-                hitDelayCounter.Stop();
-            }
+            if (HitDelayCounter != null) HitDelayCounter.Stop();
         }
 
         private ImpController SearchForCoward()
@@ -110,17 +107,9 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         private void SmashAllImpsInRange()
         {
-            for (var i = impsInAttackRange.Count - 1; i >= 0; i--)
-            {
-                impsInAttackRange[i].LeaveGame();
-            }
-
+            impsInAttackRange.ToList().ForEach(i => i.LeaveGame());
             impsInAttackRange.Clear();
-
-            if (hitDelayCounter != null)
-            {
-                hitDelayCounter.Stop();
-            }
+            if (HitDelayCounter != null) HitDelayCounter.Stop();
         }
 
         public IEnumerator SmashingRoutine()
@@ -130,9 +119,8 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
             yield return new WaitForSeconds(1f);
 
-            if (!isLeaving)
+            if (!GetComponent<TrollController>().IsLeaving)
             {
-                
                 var coward = SearchForCoward(); // check if there is a coward within striking distance
 
                 isSmashing = true;
@@ -145,63 +133,26 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
                 {
                     SmashAllImpsInRange();
                 }
-                if (!isLeaving)
+
+                if (!GetComponent<TrollController>().IsLeaving)
                 {
                     GetComponent<AnimationHelper>().Play(AnimationReferences.TrollStanding);
                 }
-
             }
             isSmashing = false;
         }
 
-        public void ReceiveHit()
+        public void StrikeAtOnce()
         {
-            if (!IsAngry)
-            {
-                IsAngry = true;
-                hitDelayCounter.Stop();
-                StrikeWithMaul();
-                angryCounter = Counter.SetCounter(gameObject, 10f, CalmDown, false);
-            }
-            else
-            {
-                isLeaving = true;
-                StopCoroutine(GetComponent<TrollAttackService>().SmashingRoutine());
-                GetComponent<AnimationHelper>().Play(AnimationReferences.TrollStanding);
-                StartCoroutine(LeavingRoutine());
-            }
-            
+            HitDelayCounter.Stop();
+            StrikeWithMaul();
+            AngryCounter = Counter.SetCounter(gameObject, 10f, GetComponent<TrollMoodService>().CalmDown, false);
         }
 
-        private void CalmDown()
+        public void StopCounters()
         {
-            IsAngry = false;
+            if (HitDelayCounter != null) HitDelayCounter.Stop();
+            if (AngryCounter != null) AngryCounter.Stop();
         }
-
-        private IEnumerator LeavingRoutine()
-        {
-            if (hitDelayCounter != null)
-            {
-                hitDelayCounter.Stop();
-            }
-            if (angryCounter != null)
-            {
-                angryCounter.Stop();
-            }
-
-            GetComponent<AnimationHelper>().Play(AnimationReferences.TrollDead);
-            GetComponent<AudioHelper>().Play(SoundReferences.TrollDeath);
-
-            yield return new WaitForSeconds(2.15f);
-
-            LeaveGame();
-        }
-
-        public void LeaveGame()
-        {
-            GetComponent<TrollController>().Listener.OnEnemyHurt(GetComponent<TrollController>());
-            Destroy(gameObject);
-        }
-
     }
 }

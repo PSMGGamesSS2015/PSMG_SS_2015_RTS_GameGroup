@@ -17,12 +17,12 @@
         #region Sounds
 
         public const string Bodenschalter = "Sounds/FX_bodenschalter";
-        public const string BombExplosion = "Sounds/FX_bombe explodiert";
-        public const string BushBurn = "Sounds/FX_busch abbrennen";
+        public const string BombExplosion = "Sounds/FX_bombe_explodiert";
+        public const string BushBurn = "Sounds/FX_busch_abbrennen";
         public const string BushRustle1 = "Sounds/FX_buschrascheln1";
         public const string BushRustle2 = "Sounds/FX_buschrascheln2";
-        public const string TorchLight1 = "Sounds/FX_fackel entzuenden1";
-        public const string TorchLight2 = "Sounds/FX_fackel entzuenden2";
+        public const string TorchLight1 = "Sounds/FX_fackel_entzuenden1";
+        public const string TorchLight2 = "Sounds/FX_fackel_entzuenden2";
         public const string ShieldWood1 = "Sounds/FX_holzschild1";
         public const string ShieldWood2 = "Sounds/FX_holzschild2";
         public const string ShieldMetal1 = "Sounds/FX_metallschild1";
@@ -32,13 +32,15 @@
         public const string Puddle2 = "Sounds/FX_pfuetze2";
         public const string Puddle3 = "Sounds/FX_pfuetze3";
         public const string ShipCanon = "Sounds/FX_schiffskanone";
-        public const string DoorOpen = "Sounds/FX_tuer oeffnen";
+        public const string DoorOpen = "Sounds/FX_tuer_oeffnen";
         public const string WallTrigger = "Sounds/FX_wandschalter";
         public const string WaterDrops1 = "Sounds/Tropfen1";
         public const string WaterDrops2 = "Sounds/Tropfen2";
         public const string WaterDrops3 = "Sounds/Tropfen3";
         public const string WaterDrops4 = "Sounds/Tropfen4";
         public const string WaterDrops5 = "Sounds/Tropfen5";
+        public const string TorchFireV1 = "Sounds/feuerrascheln_carolin";
+        public const string TorchFireV2 = "Sounds/feuerrascheln_v2";
 
         #endregion
 
@@ -136,16 +138,16 @@
         #region Soundausgabe Level 1
 
         public const string SoundLvl101 = "Sprachausgabe/Level_1/1_01_Level_01_gestartet";
-        public const string SoundLvl102 = "Sprachausgabe/Level 1/1.02_Kobold auswählen";
-        public const string SoundLvl103 = "Sprachausgabe/Level 1/1.03_Beruf zuweisen";
-        public const string SoundLvl104 = "Sprachausgabe/Level 1/1.04_Feigling ausgebildet";
-        public const string SoundLvl105 = "Sprachausgabe/Level 1/1.05_Beide Hängebrücken überquert";
-        public const string SoundLvl106 = "Sprachausgabe/Level 1/1.06_Leitern benötigt";
-        public const string SoundLvl107 = "Sprachausgabe/Level 1/1.07_Leitern gefunden";
-        public const string SoundLvl108 = "Sprachausgabe/Level 1/1.08_Felsbrocken erreicht";
-        public const string SoundLvl109 = "Sprachausgabe/Level 1/1.09_Waffen gefunden";
-        public const string SoundLvl110 = "Sprachausgabe/Level 1/1.10_Troll gesichtet";
-        public const string SoundLvl111 = "Sprachausgabe/Level 1/1.11_Karte erfolgreich abgeschlossen";
+        public const string SoundLvl102 = "Sprachausgabe/Level_1/1_02_Kobold_auswaehlen";
+        public const string SoundLvl103 = "Sprachausgabe/Level_1/1_03_Beruf_zuweisen";
+        public const string SoundLvl104 = "Sprachausgabe/Level_1/1_04_Feigling_ausgebildet";
+        public const string SoundLvl105 = "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
+        public const string SoundLvl106 = "Sprachausgabe/Level_1/1_06_Leitern_benoetigt";
+        public const string SoundLvl107 = "Sprachausgabe/Level_1/1_07_Leitern_gefunden";
+        public const string SoundLvl108 = "Sprachausgabe/Level_1/1_08_Felsbrocken_erreicht";
+        public const string SoundLvl109 = "Sprachausgabe/Level_1/1_09_Waffen_gefunden";
+        public const string SoundLvl110 = "Sprachausgabe/Level_1/1_10_Troll_gesichtet";
+        public const string SoundLvl111 = "Sprachausgabe/Level_1/1_11_Karte_erfolgreich_abgeschlossen";
 
         #endregion
     }

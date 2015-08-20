@@ -9,6 +9,7 @@ namespace Assets.Scripts.Controllers.Objects
     {
         private List<ParticleSystem> particleSystems;
         public string SortLayerName;
+        public int SortLayerPosition;
 
         public void Awake()
         {
@@ -19,6 +20,14 @@ namespace Assets.Scripts.Controllers.Objects
         {
             if (SortLayerName == "") SortLayerName = SortingLayerReferences.Default;
             particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = SortLayerName);
+
+            if (SortLayerPosition == -1) return;
+            particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingOrder = SortLayerPosition);
+        }
+
+        public void Light()
+        {
+            particleSystems.ForEach(ps => ps.Play());
         }
 
         public void Extinguish()

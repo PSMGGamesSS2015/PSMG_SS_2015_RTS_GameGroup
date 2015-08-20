@@ -118,18 +118,18 @@
 
         #region Knight
 
-        public const string KnightAttack1 = "Knight_attack1";
-        public const string KnightAttack2 = "Knight_attack2";
-        public const string KnightAttack3 = "Knight_attack3";
-        public const string KnightDeath = "Knight_death";
-        public const string KnightEnGarde = "Knight_en_garde";
-        public const string KnightHA = "Knight_ha";
-        public const string KnightHallo = "Knight_halloo";
-        public const string KnightHohoho = "Knight_hohoho";
-        public const string KnightHohoo = "Knight_hohoo";
-        public const string KnightOuioui = "Knight_ouiouioui";
-        public const string KnightUiui = "Knight_uiuiui";
-        public const string KnightWennIchDarf = "Knight_wenn_ich_bitten_darf";
+        public const string KnightAttack1 = "Knight/Knight_attack1";
+        public const string KnightAttack2 = "Knight/Knight_attack2";
+        public const string KnightAttack3 = "Knight/Knight_attack3";
+        public const string KnightDeath = "Knight/Knight_death";
+        public const string KnightEnGarde = "Knight/Knight_en_garde";
+        public const string KnightHA = "Knight/Knight_ha";
+        public const string KnightHallo = "Knight/Knight_halloo";
+        public const string KnightHohoho = "Knight/Knight_hohoho";
+        public const string KnightHohoo = "Knight/Knight_hohoo";
+        public const string KnightOuioui = "Knight/Knight_ouiouioui";
+        public const string KnightUiui = "Knight/Knight_uiuiui";
+        public const string KnightWennIchDarf = "Knight/Knight_wenn_ich_bitten_darf";
 
         #endregion
 

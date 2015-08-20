@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assets.Scripts.Managers;
+using Assets.Scripts.AssetReferences;
 
 namespace Assets.Scripts.LevelScripts
 {
@@ -29,7 +30,7 @@ namespace Assets.Scripts.LevelScripts
              */
             // narrator.Play(SoundReferences.FÜGEHIERDEINENNAMENEIN);
 
-            //narrator.Play(SoundReferences.SoundLvl101); SoundReferences nicht gefunden
+            narrator.Play(SoundReferences.SoundLvl101);
 
 
             shieldCarrierBlockingMessage = events.First(e => e.Nr == 2);

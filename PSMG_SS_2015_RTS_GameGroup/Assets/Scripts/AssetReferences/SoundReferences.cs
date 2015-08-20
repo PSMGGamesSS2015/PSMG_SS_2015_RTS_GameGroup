@@ -112,13 +112,30 @@
         public const string KingAttack2 = "King/King_attack2";
         public const string KingAttack3 = "King/King_attack3";
         public const string KingDeath = "King/King_death";
-        public const string KingSpeech = "King/King_bis zu mir";
+        public const string KingSpeech = "King/King_bis_zu_mir";
+
+        #endregion
+
+        #region Knight
+
+        public const string KnightAttack1 = "Knight_attack1";
+        public const string KnightAttack2 = "Knight_attack2";
+        public const string KnightAttack3 = "Knight_attack3";
+        public const string KnightDeath = "Knight_death";
+        public const string KnightEnGarde = "Knight_en_garde";
+        public const string KnightHA = "Knight_ha";
+        public const string KnightHallo = "Knight_halloo";
+        public const string KnightHohoho = "Knight_hohoho";
+        public const string KnightHohoo = "Knight_hohoo";
+        public const string KnightOuioui = "Knight_ouiouioui";
+        public const string KnightUiui = "Knight_uiuiui";
+        public const string KnightWennIchDarf = "Knight_wenn_ich_bitten_darf";
 
         #endregion
 
         #region Soundausgabe Level 1
 
-        public const string SoundLvl101 = "Sprachausgabe/Level 1/1.01_Level 01 gestartet";
+        public const string SoundLvl101 = "Sprachausgabe/Level_1/1_01_Level_01_gestartet";
         public const string SoundLvl102 = "Sprachausgabe/Level 1/1.02_Kobold auswählen";
         public const string SoundLvl103 = "Sprachausgabe/Level 1/1.03_Beruf zuweisen";
         public const string SoundLvl104 = "Sprachausgabe/Level 1/1.04_Feigling ausgebildet";

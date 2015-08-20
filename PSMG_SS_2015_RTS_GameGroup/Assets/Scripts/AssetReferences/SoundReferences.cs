@@ -186,5 +186,11 @@
 
         #endregion
 
+        #region Soundausgabe Level 7
+
+        public const string SoundLvl7_01 = "Sprachausgabe/Level_7/7_01_Imps_kommen_im_Dorf_an";
+
+        #endregion
+
     }
 }

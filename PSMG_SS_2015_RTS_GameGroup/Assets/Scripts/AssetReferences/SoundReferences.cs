@@ -163,6 +163,14 @@
 
         #endregion
 
+        #region Soundausgabe Level 3
+
+        #endregion
+
+        #region Soundausgabe Level 4
+
+        #endregion
+
         #region Soundausgabe Level 5
 
         public const string SoundLvl5_01 = "Sprachausgabe/Level_5/5_01_Spieler_betritt_die_Karte";

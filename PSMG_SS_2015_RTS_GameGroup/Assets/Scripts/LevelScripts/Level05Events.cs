@@ -13,8 +13,6 @@ namespace Assets.Scripts.LevelScripts
 
         protected override void RegisterEvents()
         {
-            var narrator = SoundManager.Instance.Narrator;
-
             levelStartedMessage = events.First(e => e.Nr == 1);
             levelStartedMessage.Message =
                 "Mhh, hier geht’s nicht weiter, mein Herr. Wir müssen einen anderen Weg finden!";

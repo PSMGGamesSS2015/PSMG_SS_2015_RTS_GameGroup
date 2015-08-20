@@ -163,10 +163,10 @@ namespace Assets.Scripts.Managers
                     //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
                     break;
                 case SceneReferences.Level05CastleGlazeArrival:
-                    currentLevelEvents = gameObject.AddComponent<Level03Events>();
+                    currentLevelEvents = gameObject.AddComponent<Level05Events>();
                     break;
                 case SceneReferences.Level06CastleGlazeDungenon:
-                    currentLevelEvents = gameObject.AddComponent<Level04Events>();
+                    currentLevelEvents = gameObject.AddComponent<Level06Events>();
                     break;
             }
         }

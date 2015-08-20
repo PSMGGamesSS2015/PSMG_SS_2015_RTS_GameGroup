@@ -137,17 +137,17 @@
 
         #region Soundausgabe Level 1
 
-        public const string SoundLvl101 = "Sprachausgabe/Level_1/1_01_Level_01_gestartet";
-        public const string SoundLvl102 = "Sprachausgabe/Level_1/1_02_Kobold_auswaehlen";
-        public const string SoundLvl103 = "Sprachausgabe/Level_1/1_03_Beruf_zuweisen";
-        public const string SoundLvl104 = "Sprachausgabe/Level_1/1_04_Feigling_ausgebildet";
-        public const string SoundLvl105 = "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
-        public const string SoundLvl106 = "Sprachausgabe/Level_1/1_06_Leitern_benoetigt";
-        public const string SoundLvl107 = "Sprachausgabe/Level_1/1_07_Leitern_gefunden";
-        public const string SoundLvl108 = "Sprachausgabe/Level_1/1_08_Felsbrocken_erreicht";
-        public const string SoundLvl109 = "Sprachausgabe/Level_1/1_09_Waffen_gefunden";
-        public const string SoundLvl110 = "Sprachausgabe/Level_1/1_10_Troll_gesichtet";
-        public const string SoundLvl111 = "Sprachausgabe/Level_1/1_11_Karte_erfolgreich_abgeschlossen";
+        public const string SoundLvl1_01 = "Sprachausgabe/Level_1/1_01_Level_01_gestartet";
+        public const string SoundLvl1_02 = "Sprachausgabe/Level_1/1_02_Kobold_auswaehlen";
+        public const string SoundLvl1_03 = "Sprachausgabe/Level_1/1_03_Beruf_zuweisen";
+        public const string SoundLvl1_04 = "Sprachausgabe/Level_1/1_04_Feigling_ausgebildet";
+        public const string SoundLvl1_05 = "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
+        public const string SoundLvl1_06 = "Sprachausgabe/Level_1/1_06_Leitern_benoetigt";
+        public const string SoundLvl1_07 = "Sprachausgabe/Level_1/1_07_Leitern_gefunden";
+        public const string SoundLvl1_08 = "Sprachausgabe/Level_1/1_08_Felsbrocken_erreicht";
+        public const string SoundLvl1_09 = "Sprachausgabe/Level_1/1_09_Waffen_gefunden";
+        public const string SoundLvl1_10 = "Sprachausgabe/Level_1/1_10_Troll_gesichtet";
+        public const string SoundLvl1_11 = "Sprachausgabe/Level_1/1_11_Karte_erfolgreich_abgeschlossen";
 
         #endregion
     }

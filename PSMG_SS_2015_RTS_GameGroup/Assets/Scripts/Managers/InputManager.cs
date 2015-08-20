@@ -190,9 +190,6 @@ namespace Assets.Scripts.Managers
             }
         }
 
-<<<<<<< HEAD
-        public void PauseGame()
-=======
         public void MoveCameraLeft(float distance)
         {
             var pos = mainCamera.transform.position;
@@ -203,8 +200,8 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void PauseGame()
->>>>>>> origin/master
+
+        public void PauseGame()
         {
             if (isPaused)
             {

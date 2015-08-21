@@ -7,24 +7,26 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 {
-    public class DragonFlappingService : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
+    public class DragonSteamBreathingService : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
 
-        private TriggerCollider2D flappingRange;
-        private List<ImpController> impsInFlappingRange;
+        private TriggerCollider2D steamBreathingRange;
+        private List<ImpController> impsInBreathingRange;
 
         public void Awake()
         {
-            flappingRange =
+            steamBreathingRange =
                 GetComponentsInChildren<TriggerCollider2D>()
-                    .First(tc => tc.gameObject.tag == TagReferences.DragonFlappingRange);
+                    .First(tc => tc.gameObject.tag == TagReferences.DragonSteamBreathingRange);
+            
+            steamBreathingRange.RegisterListener(this);
 
-            impsInFlappingRange = new List<ImpController>();
+            impsInBreathingRange = new List<ImpController>();
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != flappingRange.GetInstanceID()) return;
+            if (self.GetInstanceID() != steamBreathingRange.GetInstanceID()) return;
 
             switch (collider.gameObject.tag)
             {
@@ -36,32 +38,32 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
         private void OnTriggerEnterImp(ImpController imp)
         {
-            impsInFlappingRange.Add(imp);
-            Flap();
+            impsInBreathingRange.Add(imp);
+            BreathSteam();
         }
 
-        private void Flap()
+        private void BreathSteam()
         {
-            if (IsFlapping) return;
-            IsFlapping = true;
-            StartCoroutine(FlappingRoutine());
+            if (IsBreathingSteam) return;
+            IsBreathingSteam = true;
+            StartCoroutine(SteamBreathingRoutine());
         }
 
-        public bool IsFlapping { get; private set; }
+        public bool IsBreathingSteam { get; private set; }
 
-        private IEnumerator FlappingRoutine()
+        private IEnumerator SteamBreathingRoutine()
         {
             // TODO
             
 
             yield return new WaitForSeconds(0f);
 
-            IsFlapping = false;
+            IsBreathingSteam = false;
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != flappingRange.GetInstanceID()) return;
+            if (self.GetInstanceID() != steamBreathingRange.GetInstanceID()) return;
 
             switch (collider.gameObject.tag)
             {
@@ -73,14 +75,14 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != flappingRange.GetInstanceID()) return;
+            if (self.GetInstanceID() != steamBreathingRange.GetInstanceID()) return;
 
             // TODO
         }
 
         private void OnTriggerExitImp(ImpController imp)
         {
-            impsInFlappingRange.Remove(imp);
+            impsInBreathingRange.Remove(imp);
         }
     }
 

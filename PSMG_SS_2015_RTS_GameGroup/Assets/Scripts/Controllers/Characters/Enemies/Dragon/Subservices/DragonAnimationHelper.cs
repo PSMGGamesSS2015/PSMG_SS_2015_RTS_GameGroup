@@ -9,5 +9,20 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         {
             Play(AnimationReferences.DragonFlying);
         }
+
+        public void PlayFlyingAnimation()
+        {
+            Play(AnimationReferences.DragonFlying);
+        }
+
+        public void PlayBreathingAnimation()
+        {
+            Play(AnimationReferences.DragonBreathing);
+        }
+
+        public void PlayDefeatedAnimation()
+        {
+            Play(AnimationReferences.DragonDead);
+        }
     }
 }

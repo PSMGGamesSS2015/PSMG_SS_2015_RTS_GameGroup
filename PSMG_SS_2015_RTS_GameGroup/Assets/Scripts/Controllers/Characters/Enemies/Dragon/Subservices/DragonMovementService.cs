@@ -1,41 +1,45 @@
 ﻿using Assets.Scripts.Helpers;
-using Assets.Scripts.Utility;
+using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 {
     public class DragonMovementService : MovingObject {
         
-        private bool isMovingUpwards;
-
-        private Counter movementCounter;
-
-        public override void Start () {
-            isMovingUpwards = true;
-            movementCounter = Counter.SetCounter(this.gameObject, 5f, ChangeDirection, true);
+        public override void Start ()
+        {
+            FacingRight = false;
+            CurrentDirection = Direction.Upwards;
+            HasStartedMoving = true;
+            IsStanding = true;
             MovementSpeed = MovementSpeedWalking;
             Walk();
         }
 
         public override void FixedUpdate()
         {
-            if (isMovingUpwards)
+            switch (CurrentDirection)
             {
-                MoveUpwards(MovementSpeedWalking);
+                case Direction.Upwards:
+                    MoveUpwards(MovementSpeedWalking);
+                    break;
+                case Direction.Downwards:
+                    MoveDownwards(MovementSpeedWalking * 0.5f);
+                    break;
+            }
+        }
+
+        public void ChangeDirection()
+        {
+            
+            if (CurrentDirection == Direction.Upwards)
+            {
+                Debug.Log("Changing direction and moving downwards");
+                CurrentDirection = Direction.Downwards;
             }
             else
             {
-                MoveDownwards(MovementSpeedWalking * 0.5f);
+                CurrentDirection = Direction.Upwards;
             }
-        }
-
-        private void ChangeDirection()
-        {
-            isMovingUpwards = !isMovingUpwards;
-        }
-
-        public void OnDestroy()
-        {
-            movementCounter.Stop();
         }
 
     }

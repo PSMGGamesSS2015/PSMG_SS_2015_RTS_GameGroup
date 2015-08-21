@@ -13,6 +13,8 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             fireBreathingRange =
                 GetComponentsInChildren<TriggerCollider2D>()
                     .First(tc => tc.gameObject.tag == TagReferences.DragonFireBreathingRange);
+
+            fireBreathingRange.RegisterListener(this);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)

@@ -13,10 +13,10 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
         private void InitServices()
         {
             gameObject.AddComponent<DragonMovementService>();
-            gameObject.AddComponent<DragonFlappingService>();
-            gameObject.AddComponent<DragonCollisionSerivce>();
+            gameObject.AddComponent<DragonSteamBreathingService>();
             gameObject.AddComponent<DragonFireBreathingService>();
             gameObject.AddComponent<AudioHelper>();
+            gameObject.AddComponent<DragonCollisionService>();
         }
     }
 }

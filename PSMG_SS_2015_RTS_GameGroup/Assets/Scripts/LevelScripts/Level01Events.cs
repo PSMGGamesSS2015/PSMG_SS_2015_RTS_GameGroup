@@ -18,89 +18,75 @@ namespace Assets.Scripts.LevelScripts
 
 
         protected override void RegisterEvents()
-        {
-            /*
-        *  Servus Jan: In der folgenden auskommentierten Zeile siehst du, wie du die Sounds
-        *  für die Sprechtexte des Erzählers abspielst. 
-        */
-            // narrator.Play(SoundReferences.FÜGEHIERDEINENNAMENEIN);   
-
-
+        { 
             mapStartetMessage = events.First(e => e.Nr == 1);
             mapStartetMessage.Message = "Macht euch auf die Socken! Die Prinzessin wurde entführt.";
             mapStartetMessage.Action = MapStartetAction;    
-
 
             shieldCarrierBlockingMessage = events.First(e => e.Nr == 2);
             shieldCarrierBlockingMessage.Message = "Feiglinge verschanzen sich hinter ihren dicken Holzschilden. Daran kommt man nicht so leicht vorbei";
             shieldCarrierBlockingMessage.Action = ShieldCarrierBlockingAction;
            
-
             shieldCarrierHeavyMessage = events.First(e => e.Nr == 3);
             shieldCarrierHeavyMessage.Message = "Unsere Schilde sind wuchtig und schwer. Ob die Brücke das aushält?";
-            shieldCarrierBlockingMessage.Action = shieldCarrierBlockingAction;
-
+            shieldCarrierHeavyMessage.Action = ShieldCarrierHeavyAction;
 
             laddersNeededMessage = events.First(e => e.Nr == 4);
             laddersNeededMessage.Message = "Legt Leitern über die Abgründe, um auf die andere Seite zu kommen.";
-            laddersNeededMessage.Action = laddersNeededAction;
-            
+            laddersNeededMessage.Action = LaddersNeededAction;
 
             laddersCollectedMessage = events.First(e => e.Nr == 5);
             laddersCollectedMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
             laddersCollectedMessage.Action = LaddersCollectedAction;
 
-
             bombNeededMessage = events.First(e => e.Nr == 6);
             bombNeededMessage.Message = "Der Fels ist brüchig. Mit einer Bombe können wir in wegsprengen.";
-            bombNeededMessage.Action = bombNeededAction;
-
+            bombNeededMessage.Action = BombNeededAction;
 
             weaponsCollectedMessage = events.First(e => e.Nr == 7);
             weaponsCollectedMessage.Message = "Pieks pieks, bumm bumm.";
             weaponsCollectedMessage.Action = WeaponsCollectedAction;
 
-
             trollMetMessage = events.First(e => e.Nr == 8);
             trollMetMessage.Message = "Ein Troll! Vorsichtig, die sind stark und schnell sauer!";
-            trollMetMessage.Action = trollMetAction;
+            trollMetMessage.Action = TrollMetAction;
         }
 
-        private void trollMetAction()
+        private void TrollMetAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_10);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_10);
         }
 
-        private void bombNeededAction()
+        private void BombNeededAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_08);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_08);
         }
 
-        private void laddersNeededAction()
+        private void LaddersNeededAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_06);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_06);
         }
 
-        private void shieldCarrierBlockingAction()
+        public void ShieldCarrierHeavyAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_04);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_04);
         }
 
         private void MapStartetAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_01);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_01);
         }
 
         private void ShieldCarrierBlockingAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_02);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_02);
         }
 
         private void LaddersCollectedAction()
         {
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 2;
             ImpManager.Instance.NotifyMaxProfessions();
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_07);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_07);
         }
 
         private void WeaponsCollectedAction()
@@ -108,7 +94,7 @@ namespace Assets.Scripts.LevelScripts
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[0] += 1;
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[3] += 2;
             ImpManager.Instance.NotifyMaxProfessions();
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl1_09);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_09);
         }
     }
 }

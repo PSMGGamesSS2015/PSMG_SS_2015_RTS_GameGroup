@@ -13,6 +13,5 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             Voice = gameObject.AddComponent<AudioHelper>();
             Sounds = gameObject.AddComponent<AudioHelper>();
         }
-
     }
 }

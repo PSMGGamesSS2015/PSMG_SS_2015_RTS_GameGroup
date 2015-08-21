@@ -38,6 +38,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator ThrowingImpRoutine(ImpController projectile)
         {
+
+            HandleCollisionManagementWithProjectile(projectile);
+
             CurrentProjectile = projectile;
 
             IsThrowing = true;
@@ -58,6 +61,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             CurrentProjectile = null;
             IsThrowing = false;
+        }
+
+        private void HandleCollisionManagementWithProjectile(ImpController projectile)
+        {
+            Physics2D.IgnoreCollision(GetComponent<ImpCollisionService>().CircleCollider2D,
+                projectile.GetComponent<ImpCollisionService>().CircleCollider2D, true);
         }
 
         private static void ResetProjectileToWalkingPosition(ImpController projectile)

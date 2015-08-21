@@ -80,13 +80,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void OnMeetMovingImpAsSchwarzenegger(ImpController imp)
         {
-            if (GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition ||
-                (!GetComponent<ImpSchwarzeneggerService>().IsThrowing))
-            {
-                GetComponent<ImpSchwarzeneggerService>().ThrowImp(imp);
-                Physics2D.IgnoreCollision(impCollisionService.CircleCollider2D,
-                    imp.GetComponent<ImpCollisionService>().CircleCollider2D, true);
-            }
+            if (!GetComponent<ImpSchwarzeneggerService>().IsAtThrowingPosition ||
+                (GetComponent<ImpSchwarzeneggerService>().IsThrowing)) return;
+
+            GetComponent<ImpSchwarzeneggerService>().ThrowImp(imp);
         }
 
         private void OnSpearmanMeetsCoward(ImpController imp)

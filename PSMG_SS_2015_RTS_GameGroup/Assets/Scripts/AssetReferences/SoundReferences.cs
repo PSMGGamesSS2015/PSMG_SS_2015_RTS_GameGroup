@@ -13,7 +13,8 @@ namespace Assets.Scripts.AssetReferences
         public const string ForestTheme = "Theme/ForestTheme";
         public const string CaveTheme = "Theme/CaveTheme";
         public const string MountainTheme = "Theme/MountainTheme";
-        public const string StarWarsTheme = "Theme/StarWarsTheme";                                   
+        public const string StarWarsTheme = "Theme/StarWarsTheme";
+        public const string KoboldingenTheme = "Theme/KoboldingenTheme";    
 
         #endregion
 

@@ -11,25 +11,19 @@ public class DisablePauseMenuPanel : MonoBehaviour {
 	void Start () {            
         pauseMenuPanel = gameObject;
         gameManager = GameObject.Find("GameManager(Clone)");
+        Debug.Log("Disable Pause Menu Panel: Start (Pause)");
+
         gameManager.GetComponent<InputManager>().PauseGame();
-
-
 	}
 	
-	// Update is called once per frame
-	void Update () {
-        /*
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ToggleActive();
-        }
-         * */
-	
-	}
 
     public void ToggleActive()
         {
+            Debug.Log("Disable Pause Menu Panel: Toggle Active (Pause)");
+
             gameManager.GetComponent<InputManager>().PauseGame();
+            
+            Debug.Log("ToggleActive wird ausgeführt activeSelf:");
 
             Debug.Log(pauseMenuPanel.activeSelf);
             if (pauseMenuPanel.activeSelf)
@@ -39,7 +33,6 @@ public class DisablePauseMenuPanel : MonoBehaviour {
             else
             {
                 pauseMenuPanel.SetActive(true);
-
             }
                 
         }

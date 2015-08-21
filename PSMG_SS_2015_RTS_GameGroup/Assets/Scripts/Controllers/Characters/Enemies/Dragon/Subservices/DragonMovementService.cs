@@ -11,7 +11,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
         public override void Start () {
             isMovingUpwards = true;
-            movementCounter = Counter.SetCounter(this.gameObject, 4f, ChangeDirection, true);
+            movementCounter = Counter.SetCounter(this.gameObject, 5f, ChangeDirection, true);
             MovementSpeed = MovementSpeedWalking;
             Walk();
         }
@@ -20,11 +20,11 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         {
             if (isMovingUpwards)
             {
-                MoveUpwards();
+                MoveUpwards(MovementSpeedWalking);
             }
             else
             {
-                MoveDownwards();
+                MoveDownwards(MovementSpeedWalking * 0.5f);
             }
         }
 

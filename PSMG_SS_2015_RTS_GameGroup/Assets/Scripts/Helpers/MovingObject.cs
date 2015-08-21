@@ -44,9 +44,19 @@ namespace Assets.Scripts.Helpers
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, MovementSpeed);
         }
 
+        public void MoveUpwards(float movementSpeed)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, movementSpeed);
+        }
+
         public void MoveDownwards()
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -MovementSpeed);
+        }
+
+        public void MoveDownwards(float movementSpeed)
+        {
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -movementSpeed);
         }
 
         public void StartMoving(bool facingRight, Direction direction) 

@@ -63,5 +63,7 @@
         public const string YellowFlameTongue = "YellowFlameTongue";
 
         public const string HighlightableObject = "HighlightableObject";
+        public const string DragonFireBreathingRange = "DragonFireBreathingRange";
+        public const string DragonFlappingRange = "DragonFlappingRange";
     }
 }

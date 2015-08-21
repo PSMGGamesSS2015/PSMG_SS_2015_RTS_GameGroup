@@ -14,7 +14,7 @@ namespace Assets.Scripts.AssetReferences
         public const string CaveTheme = "Theme/CaveTheme";
         public const string MountainTheme = "Theme/MountainTheme";
         public const string StarWarsTheme = "Theme/StarWarsTheme";
-        public const string KoboldingenTheme = "Theme/KoboldingenTheme";    
+        public const string KoboldingenTheme = "Theme/KoboldingenTheme";
 
         #endregion
 
@@ -57,22 +57,30 @@ namespace Assets.Scripts.AssetReferences
         public const string ImpWork = "Imp/Goblins_arbeit";
         public const string ImpDamage = "Imp/Goblins_aua";
         public const string ImpDeath = "Imp/Goblins_death";
-        public const string ImpComment1 = "Imp/Goblins_hach";
-        public const string ImpComment2 = "Imp/Goblins_hihihi";
-        public const string ImpComment3 = "Imp/Goblins_hmm";
-        public const string ImpComment4 = "Imp/Goblins_hmmhehe";
-        public const string ImpSelect1 = "Imp/Goblin_ich";
-        public const string ImpSelect2 = "Imp/Goblin_ ihr_wuenscht";
-        public const string ImpSelect3 = "Imp/Goblin_ja_2";
-        public const string ImpSelect4 = "Imp/Goblin_ja_meister";
-        public const string ImpSelect5 = "Imp/Goblin_ja";
-        public const string ImpSelect6 = "Imp/Goblin_jiaa";
-        public const string ImpSelect7 = "Imp/Goblins_mmmn_2";
-        public const string ImpSelect8 = "Imp/Goblins_mmmn";
-        public const string ImpSelect9 = "Imp/Goblins_was_begehrt_ihr";
-        public const string ImpSelect10 = "Imp/Goblins_was_gibts 2";
-        public const string ImpSelect11 = "Imp/Goblins_was_gibts";
-        public const string ImpSelect12 = "Imp/Goblins_was_liegt an";
+
+        public static readonly string[] ImpCommantVariants =
+        {
+            "Imp/Goblins_hach",
+            "Imp/Goblins_hihihi",
+            "Imp/Goblins_hmm",
+            "Imp/Goblins_hmmhehe"
+        };
+
+        public static readonly string[] ImpSelectedVariants =
+        {
+            "Imp/Goblin_ich",
+            "Imp/Goblin_ ihr_wuenscht",
+            "Imp/Goblin_ja_2",
+            "Imp/Goblin_ja_meister",
+            "Imp/Goblin_ja",
+            "Imp/Goblin_jiaa",
+            "Imp/Goblins_mmmn_2",
+            "Imp/Goblins_mmmn",
+            "Imp/Goblins_was_begehrt_ihr",
+            "Imp/Goblins_was_gibts 2",
+            "Imp/Goblins_was_gibts",
+            "Imp/Goblins_was_liegt an"
+        };
 
         #endregion
 
@@ -203,6 +211,5 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl7_01 = "Sprachausgabe/Level_7/7_01_Imps_kommen_im_Dorf_an";
 
         #endregion
-
     }
 }

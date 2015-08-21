@@ -2,7 +2,6 @@
 using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ExtensionMethods;
-using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps
@@ -15,7 +14,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps
     public class ImpController : MonoBehaviour
     {
 
-        // TODO Outsource
         public GameObject HorizontalLadderPrefab;
         public GameObject VerticalLadderMediumPrefab;
         public GameObject VerticalLadderLongPrefab;
@@ -27,7 +25,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         private void InitServices()
         {
-            gameObject.AddComponent<AudioHelper>();
+            gameObject.AddComponent<ImpAudioService>();
             gameObject.AddComponent<ImpUIService>();
             gameObject.AddComponent<ImpMovementService>();
             gameObject.AddComponent<ImpTrainingService>();

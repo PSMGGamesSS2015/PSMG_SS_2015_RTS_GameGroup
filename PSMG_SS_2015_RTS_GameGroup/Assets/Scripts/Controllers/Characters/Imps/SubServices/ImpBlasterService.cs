@@ -2,7 +2,6 @@
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
-using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Utility;
 using UnityEngine;
@@ -16,7 +15,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private ImpTrainingService impTrainingService;
         private ImpMovementService impMovementService;
         private ImpAnimationHelper impAnimationService;
-        private AudioHelper impAudioService;
         private Vector3 screenPos;
         private Vector3 screenPosOfTopMargin;
         public int yOffset = 20;
@@ -31,7 +29,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impTrainingService = GetComponent<ImpTrainingService>();
             impMovementService = GetComponent<ImpMovementService>();
             impAnimationService = GetComponent<ImpAnimationHelper>();
-            impAudioService = GetComponent<AudioHelper>();
         }
 
         public void Start()
@@ -74,7 +71,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             impAnimationService.DisplayExplosion();
             impAnimationService.Play(AnimationReferences.ImpDetonatingBomb);
-            impAudioService.Play(SoundReferences.BombExplosion);
+            GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.BombExplosion);
 
             yield return new WaitForSeconds(1f);
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
-using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
@@ -14,7 +13,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private ImpTrainingService impTrainingService;
         private ImpMovementService impMovementService;
         private ImpAnimationHelper impAnimationService;
-        private AudioHelper impAudioService;
         public bool IsPlacingLadder { get; private set; }
 
 
@@ -29,7 +27,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impTrainingService = GetComponent<ImpTrainingService>();
             impMovementService = GetComponent<ImpMovementService>();
             impAnimationService = GetComponent<ImpAnimationHelper>();
-            impAudioService = GetComponent<AudioHelper>();
         }
 
         private void InitAttributes()
@@ -53,7 +50,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             var ladderLength = verticalLadderSpotController.LengthOfLadder;
 
             impAnimationService.Play(AnimationReferences.ImpPlacingLadderVertically);
-            impAudioService.Play(SoundReferences.ImpSetupLadder);
+            GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ImpSetupLadder);
 
             GameObject prefab = null;
 
@@ -117,7 +114,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsPlacingLadder = true;
 
             impAnimationService.Play(AnimationReferences.ImpPlacingLadderHorizontally);
-            impAudioService.Play(SoundReferences.ImpSetupLadder);
+            GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ImpSetupLadder);
 
             yield return new WaitForSeconds(5.5f);
 

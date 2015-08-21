@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
-using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private ImpMovementService movementService;
         private ImpAnimationHelper impAnimationHelper;
         private ImpProfessionService currentProfessionService;
-        private AudioHelper audioHelper;
 
         public bool IsTrainable { get; set; }
         public ImpType Type { get; set; }
@@ -22,11 +20,10 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impController = GetComponent<ImpController>();
             movementService = GetComponent<ImpMovementService>();
             impAnimationHelper = GetComponent<ImpAnimationHelper>();
-            audioHelper = GetComponent<AudioHelper>();
 
             Type = ImpType.Unemployed;
             IsTrainable = true;
-        }  
+        }
 
         public void Train(ImpType type)
         {
@@ -48,7 +45,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 movementService.Stand();
             }
             impAnimationHelper.PlayImpTakingObjectAnimation();
-            audioHelper.Play(SoundReferences.ImpSelect4);
 
             yield return new WaitForSeconds(1.0f);
 
@@ -125,7 +121,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void TrainCoward()
         {
             impAnimationHelper.PlayTrainingAnimation();
-            audioHelper.Play(SoundReferences.ShieldWood1);
+            GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ShieldWood1);
             currentProfessionService = gameObject.AddComponent<ImpCowardService>();
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
             GetComponent<Rigidbody2D>().freezeRotation = true;

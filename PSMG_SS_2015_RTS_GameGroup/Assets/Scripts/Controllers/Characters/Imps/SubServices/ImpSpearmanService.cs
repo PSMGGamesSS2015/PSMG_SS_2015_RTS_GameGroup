@@ -5,7 +5,6 @@ using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
-using Assets.Scripts.Helpers;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -19,7 +18,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public ImpController CommandPartner;
         private List<EnemyController> enemiesInAttackRange;
         private ImpAnimationHelper impAnimationService;
-        private AudioHelper impAudioService;
         private ImpMovementService impMovementService;
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
@@ -97,7 +95,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private void InitComponents()
         {
             impAnimationService = GetComponent<ImpAnimationHelper>();
-            impAudioService = GetComponent<AudioHelper>();
             impMovementService = GetComponent<ImpMovementService>();
         }
 
@@ -109,7 +106,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private IEnumerator PiercingRoutine()
         {
             impAnimationService.Play(AnimationReferences.ImpAttackingWithSpear);
-            impAudioService.Play(SoundReferences.ImpAttack1);
+            GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ImpAttack1);
 
             yield return new WaitForSeconds(0.75f);
 
@@ -203,7 +200,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private IEnumerator PiercingOnceRoutine()
         {
             impAnimationService.Play(AnimationReferences.ImpAttackingWithSpear);
-            impAudioService.Play(SoundReferences.ImpAttack1);
+            GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ImpAttack1);
 
             yield return new WaitForSeconds(0.75f);
 

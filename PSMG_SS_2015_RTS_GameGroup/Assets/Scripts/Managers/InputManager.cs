@@ -126,7 +126,7 @@ namespace Assets.Scripts.Managers
             highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = highlighted);
         }
 
-        private void DecreaseGameSpeed()
+        public void DecreaseGameSpeed()
         {
             if (Time.timeScale >= 0.1f && Time.timeScale <= 2.0f)
             {
@@ -134,7 +134,7 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        private void IncreaseGameSpeed()
+        public void IncreaseGameSpeed()
         {
             if (Time.timeScale >= 0.0f && Time.timeScale <= 1.9f)
             {

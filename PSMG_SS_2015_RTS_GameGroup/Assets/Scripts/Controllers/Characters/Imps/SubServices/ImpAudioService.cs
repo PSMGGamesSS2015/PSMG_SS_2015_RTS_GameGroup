@@ -12,7 +12,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void Awake()
         {
             Voice = gameObject.AddComponent<AudioHelper>();
+            Voice.AudioSource.volume = 0.7f;
             Sounds = gameObject.AddComponent<AudioHelper>();
+            Voice.AudioSource.volume = 0.7f;
         }
 
         public void PlaySelectionSound()

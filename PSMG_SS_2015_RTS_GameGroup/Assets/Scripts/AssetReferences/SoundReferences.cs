@@ -1,5 +1,8 @@
-﻿namespace Assets.Scripts.AssetReferences
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Assets.Scripts.AssetReferences
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class SoundReferences
     {
         #region Theme
@@ -184,7 +187,7 @@
         #region Soundausgabe Level 6
 
         public const string SoundLvl6_01 = "Sprachausgabe/Level_6/6_01_Spieler_betritt_kleines_Backstuebchen";
-        public const string SoundLvl6_02 = "Sprachausgabe/Level_6/6_02_Tuer_Sprengen_fehlgeschlagen_Mehl_in_den_Kessel_geraten";
+        public const string SoundLvl6_02 = "Sprachausgabe/Level_6/6_02_Tuer_Sprengen_fehlgeschlagen";
         public const string SoundLvl6_03 = "Sprachausgabe/Level_6/6_03_Kuchen_fast_fertig";
         public const string SoundLvl6_04 = "Sprachausgabe/Level_6/6_04_Kuchen_fertig";
         public const string SoundLvl6_05 = "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";

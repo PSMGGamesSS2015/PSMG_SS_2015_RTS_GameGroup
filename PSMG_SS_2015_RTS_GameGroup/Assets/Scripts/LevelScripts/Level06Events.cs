@@ -17,85 +17,85 @@ namespace Assets.Scripts.LevelScripts
 
         protected override void RegisterEvents()
         {
-            levelStartedMessage = events.First(e => e.Nr == 1);
+            levelStartedMessage = Events.First(e => e.Nr == 1);
             levelStartedMessage.Message = "Meister, sprengt dieses lästige Tor aus dem Weg.";
-            levelStartedMessage.Action = levelStartedAction;
+            levelStartedMessage.Action = LevelStartedAction;
 
 
-            flourHasFallenIntoBowlMessage = events.First(e => e.Nr == 2);
+            flourHasFallenIntoBowlMessage = Events.First(e => e.Nr == 2);
             flourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Mit Wasser und etwas zum Rühren könnten wir uns einen Kuchen backen.";
-            flourHasFallenIntoBowlMessage.Action = flourHasFallenIntoBowlAction;
+            flourHasFallenIntoBowlMessage.Action = FlourHasFallenIntoBowlAction;
 
 
-            cakeAlmostReadyMessage = events.First(e => e.Nr == 3);
+            cakeAlmostReadyMessage = Events.First(e => e.Nr == 3);
             cakeAlmostReadyMessage.Message = "Das riecht fast so gut wie die Leckereien der Prinzessin, mein Herr. Er muss nur noch kurz backen.";
-            cakeAlmostReadyMessage.Action = cakeAlmostReadyAction;
+            cakeAlmostReadyMessage.Action = CakeAlmostReadyAction;
 
 
-            cakeReadyMessage = events.First(e => e.Nr == 4);
+            cakeReadyMessage = Events.First(e => e.Nr == 4);
             cakeReadyMessage.Message = "Mmmmmhh.";
-            cakeReadyMessage.Action = cakeReadyAction;
+            cakeReadyMessage.Action = CakeReadyAction;
 
 
-            knightEatingCakeMessage = events.First(e => e.Nr == 5);
+            knightEatingCakeMessage = Events.First(e => e.Nr == 5);
             knightEatingCakeMessage.Message = "Kuchen … hmm … nur ein kleines Stück.";
             // TODO knightEatingCakeMessage.Message = "Lasst uns schnell weitergehen, bevor der Ritter aufgegessen hat.";
-            knightEatingCakeMessage.Action = knightEatingCakeAction;
+            knightEatingCakeMessage.Action = KnightEatingCakeAction;
 
 
-            impsAreAtSuspensionBridgeMessage = events.First(e => e.Nr == 6);
+            impsAreAtSuspensionBridgeMessage = Events.First(e => e.Nr == 6);
             impsAreAtSuspensionBridgeMessage.Message = "Wo ist bloß die Prinzessin? Wir konnten sie nirgendwo finden. Dringt tiefer ins Verlies vor. Versucht, diese Brücke zu Fall zu bringen.";
-            impsAreAtSuspensionBridgeMessage.Action = impsAreAtSuspensionBridgeAction;
+            impsAreAtSuspensionBridgeMessage.Action = ImpsAreAtSuspensionBridgeAction;
 
 
-            impsHaveRescuedPrincessMessage = events.First(e => e.Nr == 7);
+            impsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);
             impsHaveRescuedPrincessMessage.Message = "Geschafft, geschafft, geschafft! Nun bringt die Prinzessin sicher aus dem Verlies.";
-            impsHaveRescuedPrincessMessage.Action = impsHaveRescuedPrincessAction;
+            impsHaveRescuedPrincessMessage.Action = ImpsHaveRescuedPrincessAction;
 
 
-            kingJumpsOutOfCakeMessage = events.First(e => e.Nr == 8);
+            kingJumpsOutOfCakeMessage = Events.First(e => e.Nr == 8);
             kingJumpsOutOfCakeMessage.Message = "Ihr wollt meine Dienerin entführen? Niemand klaut mir meine Bäckerin!";
-            kingJumpsOutOfCakeMessage.Action = kingJumpsOutOfCakeAction;
+            kingJumpsOutOfCakeMessage.Action = KingJumpsOutOfCakeAction;
         }
 
-        private void kingJumpsOutOfCakeAction()
+        private void KingJumpsOutOfCakeAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_08);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_08);
         }
 
-        private void impsHaveRescuedPrincessAction()
+        private void ImpsHaveRescuedPrincessAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_07);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_07);
         }
 
-        private void impsAreAtSuspensionBridgeAction()
+        private void ImpsAreAtSuspensionBridgeAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_06);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_06);
         }
 
-        private void knightEatingCakeAction()
+        private void KnightEatingCakeAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_05);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_05);
         }
 
-        private void cakeReadyAction()
+        private void CakeReadyAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_04);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_04);
         }
 
-        private void cakeAlmostReadyAction()
+        private void CakeAlmostReadyAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_03);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_03);
         }
 
-        private void flourHasFallenIntoBowlAction()
+        private void FlourHasFallenIntoBowlAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_02);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_02);
         }
 
-        private void levelStartedAction()
+        private void LevelStartedAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl6_01);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_01);
         }
     }
 }

@@ -14,56 +14,56 @@ namespace Assets.Scripts.LevelScripts
 
         protected override void RegisterEvents()
         {
-            levelStartedMessage = events.First(e => e.Nr == 1);
+            levelStartedMessage = Events.First(e => e.Nr == 1);
             levelStartedMessage.Message =
                 "Mhh, hier geht’s nicht weiter, mein Herr. Wir müssen einen anderen Weg finden!";
-            levelStartedMessage.Action = levelStartedAction;
+            levelStartedMessage.Action = LevelStartedAction;
 
 
-            closedDoorMessage = events.First(e => e.Nr == 2);
+            closedDoorMessage = Events.First(e => e.Nr == 2);
             closedDoorMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
-            closedDoorMessage.Action = closedDoorAction;
+            closedDoorMessage.Action = ClosedDoorAction;
 
 
-            torchesCollectedMessage = events.First(e => e.Nr == 3);
+            torchesCollectedMessage = Events.First(e => e.Nr == 3);
             torchesCollectedMessage.Message = "Fackeln… guuut. Sie brennen hell und heiß. Die werden wir noch brauchen!";
-            torchesCollectedMessage.Action = torchesCollectedAction;
+            torchesCollectedMessage.Action = TorchesCollectedAction;
 
 
-            potionCollectedMessage = events.First(e => e.Nr == 4);
+            potionCollectedMessage = Events.First(e => e.Nr == 4);
             potionCollectedMessage.Message =
                 "Sieht aus wie eine Art Zaubertrank. Ein kleines Wildschwein ist auf der Flasche abgebildet. (Grunz Grunz). Laut Etikett soll er übermenschliche Kräfte verleihen!";
-            potionCollectedMessage.Action = potionCollectedAction;
+            potionCollectedMessage.Action = PotionCollectedAction;
 
 
-            canonFiringMessage = events.First(e => e.Nr == 5);
+            canonFiringMessage = Events.First(e => e.Nr == 5);
             canonFiringMessage.Message = "Achtung, wir stehen unter Feueeer!!! In Deckung!";
-            canonFiringMessage.Action = canonFiringAction;
+            canonFiringMessage.Action = CanonFiringAction;
         }
 
-        private void canonFiringAction()
+        private void CanonFiringAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLVl5_05);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLVl5_05);
         }
 
-        private void potionCollectedAction()
+        private void PotionCollectedAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl5_04);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_04);
         }
 
-        private void torchesCollectedAction()
+        private void TorchesCollectedAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl5_03);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_03);
         }
 
-        private void closedDoorAction()
+        private void ClosedDoorAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl5_02);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_02);
         }
 
-        private void levelStartedAction()
+        private void LevelStartedAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl5_01);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_01);
         }
     }
 }

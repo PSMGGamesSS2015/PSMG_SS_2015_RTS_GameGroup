@@ -10,15 +10,14 @@ namespace Assets.Scripts.LevelScripts
 
         protected override void RegisterEvents()
         {
-            // TODO
-            impsReachedVillageMessage = events.First(e => e.Nr == 1);
+            impsReachedVillageMessage = Events.First(e => e.Nr == 1);
             impsReachedVillageMessage.Message = "Wir sind wieder zu Hause, mein Herr. Ein Hoch auf den Meister! Ein Hoch auf den Gebieter! Ein Hoch auf unseren Imperator! Nun lasst uns essen und feiern.";
-            impsReachedVillageMessage.Action = impsReachedVillageAction;
+            impsReachedVillageMessage.Action = ImpsReachedVillageAction;
         }
 
-        private void impsReachedVillageAction()
+        private void ImpsReachedVillageAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl7_01);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl7_01);
         }
     }
 }

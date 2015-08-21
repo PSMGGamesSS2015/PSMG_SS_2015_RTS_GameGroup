@@ -15,66 +15,66 @@ namespace Assets.Scripts.LevelScripts
 
         protected override void RegisterEvents()
         {
-            level02Started = events.First(e => e.Nr == 1);
+            level02Started = Events.First(e => e.Nr == 1);
             level02Started.Message = "Kommandant, bald lassen wir das Rotgebirge hinter uns. Nur noch ein kleines Stück. Gebt Acht. Der Weg ist tückisch.";
-            level02Started.Action = level02Action;
+            level02Started.Action = Level02Action;
 
 
-            darkness = events.First(e => e.Nr == 2);
+            darkness = Events.First(e => e.Nr == 2);
             darkness.Message = "Es ist Nacht und die Sicht ist schlecht. Unsere Feuerteufel können die Umgebung ausleuchten und Laternen anzünden.";
-            darkness.Action = darknessAction;
+            darkness.Action = DarknessAction;
 
 
-            ravineReached = events.First(e => e.Nr == 3);
+            ravineReached = Events.First(e => e.Nr == 3);
             ravineReached.Message = "Diese Schlucht sieht weit und tief aus. Unsere Leitern reichen nicht bis zur anderen Seite. Aber ein Kraftprotz könnte andere Kobolde hinüberwerfen. Sucht nach einem Zaubertrank, um Kraftprotze auszubilden.";
-            ravineReached.Action = ravineReachedAction;
+            ravineReached.Action = RavineReachedAction;
 
 
-            sunglassesCollected = events.First(e => e.Nr == 4);
+            sunglassesCollected = Events.First(e => e.Nr == 4);
             sunglassesCollected.Message = "Mein Gebieter, ihr könnt nun Kraftprotze ausbilden, die andere Kobolde werfen und schwere Gegenstände aufheben können.";
             sunglassesCollected.Action = SunglassesCollectedAction;
 
 
-            buzzwaspSpotted = events.First(e => e.Nr == 5);
+            buzzwaspSpotted = Events.First(e => e.Nr == 5);
             buzzwaspSpotted.Message = "Eine Brummwespe. Wuahhh, Wespengift und spitze Stacheln. Aber sie kann uns auf die andere Seite tragen.";
-            buzzwaspSpotted.Action = buzzwaspAction;
+            buzzwaspSpotted.Action = BuzzwaspAction;
 
 
-            reachedGoal = events.First(e => e.Nr == 6);
+            reachedGoal = Events.First(e => e.Nr == 6);
             reachedGoal.Message = "Mehr Kuchenkrümel … Rasch, weiter!";
-            reachedGoal.Action = reachedAction;
+            reachedGoal.Action = ReachedAction;
         }
 
-        private void reachedAction()
+        private void ReachedAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl2_07);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_07);
         }
 
-        private void buzzwaspAction()
+        private void BuzzwaspAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl2_05);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_05);
         }
 
-        private void ravineReachedAction()
+        private void RavineReachedAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl2_03);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_03);
         }
 
-        private void darknessAction()
+        private void DarknessAction()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl2_02);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_02);
         }
 
-        private void level02Action()
+        private void Level02Action()
         {
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl2_01);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_01);
         }
 
         private void SunglassesCollectedAction()
         {
             LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[5] += 1;
             ImpManager.Instance.NotifyMaxProfessions();
-            SoundManager.Instance.Narrator.Play(SoundReferences.SoundLvl2_04);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_04);
         }
     }
 }

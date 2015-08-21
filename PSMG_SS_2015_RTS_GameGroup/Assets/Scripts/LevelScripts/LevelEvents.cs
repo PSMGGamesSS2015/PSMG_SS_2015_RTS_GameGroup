@@ -7,15 +7,15 @@ namespace Assets.Scripts.LevelScripts
 {
     public abstract class LevelEvents : MonoBehaviour
     {
-        protected List<Event> events;
+        protected List<Event> Events;
 
         public void Awake()
         {
-            events = new List<Event>();
+            Events = new List<Event>();
 
             GameObject.FindGameObjectsWithTag(TagReferences.Event)
                 .ToList()
-                .ForEach(e => events.Add(e.GetComponent<Event>()));
+                .ForEach(e => Events.Add(e.GetComponent<Event>()));
         }
 
         public void Start()

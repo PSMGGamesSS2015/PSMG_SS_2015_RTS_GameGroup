@@ -21,6 +21,8 @@
         public const string ImpClimbingLadderFirebug = "Imp Climbing Ladder with Torch";
         public const string ImpClimbingLadderUnemployed = "Imp Climbing Ladder";
         public const string ImpClimbingLadderEnd = "Imp End of Ladder";
+        public const string ImpClimbingLadderWithLadder = "Imp Climbing Ladder";
+        public const string ImpClimbingLadderWithTorch = "Imp Climbing With Torch";
 
         public const string ImpDetonatingBomb = "Explosion";
         public const string ImpSelected = "Selection";     

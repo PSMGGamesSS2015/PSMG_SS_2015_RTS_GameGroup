@@ -58,6 +58,7 @@
         public const string DragonAttacking = "Dragon_Attack";
         public const string DragonDead = "Dragon_Dead";
         public const string DragonFlying = "Dragon_Flying";
+        public const string DragonBreathing = "Dragon_Breathing";
 
         #endregion
 

@@ -68,12 +68,12 @@ namespace Assets.Scripts.AssetReferences
 
         public static readonly string[] ImpSelectedVariants =
         {
-            "Imp/Goblin_ich",
-            "Imp/Goblin_ ihr_wuenscht",
-            "Imp/Goblin_ja_2",
-            "Imp/Goblin_ja_meister",
-            "Imp/Goblin_ja",
-            "Imp/Goblin_jiaa",
+            "Imp/Goblins_ich",
+            "Imp/Goblins_ihr_wuenscht",
+            "Imp/Goblins_ja_2",
+            "Imp/Goblins_ja_meister",
+            "Imp/Goblins_ja",
+            "Imp/Goblins_jiaa",
             "Imp/Goblins_mmmn_2",
             "Imp/Goblins_mmmn",
             "Imp/Goblins_was_begehrt_ihr",

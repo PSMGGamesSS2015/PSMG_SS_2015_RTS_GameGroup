@@ -227,6 +227,7 @@ namespace Assets.Scripts.Managers
             impSelected = imp;
             HideSelectionOfAllImps();
             DisplaySelectionOfSelectedImp();
+            imp.GetComponent<ImpAudioService>().PlaySelectionSound();
         }
 
         void ImpController.IImpControllerListener.OnImpHurt(ImpController impController)

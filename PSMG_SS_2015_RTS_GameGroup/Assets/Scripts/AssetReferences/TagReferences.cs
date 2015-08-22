@@ -65,5 +65,7 @@
         public const string HighlightableObject = "HighlightableObject";
         public const string DragonFireBreathingRange = "DragonFireBreathingRange";
         public const string DragonSteamBreathingRange = "DragonSteamBreathingRange";
+        public const string LeftNostril = "LeftNostril";
+        public const string RightNostril = "RightNostril";
     }
 }

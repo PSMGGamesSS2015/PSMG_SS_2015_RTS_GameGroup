@@ -155,7 +155,16 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             else if (enemyController.GetType() == typeof (RainingCloudController))
             {
                 AttackCloud((RainingCloudController) enemyController);
+            } else if (enemyController.GetType() == typeof (DragonController))
+            {
+                AttackDragon((DragonController) enemyController);
             }
+        }
+
+        private void AttackDragon(DragonController dragonController)
+        {
+            dragonController.ReceiveHit();
+            if (dragonController.IsWounded) enemiesInAttackRange.Remove(dragonController);
         }
 
         private void AttackCloud(RainingCloudController rainingCloudController)

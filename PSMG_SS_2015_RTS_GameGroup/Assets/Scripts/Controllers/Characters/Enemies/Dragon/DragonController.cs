@@ -27,6 +27,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
             gameObject.AddComponent<DragonAudioService>();
             gameObject.AddComponent<DragonCollisionService>();
             gameObject.AddComponent<DragonSpriteManagerService>();
+            gameObject.AddComponent<DragonUIService>();
         }
 
 

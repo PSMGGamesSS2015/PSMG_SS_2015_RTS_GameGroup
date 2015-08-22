@@ -101,17 +101,22 @@ namespace Assets.Scripts.AssetReferences
 
         #region Dragon
 
-        public const string DragonAttack1 = "Dragon/Dragon_attack1";
-        public const string DragonAttack2 = "Dragon/Dragon_attack2";
-        public const string DragonAttack3 = "Dragon/Dragon_attack3";
         public const string DragonWing1 = "Dragon/Dragon_fluegel1";
         public const string DragonWing2 = "Dragon/Dragon_fluegel2";
         public const string DragonDeath = "Dragon/Dragon_death";
-        public const string DragonComment1 = "Dragon/Dragon_brrr";
         public const string DragonBurr = "Dragon/Dragon_burrr";
-        public const string DragonComment3 = "Dragon/Dragon_horr";
-        public const string DragonComment4 = "Dragon/Dragon_mhm";
-        public const string DragonComment5 = "Dragon/Dragon_mhmn";
+
+        public static readonly string[] DragonSelectedVariants =
+        {
+            "Dragon/Dragon_horr",
+            "Dragon/Dragon_mhm",
+            "Dragon/Dragon_mhmn",
+            "Dragon/Dragon_brrr",
+            "Dragon/Dragon_attack1",
+            "Dragon/Dragon_attack2",
+            "Dragon/Dragon_attack3"
+        };
+
         public const string DragonComment6 = "Dragon/Dragon_schnief1";
         public const string DragonComment7 = "Dragon/Dragon_schnief2";
         public const string DragonCry = "Dragon/Dragon_schnief3";

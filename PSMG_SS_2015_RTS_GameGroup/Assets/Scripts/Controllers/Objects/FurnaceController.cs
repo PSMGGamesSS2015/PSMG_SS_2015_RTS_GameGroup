@@ -9,7 +9,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Awake()
         {
-            fireParticleSystem = GetComponent<FireParticleSystemController>();
+            fireParticleSystem = GetComponentInChildren<FireParticleSystemController>();
             IsLight = false;
         }
 

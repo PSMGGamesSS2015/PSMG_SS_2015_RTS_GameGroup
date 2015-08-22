@@ -8,8 +8,8 @@ namespace Assets.Scripts.Controllers.Objects
         private SpriteRenderer doorOpenSprite;
         private SpriteRenderer doorClosedSprite;
 
-        private const string DoorOpenName = "DoorOpen";
-        private const string DoorClosedName = "DoorClosed";
+        private const string DoorOpenName = "OpenDoor";
+        private const string DoorClosedName = "ClosedDoor";
 
         public DoorState State { get; private set; }
 

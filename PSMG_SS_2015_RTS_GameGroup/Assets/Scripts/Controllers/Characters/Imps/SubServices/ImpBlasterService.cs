@@ -34,7 +34,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void Start()
         {
             SetupBombCounter();
-            screenPosOfTopMargin = Camera.main.WorldToScreenPoint(LevelManager.Instance.CurrentLevel.TopMargin.transform.position);
+            screenPosOfTopMargin =
+                Camera.main.WorldToScreenPoint(LevelManager.Instance.CurrentLevel.TopMargin.transform.position);
         }
 
         public void Update()
@@ -44,7 +45,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void OnGUI()
         {
-            GUI.Label(new Rect(screenPos.x, screenPosOfTopMargin.y - screenPos.y - 100, 100, 25), ((int) bombCounter.CurrentCount).ToString());
+            GUI.Label(new Rect(screenPos.x, screenPosOfTopMargin.y - screenPos.y - 100, 100, 25),
+                ((int) bombCounter.CurrentCount).ToString());
         }
 
         private void SetupBombCounter()
@@ -73,30 +75,40 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impAnimationService.Play(AnimationReferences.ImpDetonatingBomb);
             GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.BombExplosion);
 
-            yield return new WaitForSeconds(1f);
-
             if (isFlippingNecessary)
             {
                 impAnimationService.FlipExplosion();
             }
 
-            var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 2f);
+            var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 4f);
 
-            foreach (var c in objectsWithinRadius.Where(c => c.gameObject.tag == TagReferences.RockyArc))
-            {
-                c.GetComponent<RockyArcScript>().Detonate();
-            }
+            objectsWithinRadius.ToList()
+                .Where(o => o.tag == TagReferences.RockyArc)
+                .ToList()
+                .ForEach(o => o.GetComponent<RockyArcScript>().Detonate());
 
-            foreach (var c in objectsWithinRadius.Where(c => c.gameObject.tag == TagReferences.FragileRock))
-            {
-                c.GetComponent<SpriteRenderer>().enabled = false;
-                Destroy(c);
-            }
+            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FragileRock).ToList().ForEach(Destroy);
+
+            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.Explodable).ToList().ForEach(ApplyChaos);
+
+            yield return new WaitForSeconds(1f);
 
             impMovementService.Walk();
             impTrainingService.IsTrainable = true;
             impTrainingService.Untrain();
         }
 
+        private void ApplyChaos(Collider2D collider)
+        {
+            var rb = collider.GetComponent<Rigidbody2D>();
+            rb.isKinematic = false;
+
+            var x = collider.transform.position.x - gameObject.transform.position.x;
+            var y = collider.transform.position.y - gameObject.transform.position.y;
+
+            var positionRelativeToImp = new Vector2(x, y);
+
+            rb.velocity = new Vector2(positionRelativeToImp.x * 15, positionRelativeToImp.y * 15);
+        }
     }
 }

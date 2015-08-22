@@ -21,6 +21,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsClimbing = false;
             IsJumping = false;
             FacingRight = true;
+            IsGettingBouncedBack = false;
             CurrentDirection = Direction.Horizontal;
             HasStartedMoving = true;
             IsStanding = true;
@@ -29,7 +30,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public override void FixedUpdate()
         {
-            if (IsBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping) return;
+            if (IsBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping || IsGettingBouncedBack) return;
 
             if (CurrentDirection == Direction.Vertical)
             {
@@ -54,6 +55,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             return GetComponent<ImpTrainingService>().Type == ImpType.Coward ||
                    ((GetComponent<ImpTrainingService>().Type == ImpType.Spearman) &&
                     GetComponent<ImpSpearmanService>().IsInCommand());
+        }
+
+        public new void Turn()
+        {
+            if (IsGettingBouncedBack)
+            {
+                if (!FacingRight && MovementSpeed < 0) return;
+                if (FacingRight && MovementSpeed > 0) return;
+            }
+
+            base.Turn();
         }
 
         public void GetThrown()
@@ -139,5 +151,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             IsJumping = false;
         }
 
+        public void GetBouncedBack(bool rightOfSource)
+        {
+            IsGettingBouncedBack = true;
+            GetComponent<Rigidbody2D>().velocity = rightOfSource ? new Vector2(7f, 3f) : new Vector2(-7f, 3f);
+        }
+
+        public bool IsGettingBouncedBack { get; private set; }
+
+        public void StopGettingBouncedBack()
+        {
+            IsGettingBouncedBack = false;
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace Assets.Scripts.Helpers
 
         public void Turn()
         {
+
             MovementSpeed *= -1;
             FacingRight = !FacingRight;
             this.Flip();

@@ -55,6 +55,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 return;
             }
 
+            
+
             switch (collision.gameObject.tag)
             {
                 case TagReferences.EnemyTroll:
@@ -73,6 +75,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.Impassable:
                     impMovementService.Turn();
                     break;
+            }
+
+            if (GetComponent<ImpMovementService>().IsGettingBouncedBack && collision.gameObject.tag != TagReferences.Imp)
+            {
+                GetComponent<ImpMovementService>().StopGettingBouncedBack();
             }
         }
 

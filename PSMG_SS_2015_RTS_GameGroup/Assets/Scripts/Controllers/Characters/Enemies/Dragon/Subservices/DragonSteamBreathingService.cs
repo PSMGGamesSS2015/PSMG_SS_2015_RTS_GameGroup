@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
@@ -11,7 +12,8 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
     {
 
         private TriggerCollider2D steamBreathingRange;
-        private List<ImpController> impsInBreathingRange;
+        public List<ImpController> ImpsInBreathingRange { get; private set; }
+        private ParticleSystem steamParticleSystem;
 
         public void Awake()
         {
@@ -21,7 +23,10 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             
             steamBreathingRange.RegisterListener(this);
 
-            impsInBreathingRange = new List<ImpController>();
+            steamParticleSystem =
+                GetComponentsInChildren<ParticleSystem>().First(ps => ps.tag == TagReferences.DragonSteamBreath);
+
+            ImpsInBreathingRange = new List<ImpController>();
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
@@ -30,43 +35,61 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
             switch (collider.gameObject.tag)
             {
-                case TagReferences.Imp:
-                    OnTriggerEnterImp(collider.GetComponent<ImpController>());
+                case TagReferences.ImpCollisionCheck:
+                    OnTriggerEnterImp(collider.GetComponentInParent<ImpController>());
                     break;
             }
         }
 
         private void OnTriggerEnterImp(ImpController imp)
         {
-            impsInBreathingRange.Add(imp);
-            BreathSteam();
+            if (!ImpsInBreathingRange.Contains(imp))
+                ImpsInBreathingRange.Add(imp);
         }
 
-        private void BreathSteam()
+        public void BreathSteam()
         {
-            if (IsBreathingSteam) return;
             StartCoroutine(SteamBreathingRoutine());
         }
 
-        public bool IsBreathingSteam { get; private set; }
-
         private IEnumerator SteamBreathingRoutine()
         {
-            IsBreathingSteam = true;
-
             GetComponent<DragonAnimationHelper>().PlayBreathingAnimation();
-            GetComponent<DragonMovementService>().Stand();
+            GetComponent<DragonMovementService>().StayInPosition();
+            
 
             yield return new WaitForSeconds(2.15f);
 
-            // TODO Instantiate steam
+            steamParticleSystem.Play();
 
-            yield return new WaitForSeconds(0.85f);
+            yield return new WaitForSeconds(0.2f);
+
+            GetComponent<DragonMovementService>().ChangeDirection();
+            ImpsInBreathingRange.ForEach(BounceBack);
+
+            yield return new WaitForSeconds(0.65f);
 
             GetComponent<DragonAnimationHelper>().PlayFlyingAnimation();
-            GetComponent<DragonMovementService>().Walk();
+            steamParticleSystem.Stop();
+            GetComponent<DragonMovementService>().Run();
 
-            IsBreathingSteam = false;
+        }
+
+        private void BounceBack(ImpController imp)
+        {
+            if (IsImpRightOfDragon(imp))
+            {
+                imp.GetComponent<ImpMovementService>().GetBouncedBack(true);
+            }
+            else
+            {
+                imp.GetComponent<ImpMovementService>().GetBouncedBack(false);
+            }
+        }
+
+        private bool IsImpRightOfDragon(ImpController imp)
+        {
+            return imp.gameObject.transform.position.x > gameObject.transform.position.x;
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
@@ -76,7 +99,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             switch (collider.gameObject.tag)
             {
                 case TagReferences.Imp:
-                    OnTriggerExitImp(collider.GetComponent<ImpController>());
+                    OnTriggerExitImp(collider.GetComponentInParent<ImpController>());
                     break;
             }
         }
@@ -84,13 +107,12 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != steamBreathingRange.GetInstanceID()) return;
-
-            // TODO
         }
 
         private void OnTriggerExitImp(ImpController imp)
         {
-            impsInBreathingRange.Remove(imp);
+            if (ImpsInBreathingRange.Contains(imp))
+                ImpsInBreathingRange.Remove(imp);
         }
     }
 

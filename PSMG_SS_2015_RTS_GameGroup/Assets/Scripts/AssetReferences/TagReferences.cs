@@ -67,5 +67,7 @@
         public const string DragonSteamBreathingRange = "DragonSteamBreathingRange";
         public const string LeftNostril = "LeftNostril";
         public const string RightNostril = "RightNostril";
+        public const string DragonSteamBreath = "DragonSteamBreath";
+        public const string DragonFireBreath = "DragonFireBreath";
     }
 }

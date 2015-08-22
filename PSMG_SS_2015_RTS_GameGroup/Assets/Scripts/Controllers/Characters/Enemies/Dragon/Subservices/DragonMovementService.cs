@@ -11,7 +11,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             CurrentDirection = Direction.Upwards;
             HasStartedMoving = true;
             IsStanding = true;
-            MovementSpeed = MovementSpeedWalking;
+            MovementSpeed = MovementSpeedRunning;
             Walk();
         }
 
@@ -20,12 +20,27 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             switch (CurrentDirection)
             {
                 case Direction.Upwards:
-                    MoveUpwards(MovementSpeedWalking);
+                    MoveUpwards();
                     break;
                 case Direction.Downwards:
-                    MoveDownwards(MovementSpeedWalking * 0.5f);
+                    MoveDownwards();
                     break;
             }
+        }
+
+        public void StayInPosition()
+        {
+            if (CurrentDirection == Direction.Upwards)
+            {
+                GetComponent<Rigidbody2D>().isKinematic = true;
+            }
+            Stand();
+        }
+
+        public new void Run()
+        {
+            GetComponent<Rigidbody2D>().isKinematic = false;
+            base.Run();
         }
 
         public void ChangeDirection()
@@ -34,6 +49,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             if (CurrentDirection == Direction.Upwards)
             {
                 CurrentDirection = Direction.Downwards;
+                GetComponent<DragonSteamBreathingService>().ImpsInBreathingRange.Clear();
             }
             else
             {

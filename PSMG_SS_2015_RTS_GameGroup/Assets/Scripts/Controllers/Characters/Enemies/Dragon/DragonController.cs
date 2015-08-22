@@ -1,6 +1,6 @@
 ﻿using System.Collections;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices;
-using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
         {
             gameObject.AddComponent<DragonMovementService>();
             gameObject.AddComponent<DragonSteamBreathingService>();
-            gameObject.AddComponent<AudioHelper>();
+            gameObject.AddComponent<DragonAudioService>();
             gameObject.AddComponent<DragonCollisionService>();
             gameObject.AddComponent<DragonSpriteManagerService>();
         }
@@ -39,6 +39,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
             else
             {
                 IsWounded = true;
+                GetComponent<DragonAudioService>().Voice.Play(SoundReferences.DragonCry);
                 GetComponent<DragonSpriteManagerService>().Blink();
             }
             
@@ -46,7 +47,12 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
 
         private IEnumerator LeavingRoutine()
         {
-            yield return new WaitForSeconds(0f);
+            GetComponent<DragonMovementService>().Stand();
+            GetComponent<DragonAudioService>().Voice.Play(SoundReferences.DragonDeath);
+
+            yield return new WaitForSeconds(1.5f);
+
+            LeaveGame();
         }
 
         public void LeaveGame()

@@ -61,6 +61,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             yield return new WaitForSeconds(2.15f);
 
             steamParticleSystem.Play();
+            GetComponent<DragonAudioService>().Voice.Play(SoundReferences.DragonWoahh);
 
             yield return new WaitForSeconds(0.2f);
 

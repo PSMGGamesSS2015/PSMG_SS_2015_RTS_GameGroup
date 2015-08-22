@@ -108,14 +108,14 @@ namespace Assets.Scripts.AssetReferences
         public const string DragonWing2 = "Dragon/Dragon_fluegel2";
         public const string DragonDeath = "Dragon/Dragon_death";
         public const string DragonComment1 = "Dragon/Dragon_brrr";
-        public const string DragonComment2 = "Dragon/Dragon_burrr";
+        public const string DragonBurr = "Dragon/Dragon_burrr";
         public const string DragonComment3 = "Dragon/Dragon_horr";
         public const string DragonComment4 = "Dragon/Dragon_mhm";
         public const string DragonComment5 = "Dragon/Dragon_mhmn";
         public const string DragonComment6 = "Dragon/Dragon_schnief1";
         public const string DragonComment7 = "Dragon/Dragon_schnief2";
-        public const string DragonComment8 = "Dragon/Dragon_schnief3";
-        public const string DragonComment9 = "Dragon/Dragon_woaah";
+        public const string DragonCry = "Dragon/Dragon_schnief3";
+        public const string DragonWoahh = "Dragon/Dragon_woaah";
         public const string DragonComment10 = "Dragon/Dragon_woooah_lang";
 
         #endregion

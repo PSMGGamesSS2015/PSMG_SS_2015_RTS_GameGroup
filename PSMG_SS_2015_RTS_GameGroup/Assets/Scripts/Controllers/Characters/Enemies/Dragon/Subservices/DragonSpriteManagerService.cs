@@ -9,11 +9,14 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
     public class DragonSpriteManagerService : MonoBehaviour
     {
         private List<SpriteRenderer> nostrils;
+        private List<SpriteRenderer> dragonSpriteRenderers;
         private Color defaultColor;
 
         public void Awake()
         {
             nostrils = new List<SpriteRenderer>();
+
+            dragonSpriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
         }
 
         public void Start()
@@ -35,5 +38,44 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             nostrils.ForEach(n => n.color = defaultColor);
         }
 
+        public void Blink()
+        {
+            StartCoroutine(BlinkingRoutine());
+        }
+
+        private void ColorDragonInRed()
+        {
+            dragonSpriteRenderers.ForEach(dsr => dsr.color = Color.red);
+        }
+
+        private void ColorDragonInStandardColor()
+        {
+            dragonSpriteRenderers.ForEach(dsr => dsr.color = defaultColor);
+        }
+
+        private IEnumerator BlinkingRoutine()
+        {
+            ColorDragonInRed();
+
+            yield return new WaitForSeconds(0.5f);
+
+            ColorDragonInStandardColor();
+
+            yield return new WaitForSeconds(0.5f);
+
+            ColorDragonInRed();
+
+            yield return new WaitForSeconds(0.5f);
+
+            ColorDragonInStandardColor();
+
+            yield return new WaitForSeconds(0.5f);
+
+            ColorDragonInRed();
+
+            yield return new WaitForSeconds(0.5f);
+
+            ColorDragonInStandardColor();
+        }
     }
 }

@@ -25,7 +25,15 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             {
                 if (GetComponent<DragonController>().IsWounded)
                 {
-                    GetComponent<DragonFireBreathingService>().BreathFire();
+                    if (GetComponent<DragonFireBreathingService>().BreathingCounter >= 3 || GetComponent<DragonFireBreathingService>().IsFirstBreath)
+                    {
+                        GetComponent<DragonFireBreathingService>().BreathFire();
+                    }
+                    else
+                    {
+                        GetComponent<DragonFireBreathingService>().BreathingCounter++;
+                        GetComponent<DragonMovementService>().Flydown();
+                    }
                 }
                 else
                 {

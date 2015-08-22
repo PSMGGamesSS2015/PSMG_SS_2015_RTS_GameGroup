@@ -90,7 +90,18 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.EnemyTroll:
                     OnTriggerStayTroll(collider.GetComponent<TrollController>());
                     break;
+                case TagReferences.Dragon:
+                    OnTriggerStayDragon(collider.GetComponent<DragonController>());
+                    break;
             }
+        }
+
+        private void OnTriggerStayDragon(DragonController dragonController)
+        {
+            if (enemiesInAttackRange.Contains(dragonController)) return;
+            if (dragonController.IsLeaving) return;
+
+            enemiesInAttackRange.Add(dragonController);
         }
 
         private void OnTriggerStayTroll(TrollController trollController)

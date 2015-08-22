@@ -39,7 +39,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
             else
             {
                 IsWounded = true;
-                // TODO Highlight being wounded
+                GetComponent<DragonSpriteManagerService>().Blink();
             }
             
         }

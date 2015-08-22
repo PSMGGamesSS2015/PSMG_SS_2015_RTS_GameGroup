@@ -19,6 +19,8 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             fireBreathingRange.RegisterListener(this);
 
             IsBreathingFire = false;
+            IsFirstBreath = true;
+            BreathingCounter = 0;
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
@@ -55,15 +57,21 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         public void BreathFire()
         {
             if (IsBreathingFire) return;
-            IsBreathingFire = true;
 
+            if (IsFirstBreath) IsFirstBreath = false;
+
+            BreathingCounter = 0;
             StartCoroutine(FireBreathingRoutine());
         }
 
         public bool IsBreathingFire { get; set; }
+        public bool IsFirstBreath { get; private set; }
+        public int BreathingCounter { get; set; }
 
         private IEnumerator FireBreathingRoutine()
         {
+            IsBreathingFire = true;
+
             GetComponent<DragonAnimationHelper>().PlayBreathingAnimation();
 
             GetComponent<DragonMovementService>().StayInPosition();

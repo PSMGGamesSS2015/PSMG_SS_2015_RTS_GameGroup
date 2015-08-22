@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Helpers;
 using UnityEngine;
 
@@ -22,7 +23,15 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
             if (HasReachedTop())
             {
-                GetComponent<DragonFireBreathingService>().BreathFire();
+                if (GetComponent<DragonController>().IsWounded)
+                {
+                    GetComponent<DragonFireBreathingService>().BreathFire();
+                }
+                else
+                {
+                    GetComponent<DragonMovementService>().Flydown();
+                }
+                
             }
             else
             {

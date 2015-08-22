@@ -78,8 +78,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
             GetComponent<DragonAnimationHelper>().PlayFlyingAnimation();
 
-            GetComponent<DragonMovementService>().ChangeDirection();
-            GetComponent<DragonMovementService>().Run();
+            GetComponent<DragonMovementService>().Flydown();
 
             GetComponent<DragonSpriteManagerService>().HighlightNostrilsInDefaultColor();
 

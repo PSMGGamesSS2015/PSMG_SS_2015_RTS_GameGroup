@@ -57,5 +57,10 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             }
         }
 
+        public void Flydown()
+        {
+            GetComponent<DragonMovementService>().ChangeDirection();
+            GetComponent<DragonMovementService>().Run();
+        }
     }
 }

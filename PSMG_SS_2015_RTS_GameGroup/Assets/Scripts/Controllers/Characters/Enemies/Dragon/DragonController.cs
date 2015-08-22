@@ -5,11 +5,15 @@ using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
 {
-    public class DragonController : EnemyController {
+    public class DragonController : EnemyController
+    {
+
+        public bool IsWounded { get; private set; }
 
         public void Awake()
         {
             IsLeaving = false;
+            IsWounded = false;
 
             InitServices();
         }
@@ -28,8 +32,16 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
 
         public void ReceiveHit()
         {
-            // TODO
-            StartCoroutine(LeavingRoutine());
+            if (IsWounded)
+            {
+                StartCoroutine(LeavingRoutine());
+            }
+            else
+            {
+                IsWounded = true;
+                // TODO Highlight being wounded
+            }
+            
         }
 
         private IEnumerator LeavingRoutine()

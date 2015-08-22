@@ -11,7 +11,7 @@ namespace Assets.Scripts.LevelScripts
         private Event cakeAlmostReadyMessage;
         private Event cakeReadyMessage;
         private Event knightEatingCakeMessage;
-        private Event impsAreAtSuspensionBridgeMessage;
+        private Event impsAreAtEndOfFirstFloorMessage;
         private Event impsHaveRescuedPrincessMessage;
         private Event kingJumpsOutOfCakeMessage;
 
@@ -20,7 +20,6 @@ namespace Assets.Scripts.LevelScripts
             levelStartedMessage = Events.First(e => e.Nr == 1);
             levelStartedMessage.Message = "Meister, sprengt dieses lästige Tor aus dem Weg.";
             levelStartedMessage.Action = LevelStartedAction;
-
 
             flourHasFallenIntoBowlMessage = Events.First(e => e.Nr == 2);
             flourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Mit Wasser und etwas zum Rühren könnten wir uns einen Kuchen backen.";
@@ -43,9 +42,9 @@ namespace Assets.Scripts.LevelScripts
             knightEatingCakeMessage.Action = KnightEatingCakeAction;
 
 
-            impsAreAtSuspensionBridgeMessage = Events.First(e => e.Nr == 6);
-            impsAreAtSuspensionBridgeMessage.Message = "Wo ist bloß die Prinzessin? Wir konnten sie nirgendwo finden. Dringt tiefer ins Verlies vor. Versucht, diese Brücke zu Fall zu bringen.";
-            impsAreAtSuspensionBridgeMessage.Action = ImpsAreAtSuspensionBridgeAction;
+            impsAreAtEndOfFirstFloorMessage = Events.First(e => e.Nr == 6);
+            impsAreAtEndOfFirstFloorMessage.Message = "Wo ist bloß die Prinzessin? Wir konnten sie nirgendwo finden. Dringt tiefer ins Verlies vor. Versucht, diese Brücke zu Fall zu bringen.";
+            impsAreAtEndOfFirstFloorMessage.Action = ImpsAreAtSuspensionBridgeAction;
 
 
             impsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);

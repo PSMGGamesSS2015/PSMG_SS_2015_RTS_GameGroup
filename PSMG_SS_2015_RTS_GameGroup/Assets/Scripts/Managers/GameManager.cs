@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Config;
+﻿using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Config;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.UserInterfaceComponents;
 using UnityEngine;
@@ -34,8 +35,15 @@ namespace Assets.Scripts.Managers
         public void Awake()
         {
             DontDestroyOnLoad(gameObject);
+            SetupCollisionManagement();
             InitManagers();
             gameState = GameState.NotStarted;
+        }
+
+        private void SetupCollisionManagement()
+        {
+            Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerBackground, true);
+            Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerForeground, true);
         }
 
         private void InitManagers()

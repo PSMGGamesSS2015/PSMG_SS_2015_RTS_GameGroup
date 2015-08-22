@@ -70,6 +70,6 @@
         public const string DragonFireBreath = "DragonFireBreath";
         public const string Dragon = "Dragon";
         public const string DragonFire = "DragonFire";
-
+        public const string Explodable = "Explodable";
     }
 }

@@ -18,12 +18,11 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
         public void Start()
         {
-            var leftNostril = GetComponentsInChildren<SpriteRenderer>().ToList().First(sr => sr.tag == TagReferences.LeftNostril);
-            nostrils.Add(leftNostril);
-            var rightNostril = GetComponentsInChildren<SpriteRenderer>().ToList().First(sr => sr.tag == TagReferences.RightNostril);
-            nostrils.Add(rightNostril);
+            var dragonNostrils = GetComponentsInChildren<SpriteRenderer>().ToList().Where(sr => sr.tag == TagReferences.DragonNostril).ToList();
 
-            defaultColor = leftNostril.color;
+            dragonNostrils.ForEach(nostrils.Add);
+
+            defaultColor = nostrils[0].color;
         }
 
         public void HighlightNostrilsInColor(Color color)

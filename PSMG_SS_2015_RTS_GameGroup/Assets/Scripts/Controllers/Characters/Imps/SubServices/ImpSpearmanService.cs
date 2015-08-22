@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies;
+using Assets.Scripts.Controllers.Characters.Enemies.Dragon;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Utility;
@@ -24,10 +25,28 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             if (self.GetInstanceID() != attackRange.GetInstanceID()) return;
 
-            if (collider.gameObject.tag == TagReferences.EnemyTroll)
+            switch (collider.gameObject.tag)
             {
-                enemiesInAttackRange.Add(collider.gameObject.GetComponent<TrollController>());
+                case TagReferences.EnemyTroll:
+                    OnTriggerEnterTroll(collider.GetComponent<TrollController>());
+                    break;
+                case TagReferences.Dragon:
+                    OnTriggerEnterDragon(collider.gameObject.GetComponent<DragonController>());
+                    break;
             }
+        }
+
+        private void OnTriggerEnterDragon(DragonController dragon)
+        {
+            if (enemiesInAttackRange.Contains(dragon)) return;
+
+            enemiesInAttackRange.Add(dragon);
+        }
+
+        private void OnTriggerEnterTroll(TrollController troll)
+        {
+            if (troll.IsLeaving) return;
+            enemiesInAttackRange.Add(troll);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
@@ -39,12 +58,24 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.EnemyTroll:
                     OnTriggerExitTroll(collider.GetComponent<TrollController>());
                     break;
+                case TagReferences.Dragon:
+                    OnTriggerExitDragon(collider.GetComponent<DragonController>());
+                    break;
             }
         }
 
-        private void OnTriggerExitTroll(TrollController trollController)
+        private void OnTriggerExitDragon(DragonController dragon)
         {
-            enemiesInAttackRange.Remove(trollController);
+            if (!enemiesInAttackRange.Contains(dragon)) return;
+
+            enemiesInAttackRange.Remove(dragon);
+        }
+
+        private void OnTriggerExitTroll(TrollController troll)
+        {
+            if (!enemiesInAttackRange.Contains(troll)) return;
+
+            enemiesInAttackRange.Remove(troll);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)

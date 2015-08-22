@@ -151,7 +151,16 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.FieryCake:
                     OnEnterFieryCake(collider);
                     break;
+                case TagReferences.DragonFire:
+                    OnEnterDragonFire(collider);
+                    break;
             }
+        }
+
+        private void OnEnterDragonFire(Collider2D collider)
+        {
+            Physics2D.IgnoreCollision(CircleCollider2D, collider);
+            GetComponent<ImpPwnedService>().Pwn(ImpPwnedService.PwningType.Scorching);
         }
 
         private void OnEnterFieryCake(Collider2D collider)

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
@@ -18,8 +19,20 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         public void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.tag == TagReferences.Imp) return;
-            GetComponent<DragonSteamBreathingService>().BreathSteam();
+
+            if (HasReachedTop())
+            {
+                GetComponent<DragonFireBreathingService>().BreathFire();
+            }
+            else
+            {
+                GetComponent<DragonSteamBreathingService>().BreathSteam();
+            }
         }
 
+        private bool HasReachedTop()
+        {
+            return GetComponent<DragonMovementService>().CurrentDirection == MovingObject.Direction.Upwards;
+        }
     }
 }

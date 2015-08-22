@@ -30,6 +30,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator ScorchingRoutine()
         {
+            
             GetComponent<ImpAnimationHelper>().ImpInventory.HideItems();
             GetComponent<ImpTrainingService>().IsTrainable = false;
 

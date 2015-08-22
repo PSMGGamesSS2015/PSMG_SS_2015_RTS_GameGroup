@@ -26,22 +26,15 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             defaultColor = leftNostril.color;
         }
 
-        public void HighlightNostrilsInOrange()
+        public void HighlightNostrilsInColor(Color color)
         {
-            StartCoroutine(HighlightNostrilsRoutine(Color.red));
+            nostrils.ForEach(n => n.color = color);
         }
 
         public void HighlightNostrilsInDefaultColor()
         {
-            StartCoroutine(HighlightNostrilsRoutine(defaultColor));
+            nostrils.ForEach(n => n.color = defaultColor);
         }
 
-        // Note: the duration of the breathing animation is 3 seconds
-        private IEnumerator HighlightNostrilsRoutine(Color color)
-        {
-            // TODO
-            // TODO scale nostrils and make them smaller a couple of times
-            yield return new WaitForSeconds(0f);
-        }
     }
 }

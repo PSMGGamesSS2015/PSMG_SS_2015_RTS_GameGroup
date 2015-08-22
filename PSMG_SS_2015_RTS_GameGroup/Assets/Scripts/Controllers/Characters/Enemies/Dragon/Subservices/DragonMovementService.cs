@@ -7,7 +7,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         
         public override void Start ()
         {
-            FacingRight = false;
+            FacingRight = true;
             CurrentDirection = Direction.Upwards;
             HasStartedMoving = true;
             IsStanding = true;
@@ -33,7 +33,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             
             if (CurrentDirection == Direction.Upwards)
             {
-                Debug.Log("Changing direction and moving downwards");
                 CurrentDirection = Direction.Downwards;
             }
             else

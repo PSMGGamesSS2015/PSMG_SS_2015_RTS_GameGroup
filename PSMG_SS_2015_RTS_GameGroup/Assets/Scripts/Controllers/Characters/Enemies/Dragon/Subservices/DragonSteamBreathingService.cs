@@ -45,7 +45,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         private void BreathSteam()
         {
             if (IsBreathingSteam) return;
-            IsBreathingSteam = true;
             StartCoroutine(SteamBreathingRoutine());
         }
 
@@ -53,10 +52,19 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
         private IEnumerator SteamBreathingRoutine()
         {
-            // TODO
-            
+            IsBreathingSteam = true;
 
-            yield return new WaitForSeconds(0f);
+            GetComponent<DragonAnimationHelper>().PlayBreathingAnimation();
+            GetComponent<DragonMovementService>().Stand();
+
+            yield return new WaitForSeconds(2.15f);
+
+            // TODO Instantiate steam
+
+            yield return new WaitForSeconds(0.85f);
+
+            GetComponent<DragonAnimationHelper>().PlayFlyingAnimation();
+            GetComponent<DragonMovementService>().Walk();
 
             IsBreathingSteam = false;
         }

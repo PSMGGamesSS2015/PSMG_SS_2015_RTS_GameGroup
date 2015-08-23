@@ -162,9 +162,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void OnEnterBatterBowl(Collider2D collider)
         {
-            if (impTrainingService.Type != ImpType.Spearman) return;
-
-            GetComponent<ImpSpearmanService>().BatterDough(collider.GetComponent<BowlController>());
+            switch (impTrainingService.Type)
+            {
+                case ImpType.Spearman:
+                    GetComponent<ImpSpearmanService>().BatterDough(collider.GetComponent<BowlController>());
+                    break;
+                case ImpType.Firebug:
+                    GetComponent<ImpFirebugService>().HeatDough(collider.GetComponent<BowlController>());
+                    break;
+                default:
+                    return;
+            }
             
         }
 

@@ -42,7 +42,7 @@
         public const string ImpWinLoop = "Imp Win Loop";
 
         public const string ImpSchwarzeneggerThrowing = "Imp Schwarzenegger Throwing";
-
+        public const string ImpBatteringDough = "Imp Battering Dough";
 
         #endregion
 

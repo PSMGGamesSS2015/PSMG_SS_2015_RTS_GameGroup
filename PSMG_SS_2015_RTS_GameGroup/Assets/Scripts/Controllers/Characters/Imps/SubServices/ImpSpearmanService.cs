@@ -273,6 +273,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void BatterDough(BowlController bowl)
         {
             if (IsPiercing || IsInCommand()) return;
+            if (bowl.IsBeingBattered) return;
 
             StartCoroutine(BatterDoughRoutine(bowl));
             
@@ -282,11 +283,15 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator BatterDoughRoutine(BowlController bowl)
         {
-            // TODO Play batter-dough animation
+            bowl.IsBeingBattered = true;
 
-            // TODO Handle render-layer stuff
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpBatteringDough);
+            GetComponent<ImpMovementService>().Stand();
 
-            yield return new WaitForSeconds(0f);
+            yield return new WaitForSeconds(6f);
+
+            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
+            GetComponent<ImpMovementService>().Walk();
 
             bowl.BatterDough();
         }

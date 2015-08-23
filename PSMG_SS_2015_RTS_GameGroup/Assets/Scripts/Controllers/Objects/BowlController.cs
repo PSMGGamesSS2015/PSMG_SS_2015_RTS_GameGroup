@@ -12,6 +12,8 @@ namespace Assets.Scripts.Controllers.Objects
 
         public bool HasFlourBeenAdded { get; private set; }
 
+        public bool IsBeingBattered { get; set; }
+
         public bool HasBeenBattered { get; private set; }
 
         public bool HasBeenHeated { get; private set; }
@@ -21,6 +23,7 @@ namespace Assets.Scripts.Controllers.Objects
             HasFlourBeenAdded = false;
             HasBeenBattered = false;
             HasBeenHeated = false;
+            IsBeingBattered = false;
 
             flour = GetComponentsInChildren<SpriteRenderer>().First(sr => sr.name == FlourName);
         }
@@ -38,10 +41,12 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void BatterDough()
         {
-            if (!HasFlourBeenAdded || HasBeenBattered || HasBeenHeated) return;
+            if (!HasFlourBeenAdded || HasBeenBattered || HasBeenHeated || IsBeingBattered) return;
 
             HasBeenBattered = true;
-            // TODO
+
+            var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
+            level06Events.CakeAlmostReadyMessage.TriggerManually();
         }
 
         public void Heat()
@@ -49,7 +54,9 @@ namespace Assets.Scripts.Controllers.Objects
             if (!HasFlourBeenAdded || !HasBeenBattered || HasBeenHeated) return;
 
             HasBeenHeated = true;
-            // TODO 
+
+            var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
+            level06Events.CakeReadyMessage.TriggerManually();
         }
     }
 }

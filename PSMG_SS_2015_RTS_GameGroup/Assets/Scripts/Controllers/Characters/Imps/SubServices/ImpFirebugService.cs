@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.AssetReferences;
+﻿using System.Collections;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Managers;
 using UnityEngine;
@@ -21,6 +22,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void SetOnFire(GameObject target, int nrOfFlameTongues)
         {
             SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground, nrOfFlameTongues);
+        }
+
+        public void HeatDough(BowlController bowl)
+        {
+            StartCoroutine(HeatingDoughRoutine(bowl));
+        }
+
+        private IEnumerator HeatingDoughRoutine(BowlController bowl)
+        {
+            // TODO
+
+            yield return new WaitForSeconds(0f);
+
+            // TODO
         }
     }
 }

@@ -6,55 +6,55 @@ namespace Assets.Scripts.LevelScripts
 {
     public class Level06Events : LevelEvents
     {
-        private Event levelStartedMessage;
-        private Event flourHasFallenIntoBowlMessage;
-        private Event cakeAlmostReadyMessage;
-        private Event cakeReadyMessage;
-        private Event knightEatingCakeMessage;
-        private Event impsAreAtEndOfFirstFloorMessage;
-        private Event impsHaveRescuedPrincessMessage;
-        private Event kingJumpsOutOfCakeMessage;
+        public Event LevelStartedMessage;
+        public Event FlourHasFallenIntoBowlMessage;
+        public Event CakeAlmostReadyMessage;
+        public Event CakeReadyMessage;
+        public Event KnightEatingCakeMessage;
+        public Event ImpsAreAtEndOfFirstFloorMessage;
+        public Event ImpsHaveRescuedPrincessMessage;
+        public Event KingJumpsOutOfCakeMessage;
 
         protected override void RegisterEvents()
         {
-            levelStartedMessage = Events.First(e => e.Nr == 1);
-            levelStartedMessage.Message = "Meister, sprengt dieses lästige Tor aus dem Weg.";
-            levelStartedMessage.Action = LevelStartedAction;
+            LevelStartedMessage = Events.First(e => e.Nr == 1);
+            LevelStartedMessage.Message = "Meister, sprengt dieses lästige Tor aus dem Weg.";
+            LevelStartedMessage.Action = LevelStartedAction;
 
-            flourHasFallenIntoBowlMessage = Events.First(e => e.Nr == 2);
-            flourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Mit Wasser und etwas zum Rühren könnten wir uns einen Kuchen backen.";
-            flourHasFallenIntoBowlMessage.Action = FlourHasFallenIntoBowlAction;
-
-
-            cakeAlmostReadyMessage = Events.First(e => e.Nr == 3);
-            cakeAlmostReadyMessage.Message = "Das riecht fast so gut wie die Leckereien der Prinzessin, mein Herr. Er muss nur noch kurz backen.";
-            cakeAlmostReadyMessage.Action = CakeAlmostReadyAction;
+            FlourHasFallenIntoBowlMessage = Events.First(e => e.Nr == 2);
+            FlourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Mit Wasser und etwas zum Rühren könnten wir uns einen Kuchen backen.";
+            FlourHasFallenIntoBowlMessage.Action = FlourHasFallenIntoBowlAction;
 
 
-            cakeReadyMessage = Events.First(e => e.Nr == 4);
-            cakeReadyMessage.Message = "Mmmmmhh.";
-            cakeReadyMessage.Action = CakeReadyAction;
+            CakeAlmostReadyMessage = Events.First(e => e.Nr == 3);
+            CakeAlmostReadyMessage.Message = "Das riecht fast so gut wie die Leckereien der Prinzessin, mein Herr. Er muss nur noch kurz backen.";
+            CakeAlmostReadyMessage.Action = CakeAlmostReadyAction;
 
 
-            knightEatingCakeMessage = Events.First(e => e.Nr == 5);
-            knightEatingCakeMessage.Message = "Kuchen … hmm … nur ein kleines Stück.";
+            CakeReadyMessage = Events.First(e => e.Nr == 4);
+            CakeReadyMessage.Message = "Mmmmmhh.";
+            CakeReadyMessage.Action = CakeReadyAction;
+
+
+            KnightEatingCakeMessage = Events.First(e => e.Nr == 5);
+            KnightEatingCakeMessage.Message = "Kuchen … hmm … nur ein kleines Stück.";
             // TODO knightEatingCakeMessage.Message = "Lasst uns schnell weitergehen, bevor der Ritter aufgegessen hat.";
-            knightEatingCakeMessage.Action = KnightEatingCakeAction;
+            KnightEatingCakeMessage.Action = KnightEatingCakeAction;
 
 
-            impsAreAtEndOfFirstFloorMessage = Events.First(e => e.Nr == 6);
-            impsAreAtEndOfFirstFloorMessage.Message = "Wo ist bloß die Prinzessin? Wir konnten sie nirgendwo finden. Dringt tiefer ins Verlies vor. Versucht, diese Brücke zu Fall zu bringen.";
-            impsAreAtEndOfFirstFloorMessage.Action = ImpsAreAtSuspensionBridgeAction;
+            ImpsAreAtEndOfFirstFloorMessage = Events.First(e => e.Nr == 6);
+            ImpsAreAtEndOfFirstFloorMessage.Message = "Wo ist bloß die Prinzessin? Wir konnten sie nirgendwo finden. Dringt tiefer ins Verlies vor. Versucht, diese Brücke zu Fall zu bringen.";
+            ImpsAreAtEndOfFirstFloorMessage.Action = ImpsAreAtSuspensionBridgeAction;
 
 
-            impsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);
-            impsHaveRescuedPrincessMessage.Message = "Geschafft, geschafft, geschafft! Nun bringt die Prinzessin sicher aus dem Verlies.";
-            impsHaveRescuedPrincessMessage.Action = ImpsHaveRescuedPrincessAction;
+            ImpsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);
+            ImpsHaveRescuedPrincessMessage.Message = "Geschafft, geschafft, geschafft! Nun bringt die Prinzessin sicher aus dem Verlies.";
+            ImpsHaveRescuedPrincessMessage.Action = ImpsHaveRescuedPrincessAction;
 
 
-            kingJumpsOutOfCakeMessage = Events.First(e => e.Nr == 8);
-            kingJumpsOutOfCakeMessage.Message = "Ihr wollt meine Dienerin entführen? Niemand klaut mir meine Bäckerin!";
-            kingJumpsOutOfCakeMessage.Action = KingJumpsOutOfCakeAction;
+            KingJumpsOutOfCakeMessage = Events.First(e => e.Nr == 8);
+            KingJumpsOutOfCakeMessage.Message = "Ihr wollt meine Dienerin entführen? Niemand klaut mir meine Bäckerin!";
+            KingJumpsOutOfCakeMessage.Action = KingJumpsOutOfCakeAction;
         }
 
         private void KingJumpsOutOfCakeAction()

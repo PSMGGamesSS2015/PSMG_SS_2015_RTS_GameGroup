@@ -23,7 +23,7 @@ namespace Assets.Scripts.Managers
         private List<ILevelManagerListener> listeners;
         public LevelConfig CurrentLevelConfig { get; set; }
         public Level CurrentLevel { get; set; }
-        private LevelEvents currentLevelEvents;
+        public LevelEvents CurrentLevelEvents { get; set; }
 
         void GoalController.IGoalControllerListener.OnGoalReachedByImp()
         {
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Managers
 
         private void Reset()
         {
-            Destroy(currentLevelEvents);
+            Destroy(CurrentLevelEvents);
         }
 
         public void OnLevelWasLoaded(int level)
@@ -155,18 +155,18 @@ namespace Assets.Scripts.Managers
             switch (CurrentLevel.CurrentLevelConfig.Name)
             {
                 case SceneReferences.Level01Koboldingen:
-                    currentLevelEvents = gameObject.AddComponent<Level01Events>();
+                    CurrentLevelEvents = gameObject.AddComponent<Level01Events>();
                     break;
                 case SceneReferences.Level02CherryTopMountains:
-                    currentLevelEvents = gameObject.AddComponent<Level02Events>();
+                    CurrentLevelEvents = gameObject.AddComponent<Level02Events>();
                     // TODO
                     //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
                     break;
                 case SceneReferences.Level05CastleGlazeArrival:
-                    currentLevelEvents = gameObject.AddComponent<Level05Events>();
+                    CurrentLevelEvents = gameObject.AddComponent<Level05Events>();
                     break;
                 case SceneReferences.Level06CastleGlazeDungenon:
-                    currentLevelEvents = gameObject.AddComponent<Level06Events>();
+                    CurrentLevelEvents = gameObject.AddComponent<Level06Events>();
                     break;
             }
         }

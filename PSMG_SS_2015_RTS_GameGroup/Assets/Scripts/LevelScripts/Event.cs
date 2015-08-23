@@ -23,17 +23,24 @@ namespace Assets.Scripts.LevelScripts
             if (collider.isTrigger) return;
             if (collider.gameObject.GetComponent<ImpController>() == null) return;
 
-            Debug.Log(gameObject.name);
+            PlayEvent();
+        }
 
+        public void TriggerManually()
+        {
+            PlayEvent();
+        }
+
+        private void PlayEvent()
+        {
             UIManager.Instance.UIMessageService.CreateSpeechBubbleMessage(Message, Speaker.Wilbur);
 
             if (Action != null)
             {
                 Action();
             }
-            
+
             Destroy(this);
         }
-
     }
 }

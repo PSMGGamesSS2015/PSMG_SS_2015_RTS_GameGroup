@@ -91,9 +91,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void HandleImpactOnObjectsInRange()
         {
-            // TODO Check if flour falls into kettle in backstuebchen
-
             var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 4f);
+
+            // TODO use more efficient code here
 
             objectsWithinRadius.ToList()
                 .Where(o => o.tag == TagReferences.RockyArc)
@@ -102,19 +102,21 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FragileRock).ToList().ForEach(Destroy);
             objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.Explodable).ToList().ForEach(ApplyChaos);
-            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.BatterBowl).ToList().ForEach(DetonateBatterBowl);
+            objectsWithinRadius.ToList()
+                .Where(c => c.tag == TagReferences.BatterBowl)
+                .ToList()
+                .ForEach(DetonateBatterBowl);
             objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FlourBag).ToList().ForEach(DetonateFlourBag);
         }
 
         private void DetonateBatterBowl(Collider2D collider)
         {
-            // TODO add flour to bowl
+            collider.GetComponent<BowlController>().AddFlour();
         }
 
         private void DetonateFlourBag(Collider2D collider)
         {
             var flourBagController = collider.gameObject.GetComponent<FlourBagController>();
-
             flourBagController.Explode();
         }
 

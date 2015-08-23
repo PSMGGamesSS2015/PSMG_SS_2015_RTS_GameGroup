@@ -154,7 +154,18 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.DragonFire:
                     OnEnterDragonFire(collider);
                     break;
+                case TagReferences.BatterBowl:
+                    OnEnterBatterBowl(collider);
+                    break;
             }
+        }
+
+        private void OnEnterBatterBowl(Collider2D collider)
+        {
+            if (impTrainingService.Type != ImpType.Spearman) return;
+
+            GetComponent<ImpSpearmanService>().BatterDough(collider.GetComponent<BowlController>());
+            
         }
 
         private void OnEnterDragonFire(Collider2D collider)

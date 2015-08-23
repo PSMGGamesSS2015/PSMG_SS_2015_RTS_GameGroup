@@ -1,9 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using Assets.Scripts.LevelScripts;
+using Assets.Scripts.Managers;
+using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects
 {
     public class BowlController : MonoBehaviour
     {
+        private SpriteRenderer flour;
+        private const string FlourName = "Flour";
+
         public bool HasFlourBeenAdded { get; private set; }
 
         public bool HasBeenBattered { get; private set; }
@@ -15,6 +21,8 @@ namespace Assets.Scripts.Controllers.Objects
             HasFlourBeenAdded = false;
             HasBeenBattered = false;
             HasBeenHeated = false;
+
+            flour = GetComponentsInChildren<SpriteRenderer>().First(sr => sr.name == FlourName);
         }
 
         public void AddFlour()
@@ -22,13 +30,15 @@ namespace Assets.Scripts.Controllers.Objects
             if (HasFlourBeenAdded || HasBeenBattered || HasBeenHeated) return;
 
             HasFlourBeenAdded = true;
-            // TODO Display flour
+            flour.enabled = true;
+
+            var level06Events = (Level06Events) LevelManager.Instance.CurrentLevelEvents;
+            level06Events.FlourHasFallenIntoBowlMessage.TriggerManually();
         }
 
         public void BatterDough()
         {
-            if (!HasFlourBeenAdded) return;
-            if (HasBeenBattered || HasBeenHeated) return;
+            if (!HasFlourBeenAdded || HasBeenBattered || HasBeenHeated) return;
 
             HasBeenBattered = true;
             // TODO
@@ -36,8 +46,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Heat()
         {
-            if (!HasFlourBeenAdded || !HasBeenBattered) return;
-            if (HasBeenHeated) return;
+            if (!HasFlourBeenAdded || !HasBeenBattered || HasBeenHeated) return;
 
             HasBeenHeated = true;
             // TODO 

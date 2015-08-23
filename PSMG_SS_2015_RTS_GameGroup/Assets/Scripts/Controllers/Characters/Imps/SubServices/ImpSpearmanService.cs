@@ -125,6 +125,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             InitComponents();
             InitTriggerCollider();
+
+            IsPiercing = false;
         }
 
         private void InitTriggerCollider()
@@ -142,11 +144,15 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void Pierce()
         {
+            if (IsPiercing) return;
+
             StartCoroutine(PiercingRoutine());
         }
 
         private IEnumerator PiercingRoutine()
         {
+            IsPiercing = true;
+
             impAnimationService.Play(AnimationReferences.ImpAttackingWithSpear);
             GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ImpAttack1);
 
@@ -155,6 +161,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             enemiesInAttackRange.ForEach(Attack);
 
             impAnimationService.Play(AnimationReferences.ImpStandingWithSpear);
+
+            IsPiercing = false;
         }
 
         private void Attack(EnemyController enemyController)
@@ -215,6 +223,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             StopAttacking();
             CommandPartner = null;
+            IsPiercing = false;
         }
 
         public bool IsInCommand()
@@ -259,6 +268,27 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             impAnimationService.PlayWalkingAnimation();
             impMovementService.Walk();
+        }
+
+        public void BatterDough(BowlController bowl)
+        {
+            if (IsPiercing || IsInCommand()) return;
+
+            StartCoroutine(BatterDoughRoutine(bowl));
+            
+        }
+
+        public bool IsPiercing { get; set; }
+
+        private IEnumerator BatterDoughRoutine(BowlController bowl)
+        {
+            // TODO Play batter-dough animation
+
+            // TODO Handle render-layer stuff
+
+            yield return new WaitForSeconds(0f);
+
+            bowl.BatterDough();
         }
     }
 }

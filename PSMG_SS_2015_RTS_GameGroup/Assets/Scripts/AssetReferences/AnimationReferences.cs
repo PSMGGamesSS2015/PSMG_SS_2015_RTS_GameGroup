@@ -43,6 +43,7 @@
 
         public const string ImpSchwarzeneggerThrowing = "Imp Schwarzenegger Throwing";
         public const string ImpBatteringDough = "Imp Battering Dough";
+        public const string ImpSettingObjectOnFire = "Imp Setting Object On Fire";
 
         #endregion
 

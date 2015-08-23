@@ -26,16 +26,28 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void HeatDough(BowlController bowl)
         {
+            if (bowl.IsBeingHeated) return;
+
             StartCoroutine(HeatingDoughRoutine(bowl));
         }
 
         private IEnumerator HeatingDoughRoutine(BowlController bowl)
         {
-            // TODO
+            bowl.IsBeingHeated = true;
 
-            yield return new WaitForSeconds(0f);
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpSettingObjectOnFire);
+            GetComponent<ImpMovementService>().Stand();
 
-            // TODO
+            yield return new WaitForSeconds(2.5f);
+
+            SetOnFire(bowl.gameObject);
+
+            yield return new WaitForSeconds(1.5f);
+
+            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
+            GetComponent<ImpMovementService>().Walk();
+
+            bowl.Heat();
         }
     }
 }

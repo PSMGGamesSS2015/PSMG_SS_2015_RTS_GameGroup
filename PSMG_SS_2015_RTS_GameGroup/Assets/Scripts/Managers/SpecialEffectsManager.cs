@@ -34,12 +34,12 @@ namespace Assets.Scripts.Managers
         // position in world coordinates
         public List<GameObject> SpawnFire(Vector3 position, string sortingLayerName)
         {
-            return SpawnFire(new Vector3(position.x + 1f, position.y + 0.5f, position.z), sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, 1);   
+            return SpawnFire(position, sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, 1);   
         }
 
         public List<GameObject> SpawnFire(Vector3 position, string sortingLayerName, int nrOfFlameTongues)
         {
-            return SpawnFire(new Vector3(position.x + 1f, position.y + 0.5f, position.z), sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, nrOfFlameTongues);   
+            return SpawnFire(position, sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, nrOfFlameTongues);   
         }
 
         public List<GameObject> SpawnFire(Vector3 position, string sortingLayerName, Vector3 scale, Quaternion rotation, int nrOfFlameTongues)

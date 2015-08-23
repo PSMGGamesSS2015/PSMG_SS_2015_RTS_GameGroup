@@ -80,6 +80,8 @@ namespace Assets.Scripts.LevelScripts
         private void CakeReadyAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_04);
+
+            // TODO Open Door and make knight move in
         }
 
         private void CakeAlmostReadyAction()

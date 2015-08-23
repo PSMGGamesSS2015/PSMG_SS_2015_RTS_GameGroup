@@ -70,13 +70,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
             string anim;
 
-            if (type == ImpType.Spearman)
+            switch (type)
             {
-                anim = AnimationReferences.ImpWalkingSpear;
-            }
-            else
-            {
-                anim = AnimationReferences.ImpWalkingUnemployed;
+                case ImpType.Spearman:
+                    anim = AnimationReferences.ImpWalkingSpear;
+                    break;
+                case ImpType.LadderCarrier:
+                    anim = AnimationReferences.ImpWalkingLadder;
+                    break;
+                case ImpType.Firebug:
+                    anim = AnimationReferences.ImpWalkingTorch;
+                    break;
+                default:
+                    anim = AnimationReferences.ImpWalkingUnemployed;
+                    break;
             }
 
             Play(anim);

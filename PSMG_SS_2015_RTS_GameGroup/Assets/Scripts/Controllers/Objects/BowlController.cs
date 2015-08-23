@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.Managers;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Assets.Scripts.Controllers.Objects
         public bool HasBeenBattered { get; private set; }
 
         public bool HasBeenHeated { get; private set; }
+        public bool IsBeingHeated { get; set; }
 
         public void Awake()
         {
@@ -24,6 +26,7 @@ namespace Assets.Scripts.Controllers.Objects
             HasBeenBattered = false;
             HasBeenHeated = false;
             IsBeingBattered = false;
+            IsBeingHeated = false;
 
             flour = GetComponentsInChildren<SpriteRenderer>().First(sr => sr.name == FlourName);
         }
@@ -54,6 +57,28 @@ namespace Assets.Scripts.Controllers.Objects
             if (!HasFlourBeenAdded || !HasBeenBattered || HasBeenHeated) return;
 
             HasBeenHeated = true;
+            StartCoroutine(HeatingRoutine());
+        }
+
+        private IEnumerator HeatingRoutine()
+        {
+            // TODO Wait a bit
+
+            yield return new WaitForSeconds(0f);
+
+            // TODO replace bowl with cake
+
+            // TODO make cake steam
+
+            // TODO Wait a bit
+
+            // TODO open door
+
+            // TODO wait a bit
+
+            // TODO make knight move to cake
+
+            // TODO make knight eat cake
 
             var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
             level06Events.CakeReadyMessage.TriggerManually();

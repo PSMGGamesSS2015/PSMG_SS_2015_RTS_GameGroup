@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 4aba60de1ae2935468c0b0b4195e56d6
-timeCreated: 1440348879
+guid: e253dd54632c37b42af2396964a063fc
+timeCreated: 1440348588
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences:
-  - TastyTartPrefab: {fileID: 141812, guid: 0c33503b8ac149943a2343a164e56600, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

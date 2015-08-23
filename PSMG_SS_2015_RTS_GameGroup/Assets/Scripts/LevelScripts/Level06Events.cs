@@ -1,6 +1,9 @@
 ﻿using System.Linq;
-using Assets.Scripts.Managers;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Characters.Enemies.Knight;
+using Assets.Scripts.Controllers.Objects;
+using Assets.Scripts.Managers;
+using UnityEngine;
 
 namespace Assets.Scripts.LevelScripts
 {
@@ -11,9 +14,37 @@ namespace Assets.Scripts.LevelScripts
         public Event CakeAlmostReadyMessage;
         public Event CakeReadyMessage;
         public Event KnightEatingCakeMessage;
-        public Event ImpsAreAtEndOfFirstFloorMessage;
         public Event ImpsHaveRescuedPrincessMessage;
         public Event KingJumpsOutOfCakeMessage;
+
+        public KnightController Knight { get; private set; }
+
+        public DungeonDoorController DoorToOvens { get; private set; }
+        private const string DoorToOvenName = "DoorToOvens";
+
+        public DungeonDoorController DoorToPrincess { get; private set; }
+        private const string DoorToPrincessName = "DoorToPrincess";
+
+        public DungeonDoorController DoorToExit { get; private set; }
+        private const string DoorToExitName = "DoorToExit";
+
+        public new void Start()
+        {
+            base.Start();
+
+            Knight = GameObject.FindGameObjectWithTag(TagReferences.Knight).GetComponent<KnightController>();
+
+            var dungeonDoorGameObjects = GameObject.FindGameObjectsWithTag(TagReferences.DungeonDoor).ToList();
+
+            DoorToOvens =
+                dungeonDoorGameObjects.First(go => go.name == DoorToOvenName).GetComponent<DungeonDoorController>();
+
+            DoorToPrincess =
+                dungeonDoorGameObjects.First(go => go.name == DoorToPrincessName).GetComponent<DungeonDoorController>();
+
+            DoorToExit =
+                dungeonDoorGameObjects.First(go => go.name == DoorToExitName).GetComponent<DungeonDoorController>();
+        }
 
         protected override void RegisterEvents()
         {
@@ -30,27 +61,18 @@ namespace Assets.Scripts.LevelScripts
             CakeAlmostReadyMessage.Message = "Das riecht fast so gut wie die Leckereien der Prinzessin, mein Herr. Er muss nur noch kurz backen.";
             CakeAlmostReadyMessage.Action = CakeAlmostReadyAction;
 
-
             CakeReadyMessage = Events.First(e => e.Nr == 4);
             CakeReadyMessage.Message = "Mmmmmhh.";
             CakeReadyMessage.Action = CakeReadyAction;
-
 
             KnightEatingCakeMessage = Events.First(e => e.Nr == 5);
             KnightEatingCakeMessage.Message = "Kuchen … hmm … nur ein kleines Stück.";
             // TODO knightEatingCakeMessage.Message = "Lasst uns schnell weitergehen, bevor der Ritter aufgegessen hat.";
             KnightEatingCakeMessage.Action = KnightEatingCakeAction;
 
-
-            ImpsAreAtEndOfFirstFloorMessage = Events.First(e => e.Nr == 6);
-            ImpsAreAtEndOfFirstFloorMessage.Message = "Wo ist bloß die Prinzessin? Wir konnten sie nirgendwo finden. Dringt tiefer ins Verlies vor. Versucht, diese Brücke zu Fall zu bringen.";
-            ImpsAreAtEndOfFirstFloorMessage.Action = ImpsAreAtSuspensionBridgeAction;
-
-
             ImpsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);
             ImpsHaveRescuedPrincessMessage.Message = "Geschafft, geschafft, geschafft! Nun bringt die Prinzessin sicher aus dem Verlies.";
             ImpsHaveRescuedPrincessMessage.Action = ImpsHaveRescuedPrincessAction;
-
 
             KingJumpsOutOfCakeMessage = Events.First(e => e.Nr == 8);
             KingJumpsOutOfCakeMessage.Message = "Ihr wollt meine Dienerin entführen? Niemand klaut mir meine Bäckerin!";
@@ -67,11 +89,6 @@ namespace Assets.Scripts.LevelScripts
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_07);
         }
 
-        private void ImpsAreAtSuspensionBridgeAction()
-        {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_06);
-        }
-
         private void KnightEatingCakeAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_05);
@@ -80,8 +97,6 @@ namespace Assets.Scripts.LevelScripts
         private void CakeReadyAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_04);
-
-            // TODO Open Door and make knight move in
         }
 
         private void CakeAlmostReadyAction()

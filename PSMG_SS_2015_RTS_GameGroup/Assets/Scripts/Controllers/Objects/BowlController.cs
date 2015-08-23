@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Managers.UIManagerAndServices;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects
@@ -9,7 +11,10 @@ namespace Assets.Scripts.Controllers.Objects
     public class BowlController : MonoBehaviour
     {
         private SpriteRenderer flour;
+        private List<SpriteRenderer> spriteRenderers; 
         private const string FlourName = "Flour";
+
+        public GameObject TastyTartPrefab;
 
         public bool HasFlourBeenAdded { get; private set; }
 
@@ -28,6 +33,8 @@ namespace Assets.Scripts.Controllers.Objects
             IsBeingBattered = false;
             IsBeingHeated = false;
 
+            spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+
             flour = GetComponentsInChildren<SpriteRenderer>().First(sr => sr.name == FlourName);
         }
 
@@ -44,7 +51,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void BatterDough()
         {
-            if (!HasFlourBeenAdded || HasBeenBattered || HasBeenHeated || IsBeingBattered) return;
+            if (!HasFlourBeenAdded || HasBeenBattered || HasBeenHeated) return;
 
             HasBeenBattered = true;
 
@@ -54,7 +61,20 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Heat()
         {
+            Debug.Log("Heat method reached");
+
+            Debug.Log("!HasFlourBeenAdded");
+            Debug.Log(!HasFlourBeenAdded);
+
+            Debug.Log("!HasBeenBattered");
+            Debug.Log(!HasBeenBattered);
+
+            Debug.Log("HasBeenHeated");
+            Debug.Log(HasBeenHeated);
+
             if (!HasFlourBeenAdded || !HasBeenBattered || HasBeenHeated) return;
+
+            Debug.Log("Checks passed");
 
             HasBeenHeated = true;
             StartCoroutine(HeatingRoutine());
@@ -62,26 +82,29 @@ namespace Assets.Scripts.Controllers.Objects
 
         private IEnumerator HeatingRoutine()
         {
-            // TODO Wait a bit
+            Debug.Log("Starting Heating routine");
 
-            yield return new WaitForSeconds(0f);
+            yield return new WaitForSeconds(1f);
 
-            // TODO replace bowl with cake
+            var position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2, gameObject.transform.position.z);
+            Instantiate(TastyTartPrefab, position, Quaternion.identity);
 
-            // TODO make cake steam
+            spriteRenderers.ForEach(sr => sr.enabled = false);
 
-            // TODO Wait a bit
+            yield return new WaitForSeconds(2f);
 
-            // TODO open door
+            var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
 
-            // TODO wait a bit
+            level06Events.DoorToOvens.Open();
+            
+            level06Events.CakeReadyMessage.TriggerManually(Speaker.Knight);
+
+            yield return new WaitForSeconds(2f);
 
             // TODO make knight move to cake
 
             // TODO make knight eat cake
 
-            var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
-            level06Events.CakeReadyMessage.TriggerManually();
         }
     }
 }

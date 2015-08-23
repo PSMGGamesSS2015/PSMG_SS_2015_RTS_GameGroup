@@ -42,5 +42,22 @@ namespace Assets.Scripts.LevelScripts
 
             Destroy(this);
         }
+
+        public void TriggerManually(Speaker speaker)
+        {
+            PlayEvent(speaker);
+        }
+
+        private void PlayEvent(Speaker speaker)
+        {
+            UIManager.Instance.UIMessageService.CreateSpeechBubbleMessage(Message, speaker);
+
+            if (Action != null)
+            {
+                Action();
+            }
+
+            Destroy(this);
+        }
     }
 }

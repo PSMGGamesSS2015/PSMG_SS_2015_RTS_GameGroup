@@ -24,12 +24,14 @@ namespace Assets.Scripts.Controllers.Objects
             doorOpenSprite = GetComponentsInChildren<SpriteRenderer>().ToList().First(sr => sr.name == DoorOpenName);
             doorClosedSprite = GetComponentsInChildren<SpriteRenderer>().ToList().First(sr => sr.name == DoorClosedName);
 
+            doorOpenSprite.enabled = false;
+
             State = DoorState.Closed;
         }
 
         public void Open()
         {
-            GetComponent<Collider2D>().enabled = false;
+            GetComponentInChildren<Collider2D>().enabled = false;
 
             doorClosedSprite.enabled = false;
             doorOpenSprite.enabled = true;
@@ -39,7 +41,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Close()
         {
-            GetComponent<Collider2D>().enabled = true;
+            GetComponentInChildren<Collider2D>().enabled = true;
 
             doorOpenSprite.enabled = true;
             doorClosedSprite.enabled = false;

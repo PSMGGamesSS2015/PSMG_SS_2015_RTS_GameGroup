@@ -74,5 +74,7 @@
 
         public const string FlourBag = "FlourBag";
         public const string BatterBowl = "BatterBowl";
+        public const string Knight = "Knight";
+        public const string DungeonDoor = "DungeonDoor";
     }
 }

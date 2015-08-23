@@ -43,9 +43,17 @@ namespace Assets.Scripts.Controllers.Objects
             if (HasFlourBeenAdded || HasBeenBattered || HasBeenHeated) return;
 
             HasFlourBeenAdded = true;
+
+            StartCoroutine(AddingFlourRoutine());
+        }
+
+        private IEnumerator AddingFlourRoutine()
+        {
+            yield return new WaitForSeconds(6f);
+
             flour.enabled = true;
 
-            var level06Events = (Level06Events) LevelManager.Instance.CurrentLevelEvents;
+            var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
             level06Events.FlourHasFallenIntoBowlMessage.TriggerManually();
         }
 
@@ -55,26 +63,15 @@ namespace Assets.Scripts.Controllers.Objects
 
             HasBeenBattered = true;
 
+            flour.color = Color.yellow;
+
             var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
             level06Events.CakeAlmostReadyMessage.TriggerManually();
         }
 
         public void Heat()
         {
-            Debug.Log("Heat method reached");
-
-            Debug.Log("!HasFlourBeenAdded");
-            Debug.Log(!HasFlourBeenAdded);
-
-            Debug.Log("!HasBeenBattered");
-            Debug.Log(!HasBeenBattered);
-
-            Debug.Log("HasBeenHeated");
-            Debug.Log(HasBeenHeated);
-
             if (!HasFlourBeenAdded || !HasBeenBattered || HasBeenHeated) return;
-
-            Debug.Log("Checks passed");
 
             HasBeenHeated = true;
             StartCoroutine(HeatingRoutine());
@@ -82,14 +79,13 @@ namespace Assets.Scripts.Controllers.Objects
 
         private IEnumerator HeatingRoutine()
         {
-            Debug.Log("Starting Heating routine");
-
             yield return new WaitForSeconds(1f);
 
             var position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2, gameObject.transform.position.z);
             Instantiate(TastyTartPrefab, position, Quaternion.identity);
 
             spriteRenderers.ForEach(sr => sr.enabled = false);
+            GetComponent<Collider2D>().enabled = false;
 
             yield return new WaitForSeconds(2f);
 

@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
@@ -14,14 +17,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             gaslight.Light();
         }
 
-        public void SetOnFire(GameObject target)
+        public List<GameObject> SetOnFire(GameObject target)
         {
-            SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground);
+            return SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground);
         }
 
-        public void SetOnFire(GameObject target, int nrOfFlameTongues)
+        public List<GameObject> SetOnFire(GameObject target, int nrOfFlameTongues)
         {
-            SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground, nrOfFlameTongues);
+            return SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground, nrOfFlameTongues);
         }
 
         public void HeatDough(BowlController bowl)
@@ -40,9 +43,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             yield return new WaitForSeconds(2.5f);
 
-            SetOnFire(bowl.gameObject);
+            var fire = SetOnFire(bowl.gameObject);
 
             yield return new WaitForSeconds(1.5f);
+
+            fire.ForEach(f => f.GetComponent<FireParticleSystemController>().Extinguish());
 
             GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
             GetComponent<ImpMovementService>().Walk();

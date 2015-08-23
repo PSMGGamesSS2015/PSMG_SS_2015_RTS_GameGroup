@@ -73,5 +73,6 @@
         public const string Explodable = "Explodable";
 
         public const string FlourBag = "FlourBag";
+        public const string BatterBowl = "BatterBowl";
     }
 }

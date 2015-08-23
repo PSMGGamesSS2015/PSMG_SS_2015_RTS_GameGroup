@@ -102,8 +102,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FragileRock).ToList().ForEach(Destroy);
             objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.Explodable).ToList().ForEach(ApplyChaos);
-
+            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.BatterBowl).ToList().ForEach(DetonateBatterBowl);
             objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FlourBag).ToList().ForEach(DetonateFlourBag);
+        }
+
+        private void DetonateBatterBowl(Collider2D collider)
+        {
+            // TODO add flour to bowl
         }
 
         private void DetonateFlourBag(Collider2D collider)

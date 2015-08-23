@@ -71,5 +71,7 @@
         public const string Dragon = "Dragon";
         public const string DragonFire = "DragonFire";
         public const string Explodable = "Explodable";
+
+        public const string FlourBag = "FlourBag";
     }
 }

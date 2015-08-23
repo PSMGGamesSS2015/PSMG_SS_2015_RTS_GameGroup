@@ -80,16 +80,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 impAnimationService.FlipExplosion();
             }
 
-            var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 4f);
-
-            objectsWithinRadius.ToList()
-                .Where(o => o.tag == TagReferences.RockyArc)
-                .ToList()
-                .ForEach(o => o.GetComponent<RockyArcScript>().Detonate());
-
-            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FragileRock).ToList().ForEach(Destroy);
-
-            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.Explodable).ToList().ForEach(ApplyChaos);
+            HandleImpactOnObjectsInRange();
 
             yield return new WaitForSeconds(1f);
 
@@ -98,17 +89,40 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impTrainingService.Untrain();
         }
 
+        private void HandleImpactOnObjectsInRange()
+        {
+            // TODO Check if flour falls into kettle in backstuebchen
+
+            var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 4f);
+
+            objectsWithinRadius.ToList()
+                .Where(o => o.tag == TagReferences.RockyArc)
+                .ToList()
+                .ForEach(o => o.GetComponent<RockyArcScript>().Detonate());
+
+            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FragileRock).ToList().ForEach(Destroy);
+            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.Explodable).ToList().ForEach(ApplyChaos);
+
+            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FlourBag).ToList().ForEach(DetonateFlourBag);
+        }
+
+        private void DetonateFlourBag(Collider2D collider)
+        {
+            var flourBagController = collider.gameObject.GetComponent<FlourBagController>();
+
+            flourBagController.Explode();
+        }
+
         private void ApplyChaos(Collider2D collider)
         {
             var rb = collider.GetComponent<Rigidbody2D>();
-            rb.isKinematic = false;
+            if (rb == null) return;
 
+            rb.isKinematic = false;
             var x = collider.transform.position.x - gameObject.transform.position.x;
             var y = collider.transform.position.y - gameObject.transform.position.y;
-
             var positionRelativeToImp = new Vector2(x, y);
-
-            rb.velocity = new Vector2(positionRelativeToImp.x * 15, positionRelativeToImp.y * 15);
+            rb.velocity = new Vector2(positionRelativeToImp.x*15, positionRelativeToImp.y*15);
         }
     }
 }

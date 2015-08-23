@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 749ee744189f7dd4ebf4a08d7369339a
+timeCreated: 1440317811
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - FlourParticleSystemPrefab: {fileID: 171068, guid: 7a7b1c40347ea60429e8eae77b2c43e0,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

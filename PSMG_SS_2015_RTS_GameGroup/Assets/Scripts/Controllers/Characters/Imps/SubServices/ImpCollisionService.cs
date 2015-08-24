@@ -157,7 +157,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.BatterBowl:
                     OnEnterBatterBowl(collider);
                     break;
+                case TagReferences.Furnace:
+                    OnEnterFurnace(collider);
+                    break;
             }
+        }
+
+        private void OnEnterFurnace(Collider2D collider)
+        {
+            if (impTrainingService.Type != ImpType.Firebug) return;
+
+            GetComponent<ImpFirebugService>().LightFurnace(collider.GetComponent<FurnaceController>());
         }
 
         private void OnEnterBatterBowl(Collider2D collider)

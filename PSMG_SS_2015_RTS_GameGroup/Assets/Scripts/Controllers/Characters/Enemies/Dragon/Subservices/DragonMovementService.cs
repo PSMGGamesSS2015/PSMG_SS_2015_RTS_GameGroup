@@ -11,7 +11,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             CurrentDirection = Direction.Upwards;
             HasStartedMoving = true;
             IsStanding = true;
-            MovementSpeed = MovementSpeedRunning;
+            MovementSpeed = MovementSpeedWalking;
             Walk();
         }
 
@@ -37,10 +37,10 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             Stand();
         }
 
-        public new void Run()
+        public new void Walk()
         {
             GetComponent<Rigidbody2D>().isKinematic = false;
-            base.Run();
+            base.Walk();
         }
 
         public void ChangeDirection()
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
         public void Flydown()
         {
             GetComponent<DragonMovementService>().ChangeDirection();
-            GetComponent<DragonMovementService>().Run();
+            GetComponent<DragonMovementService>().Walk();
         }
     }
 }

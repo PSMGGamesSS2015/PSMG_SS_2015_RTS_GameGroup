@@ -4,7 +4,7 @@ namespace Assets.Scripts.Controllers.Objects
 {
     public class FurnaceController : MonoBehaviour
     {
-        public bool IsLight { get; private set; }
+        public bool IsLight { get; set; }
         private FireParticleSystemController fireParticleSystem;
 
         public void Awake()
@@ -20,8 +20,6 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Light()
         {
-            if (IsLight) return; 
-
             fireParticleSystem.Light();
             IsLight = true;
         }

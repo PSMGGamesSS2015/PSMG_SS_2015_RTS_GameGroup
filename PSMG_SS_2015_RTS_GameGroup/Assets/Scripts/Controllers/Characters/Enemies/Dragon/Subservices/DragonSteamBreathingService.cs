@@ -72,7 +72,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
             GetComponent<DragonAnimationHelper>().PlayFlyingAnimation();
             steamParticleSystem.Stop();
-            GetComponent<DragonMovementService>().Run();
+            GetComponent<DragonMovementService>().Walk();
 
         }
 

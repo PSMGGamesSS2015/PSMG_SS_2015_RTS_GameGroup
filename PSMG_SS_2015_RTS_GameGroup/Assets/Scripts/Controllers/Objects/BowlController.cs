@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Managers.UIManagerAndServices;
@@ -82,7 +83,7 @@ namespace Assets.Scripts.Controllers.Objects
             yield return new WaitForSeconds(1f);
 
             var position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2, gameObject.transform.position.z);
-            Instantiate(TastyTartPrefab, position, Quaternion.identity);
+            var tart = Instantiate(TastyTartPrefab, position, Quaternion.identity);
 
             spriteRenderers.ForEach(sr => sr.enabled = false);
             GetComponent<Collider2D>().enabled = false;
@@ -97,10 +98,7 @@ namespace Assets.Scripts.Controllers.Objects
 
             yield return new WaitForSeconds(2f);
 
-            // TODO make knight move to cake
-
-            // TODO make knight eat cake
-
+            level06Events.KnightBehindFirstGate.GetComponent<KnightMovementService>().Walk();
         }
     }
 }

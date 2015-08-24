@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Controllers.Objects;
+﻿using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Objects;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
@@ -18,9 +19,11 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
 
             IsEatingTart = true;
 
-            // TODO play eating tart animation
+            GetComponent<KnightMovementService>().Stand();
+            GetComponent<KnightAnimationHelper>().Play(AnimationReferences.KnightEating);
+            GetComponent<KnightSpriteManagerService>().DisplayTart();
 
-            // TODO let the imps pass
+            Destroy(tart);
         }
 
         

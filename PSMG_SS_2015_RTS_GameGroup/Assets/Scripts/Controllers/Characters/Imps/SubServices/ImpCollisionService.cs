@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Characters.Enemies.Knight;
+using Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
@@ -62,6 +64,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.EnemyTroll:
                     OnCollisionEnterWithTroll();
                     break;
+                case TagReferences.Knight:
+                    OnCollisionEnterWithKnight(collision);
+                    break;
                 case TagReferences.Imp:
                     GetComponent<ImpInteractionLogicService>()
                         .OnCollisionEnterWithImp(collision.gameObject.GetComponent<ImpController>());
@@ -81,6 +86,14 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             {
                 GetComponent<ImpMovementService>().StopGettingBouncedBack();
             }
+        }
+
+        private void OnCollisionEnterWithKnight(Collision2D collision)
+        {
+            var knight = collision.gameObject.GetComponent<KnightController>();
+            if (knight.GetComponent<KnightEatingTartService>().IsEatingTart) return;
+
+            impMovementService.Turn();
         }
 
         private void OnCollisionEnterWithTroll()

@@ -4,21 +4,17 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
 {
     public class KnightMovementService : MovingObject
     {
-
-
         public override void Start()
         {
-            // TODO
+            FacingRight = false;
+            CurrentDirection = Direction.Horizontal;
+            HasStartedMoving = true;
+            IsStanding = true;
         }
 
         public override void FixedUpdate()
         {
-            // TODO
-        }
-
-        public void MoveToCake()
-        {
-            
+            Move();
         }
     }
 }

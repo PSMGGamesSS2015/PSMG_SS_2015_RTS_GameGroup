@@ -1,5 +1,8 @@
 ﻿using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
+using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
@@ -7,11 +10,33 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
     public class KnightCollisionSerivce : MonoBehaviour, TriggerCollider2D.ITriggerCollider2DListener
     {
         private TriggerCollider2D knightCollisionCheck;
+        private CircleCollider2D circleCollider2D;
 
         public void Awake()
         {
             knightCollisionCheck = GetComponentInChildren<TriggerCollider2D>();
             knightCollisionCheck.RegisterListener(this);
+            circleCollider2D = GetComponent<CircleCollider2D>();
+        }
+
+        public void OnCollisionEnter2D(Collision2D collision)
+        {
+            switch (collision.gameObject.tag)
+            {
+                case TagReferences.Imp:
+                    OnCollisionEnterWithImp(collision);
+                    break;
+            }
+        }
+
+        private void OnCollisionEnterWithImp(Collision2D collision)
+        {
+            var imp = collision.gameObject.GetComponent<ImpController>();
+
+            if (GetComponent<KnightEatingTartService>().IsEatingTart)
+            {
+                Physics2D.IgnoreCollision(circleCollider2D, imp.GetComponent<ImpCollisionService>().CircleCollider2D, true);
+            }
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)

@@ -72,6 +72,7 @@
         public const string KnightDead = "Knight_Dead";
         public const string KnightWalking = "Knight_Walking";
         public const string KnightEating = "Knight_Eating";
+        public const string KnightBeingSoHot = "Knight_BeingSoHot";
 
         #endregion
 

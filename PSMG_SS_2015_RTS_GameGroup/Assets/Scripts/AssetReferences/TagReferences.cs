@@ -78,5 +78,6 @@
         public const string DungeonDoor = "DungeonDoor";
         public const string KnightCollisionCheck = "KnightCollisionCheck";
         public const string TastyTart = "TastyTart";
+        public const string KnightTart = "KnightTart";
     }
 }

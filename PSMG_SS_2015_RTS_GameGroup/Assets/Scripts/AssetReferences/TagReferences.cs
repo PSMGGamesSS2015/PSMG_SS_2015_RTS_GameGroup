@@ -76,5 +76,7 @@
         public const string BatterBowl = "BatterBowl";
         public const string Knight = "Knight";
         public const string DungeonDoor = "DungeonDoor";
+        public const string KnightCollisionCheck = "KnightCollisionCheck";
+        public const string TastyTart = "TastyTart";
     }
 }

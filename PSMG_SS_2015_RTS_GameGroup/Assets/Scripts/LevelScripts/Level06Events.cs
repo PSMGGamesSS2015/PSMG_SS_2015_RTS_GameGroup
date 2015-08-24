@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies.Knight;
 using Assets.Scripts.Controllers.Objects;
@@ -17,7 +18,10 @@ namespace Assets.Scripts.LevelScripts
         public Event ImpsHaveRescuedPrincessMessage;
         public Event KingJumpsOutOfCakeMessage;
 
-        public KnightController Knight { get; private set; }
+        public KnightController KnightBehindFirstGate { get; private set; }
+        public KnightController KnightAtEndOfFirstFloor { get; private set; }
+
+        public List<FurnaceController> Furnaces { get; private set; }
 
         public DungeonDoorController DoorToOvens { get; private set; }
         private const string DoorToOvenName = "DoorToOvens";
@@ -32,7 +36,12 @@ namespace Assets.Scripts.LevelScripts
         {
             base.Start();
 
-            Knight = GameObject.FindGameObjectWithTag(TagReferences.Knight).GetComponent<KnightController>();
+            Furnaces = new List<FurnaceController>();
+
+            var knights = GameObject.FindGameObjectsWithTag(TagReferences.Knight).ToList();
+
+            KnightBehindFirstGate = knights.First(k => k.name == KnightBehindFirstGateName).GetComponent<KnightController>();
+            KnightAtEndOfFirstFloor = knights.First(k => k.name == KnightAtEndOfFirstFloorName).GetComponent<KnightController>();
 
             var dungeonDoorGameObjects = GameObject.FindGameObjectsWithTag(TagReferences.DungeonDoor).ToList();
 
@@ -44,7 +53,14 @@ namespace Assets.Scripts.LevelScripts
 
             DoorToExit =
                 dungeonDoorGameObjects.First(go => go.name == DoorToExitName).GetComponent<DungeonDoorController>();
+
+            var furanceGameObjects = GameObject.FindGameObjectsWithTag(TagReferences.Furnace).ToList();
+            furanceGameObjects.ForEach(fgo => Furnaces.Add(fgo.GetComponent<FurnaceController>()));
         }
+
+        private const string KnightAtEndOfFirstFloorName = "KnightAtEndOfFirstFloor";
+
+        private const string KnightBehindFirstGateName = "KnightBehindFirstGate";
 
         protected override void RegisterEvents()
         {

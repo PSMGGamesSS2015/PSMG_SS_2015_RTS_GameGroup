@@ -45,6 +45,7 @@ namespace Assets.Scripts.Managers
             Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerBackground, true);
             Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerForeground, true);
             Physics2D.IgnoreLayerCollision(LayerReferences.DefaultLayer, LayerReferences.DecorationLayerForeground, true);
+            Physics2D.IgnoreLayerCollision(LayerReferences.KnightLayer, LayerReferences.DecorationLayerBackground, true);
         }
 
         private void InitManagers()

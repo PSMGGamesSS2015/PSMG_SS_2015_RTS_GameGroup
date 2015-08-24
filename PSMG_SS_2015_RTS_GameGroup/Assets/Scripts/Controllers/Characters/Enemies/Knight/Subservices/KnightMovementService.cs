@@ -4,6 +4,8 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
 {
     public class KnightMovementService : MovingObject
     {
+
+
         public override void Start()
         {
             // TODO
@@ -12,6 +14,11 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
         public override void FixedUpdate()
         {
             // TODO
+        }
+
+        public void MoveToCake()
+        {
+            
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices;
-using Assets.Scripts.Helpers;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
 {
@@ -11,15 +10,15 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
             InitServices();
         }
 
-
         private void InitServices()
         {
             gameObject.AddComponent<KnightMovementService>();
             gameObject.AddComponent<KnightAttackService>();
             gameObject.AddComponent<KnightCollisionSerivce>();
-            gameObject.AddComponent<KnightInteractionService>();
-            gameObject.AddComponent<AnimationHelper>();
-            gameObject.AddComponent<AudioHelper>();
+            gameObject.AddComponent<KnightEatingTartService>();
+            gameObject.AddComponent<KnightAnimationHelper>();
+            gameObject.AddComponent<KnightFeelsSoHotService>();
+            gameObject.AddComponent<KnightAudioService>();
         }
     }
 }

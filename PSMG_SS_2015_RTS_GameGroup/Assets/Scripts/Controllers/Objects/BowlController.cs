@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.Managers;
@@ -99,6 +100,7 @@ namespace Assets.Scripts.Controllers.Objects
             yield return new WaitForSeconds(2f);
 
             level06Events.KnightBehindFirstGate.GetComponent<KnightMovementService>().Walk();
+            level06Events.KnightBehindFirstGate.GetComponent<KnightAnimationHelper>().Play(AnimationReferences.KnightWalking);
         }
     }
 }

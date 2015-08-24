@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices;
+using Assets.Scripts.LevelScripts;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
@@ -52,6 +54,12 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon
             GetComponent<DragonAudioService>().Voice.Play(SoundReferences.DragonDeath);
 
             yield return new WaitForSeconds(1.5f);
+
+            var level06Events = (Level06Events) LevelManager.Instance.CurrentLevelEvents;
+            if (level06Events != null)
+            {
+                level06Events.DoorToPrincess.Open();
+            }
 
             LeaveGame();
         }

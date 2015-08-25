@@ -38,6 +38,7 @@ namespace Assets.Scripts.AssetReferences
         public const string Puddle3 = "Sounds/FX_pfuetze3";
         public const string ShipCanon = "Sounds/FX_schiffskanone";
         public const string DoorOpen = "Sounds/FX_tuer_oeffnen";
+        public const string DoorOpen_II = "Sounds/Tuer_oeffnen_II";
         public const string WallTrigger = "Sounds/FX_wandschalter";
         public const string WaterDrops1 = "Sounds/Tropfen1";
         public const string WaterDrops2 = "Sounds/Tropfen2";
@@ -46,6 +47,11 @@ namespace Assets.Scripts.AssetReferences
         public const string WaterDrops5 = "Sounds/Tropfen5";
         public const string TorchFireV1 = "Sounds/feuerrascheln_carolin";
         public const string TorchFireV2 = "Sounds/feuerrascheln_v2";
+        public const string MetallDrum = "Metalltrommel";
+        public const string FireBurning = "Rascheln";
+        public const string Walking = "Ritter_Gehen";
+        public const string HeavyWalking = "Schweres_Gehen";
+        public const string UI_Feedback = "Feedback";
 
         #endregion
 

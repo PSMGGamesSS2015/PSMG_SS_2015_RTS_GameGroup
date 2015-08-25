@@ -37,7 +37,7 @@ namespace Assets.Scripts.Managers
             return SpawnFire(position, sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, 1);   
         }
 
-        public List<GameObject> SpawnFire(Vector3 position, string sortingLayerName, int nrOfFlameTongues)
+        public List<GameObject> SpawnFire(Vector3 position, string sortingLayerName, int positionInLayer, int nrOfFlameTongues)
         {
             return SpawnFire(position, sortingLayerName, new Vector3(StandardScale, StandardScale, StandardScale), Quaternion.identity, nrOfFlameTongues);   
         }
@@ -69,5 +69,16 @@ namespace Assets.Scripts.Managers
         }
 
 
+        public List<GameObject> SpawnFire(Vector3 position, string sortingLayerName, int positionInLayer)
+        {
+            var flames = new List<GameObject>();
+
+            var flame = (GameObject)Instantiate(FirePrefab, position, Quaternion.identity);
+            flame.GetComponent<FireParticleSystemController>().MoveToSortingLayer(sortingLayerName);
+            flame.GetComponent<FireParticleSystemController>().MoveToSortingLayerPosition(positionInLayer);
+            flames.Add(flame);
+
+            return flames;
+        }
     }
 }

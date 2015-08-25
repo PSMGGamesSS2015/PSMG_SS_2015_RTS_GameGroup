@@ -35,6 +35,12 @@ namespace Assets.Scripts.Helpers
             this.Flip();
         }
 
+        public void TurnVertically()
+        {
+            FacingRight = !FacingRight;
+            this.Flip();
+        }
+
         public void Move()
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(MovementSpeed, GetComponent<Rigidbody2D>().velocity.y);

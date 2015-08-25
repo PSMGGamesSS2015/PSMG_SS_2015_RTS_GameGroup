@@ -20,6 +20,11 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             return SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground);
         }
 
+        public List<GameObject> SetOnFire(GameObject target, string sortingLayer, int positionInLayer)
+        {
+            return SpecialEffectsManager.Instance.SpawnFire(target.transform.position, sortingLayer, positionInLayer);
+        }
+
         public List<GameObject> SetOnFire(GameObject target, int nrOfFlameTongues)
         {
             return SpecialEffectsManager.Instance.SpawnFire(target.transform.position, SortingLayerReferences.MiddleForeground, nrOfFlameTongues);
@@ -41,7 +46,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             yield return new WaitForSeconds(2.5f);
 
-            var fire = SetOnFire(bowl.gameObject);
+            var fire = SetOnFire(bowl.gameObject, SortingLayerReferences.MiddleForeground, 35);
 
             yield return new WaitForSeconds(1.5f);
 

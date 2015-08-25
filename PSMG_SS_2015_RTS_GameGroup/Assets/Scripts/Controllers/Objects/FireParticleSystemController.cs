@@ -44,5 +44,10 @@ namespace Assets.Scripts.Controllers.Objects
         {
             particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingLayerName = sortingLAyerName);
         }
+
+        public void MoveToSortingLayerPosition(int positionInLayer)
+        {
+            particleSystems.ForEach(ps => ps.GetComponent<Renderer>().sortingOrder = positionInLayer);
+        }
     }
 }

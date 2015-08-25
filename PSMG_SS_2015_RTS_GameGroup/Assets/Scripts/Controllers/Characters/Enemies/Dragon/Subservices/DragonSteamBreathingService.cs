@@ -13,7 +13,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
         private TriggerCollider2D steamBreathingRange;
         public List<ImpController> ImpsInBreathingRange { get; private set; }
-        private ParticleSystem steamParticleSystem;
+        public ParticleSystem SteamParticleSystem { get; private set; }
 
         public void Awake()
         {
@@ -23,7 +23,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             
             steamBreathingRange.RegisterListener(this);
 
-            steamParticleSystem =
+            SteamParticleSystem =
                 GetComponentsInChildren<ParticleSystem>().First(ps => ps.tag == TagReferences.DragonSteamBreath);
 
             ImpsInBreathingRange = new List<ImpController>();
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 
             yield return new WaitForSeconds(2.15f);
 
-            steamParticleSystem.Play();
+            SteamParticleSystem.Play();
             GetComponent<DragonAudioService>().Voice.Play(SoundReferences.DragonWoahh);
 
             yield return new WaitForSeconds(0.2f);
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             yield return new WaitForSeconds(0.65f);
 
             GetComponent<DragonAnimationHelper>().PlayFlyingAnimation();
-            steamParticleSystem.Stop();
+            SteamParticleSystem.Stop();
             GetComponent<DragonMovementService>().Walk();
 
         }

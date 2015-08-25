@@ -107,12 +107,12 @@ namespace Assets.Scripts.LevelScripts
 
         private void KnightEatingCakeAction()
         {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_05);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_05_KnightEatingCake);
         }
 
         private void CakeReadyAction()
         {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_04);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_04_KnightSaliva);
         }
 
         private void CakeAlmostReadyAction()

@@ -15,6 +15,7 @@ namespace Assets.Scripts.Controllers.Objects
         private SpriteRenderer flour;
         private List<SpriteRenderer> spriteRenderers; 
         private const string FlourName = "Flour";
+        private const string ColorOfBatteredDoughHexString = "D49A6A";
 
         public GameObject TastyTartPrefab;
 
@@ -64,8 +65,9 @@ namespace Assets.Scripts.Controllers.Objects
             if (!HasFlourBeenAdded || HasBeenBattered || HasBeenHeated) return;
 
             HasBeenBattered = true;
-
-            flour.color = Color.yellow;
+            Color colorOfBatteredDough;
+            Color.TryParseHexString(ColorOfBatteredDoughHexString, out colorOfBatteredDough);
+            flour.color = colorOfBatteredDough;
 
             var level06Events = (Level06Events)LevelManager.Instance.CurrentLevelEvents;
             level06Events.CakeAlmostReadyMessage.TriggerManually();
@@ -84,7 +86,7 @@ namespace Assets.Scripts.Controllers.Objects
             yield return new WaitForSeconds(1f);
 
             var position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2, gameObject.transform.position.z);
-            var tart = Instantiate(TastyTartPrefab, position, Quaternion.identity);
+            Instantiate(TastyTartPrefab, position, Quaternion.identity);
 
             spriteRenderers.ForEach(sr => sr.enabled = false);
             GetComponent<Collider2D>().enabled = false;

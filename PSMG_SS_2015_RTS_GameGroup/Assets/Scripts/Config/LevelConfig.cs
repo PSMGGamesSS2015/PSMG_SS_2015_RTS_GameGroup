@@ -59,7 +59,7 @@ namespace Assets.Scripts.Config
             new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level04TrollVillage, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level05CastleGlazeArrival, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.CaveTheme}),
-            new LevelConfig(6, 4.0f, SceneReferences.Level06CastleGlazeDungenon, new[] {10,10,10,10,10,10,10}, LevelType.InGame, new []{SoundReferences.CaveTheme}),
+            new LevelConfig(6, 4.0f, SceneReferences.Level06CastleGlazeDungenon, new[] {1,6,0,1,1,0,0}, LevelType.InGame, new []{SoundReferences.CaveTheme}),
         };
     }
 }

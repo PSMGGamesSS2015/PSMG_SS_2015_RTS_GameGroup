@@ -203,8 +203,8 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl6_01 = "Sprachausgabe/Level_6/6_01_Spieler_betritt_kleines_Backstuebchen";
         public const string SoundLvl6_02 = "Sprachausgabe/Level_6/6_02_Tuer_Sprengen_fehlgeschlagen";
         public const string SoundLvl6_03 = "Sprachausgabe/Level_6/6_03_Kuchen_fast_fertig";
-        public const string SoundLvl6_04 = "Sprachausgabe/Level_6/6_04_Kuchen_fertig";
-        public const string SoundLvl6_05 = "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
+        public const string SoundLvl6_04_KnightSaliva = "Sprachausgabe/Level_6/6_04_Kuchen_fertig";
+        public const string SoundLvl6_05_KnightEatingCake = "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
         public const string SoundLvl6_06 = "Sprachausgabe/Level_6/6_06_Imps_sind_bei_der_Haengebruecke";
         public const string SoundLvl6_07 = "Sprachausgabe/Level_6/6_07_Imp_befreien_Prinzessin";
         public const string SoundLvl6_08 = "Sprachausgabe/Level_6/6_08_Koenig_springt_aus_Torte";

@@ -50,11 +50,19 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
             {
                 CurrentDirection = Direction.Downwards;
                 GetComponent<DragonSteamBreathingService>().ImpsInBreathingRange.Clear();
+                TurnVertically();
             }
             else
             {
                 CurrentDirection = Direction.Upwards;
             }
+        }
+
+        public new void TurnVertically()
+        {
+            base.TurnVertically();
+
+            GetComponent<DragonSteamBreathingService>().SteamParticleSystem.startSpeed *= -1;
         }
 
         public void Flydown()

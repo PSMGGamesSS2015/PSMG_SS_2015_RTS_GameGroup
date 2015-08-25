@@ -14,7 +14,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
         {
             IsLeaving = false;
 
-
             InitServices();
         }
 

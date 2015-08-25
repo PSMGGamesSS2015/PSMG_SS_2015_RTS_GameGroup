@@ -32,8 +32,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void LightFires()
         {
-            var spawnPosition = new Vector3(gameObject.transform.position.x - 1, gameObject.transform.position.y, gameObject.transform.position.z);
-            fire = SpecialEffectsManager.Instance.SpawnFire(spawnPosition, SortingLayerReferences.MiddleForeground);
+            fire = SpecialEffectsManager.Instance.SpawnFire(gameObject.transform.position, SortingLayerReferences.MiddleForeground);
         }
 
         public void Extinguish()

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.LevelScripts;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Types;
 using UnityEngine;
 
@@ -77,6 +79,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                     TrainUnemployed();
                     break;
             }
+
+            CheckIfFirstImpInFirstLevelIsTrained();
+        }
+
+        private void CheckIfFirstImpInFirstLevelIsTrained()
+        {
+            if (LevelManager.Instance.CurrentLevel.CurrentLevelConfig.Name != SceneReferences.Level01Koboldingen) return;
+
+            var events = (Level01Events)LevelManager.Instance.CurrentLevelEvents;
+
+            if (!events.ImpIsTrainable) return;
+            if (events.ImpHasBeenTrained) return;
+
+            events.ShieldCarrierTrainedMessage.TriggerManually();
         }
 
         public bool SpearmanIsInCommand

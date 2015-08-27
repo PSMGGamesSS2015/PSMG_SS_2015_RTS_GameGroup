@@ -161,9 +161,8 @@ namespace Assets.Scripts.Managers
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
             RegisterListeners();
-            listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
-
             LoadLevelEvents();
+            listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
         }
 
         private void LoadLevelEvents()
@@ -172,17 +171,56 @@ namespace Assets.Scripts.Managers
             {
                 case SceneReferences.Level01Koboldingen:
                     CurrentLevelEvents = gameObject.AddComponent<Level01Events>();
+                    StartCoroutine(Level01StartedRoutine());
                     break;
                 case SceneReferences.Level02CherryTopMountains:
                     CurrentLevelEvents = gameObject.AddComponent<Level02Events>();
+                    StartCoroutine(Level02StartedRoutine());
                     break;
                 case SceneReferences.Level05CastleGlazeArrival:
                     CurrentLevelEvents = gameObject.AddComponent<Level05Events>();
+                    StartCoroutine(Level05StartedRoutine());
                     break;
                 case SceneReferences.Level06CastleGlazeDungenon:
                     CurrentLevelEvents = gameObject.AddComponent<Level06Events>();
+                    StartCoroutine(Level06StartedRoutine());
                     break;
             }
+        }
+
+        public IEnumerator Level01StartedRoutine()
+        {
+            yield return (1f);
+
+            var events = (Level01Events) CurrentLevelEvents;
+            events.MapStartetMessage.TriggerManually();
+
+            yield return new WaitForSeconds(12f);
+            listeners.ForEach(l => l.OnStartMessagePlayed());
+        }
+
+        private IEnumerator Level02StartedRoutine()
+        {
+            yield return new WaitForSeconds(0f);
+
+            // TODO
+            listeners.ForEach(l => l.OnStartMessagePlayed());
+        }
+
+        private IEnumerator Level05StartedRoutine()
+        {
+            yield return new WaitForSeconds(0f);
+
+            // TODO
+            listeners.ForEach(l => l.OnStartMessagePlayed());
+        }
+
+        private IEnumerator Level06StartedRoutine()
+        {
+            yield return new WaitForSeconds(0f);
+
+             // TODO
+            listeners.ForEach(l => l.OnStartMessagePlayed());
         }
 
         public void RegisterListeners()
@@ -204,6 +242,7 @@ namespace Assets.Scripts.Managers
         public interface ILevelManagerListener
         {
             void OnLevelStarted(Level level);
+            void OnStartMessagePlayed();
         }
 
         private List<ILevelManagerMenuSceneListener> menuSceneListeners;

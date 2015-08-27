@@ -277,5 +277,10 @@ namespace Assets.Scripts.Managers
         {
             mainCamera = level.MainCamera;
         }
+
+        void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
+        {
+            // TODO enabled stuff
+        }
     }
 }

@@ -53,6 +53,9 @@ namespace Assets.Scripts.Managers
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
+            UIMessageService.Reset();
+            UIImpOutOfSightService.Reset();
+
             CurrentUserInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface>();
             CurrentUserInterface.Setup(level.CurrentLevelConfig);
 

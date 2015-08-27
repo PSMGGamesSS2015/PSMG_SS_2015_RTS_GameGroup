@@ -214,5 +214,10 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
                 ImpOutOfSightIcons.Clear();
             }
         }
+
+        public void Reset()
+        {
+            ImpOutOfSightIcons.Clear();
+        }
     }
 }

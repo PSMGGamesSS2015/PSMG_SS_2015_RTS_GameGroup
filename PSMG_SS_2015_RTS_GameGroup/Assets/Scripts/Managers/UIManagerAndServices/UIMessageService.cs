@@ -69,7 +69,7 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
             ConfigureMessageTextAndImage(message, speaker, msg);
 
-            positionElementWithinCanvas(msg);
+            PositionElementWithinCanvas(msg);
 
             Counter.SetCounter(gameObject, SpeechBubbleMessageDuration, UpdateDisplayedList, false);
         }
@@ -140,11 +140,11 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             Destroy(oldestSpeechBubbleMessage);
 
             speechBubbleMessages.Where(sbm => sbm != null).ToList().Sort();
-            speechBubbleMessages.Where(sbm => sbm != null).ToList().ForEach(positionElementWithinCanvas);
+            speechBubbleMessages.Where(sbm => sbm != null).ToList().ForEach(PositionElementWithinCanvas);
             
         }
 
-        private void positionElementWithinCanvas(GameObject msg)
+        private void PositionElementWithinCanvas(GameObject msg)
         {
             var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
             var screenPositionOfCanvas = canvas.transform.position;
@@ -157,6 +157,11 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
                 screenPositionOfCanvas.y + Screen.height/2.0f -  75 * speechBubbleMessages.Count-1,
                 screenPositionOfCanvas.z
                 );
+        }
+
+        public void Reset()
+        {
+            speechBubbleMessages.Clear();
         }
     }
 }

@@ -44,8 +44,7 @@ namespace Assets.Scripts.Managers
 
         private IEnumerator OnGoalReachedRoutine()
         {
-            //TODO Display feedback to user
-            GameManager.Instance.State = GameManager.GameState.NotStarted;
+            ImpManager.Instance.SpawnCounter.Stop();
             ImpManager.Instance.Imps.ForEach(i => i.GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpWinLoop));
             SoundManager.Instance.BackgroundMusic.PlayAsLast(SoundReferences.WonTheme);
 

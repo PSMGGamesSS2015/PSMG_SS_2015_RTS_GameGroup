@@ -55,6 +55,8 @@ namespace Assets.Scripts.Managers
         {
             CurrentUserInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface>();
             CurrentUserInterface.Setup(level.CurrentLevelConfig);
+
+            GetComponent<ImpManager>().OnNewUserInterfaceLoaded(CurrentUserInterface);
             listeners.ForEach(x => x.OnUserInterfaceLoaded(CurrentUserInterface));
         }
     }

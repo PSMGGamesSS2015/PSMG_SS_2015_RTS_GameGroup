@@ -16,7 +16,6 @@ namespace Assets.Scripts.LevelScripts
         private Event bombNeededMessage;
         private Event trollMetMessage;
 
-
         protected override void RegisterEvents()
         { 
             mapStartetMessage = Events.First(e => e.Nr == 1);

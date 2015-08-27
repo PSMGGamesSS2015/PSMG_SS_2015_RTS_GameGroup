@@ -6,6 +6,7 @@ using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
+using Assets.Scripts.UserInterfaceComponents;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -21,10 +22,10 @@ namespace Assets.Scripts.Managers
     {
         private LevelConfig config;
         private Vector3 spawnPosition;
-
+        private UserInterface currentUserInterface;
         public List<ImpController> Imps;
 
-        private Counter spawnCounter;
+        public Counter SpawnCounter { get; private set; }
         private int currentImps;
         private int[] professions;
 
@@ -69,14 +70,14 @@ namespace Assets.Scripts.Managers
 
         public void SetLevel(Level level)
         {
-            if (spawnCounter != null) spawnCounter.Stop();
+            if (SpawnCounter != null) SpawnCounter.Stop();
 
             currentImps = 0;
             config = level.CurrentLevelConfig;
             professions = new int[7];
             spawnPosition = level.Start.transform.position;
             SpawnImp(); // spawn first imp
-            spawnCounter = Counter.SetCounter(gameObject, level.CurrentLevelConfig.SpawnInterval, SpawnImp, true);
+            SpawnCounter = Counter.SetCounter(gameObject, level.CurrentLevelConfig.SpawnInterval, SpawnImp, true);
         }
 
         private void SelectProfession(ImpType profession)
@@ -97,6 +98,13 @@ namespace Assets.Scripts.Managers
                 UpdateMaxProfessions();
                 impSelected.GetComponent<ImpTrainingService>().Train(profession);
             }
+        }
+
+        public void OnNewUserInterfaceLoaded(UserInterface userInterface)
+        {
+            if (currentUserInterface != null) UnregisterListener(currentUserInterface);
+            currentUserInterface = userInterface;
+            RegisterListener(userInterface);
         }
 
         public int[] GetProfessions()

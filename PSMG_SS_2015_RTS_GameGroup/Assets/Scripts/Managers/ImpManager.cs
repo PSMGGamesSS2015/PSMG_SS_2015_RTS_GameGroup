@@ -36,6 +36,7 @@ namespace Assets.Scripts.Managers
         private List<IMpManagerListener> listeners;
 
         public static ImpManager Instance;
+        private float spawnInterval;
 
         public interface IMpManagerListener
         {
@@ -76,8 +77,7 @@ namespace Assets.Scripts.Managers
             config = level.CurrentLevelConfig;
             professions = new int[7];
             spawnPosition = level.Start.transform.position;
-            SpawnImp(); // spawn first imp
-            SpawnCounter = Counter.SetCounter(gameObject, level.CurrentLevelConfig.SpawnInterval, SpawnImp, true);
+            spawnInterval = level.CurrentLevelConfig.SpawnInterval;
         }
 
         private void SelectProfession(ImpType profession)
@@ -255,6 +255,17 @@ namespace Assets.Scripts.Managers
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
             SetLevel(level);
+        }
+
+         void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
+         {
+             StartSpawningImps();
+         }
+
+        private void StartSpawningImps()
+        {
+            SpawnImp(); // spawn first imp
+            SpawnCounter = Counter.SetCounter(gameObject, spawnInterval, SpawnImp, true);
         }
 
         public void OnUntrain(ImpController impController)

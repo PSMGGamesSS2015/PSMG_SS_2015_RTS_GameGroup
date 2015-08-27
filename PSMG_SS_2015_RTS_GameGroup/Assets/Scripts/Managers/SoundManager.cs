@@ -65,6 +65,11 @@ namespace Assets.Scripts.Managers
             StartPlaylist(level);
         }
 
+        void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
+        {
+            // TODO
+        }
+
         void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
         {
             StartPlaylist(level);

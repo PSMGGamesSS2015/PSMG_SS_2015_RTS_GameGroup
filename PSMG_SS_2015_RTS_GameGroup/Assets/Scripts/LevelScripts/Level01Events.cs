@@ -6,6 +6,11 @@ namespace Assets.Scripts.LevelScripts
 {
     public class Level01Events : LevelEvents
     {
+        public bool ImpHasBeenClicked { get; private set; }
+        public bool ImpIsClickable { get; private set; }
+        public bool ImpHasBeenTrained { get; private set; }
+        public bool ImpIsTrainable { get; private set; }
+
         public Event MapStartetMessage { get; private set; }
         public Event SelectImpMessageTrigger { get; private set; }
         public Event ShieldCarrierTrainedMessage { get; private set; }
@@ -13,12 +18,17 @@ namespace Assets.Scripts.LevelScripts
         public Event WeaponsCollectedMessage { get; private set; }
         public Event BombNeededMessage { get; private set; }
         public Event TrollMetMessage { get; private set; }
-        public Event ProfessionAssignedMessage { get; private set; }
+        public Event AssignProfessionMessage { get; private set; }
         public Event SuspensionBridgesCrossed { get; private set; }
         public Event LevelCompleted { get; private set; }
 
         protected override void RegisterEvents()
         {
+            ImpHasBeenClicked = false;
+            ImpIsClickable = false;
+            ImpIsTrainable = false;
+            ImpHasBeenTrained = false;
+
             MapStartetMessage = gameObject.AddComponent<Event>();
             MapStartetMessage.Message =
                 "Gebieter, Prinzessin Koboldigunde wurde entführt. König Krümelbart hat sie in sein tiefstes Verlies geworfen. Ihr müsst sie retten. Macht euch auf!!!";
@@ -28,21 +38,20 @@ namespace Assets.Scripts.LevelScripts
             SelectImpMessageTrigger.Message =
                 "Mein Herr. Ihr könnt Kobolde auswählen, indem ihr auf sie klickt oder die Tab-Taste benutzt.";
             SelectImpMessageTrigger.Action = SelectImpAction;
-
-            // TODO not played so far; should be played when the first imps is selected; create
-            ProfessionAssignedMessage = gameObject.AddComponent<Event>();
-            ProfessionAssignedMessage.Message = "Herrvorragend. Nun gebt mir was zu tun!";
-
-            // TODO should be played when first coward is assigned
+            
+            AssignProfessionMessage = gameObject.AddComponent<Event>();
+            AssignProfessionMessage.Message = "Herrvorragend. Nun gebt mir was zu tun!";
+            AssignProfessionMessage.Action = AssignProfessionAction;
+            
             ShieldCarrierTrainedMessage = gameObject.AddComponent<Event>();
             ShieldCarrierTrainedMessage.Message =
                 "Hierhinter bin ich sicher, Meister. Nichts und niemand kommt an mir vorbei.";
             ShieldCarrierTrainedMessage.Action = ShieldCarrierTrainedAction;
 
-            // TODO created
             SuspensionBridgesCrossed = Events.First(e => e.Nr == 5);
             SuspensionBridgesCrossed.Message =
                 "Diese Hängebrücke sieht zerbrechlich aus, Gebieter. Ich weiß nicht, ob sie das Gewicht unserer Schilde trägt.";
+            SuspensionBridgesCrossed.Action = SuspensionBridgesCrossedAction;
 
             LaddersCollectedMessage = Events.First(e => e.Nr == 6);
             LaddersCollectedMessage.Message =
@@ -68,6 +77,19 @@ namespace Assets.Scripts.LevelScripts
             LevelCompleted.Message =
                 "Hmmm, auf dem Weg liegen Kuchenkrümel herum. Die Prinzessin muss hier vorbeigekommen sein. Ihr habt die Spur des arglistigen Entführers gefunden. Ein Meisterstück, eure Boshaftigkeit.";
             LevelCompleted.Action = LevelCompletedAction;
+            
+        }
+
+        private void SuspensionBridgesCrossedAction()
+        {
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_05_SuspensionBridgesCrossed);
+        }
+
+        private void AssignProfessionAction()
+        {
+            ImpHasBeenClicked = true;
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_03_AssignProfession);
+            ImpIsTrainable = true;
         }
 
         private void LevelCompletedAction()
@@ -87,17 +109,19 @@ namespace Assets.Scripts.LevelScripts
 
         public void ShieldCarrierTrainedAction()
         {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_04);
+            ImpHasBeenTrained = true;
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_04_CowardTrained);
         }
 
         private void MapStartetAction()
         {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_01);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_01_LevelStarted);
         }
 
         private void SelectImpAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_02);
+            ImpIsClickable = true;
         }
 
         private void LaddersCollectedAction()

@@ -59,5 +59,10 @@ namespace Assets.Scripts.Managers
             GetComponent<ImpManager>().OnNewUserInterfaceLoaded(CurrentUserInterface);
             listeners.ForEach(x => x.OnUserInterfaceLoaded(CurrentUserInterface));
         }
+
+        void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
+        {
+            // TODO
+        }
     }
 }

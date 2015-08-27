@@ -38,8 +38,7 @@
         public const string ImpTalk = "Imp Talk";
         public const string ImpDead = "Imp Dead";
 
-        public const string ImpWin = "Imp Win";
-        public const string ImpWinLoop = "Imp Win Loop";
+        public const string ImpHappy = "Imp Happy";
 
         public const string ImpSchwarzeneggerThrowing = "Imp Schwarzenegger Throwing";
         public const string ImpBatteringDough = "Imp Battering Dough";

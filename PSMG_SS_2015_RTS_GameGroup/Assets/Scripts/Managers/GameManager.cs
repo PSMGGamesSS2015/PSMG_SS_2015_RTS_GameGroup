@@ -1,52 +1,40 @@
-﻿using Assets.Scripts.AssetReferences;
-using Assets.Scripts.Config;
-using Assets.Scripts.ParameterObjects;
-using Assets.Scripts.UserInterfaceComponents;
+﻿using Assets.Scripts.Config;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
     /// <summary>
     /// The GameManager is a global object that glues the whole application together.
-    /// It holds references to the major components of the game and serves as event hub
-    /// for communication between these components.
-    /// Beyond that, the GameManager is a state machine that manages the game states, thereby
-    /// coordinating the flow of the application.
+    /// It holds references to the major components of the game and sets up
+    /// the communication between these components.
     /// </summary>
 
-    public class GameManager : MonoBehaviour, LevelManager.ILevelManagerListener, UIManager.IUIManagerListener
+    public class GameManager : MonoBehaviour
     {
-        private enum GameState
-        {
-            NotStarted,
-            LevelStarted
-        }
-
-        private GameState gameState;
-
         private LevelManager levelManager;
         private ImpManager impManager;
         private UIManager uiManager;
         private InputManager inputManager;
         private SoundManager soundManager;
-        // ReSharper disable once NotAccessedField.Local
-        private SpecialEffectsManager specialEffectsManager;
+        private Physics2DManager physics2DManager;
+
+        public static GameManager Instance;
 
         public void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            SetupCollisionManagement();
-            InitManagers();
-            gameState = GameState.NotStarted;
-        }
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
 
-        private void SetupCollisionManagement()
-        {
-            Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerBackground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerForeground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.DefaultLayer, LayerReferences.DecorationLayerForeground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.KnightLayer, LayerReferences.DecorationLayerBackground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.KnightLayer, LayerReferences.DecorationLayerForeground, true);
+            DontDestroyOnLoad(gameObject);
+
+            InitManagers();
+            SetupCollisionManagement();
         }
 
         private void InitManagers()
@@ -56,19 +44,23 @@ namespace Assets.Scripts.Managers
             uiManager = GetComponent<UIManager>();
             inputManager = GetComponent<InputManager>();
             soundManager = GetComponent<SoundManager>();
-            specialEffectsManager = GetComponent<SpecialEffectsManager>();
+            physics2DManager = gameObject.AddComponent<Physics2DManager>();
+        }
 
+        private void SetupCollisionManagement()
+        {
+            physics2DManager.SetupCollisionManagement();
         }
 
         public void Start() 
         {
             SetupCommunicationBetweenManagers();
+
             levelManager.LoadLevel(LevelConfig.Levels[0]);
         }
         
         private void SetupCommunicationBetweenManagers()
         {
-            levelManager.RegisterListener(this);
             levelManager.RegisterListener(impManager);
             levelManager.RegisterListener(soundManager);
             levelManager.RegisterMenuSceneListener(soundManager);
@@ -77,28 +69,6 @@ namespace Assets.Scripts.Managers
             levelManager.RegisterListener(inputManager);
             inputManager.RegisterListener(impManager);
             uiManager.RegisterListener(inputManager);
-            uiManager.RegisterListener(this);
-        }
-
-        public void Update()
-        {
-            if (gameState == GameState.LevelStarted) impManager.SpawnImps();
-        }
-
-        void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
-        {
-            gameState = GameState.LevelStarted;
-        }
-
-        // The following parts need to be placed here to avoid a circular base class reference.
-
-        private UserInterface currentUserInterface;
-
-        void UIManager.IUIManagerListener.OnUserInterfaceLoaded(UserInterface userInterface)
-        {
-            if (currentUserInterface != null) impManager.UnregisterListener(currentUserInterface);
-            currentUserInterface = userInterface;
-            impManager.RegisterListener(userInterface);
         }
     }
 }

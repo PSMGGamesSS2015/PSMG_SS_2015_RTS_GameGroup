@@ -98,5 +98,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         {
             ImpInventory.DisplayExplosion();
         }
+
+        public void PlayWinningAnimation()
+        {
+            GetComponent<ImpMovementService>().Stand();
+
+            Play(AnimationReferences.ImpHappy);
+        }
     }
 }

@@ -79,5 +79,8 @@
         public const string KnightCollisionCheck = "KnightCollisionCheck";
         public const string TastyTart = "TastyTart";
         public const string KnightTart = "KnightTart";
+
+        public const string Koboldigunde = "Koboldigunde";
+        public const string KoboldigundeCollisionCheck = "KoboldigundeCollisionCheck";
     }
 }

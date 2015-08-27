@@ -11,6 +11,7 @@
         public const string Dragon = "Dragon Sorting Layer";
         public const string Knight = "Knight Sorting Layer";
         public const string Crumblebeard = "Crumblebeard Sorting Layer";
+        public const string Koboldigunde = "Koboldigunde Sorting Layer";
         public const string Explosion = "Explosion Sorting Layer";
         public const string MiddleForeground = "Middle_Foreground";
         public const string Foreground = "Foreground";

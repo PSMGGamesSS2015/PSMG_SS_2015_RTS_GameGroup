@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
+using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.ParameterObjects;
@@ -25,10 +27,30 @@ namespace Assets.Scripts.Managers
         public Level CurrentLevel { get; set; }
         public LevelEvents CurrentLevelEvents { get; set; }
 
+        private bool isEndingLevel;
+
         void GoalController.IGoalControllerListener.OnGoalReachedByImp()
         {
-            // TODO
-            Debug.Log("An imp has reached the goal.");
+            OnGoalReached();
+        }
+
+        public void OnGoalReached()
+        {
+            if (isEndingLevel) return;
+
+            isEndingLevel = true;
+            StartCoroutine(OnGoalReachedRoutine());
+        }
+
+        private IEnumerator OnGoalReachedRoutine()
+        {
+            ImpManager.Instance.SpawnCounter.Stop();
+            ImpManager.Instance.Imps.ForEach(i => i.GetComponent<ImpAnimationHelper>().PlayWinningAnimation());
+            SoundManager.Instance.BackgroundMusic.PlayAsLast(SoundReferences.WonTheme);
+
+            yield return new WaitForSeconds(10f);
+
+            LoadNextLevel();
         }
 
         void TrollController.ITrollControllerListener.OnEnemyHurt(TrollController trollController)
@@ -50,14 +72,7 @@ namespace Assets.Scripts.Managers
             listeners = new List<ILevelManagerListener>();
             menuSceneListeners = new List<ILevelManagerMenuSceneListener>();
             narrativeSceneListeners = new List<ILevelManagerNarrativeSceneListener>();
-
-            SetupCollisionManagement();
-        }
-
-        private void SetupCollisionManagement()
-        {
-            Physics2D.IgnoreLayerCollision(2, 2);
-            Physics2D.IgnoreLayerCollision(2, 12);
+            isEndingLevel = false;
         }
 
         public void RegisterListener(ILevelManagerListener listener)
@@ -81,15 +96,16 @@ namespace Assets.Scripts.Managers
 
         public void LoadNextLevel()
         {
-            if (CurrentLevelNumber < LevelConfig.Levels.Length - 1)
-            {
-                Reset();
-                LoadLevel(CurrentLevelNumber + 1);
-            }
+            if (CurrentLevelNumber >= LevelConfig.Levels.Length - 1) return;
+
+            Reset();
+            LoadLevel(CurrentLevelNumber + 1);
         }
 
         private void Reset()
         {
+            isEndingLevel = false;
+
             Destroy(CurrentLevelEvents);
         }
 
@@ -159,8 +175,6 @@ namespace Assets.Scripts.Managers
                     break;
                 case SceneReferences.Level02CherryTopMountains:
                     CurrentLevelEvents = gameObject.AddComponent<Level02Events>();
-                    // TODO
-                    //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
                     break;
                 case SceneReferences.Level05CastleGlazeArrival:
                     CurrentLevelEvents = gameObject.AddComponent<Level05Events>();

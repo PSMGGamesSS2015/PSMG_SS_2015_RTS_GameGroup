@@ -6,6 +6,8 @@ using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
+using Assets.Scripts.UserInterfaceComponents;
+using Assets.Scripts.Utility;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -20,10 +22,10 @@ namespace Assets.Scripts.Managers
     {
         private LevelConfig config;
         private Vector3 spawnPosition;
-
+        private UserInterface currentUserInterface;
         public List<ImpController> Imps;
 
-        private float spawnCounter;
+        public Counter SpawnCounter { get; private set; }
         private int currentImps;
         private int[] professions;
 
@@ -68,53 +70,41 @@ namespace Assets.Scripts.Managers
 
         public void SetLevel(Level level)
         {
+            if (SpawnCounter != null) SpawnCounter.Stop();
+
             currentImps = 0;
             config = level.CurrentLevelConfig;
-            professions = new int[9];
+            professions = new int[7];
             spawnPosition = level.Start.transform.position;
+            SpawnImp(); // spawn first imp
+            SpawnCounter = Counter.SetCounter(gameObject, level.CurrentLevelConfig.SpawnInterval, SpawnImp, true);
         }
 
-        // TODO refactor
         private void SelectProfession(ImpType profession)
         {
-            if (impSelected == null)
+            if (impSelected == null) return;
+            if (!impSelected.GetComponent<ImpTrainingService>().IsTrainable) return;
+            if (impSelected.GetComponent<ImpTrainingService>().Type == profession) return;
+
+            if (profession != ImpType.Unemployed)
             {
-                Debug.Log("No imp selected");
+                if (IsTrainingLimitReached(profession)) return;
+
+                UpdateMaxProfessions(profession);
+                impSelected.GetComponent<ImpTrainingService>().Train(profession);
             }
             else
             {
-                if (!impSelected.GetComponent<ImpTrainingService>().IsTrainable)
-                {
-                    Debug.Log("This imp is currently not trainable");
-                }
-                else
-                {
-                    if (impSelected.GetComponent<ImpTrainingService>().Type == profession)
-                    {
-                        Debug.Log("The selected imp already has that profession.");
-                    }
-                    else
-                    {
-                        if (profession != ImpType.Unemployed)
-                        {
-                            if (IsTrainingLimitReached(profession))
-                            {
-                                UpdateMaxProfessions(profession);
-                                impSelected.GetComponent<ImpTrainingService>().Train(profession);
-                            }
-                            else
-                            {
-                                Debug.Log("You cannot train anymore imps of that profession.");
-                            }
-                        }
-                        else
-                        {
-                            UpdateMaxProfessions();
-                            impSelected.GetComponent<ImpTrainingService>().Train(profession);
-                        }
-                    }
-                }
+                UpdateMaxProfessions();
+                impSelected.GetComponent<ImpTrainingService>().Train(profession);
             }
+        }
+
+        public void OnNewUserInterfaceLoaded(UserInterface userInterface)
+        {
+            if (currentUserInterface != null) UnregisterListener(currentUserInterface);
+            currentUserInterface = userInterface;
+            RegisterListener(userInterface);
         }
 
         public int[] GetProfessions()
@@ -129,7 +119,7 @@ namespace Assets.Scripts.Managers
 
         private bool IsTrainingLimitReached(ImpType profession)
         {
-            return professions[(int) profession] < config.MaxProfessions[(int) profession];
+            return professions[(int) profession] >= config.MaxProfessions[(int) profession];
         }
 
         private void UpdateMaxProfessions(ImpType profession)
@@ -163,70 +153,28 @@ namespace Assets.Scripts.Managers
             listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
         }
 
-        public void SpawnImps()
-        {
-            if (currentImps == 0)
-            {
-                SpawnImp();
-            }
-            else if (IsMaxImpsReached() && IsSpawnTimeCooledDown())
-            {
-                SpawnImp();
-            }
-            else
-            {
-                spawnCounter += Time.deltaTime;
-            }
-        }
-
-        private bool IsMaxImpsReached()
-        {
-            return currentImps < config.MaxImps;
-        }
-
-        private bool IsSpawnTimeCooledDown()
-        {
-            return spawnCounter >= config.SpawnInterval;
-        }
-
         private void SpawnImp()
         {
+            if (currentImps >= config.MaxImps) return;
+
             var imp = (GameObject) Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
             var impController = imp.GetComponent<ImpController>();
             impController.RegisterListener(this);
             impController.gameObject.GetComponent<ImpSpriteManagerService>().MoveToSortingLayerPosition(currentImps);
             currentImps++;
-
             Imps.Add(impController);
-
-            spawnCounter = 0f;
         }
-
-        #region interface implementation
 
         void ImpController.IImpControllerListener.OnImpSelected(ImpController impController)
         {
             SelectImp(impController);
         }
 
-        private void DisplaySelectionOfSelectedImp()
-        {
-            impSelected.gameObject.GetComponent<ImpUIService>().Selection.Display();
-        }
-
-        private void HideSelectionOfAllImps()
-        {
-            foreach (var imp in Imps)
-            {
-                imp.gameObject.GetComponent<ImpUIService>().Selection.Hide();
-            }
-        }
-
         private void SelectImp(ImpController imp)
         {
             impSelected = imp;
-            HideSelectionOfAllImps();
-            DisplaySelectionOfSelectedImp();
+            Imps.ForEach(i => i.GetComponent<ImpUIService>().Selection.Hide()); // hide selection of all imps
+            impSelected.GetComponent<ImpUIService>().Selection.Display(); // display selection of current imp
             imp.GetComponent<ImpAudioService>().PlaySelectionSound();
         }
 
@@ -238,7 +186,7 @@ namespace Assets.Scripts.Managers
             {
                 professions[(int) type]--;
             }
-            
+
             NotifyMaxProfessions();
 
             Imps.Remove(impController);
@@ -308,8 +256,6 @@ namespace Assets.Scripts.Managers
         {
             SetLevel(level);
         }
-
-        #endregion
 
         public void OnUntrain(ImpController impController)
         {

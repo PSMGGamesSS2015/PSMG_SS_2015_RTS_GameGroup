@@ -161,8 +161,9 @@ namespace Assets.Scripts.Managers
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
             RegisterListeners();
-            LoadLevelEvents();
             listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
+
+            LoadLevelEvents();
         }
 
         private void LoadLevelEvents()

@@ -2,33 +2,84 @@
 using Assets.Scripts.Managers;
 
 public class PauseMenuScript : MonoBehaviour {
-    GameObject DisablePauseMenuPanel, HelpMenuPanel;
-    bool helpOpen=false;
+    GameObject PauseMenuPanel, HelpMenuPanel, gameManager, WinningScreenPanel;
+    bool pauseOpen = false;
+    bool helpOpen = false;
 
     void Start()
     {
-        DisablePauseMenuPanel = GameObject.Find("PauseMenu/PausePanel");
-        HelpMenuPanel = GameObject.Find("PauseMenu/HelpPanel");
-        DisablePauseMenuPanel.GetComponent<DisablePauseMenuPanel>().ToggleActive();
+        gameManager = GameObject.Find("GameManager(Clone)");
+        PauseMenuPanel = GameObject.Find("UserInterface(Clone)/PauseMenu/PausePanel");
+        HelpMenuPanel = GameObject.Find("UserInterface(Clone)/PauseMenu/HelpPanel");
+        WinningScreenPanel = GameObject.Find("UserInterface(Clone)/WinningScreen");
+        Debug.Log(WinningScreenPanel);
+        WinningScreenPanel.SetActive(false);
         HelpMenuPanel.SetActive(false);
-
+        PauseMenuPanel.SetActive(false);
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            DisablePauseMenuPanel.GetComponent<DisablePauseMenuPanel>().ToggleActive();
-            if (helpOpen == true)
+            Debug.Log("ESC wurde geklickt");
+
+            if (!pauseOpen && !helpOpen)
             {
-                HelpMenuPanel.SetActive(false);
+                OpenPauseMenu();
+            }
+            else if (helpOpen == true)
+            {
+                CloseHelp();
+            }
+            else if (pauseOpen == true)
+            {
+                ClosePauseMenu();
             }
         }
     }
 
+    public void OpenPauseMenuButton()
+    {
+        if (!pauseOpen && !helpOpen)
+        {
+            OpenPauseMenu();
+        }
+        else if (helpOpen == true)
+        {
+            CloseHelp();
+        }
+        else if (pauseOpen == true)
+        {
+            ClosePauseMenu();
+        }
+    }
+
+    public void OpenPauseMenu()
+    {
+        pauseOpen = true;
+        PauseMenuPanel.SetActive(true);
+        gameManager.GetComponent<InputManager>().PauseGame();
+        Debug.Log("PauseMenu wird angezeigt");
+    }
+
+    public void ClosePauseMenu()
+    {
+        PauseMenuPanel.SetActive(false);
+        pauseOpen = false;
+        gameManager.GetComponent<InputManager>().PauseGame();
+        Debug.Log("Pause wurde geschlossen");
+    }
+
     public void ChangeToMainMenu()
     {
-        DisablePauseMenuPanel.GetComponent<DisablePauseMenuPanel>().ToggleActive();
+        gameManager.GetComponent<InputManager>().PauseGame();
         LevelManager.Instance.LoadLevel(0);
+    }
+
+    public void showWinningScreen()
+    {
+        WinningScreenPanel.SetActive(true);
     }
 
     public void QuitGame()
@@ -36,17 +87,19 @@ public class PauseMenuScript : MonoBehaviour {
         Application.Quit();
     }
 
-    public void HelpBack()
+    public void CloseHelp()
     {
-        Debug.Log("helpback wird ausgeführt ");
         helpOpen=false;
+        pauseOpen = true;
         HelpMenuPanel.SetActive(false);
+        Debug.Log("Hilfe wurde geschlossen");
+
     }
 
     public void ShowHelp()
     {
-        Debug.Log("helpback wird ausgeführt DisablePauseMenuPanel.activeSelf:");
-        Debug.Log(DisablePauseMenuPanel.activeSelf);
+        Debug.Log("helpback wird ausgeführt PauseMenuPanel.activeSelf:");
+        Debug.Log(PauseMenuPanel.activeSelf);
         HelpMenuPanel.SetActive(true);
         helpOpen=true;
 
@@ -54,6 +107,7 @@ public class PauseMenuScript : MonoBehaviour {
 
     public void ChangeLevel(int sceneNumber)
     {
+        gameManager.GetComponent<InputManager>().PauseGame();
         LevelManager.Instance.LoadLevel(sceneNumber);
     }
 

@@ -12,6 +12,12 @@ public class DisablePauseMenuPanel : MonoBehaviour {
         pauseMenuPanel = gameObject;
         gameManager = GameObject.Find("GameManager(Clone)");
         Debug.Log("Disable Pause Menu Panel: Start (Pause)");
+        Debug.Log("GameManager?_:");
+        Debug.Log(gameManager);
+        Debug.Log("GameManager.input:");
+        Debug.Log(gameManager.GetComponent<InputManager>());
+        Debug.Log("pauseMenuPanel:");
+        Debug.Log(pauseMenuPanel);
 
         gameManager.GetComponent<InputManager>().PauseGame();
 	}

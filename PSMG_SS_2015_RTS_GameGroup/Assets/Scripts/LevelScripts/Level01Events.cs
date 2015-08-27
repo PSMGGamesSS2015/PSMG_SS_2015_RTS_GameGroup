@@ -5,67 +5,69 @@ using Assets.Scripts.Managers;
 namespace Assets.Scripts.LevelScripts
 {
     public class Level01Events : LevelEvents
-    { 
-
-        private Event mapStartetMessage;
-        private Event shieldCarrierBlockingMessage;
-        private Event shieldCarrierHeavyMessage;
-        private Event laddersNeededMessage;
-        private Event laddersCollectedMessage;
-        private Event weaponsCollectedMessage;
-        private Event bombNeededMessage;
-        private Event trollMetMessage;
-        private Event professionAssignedMessage;
-        private Event suspensionBridgesCrossed;
-        private Event levelCompleted;
+    {
+        public Event MapStartetMessage { get; private set; }
+        public Event SelectImpMessageTrigger { get; private set; }
+        public Event ShieldCarrierTrainedMessage { get; private set; }
+        public Event LaddersCollectedMessage { get; private set; }
+        public Event WeaponsCollectedMessage { get; private set; }
+        public Event BombNeededMessage { get; private set; }
+        public Event TrollMetMessage { get; private set; }
+        public Event ProfessionAssignedMessage { get; private set; }
+        public Event SuspensionBridgesCrossed { get; private set; }
+        public Event LevelCompleted { get; private set; }
 
         protected override void RegisterEvents()
-        { 
-            mapStartetMessage = Events.First(e => e.Nr == 1);
-            mapStartetMessage.Message = "Gebieter, Prinzessin Koboldigunde wurde entführt. König Krümelbart hat sie in sein tiefstes Verlies geworfen. Ihr müsst sie retten. Macht euch auf!!!";
-            mapStartetMessage.Action = MapStartetAction;    
+        {
+            MapStartetMessage = gameObject.AddComponent<Event>();
+            MapStartetMessage.Message =
+                "Gebieter, Prinzessin Koboldigunde wurde entführt. König Krümelbart hat sie in sein tiefstes Verlies geworfen. Ihr müsst sie retten. Macht euch auf!!!";
+            MapStartetMessage.Action = MapStartetAction;
 
-            shieldCarrierBlockingMessage = Events.First(e => e.Nr == 2);
-            shieldCarrierBlockingMessage.Message = "Mein Herr. Ihr könnt Kobolde auswählen, indem ihr auf sie klickt oder die Tab-Taste benutzt.";
-            shieldCarrierBlockingMessage.Action = ShieldCarrierBlockingAction;
+            SelectImpMessageTrigger = Events.First(e => e.Nr == 2);
+            SelectImpMessageTrigger.Message =
+                "Mein Herr. Ihr könnt Kobolde auswählen, indem ihr auf sie klickt oder die Tab-Taste benutzt.";
+            SelectImpMessageTrigger.Action = SelectImpAction;
 
             // TODO not played so far; should be played when the first imps is selected; create
-            professionAssignedMessage = Events.First(e => e.Nr == 9);
-            professionAssignedMessage.Message = "Herrvorragend. Nun gebt mir was zu tun!";
+            ProfessionAssignedMessage = gameObject.AddComponent<Event>();
+            ProfessionAssignedMessage.Message = "Herrvorragend. Nun gebt mir was zu tun!";
 
             // TODO should be played when first coward is assigned
-            shieldCarrierHeavyMessage = Events.First(e => e.Nr == 3);
-            shieldCarrierHeavyMessage.Message = "Hierhinter bin ich sicher, Meister. Nichts und niemand kommt an mir vorbei.";
-            shieldCarrierHeavyMessage.Action = ShieldCarrierHeavyAction;
+            ShieldCarrierTrainedMessage = gameObject.AddComponent<Event>();
+            ShieldCarrierTrainedMessage.Message =
+                "Hierhinter bin ich sicher, Meister. Nichts und niemand kommt an mir vorbei.";
+            ShieldCarrierTrainedMessage.Action = ShieldCarrierTrainedAction;
 
             // TODO created
-            suspensionBridgesCrossed = Events.First(e => e.Nr == 10);
-            suspensionBridgesCrossed.Message =
+            SuspensionBridgesCrossed = Events.First(e => e.Nr == 5);
+            SuspensionBridgesCrossed.Message =
                 "Diese Hängebrücke sieht zerbrechlich aus, Gebieter. Ich weiß nicht, ob sie das Gewicht unserer Schilde trägt.";
 
-            laddersNeededMessage = Events.First(e => e.Nr == 4);
-            laddersNeededMessage.Message = "Mein Herr, eure Kobolde brauchen Leitern, um Abgründe zu überqueren.";
-            laddersNeededMessage.Action = LaddersNeededAction;
+            LaddersCollectedMessage = Events.First(e => e.Nr == 6);
+            LaddersCollectedMessage.Message =
+                "Meisterlich, Meister. Wir können die Leitern nutzen, um Hindernisse zu überqueren.";
+            LaddersCollectedMessage.Action = LaddersCollectedAction;
 
-            laddersCollectedMessage = Events.First(e => e.Nr == 5);
-            laddersCollectedMessage.Message = "Meisterlich, Meister. Wir können die Leitern nutzen, um Hindernisse zu überqueren.";
-            laddersCollectedMessage.Action = LaddersCollectedAction;
+            BombNeededMessage = Events.First(e => e.Nr == 7);
+            BombNeededMessage.Message =
+                "Ein dicker, fetter Brocken. Sprengt ihn, mein Herr. In unserer Waffenkammer liegen Bomben und Speere.";
+            BombNeededMessage.Action = BombNeededAction;
 
-            bombNeededMessage = Events.First(e => e.Nr == 6);
-            bombNeededMessage.Message = "Ein dicker, fetter Brocken. Sprengt ihn, mein Herr. In unserer Waffenkammer liegen Bomben und Speere.";
-            bombNeededMessage.Action = BombNeededAction;
+            WeaponsCollectedMessage = Events.First(e => e.Nr == 8);
+            WeaponsCollectedMessage.Message =
+                "Sprengstoff und Speere. Nun sind wir gerüstet. Reißt alles nieder! Fels und Mauer, Tor und Turm.";
+            WeaponsCollectedMessage.Action = WeaponsCollectedAction;
 
-            weaponsCollectedMessage = Events.First(e => e.Nr == 7);
-            weaponsCollectedMessage.Message = "Sprengstoff und Speere. Nun sind wir gerüstet. Reißt alles nieder! Fels und Mauer, Tor und Turm.";
-            weaponsCollectedMessage.Action = WeaponsCollectedAction;
+            TrollMetMessage = Events.First(e => e.Nr == 9);
+            TrollMetMessage.Message =
+                "Ein Troll … Achtsam, mein Herr. Diese Ungeheuer sind stark und rasch verärgert. Lasst uns aus der Deckung heraus angreifen, um das Biest auszuschalten";
+            TrollMetMessage.Action = TrollMetAction;
 
-            trollMetMessage = Events.First(e => e.Nr == 8);
-            trollMetMessage.Message = "Ein Troll … Achtsam, mein Herr. Diese Ungeheuer sind stark und rasch verärgert. Lasst uns aus der Deckung heraus angreifen, um das Biest auszuschalten";
-            trollMetMessage.Action = TrollMetAction;
-
-            levelCompleted = Events.First(e => e.Nr == 11);
-            levelCompleted.Message = "Hmmm, auf dem Weg liegen Kuchenkrümel herum. Die Prinzessin muss hier vorbeigekommen sein. Ihr habt die Spur des arglistigen Entführers gefunden. Ein Meisterstück, eure Boshaftigkeit.";
-            levelCompleted.Action = LevelCompletedAction;
+            LevelCompleted = gameObject.AddComponent<Event>();
+            LevelCompleted.Message =
+                "Hmmm, auf dem Weg liegen Kuchenkrümel herum. Die Prinzessin muss hier vorbeigekommen sein. Ihr habt die Spur des arglistigen Entführers gefunden. Ein Meisterstück, eure Boshaftigkeit.";
+            LevelCompleted.Action = LevelCompletedAction;
         }
 
         private void LevelCompletedAction()
@@ -83,12 +85,7 @@ namespace Assets.Scripts.LevelScripts
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_08);
         }
 
-        private void LaddersNeededAction()
-        {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_06);
-        }
-
-        public void ShieldCarrierHeavyAction()
+        public void ShieldCarrierTrainedAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_04);
         }
@@ -98,7 +95,7 @@ namespace Assets.Scripts.LevelScripts
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_01);
         }
 
-        private void ShieldCarrierBlockingAction()
+        private void SelectImpAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_02);
         }

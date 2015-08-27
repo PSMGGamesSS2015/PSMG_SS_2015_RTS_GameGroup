@@ -166,7 +166,6 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl1_03 = "Sprachausgabe/Level_1/1_03_Beruf_zuweisen";
         public const string SoundLvl1_04 = "Sprachausgabe/Level_1/1_04_Feigling_ausgebildet";
         public const string SoundLvl1_05 = "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
-        public const string SoundLvl1_06 = "Sprachausgabe/Level_1/1_06_Leitern_benoetigt";
         public const string SoundLvl1_07 = "Sprachausgabe/Level_1/1_07_Leitern_gefunden";
         public const string SoundLvl1_08 = "Sprachausgabe/Level_1/1_08_Felsbrocken_erreicht";
         public const string SoundLvl1_09 = "Sprachausgabe/Level_1/1_09_Waffen_gefunden";

@@ -12,6 +12,14 @@ namespace Assets.Scripts.LevelScripts
         private Event potionCollectedMessage;
         private Event canonFiringMessage;
 
+        public new void Awake()
+        {
+            base.Awake();
+
+            // TODO add water
+            //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
+        }
+
         protected override void RegisterEvents()
         {
             levelStartedMessage = Events.First(e => e.Nr == 1);

@@ -45,7 +45,7 @@ namespace Assets.Scripts.Managers
         private IEnumerator OnGoalReachedRoutine()
         {
             ImpManager.Instance.SpawnCounter.Stop();
-            ImpManager.Instance.Imps.ForEach(i => i.GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpWinLoop));
+            ImpManager.Instance.Imps.ForEach(i => i.GetComponent<ImpAnimationHelper>().PlayWinningAnimation());
             SoundManager.Instance.BackgroundMusic.PlayAsLast(SoundReferences.WonTheme);
 
             yield return new WaitForSeconds(10f);
@@ -178,8 +178,6 @@ namespace Assets.Scripts.Managers
                     break;
                 case SceneReferences.Level05CastleGlazeArrival:
                     CurrentLevelEvents = gameObject.AddComponent<Level05Events>();
-                    // TODO
-                    //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
                     break;
                 case SceneReferences.Level06CastleGlazeDungenon:
                     CurrentLevelEvents = gameObject.AddComponent<Level06Events>();

@@ -82,5 +82,10 @@
 
         public const string Koboldigunde = "Koboldigunde";
         public const string KoboldigundeCollisionCheck = "KoboldigundeCollisionCheck";
+
+        public const string FragileWall = "FragileWall";
+        public const string Gong = "Gong";
+        public const string Canon = "Canon";
+        public const string TrapDoor = "TrapDoor";
     }
 }

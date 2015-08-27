@@ -16,7 +16,7 @@ namespace Assets.Scripts.Managers
     public class InputManager : MonoBehaviour, UIManager.IUIManagerListener, LevelManager.ILevelManagerListener {
 
         private List<IInputManagerListener> listeners;
-        private bool isPaused;
+        private bool isPaused=false, pauseMenuOpen=false;
         // ReSharper disable once NotAccessedField.Local
         private UserInterface userInterface;
         private GameObject mainCamera;
@@ -128,7 +128,7 @@ namespace Assets.Scripts.Managers
 
         public void DecreaseGameSpeed()
         {
-            if (Time.timeScale >= 0.1f && Time.timeScale <= 2.0f)
+            if (Time.timeScale >= 0.1f && Time.timeScale <= 3.0f)
             {
                 Time.timeScale -= 0.1f;
             }
@@ -136,7 +136,7 @@ namespace Assets.Scripts.Managers
 
         public void IncreaseGameSpeed()
         {
-            if (Time.timeScale >= 0.0f && Time.timeScale <= 1.9f)
+            if (Time.timeScale >= 0.0f && Time.timeScale <= 2.9f)
             {
                 Time.timeScale += 0.1f;
             }
@@ -203,14 +203,37 @@ namespace Assets.Scripts.Managers
 
         public void PauseGame()
         {
-            if (isPaused)
+            Debug.Log("PauseGame");
+
+            if (!pauseMenuOpen)
             {
-                Time.timeScale = 1f;
-                isPaused = false;
-            } else {
-                Time.timeScale = 0f;
-                isPaused = true;
+                if (isPaused)
+                {
+                    Time.timeScale = 1f;
+                    isPaused = false;
+                }
+                else
+                {
+                    Time.timeScale = 0f;
+                    isPaused = true;
+                }
             }
+        }
+
+        public void PauseGameForMenu()
+        {
+            Debug.Log("PauseGameForMenu");
+                Time.timeScale = 0f;
+                pauseMenuOpen = true;
+        }
+
+        public void ContinueGameFromMenu()
+        {
+            Debug.Log("ContinueGameFromMenu");
+                Time.timeScale = 1f;
+                pauseMenuOpen = false;
+                isPaused = false;
+
         }
 
         private void SelectNextImp()

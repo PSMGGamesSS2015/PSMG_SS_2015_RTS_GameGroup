@@ -59,7 +59,7 @@ public class PauseMenuScript : MonoBehaviour {
     {
         pauseOpen = true;
         PauseMenuPanel.SetActive(true);
-        gameManager.GetComponent<InputManager>().PauseGame();
+        gameManager.GetComponent<InputManager>().PauseGameForMenu();
         Debug.Log("PauseMenu wird angezeigt");
     }
 
@@ -67,7 +67,7 @@ public class PauseMenuScript : MonoBehaviour {
     {
         PauseMenuPanel.SetActive(false);
         pauseOpen = false;
-        gameManager.GetComponent<InputManager>().PauseGame();
+        gameManager.GetComponent<InputManager>().ContinueGameFromMenu();
         Debug.Log("Pause wurde geschlossen");
     }
 

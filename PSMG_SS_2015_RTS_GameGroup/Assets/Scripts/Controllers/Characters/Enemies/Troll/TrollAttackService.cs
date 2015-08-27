@@ -92,7 +92,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
             foreach (var imp in impsToBeHit)
             {
                 impsInAttackRange.Remove(imp);
-                imp.LeaveGame(); // actually hit the imps
+                imp.GetComponent<ImpPwnedService>().Pwn(ImpPwnedService.PwningType.Smashing); // actually hit the imps
             }
 
             if (impsInAttackRange.Count != 0) return;
@@ -107,7 +107,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         private void SmashAllImpsInRange()
         {
-            impsInAttackRange.ToList().ForEach(i => i.LeaveGame());
+            impsInAttackRange.ToList().ForEach(i => i.GetComponent<ImpPwnedService>().Pwn(ImpPwnedService.PwningType.Smashing));
             impsInAttackRange.Clear();
             if (HitDelayCounter != null) HitDelayCounter.Stop();
         }

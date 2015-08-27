@@ -88,11 +88,6 @@ namespace Assets.Scripts.Managers
             uiManager.RegisterListener(this);
         }
 
-        public void Update()
-        {
-            if (State == GameState.InGameLevelStarted) impManager.SpawnImps();
-        }
-
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
             State = GameState.InGameLevelStarted;

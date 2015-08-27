@@ -20,6 +20,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps
 
         public void Awake()
         {
+            IsLeaving = false;
+
             InitServices();
         }
 
@@ -50,6 +52,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         # region listener interface
 
         public List<IImpControllerListener> Listeners { get; private set; }
+        public bool IsLeaving { get; set; }
 
         public interface IImpControllerListener
         {

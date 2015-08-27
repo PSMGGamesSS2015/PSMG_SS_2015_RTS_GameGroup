@@ -10,7 +10,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
     {
         public enum PwningType
         {
-            Scorching
+            Scorching,
+            Smashing
         }
 
         public void Pwn(PwningType pwningType)
@@ -20,7 +21,32 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case PwningType.Scorching:
                     Scorch();
                     break;
+                case PwningType.Smashing:
+                    Smash();
+                    break;
             }
+        }
+
+        private void Smash()
+        {
+            if (GetComponent<ImpController>().IsLeaving) return;
+            GetComponent<ImpController>().IsLeaving = true;
+
+            StartCoroutine(SmashingRoutine());
+        }
+
+        private IEnumerator SmashingRoutine()
+        {
+            GetComponent<ImpAnimationHelper>().ImpInventory.HideItems();
+            GetComponent<ImpTrainingService>().IsTrainable = false;
+            GetComponent<ImpMovementService>().Stand();
+
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpDead);
+            GetComponent<ImpAudioService>().Voice.PlayAsLast(SoundReferences.ImpDamage);
+
+            yield return new WaitForSeconds(1f);
+
+            GetComponent<ImpController>().LeaveGame();
         }
 
         private void Scorch()
@@ -45,6 +71,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpMovementService>().Run();
 
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpWalkingBomb);
+
+            GetComponent<ImpAudioService>().Voice.PlayAsLast(SoundReferences.ImpDamage);
 
             yield return new WaitForSeconds(1f);
 

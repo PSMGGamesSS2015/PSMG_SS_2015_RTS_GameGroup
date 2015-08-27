@@ -56,8 +56,6 @@ namespace Assets.Scripts.Config
             new LevelConfig(SceneReferences.StarWarsIntro, LevelType.Narrative, new []{SoundReferences.StarWarsTheme}), 
             new LevelConfig(6, 4.0f, SceneReferences.Level01Koboldingen, new[] {0,6,0,0,0,0,0}, LevelType.InGame, new []{SoundReferences.MountainTheme, SoundReferences.ForestTheme, SoundReferences.KoboldingenTheme}),           
             new LevelConfig(6, 4.0f, SceneReferences.Level02CherryTopMountains, new[] {1,6,3,1,2,1,0}, LevelType.InGame, new []{SoundReferences.MountainsAtNightTheme, SoundReferences.MountainTheme, SoundReferences.ForestTheme, SoundReferences.CaveTheme}),
-            new LevelConfig(6, 4.0f, SceneReferences.Level03CinnamonWood, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
-            new LevelConfig(6, 4.0f, SceneReferences.Level04TrollVillage, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.ForestTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level05CastleGlazeArrival, new[] {10,10,10,10,10,0,10}, LevelType.InGame, new []{SoundReferences.KoboldingenTheme, SoundReferences.ForestTheme, SoundReferences.MountainTheme}),
             new LevelConfig(6, 4.0f, SceneReferences.Level06CastleGlazeDungenon, new[] {1,6,0,1,1,0,0}, LevelType.InGame, new []{SoundReferences.CaveTheme, SoundReferences.KoboldingenTheme, SoundReferences.MountainTheme}),
         };

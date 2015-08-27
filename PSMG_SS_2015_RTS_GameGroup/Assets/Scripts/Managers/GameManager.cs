@@ -16,37 +16,45 @@ namespace Assets.Scripts.Managers
 
     public class GameManager : MonoBehaviour, LevelManager.ILevelManagerListener, UIManager.IUIManagerListener
     {
-        private enum GameState
+        public enum GameState
         {
             NotStarted,
-            LevelStarted
+            InGameLevelStarted
         }
 
-        private GameState gameState;
+        public GameState State;
 
         private LevelManager levelManager;
         private ImpManager impManager;
         private UIManager uiManager;
         private InputManager inputManager;
         private SoundManager soundManager;
+        private Physics2DManager physics2DManager;
         // ReSharper disable once NotAccessedField.Local
         private SpecialEffectsManager specialEffectsManager;
 
+        public static GameManager Instance;
+
         public void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             DontDestroyOnLoad(gameObject);
-            SetupCollisionManagement();
             InitManagers();
-            gameState = GameState.NotStarted;
+            SetupCollisionManagement();
+            State = GameState.NotStarted;
         }
 
         private void SetupCollisionManagement()
         {
-            Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerBackground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.ImpLayer, LayerReferences.DecorationLayerForeground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.DefaultLayer, LayerReferences.DecorationLayerForeground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.KnightLayer, LayerReferences.DecorationLayerBackground, true);
-            Physics2D.IgnoreLayerCollision(LayerReferences.KnightLayer, LayerReferences.DecorationLayerForeground, true);
+            physics2DManager.SetupCollisionManagement();
         }
 
         private void InitManagers()
@@ -57,7 +65,7 @@ namespace Assets.Scripts.Managers
             inputManager = GetComponent<InputManager>();
             soundManager = GetComponent<SoundManager>();
             specialEffectsManager = GetComponent<SpecialEffectsManager>();
-
+            physics2DManager = gameObject.AddComponent<Physics2DManager>();
         }
 
         public void Start() 
@@ -82,12 +90,12 @@ namespace Assets.Scripts.Managers
 
         public void Update()
         {
-            if (gameState == GameState.LevelStarted) impManager.SpawnImps();
+            if (State == GameState.InGameLevelStarted) impManager.SpawnImps();
         }
 
         void LevelManager.ILevelManagerListener.OnLevelStarted(Level level)
         {
-            gameState = GameState.LevelStarted;
+            State = GameState.InGameLevelStarted;
         }
 
         // The following parts need to be placed here to avoid a circular base class reference.

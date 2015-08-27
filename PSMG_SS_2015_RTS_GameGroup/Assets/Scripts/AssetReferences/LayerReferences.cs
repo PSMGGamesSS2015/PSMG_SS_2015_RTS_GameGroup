@@ -9,5 +9,6 @@
         public const int DecorationLayerBackground = 14;
         public const int DecorationLayerForeground = 15;
         public const int KnightLayer = 16;
+        public const int KoboldigundeLayer = 17;
     }
 }

@@ -31,6 +31,9 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
 
         public void Leave()
         {
+            if (IsLeaving) return;
+
+            IsLeaving = true;
             StartCoroutine(LeavingRoutine());
         }
 

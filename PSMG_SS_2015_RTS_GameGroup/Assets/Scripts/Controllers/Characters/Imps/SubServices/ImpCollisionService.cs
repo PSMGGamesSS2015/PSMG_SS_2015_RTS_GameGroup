@@ -77,6 +77,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.FragileRock:
                     impMovementService.Turn();
                     break;
+                case TagReferences.FragileWall:
+                    impMovementService.Turn();
+                    break;
                 case TagReferences.Impassable:
                     impMovementService.Turn();
                     break;
@@ -173,7 +176,18 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.Furnace:
                     OnEnterFurnace(collider);
                     break;
+                case TagReferences.Canon:
+                    OnEnterCanon(collider);
+                    break;
             }
+        }
+
+        private void OnEnterCanon(Collider2D collider)
+        {
+            if (impTrainingService.Type != ImpType.Firebug) return;
+
+            var canon = collider.GetComponent<CanonController>();
+            GetComponent<ImpFirebugService>().FireCanon(canon);
         }
 
         private void OnEnterFurnace(Collider2D collider)

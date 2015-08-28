@@ -39,6 +39,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator HeatingDoughRoutine(BowlController bowl)
         {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
             bowl.IsBeingHeated = true;
 
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpSettingObjectOnFire);
@@ -56,6 +57,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpMovementService>().Walk();
 
             bowl.Heat();
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
         public void LightFurnace(FurnaceController furnace)
@@ -66,6 +68,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator LightingFurnaceRoutine(FurnaceController furnace)
         {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
             furnace.IsLight = true;
 
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpSettingObjectOnFire);
@@ -79,6 +82,36 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
             GetComponent<ImpMovementService>().Walk();
+            GetComponent<ImpTrainingService>().IsTrainable = true;
+        }
+
+        public void FireCanon(CanonController canon)
+        {
+            if (canon.IsBeingFired) return;
+
+            canon.IsBeingFired = true;
+            StartCoroutine(FiringCanonRoutine(canon));
+        }
+
+        private IEnumerator FiringCanonRoutine(CanonController canon)
+        {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpSettingObjectOnFire);
+            GetComponent<ImpMovementService>().Stand();
+
+            yield return new WaitForSeconds(1.5f);
+
+            canon.Light();
+
+            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
+            GetComponent<ImpMovementService>().Walk();
+
+            yield return new WaitForSeconds(1.5f);
+
+            canon.Fire();
+
+            canon.IsBeingFired = false;
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
     }
 }

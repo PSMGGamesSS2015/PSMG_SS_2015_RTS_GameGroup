@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Controllers.Characters.Other.Koboldigunde.Subservices;
+﻿using Assets.Scripts.Controllers.Characters.General;
+using Assets.Scripts.Controllers.Characters.Other.Koboldigunde.Subservices;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Other.Koboldigunde
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Controllers.Characters.Other.Koboldigunde
     {
         public void Awake()
         {
-            gameObject.AddComponent<KoboldigundeAudioService>();
+            gameObject.AddComponent<CharacterAudioService>();
             gameObject.AddComponent<KoboldigundeMovementService>();
             gameObject.AddComponent<KoboldigundeAnimationHelper>();
             gameObject.AddComponent<KoboldigundeCollisionService>();

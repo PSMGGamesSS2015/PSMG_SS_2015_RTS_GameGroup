@@ -27,6 +27,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
             gameObject.AddComponent<KnightEatingTartService>();
             gameObject.AddComponent<KnightFeelsSoHotService>();
             gameObject.AddComponent<KnightAudioService>();
+            gameObject.AddComponent<KnightUIService>();
         }
 
         public void Leave()
@@ -41,8 +42,9 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
         {
             GetComponent<KnightMovementService>().Stand();
             GetComponent<KnightAnimationHelper>().Play(AnimationReferences.KnightDead);
+            GetComponent<KnightAudioService>().PlayDeathSound();
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
 
             LeaveGame();
         }

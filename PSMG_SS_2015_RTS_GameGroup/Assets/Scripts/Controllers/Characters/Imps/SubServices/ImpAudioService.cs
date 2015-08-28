@@ -1,22 +1,11 @@
 ﻿using Assets.Scripts.AssetReferences;
-using Assets.Scripts.Helpers;
+using Assets.Scripts.Controllers.Characters.General;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 {
-    public class ImpAudioService : MonoBehaviour
+    public class ImpAudioService : CharacterAudioService
     {
-        public AudioHelper Voice { get; private set; }
-        public AudioHelper Sounds { get; private set; }
-
-        public void Awake()
-        {
-            Voice = gameObject.AddComponent<AudioHelper>();
-            Voice.AudioSource.volume = 0.7f;
-            Sounds = gameObject.AddComponent<AudioHelper>();
-            Sounds.AudioSource.volume = 0.7f;
-        }
-
         public void PlaySelectionSound()
         {
             var randomLimit = SoundReferences.ImpSelectedVariants.Length;

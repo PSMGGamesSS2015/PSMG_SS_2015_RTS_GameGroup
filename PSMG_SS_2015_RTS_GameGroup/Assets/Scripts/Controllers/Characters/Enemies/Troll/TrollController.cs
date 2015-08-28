@@ -1,17 +1,16 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
-using Assets.Scripts.Types;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 {
     public class TrollController : EnemyController
     {
-        public EnemyType Type;
 
         private TrollAttackService attackService;
         private TrollMoodService moodService;
+        private TrollAudioService audioService;
 
         public bool IsLeaving;
 
@@ -20,6 +19,8 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
             IsLeaving = false;
             attackService = gameObject.AddComponent<TrollAttackService>();
             moodService = gameObject.AddComponent<TrollMoodService>();
+            audioService = gameObject.AddComponent<TrollAudioService>();
+            gameObject.AddComponent<TrollUIService>();
         }
 
         public void ReceiveHit()
@@ -46,7 +47,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
             attackService.StopCounters();
 
             GetComponent<AnimationHelper>().Play(AnimationReferences.TrollDead);
-            GetComponent<AudioHelper>().Play(SoundReferences.TrollDeath);
+            audioService.Voice.Play(SoundReferences.TrollDeath);
 
             yield return new WaitForSeconds(2.15f);
 

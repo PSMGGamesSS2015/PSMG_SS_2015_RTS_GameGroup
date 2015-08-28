@@ -23,7 +23,6 @@ namespace Assets.Scripts.AssetReferences
 
         public const string Bodenschalter = "Sounds/FX_bodenschalter";
         public const string BombExplosion = "Sounds/FX_bombe_explodiert";
-        public const string BushBurn = "Sounds/FX_busch_abbrennen";
         public const string BushRustle1 = "Sounds/FX_buschrascheln1";
         public const string BushRustle2 = "Sounds/FX_buschrascheln2";
         public const string TorchLight1 = "Sounds/FX_fackel_entzuenden1";
@@ -34,23 +33,14 @@ namespace Assets.Scripts.AssetReferences
         public const string ShieldMetal2 = "Sounds/FX_metallschild2";
         public const string ShieldMetal3 = "Sounds/FX_metallschild3";
         public const string Puddle1 = "Sounds/FX_pfuetze1";
-        public const string Puddle2 = "Sounds/FX_pfuetze2";
-        public const string Puddle3 = "Sounds/FX_pfuetze3";
         public const string ShipCanon = "Sounds/FX_schiffskanone";
-        public const string DoorOpen = "Sounds/FX_tuer_oeffnen";
-        public const string DoorOpen_II = "Sounds/Tuer_oeffnen_II";
+        public const string DoorOpen = "Sounds/Tuer_oeffnen_II";
         public const string WallTrigger = "Sounds/FX_wandschalter";
-        public const string WaterDrops1 = "Sounds/Tropfen1";
-        public const string WaterDrops2 = "Sounds/Tropfen2";
-        public const string WaterDrops3 = "Sounds/Tropfen3";
-        public const string WaterDrops4 = "Sounds/Tropfen4";
-        public const string WaterDrops5 = "Sounds/Tropfen5";
         public const string TorchFireV1 = "Sounds/feuerrascheln_carolin";
         public const string TorchFireV2 = "Sounds/feuerrascheln_v2";
         public const string MetallDrum = "Sounds/Metalltrommel";
         public const string FireBurning = "Sounds/Rascheln";
         public const string Walking = "Sounds/Ritter_Gehen";
-        public const string HeavyWalking = "Sounds/Schweres_Gehen";
         public const string UI_Feedback = "Sounds/Feedback";
 
         #endregion
@@ -93,16 +83,25 @@ namespace Assets.Scripts.AssetReferences
 
         #region Troll
 
-        public const string TrollAttack1 = "Troll/Troll_attack1";
-        public const string TrollAttack2 = "Troll/Troll_attack2";
-        public const string TrollAttack3 = "Troll/Troll_attack3";
+        public static readonly string[] TrollAttackVariants =
+        {
+            "Troll/Troll_attack1",
+            "Troll/Troll_attack2",
+            "Troll/Troll_attack3"
+        };
+
         public const string TrollDeath = "Troll/Troll_death";
-        public const string TrollComment1 = "Troll/Troll_draufhaun";
-        public const string TrollComment2 = "Troll/Troll_oarr";
-        public const string TrollComment3 = "Troll/Troll_oeoea";
-        public const string TrollComment4 = "Troll/Troll_rahahaha";
-        public const string TrollComment5 = "Troll/Troll_uooa";
-        public const string TrollComment6 = "Troll/Troll_wooaa";
+
+        public static readonly string[] TrollSelectedVariants
+            =
+        {
+            "Troll/Troll_draufhaun",
+            "Troll/Troll_oarr",
+            "Troll/Troll_oeoea",
+            "Troll/Troll_rahahaha",
+            "Troll/Troll_uooa",
+            "Troll/Troll_wooaa"
+        };
 
         #endregion
 
@@ -144,18 +143,33 @@ namespace Assets.Scripts.AssetReferences
 
         #region Knight
 
-        public const string KnightAttack1 = "Knight/Knight_attack1";
-        public const string KnightAttack2 = "Knight/Knight_attack2";
-        public const string KnightAttack3 = "Knight/Knight_attack3";
-        public const string KnightDeath = "Knight/Knight_death";
-        public const string KnightEnGarde = "Knight/Knight_en_garde";
-        public const string KnightHA = "Knight/Knight_ha";
-        public const string KnightHallo = "Knight/Knight_halloo";
-        public const string KnightHohoho = "Knight/Knight_hohoho";
-        public const string KnightHohoo = "Knight/Knight_hohoo";
-        public const string KnightOuioui = "Knight/Knight_ouiouioui";
-        public const string KnightUiui = "Knight/Knight_uiuiui";
-        public const string KnightWennIchDarf = "Knight/Knight_wenn_ich_bitten_darf";
+        public static readonly string[] KnightDeadVariants =
+        {
+            "Knight/Knight_death",
+            "Knight/Knight_uiuiui"
+        };
+
+        public static readonly string[] KnightAttackVariants =
+        {
+            "Knight/Knight_attack1",
+            "Knight/Knight_attack2",
+            "Knight/Knight_attack3"
+        };
+
+        public static readonly string[] KnightSelectedVariants =
+        {
+            "Knight/Knight_ha",
+            "Knight/Knight_halloo",
+            "Knight/Knight_hohoho",
+            "Knight/Knight_hohoo",
+            "Knight/Knight_ouiouioui"
+        };
+
+        public static readonly string[] KnightBeingAttackedVariants =
+        {
+            "Knight/Knight_en_garde",
+            "Knight/Knight_wenn_ich_bitten_darf"
+        };
 
         #endregion
 
@@ -165,7 +179,10 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl1_02 = "Sprachausgabe/Level_1/1_02_Kobold_auswaehlen";
         public const string SoundLvl1_03_AssignProfession = "Sprachausgabe/Level_1/1_03_Beruf_zuweisen";
         public const string SoundLvl1_04_CowardTrained = "Sprachausgabe/Level_1/1_04_Feigling_ausgebildet";
-        public const string SoundLvl1_05_SuspensionBridgesCrossed = "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
+
+        public const string SoundLvl1_05_SuspensionBridgesCrossed =
+            "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
+
         public const string SoundLvl1_07 = "Sprachausgabe/Level_1/1_07_Leitern_gefunden";
         public const string SoundLvl1_08 = "Sprachausgabe/Level_1/1_08_Felsbrocken_erreicht";
         public const string SoundLvl1_09 = "Sprachausgabe/Level_1/1_09_Waffen_gefunden";
@@ -210,7 +227,10 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl6_02 = "Sprachausgabe/Level_6/6_02_Tuer_Sprengen_fehlgeschlagen";
         public const string SoundLvl6_03 = "Sprachausgabe/Level_6/6_03_Kuchen_fast_fertig";
         public const string SoundLvl6_04_KnightSaliva = "Sprachausgabe/Level_6/6_04_Kuchen_fertig";
-        public const string SoundLvl6_05_KnightEatingCake = "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
+
+        public const string SoundLvl6_05_KnightEatingCake =
+            "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
+
         public const string SoundLvl6_06 = "Sprachausgabe/Level_6/6_06_Imps_sind_bei_der_Haengebruecke";
         public const string SoundLvl6_07 = "Sprachausgabe/Level_6/6_07_Imp_befreien_Prinzessin";
         public const string SoundLvl6_08 = "Sprachausgabe/Level_6/6_08_Koenig_springt_aus_Torte";

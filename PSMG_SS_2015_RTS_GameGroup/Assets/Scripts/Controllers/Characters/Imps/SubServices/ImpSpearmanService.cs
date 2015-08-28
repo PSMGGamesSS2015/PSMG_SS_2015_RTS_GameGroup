@@ -304,17 +304,25 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator BatterDoughRoutine(BowlController bowl)
         {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
+
             bowl.IsBeingBattered = true;
 
             GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpBatteringDough);
             GetComponent<ImpMovementService>().Stand();
 
-            yield return new WaitForSeconds(6f);
+            for (var i = 0; i < 6; i++)
+            {
+                GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.Puddle1);
+                yield return new WaitForSeconds(1f);
+            }
 
             GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
             GetComponent<ImpMovementService>().Walk();
 
             bowl.BatterDough();
+
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
     }
 }

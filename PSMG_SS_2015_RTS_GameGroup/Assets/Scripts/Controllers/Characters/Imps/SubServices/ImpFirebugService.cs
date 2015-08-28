@@ -80,5 +80,29 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
             GetComponent<ImpMovementService>().Walk();
         }
+
+        public void FireCanon(CanonController canon)
+        {
+            if (canon.IsBeingFired) return;
+
+            canon.IsBeingFired = true;
+            StartCoroutine(FiringCanonRoutine(canon));
+        }
+
+        private IEnumerator FiringCanonRoutine(CanonController canon)
+        {
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpSettingObjectOnFire);
+            GetComponent<ImpMovementService>().Stand();
+
+            yield return new WaitForSeconds(1.5f);
+
+            canon.Light();
+
+            yield return new WaitForSeconds(1.5f);
+
+            canon.Fire();
+
+            canon.IsBeingFired = false;
+        }
     }
 }

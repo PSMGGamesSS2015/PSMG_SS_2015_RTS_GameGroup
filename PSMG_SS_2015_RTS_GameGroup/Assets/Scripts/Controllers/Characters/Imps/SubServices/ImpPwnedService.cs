@@ -60,10 +60,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpAnimationHelper>().ImpInventory.HideItems();
             GetComponent<ImpTrainingService>().IsTrainable = false;
 
-            var spawnPosition = new Vector3(gameObject.transform.position.x - 1f, gameObject.transform.position.y,
-                gameObject.transform.position.z);
-            var fire = SpecialEffectsManager.Instance.SpawnFire(spawnPosition,
+            var fire = SpecialEffectsManager.Instance.SpawnFire(gameObject.transform.position,
                 SortingLayerReferences.MiddleForeground);
+
             fire.ForEach(f => f.transform.parent = gameObject.transform);
 
             GetComponent<ImpSpriteManagerService>().Sprites.ToList().ForEach(s => s.color = Color.black);

@@ -7,7 +7,9 @@ namespace Assets.Scripts.Controllers.Objects
     public class CanonController : MonoBehaviour
     {
         public bool IsBeingFired { get; set; }
-        private List<ParticleSystem> flare; 
+        private List<ParticleSystem> flare;
+
+        public GameObject CanonBallPrefab;
 
         public void Awake()
         {
@@ -29,7 +31,8 @@ namespace Assets.Scripts.Controllers.Objects
         {
             flare.ForEach(f => f.Stop());
 
-            // TODO
+            var canonBall = Instantiate(CanonBallPrefab);
+            canonBall.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, 2f);
         }
     }
 }

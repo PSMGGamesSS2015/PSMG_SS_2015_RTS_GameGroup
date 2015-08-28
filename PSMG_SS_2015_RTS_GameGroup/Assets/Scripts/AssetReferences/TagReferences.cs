@@ -86,6 +86,7 @@
         public const string FragileWall = "FragileWall";
         public const string Gong = "Gong";
         public const string Canon = "Canon";
+        public const string CanonBall = "CanonBall";
         public const string TrapDoor = "TrapDoor";
     }
 }

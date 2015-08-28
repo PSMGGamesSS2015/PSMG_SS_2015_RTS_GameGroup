@@ -12,7 +12,25 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void LightGaslight(GaslightController gaslight)
         {
             if (gaslight.IsLight) return;
+
+            StartCoroutine(LightGaslightRoutine(gaslight));
+        }
+
+        private IEnumerator LightGaslightRoutine(GaslightController gaslight)
+        {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
+
+            GetComponent<ImpMovementService>().Stand();
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpSettingObjectOnFire);
+
+            yield return new WaitForSeconds(4f);
+
             gaslight.Light();
+
+            GetComponent<ImpMovementService>().Walk();
+            GetComponent<ImpAnimationHelper>().PlayWalkingAnimation();
+
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
         public List<GameObject> SetOnFire(GameObject target)

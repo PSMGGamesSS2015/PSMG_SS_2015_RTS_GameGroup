@@ -1,52 +1,57 @@
 ﻿using System.Linq;
 using Assets.Scripts.Managers;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Controllers.Objects;
+using UnityEngine;
 
 namespace Assets.Scripts.LevelScripts
 {
     public class Level05Events : LevelEvents
     {
-        private Event levelStartedMessage;
-        private Event closedDoorMessage;
-        private Event torchesCollectedMessage;
-        private Event potionCollectedMessage;
-        private Event canonFiringMessage;
+        public Event LevelStartedMessage { get; private set; }
+        public Event ClosedDoorMessage { get; private set; }
+        public Event TorchesCollectedMessage { get; private set; }
+        public Event PotionCollectedMessage { get; private set; }
+        public Event CanonFiringMessage { get; private set; }
+
+        public GongController Gong { get; private set; }
+        public DrawBridgeController DrawBridge { get; private set; }
 
         public new void Awake()
         {
             base.Awake();
 
-            // TODO add water
-            //SpecialEffectsManager.Instance.Water.SpawnWater(-5, 30, -3.5f, -10);
+            Gong = GameObject.FindGameObjectWithTag(TagReferences.Gong).GetComponent<GongController>();
+            DrawBridge = GameObject.FindGameObjectWithTag(TagReferences.DrawBridge).GetComponent<DrawBridgeController>();
         }
 
         protected override void RegisterEvents()
         {
-            levelStartedMessage = Events.First(e => e.Nr == 1);
-            levelStartedMessage.Message =
+            LevelStartedMessage = Events.First(e => e.Nr == 1);
+            LevelStartedMessage.Message =
                 "Mhh, hier geht’s nicht weiter, mein Herr. Wir müssen einen anderen Weg finden!";
-            levelStartedMessage.Action = LevelStartedAction;
+            LevelStartedMessage.Action = LevelStartedAction;
 
 
-            closedDoorMessage = Events.First(e => e.Nr == 2);
-            closedDoorMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
-            closedDoorMessage.Action = ClosedDoorAction;
+            ClosedDoorMessage = Events.First(e => e.Nr == 2);
+            ClosedDoorMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
+            ClosedDoorMessage.Action = ClosedDoorAction;
 
 
-            torchesCollectedMessage = Events.First(e => e.Nr == 3);
-            torchesCollectedMessage.Message = "Fackeln… guuut. Sie brennen hell und heiß. Die werden wir noch brauchen!";
-            torchesCollectedMessage.Action = TorchesCollectedAction;
+            TorchesCollectedMessage = Events.First(e => e.Nr == 3);
+            TorchesCollectedMessage.Message = "Fackeln… guuut. Sie brennen hell und heiß. Die werden wir noch brauchen!";
+            TorchesCollectedMessage.Action = TorchesCollectedAction;
 
 
-            potionCollectedMessage = Events.First(e => e.Nr == 4);
-            potionCollectedMessage.Message =
+            PotionCollectedMessage = Events.First(e => e.Nr == 4);
+            PotionCollectedMessage.Message =
                 "Sieht aus wie eine Art Zaubertrank. Ein kleines Wildschwein ist auf der Flasche abgebildet. (Grunz Grunz). Laut Etikett soll er übermenschliche Kräfte verleihen!";
-            potionCollectedMessage.Action = PotionCollectedAction;
+            PotionCollectedMessage.Action = PotionCollectedAction;
 
 
-            canonFiringMessage = Events.First(e => e.Nr == 5);
-            canonFiringMessage.Message = "Achtung, wir stehen unter Feueeer!!! In Deckung!";
-            canonFiringMessage.Action = CanonFiringAction;
+            CanonFiringMessage = Events.First(e => e.Nr == 5);
+            CanonFiringMessage.Message = "Achtung, wir stehen unter Feueeer!!! In Deckung!";
+            CanonFiringMessage.Action = CanonFiringAction;
         }
 
         private void CanonFiringAction()

@@ -15,23 +15,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         public bool IsLeaving;
 
-        public ITrollControllerListener Listener { get; private set; }
-
-        public interface ITrollControllerListener
-        {
-            void OnEnemyHurt(TrollController trollController);
-        }
-
-        public void RegisterListener(ITrollControllerListener listener)
-        {
-            Listener = listener;
-        }
-
-        public void UnregisterListener()
-        {
-            Listener = null;
-        }
-
         public void Awake()
         {
             IsLeaving = false;
@@ -72,7 +55,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         public void LeaveGame()
         {
-            GetComponent<TrollController>().Listener.OnEnemyHurt(GetComponent<TrollController>());
             Destroy(gameObject);
         }
 

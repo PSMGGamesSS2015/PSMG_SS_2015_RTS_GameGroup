@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Enemies;
+using Assets.Scripts.Controllers.Characters.Enemies.BlueTroll;
 using Assets.Scripts.Controllers.Characters.Enemies.Dragon;
 using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Objects;
@@ -30,10 +31,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.EnemyTroll:
                     OnTriggerEnterTroll(collider.GetComponent<TrollController>());
                     break;
+                case TagReferences.BlueTroll:
+                    OnTriggerEnterBlueTroll(collider.GetComponent<BlueTrollController>());
+                    break;
                 case TagReferences.Dragon:
                     OnTriggerEnterDragon(collider.gameObject.GetComponent<DragonController>());
                     break;
             }
+        }
+
+        private void OnTriggerEnterBlueTroll(BlueTrollController blueTroll)
+        {
+            if (blueTroll.IsLeaving) return;
+            
+            enemiesInAttackRange.Add(blueTroll);
         }
 
         private void OnTriggerEnterDragon(DragonController dragon)
@@ -58,10 +69,20 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.EnemyTroll:
                     OnTriggerExitTroll(collider.GetComponent<TrollController>());
                     break;
+                case TagReferences.BlueTroll:
+                    OnTriggerExitBlueTroll(collider.GetComponent<BlueTrollController>());
+                    break;
                 case TagReferences.Dragon:
                     OnTriggerExitDragon(collider.GetComponent<DragonController>());
                     break;
             }
+        }
+
+        private void OnTriggerExitBlueTroll(BlueTrollController blueTroll)
+        {
+            if (!enemiesInAttackRange.Contains(blueTroll)) return;
+
+            enemiesInAttackRange.Remove(blueTroll);
         }
 
         private void OnTriggerExitDragon(DragonController dragon)

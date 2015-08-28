@@ -64,6 +64,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.EnemyTroll:
                     OnCollisionEnterWithTroll();
                     break;
+                case TagReferences.BlueTroll:
+                    OnCollisionEnterWithBlueTroll();
+                    break;
                 case TagReferences.Knight:
                     OnCollisionEnterWithKnight(collision);
                     break;
@@ -88,6 +91,18 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             if (GetComponent<ImpMovementService>().IsGettingBouncedBack && collision.gameObject.tag != TagReferences.Imp)
             {
                 GetComponent<ImpMovementService>().StopGettingBouncedBack();
+            }
+        }
+
+        private void OnCollisionEnterWithBlueTroll()
+        {
+            if (impTrainingService.Type == ImpType.Spearman)
+            {
+                GetComponent<ImpSpearmanService>().StandAndAttack();
+            }
+            else
+            {
+                impMovementService.Turn();
             }
         }
 

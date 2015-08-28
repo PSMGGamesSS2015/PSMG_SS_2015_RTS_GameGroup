@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
-using Assets.Scripts.Controllers.Characters.Enemies.Troll;
 using Assets.Scripts.Controllers.Characters.Imps;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.LevelScripts;
@@ -18,8 +17,7 @@ namespace Assets.Scripts.Managers
     ///     It also loads and holds the GameObjects in a level that are of
     ///     interest for the interaction logic.
     /// </summary>
-    public class LevelManager : MonoBehaviour, TrollController.ITrollControllerListener,
-        GoalController.IGoalControllerListener
+    public class LevelManager : MonoBehaviour, GoalController.IGoalControllerListener
     {
         public static LevelManager Instance;
         private List<ILevelManagerListener> listeners;
@@ -51,11 +49,6 @@ namespace Assets.Scripts.Managers
             yield return new WaitForSeconds(10f);
 
             LoadNextLevel();
-        }
-
-        void TrollController.ITrollControllerListener.OnEnemyHurt(TrollController trollController)
-        {
-            trollController.UnregisterListener();
         }
 
         public void Awake()
@@ -226,13 +219,7 @@ namespace Assets.Scripts.Managers
 
         public void RegisterListeners()
         {
-            RegisterEnemyListener();
             RegisterGoalListener();
-        }
-
-        private void RegisterEnemyListener()
-        {
-            CurrentLevel.Enemies.ForEach(x => x.GetComponent<TrollController>().RegisterListener(this));
         }
 
         private void RegisterGoalListener()

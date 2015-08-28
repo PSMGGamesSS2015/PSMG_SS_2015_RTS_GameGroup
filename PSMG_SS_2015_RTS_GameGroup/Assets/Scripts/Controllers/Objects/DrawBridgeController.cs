@@ -7,10 +7,10 @@ namespace Assets.Scripts.Controllers.Objects
         private const float LimitLowerAngleBeginning = 0f;
         private const float LimitUpperAngleBeginning = 0f;
 
-        private const float LimitLowerAngleMiddle = 0f;
+        private const float LimitLowerAngleMiddle = -5f;
         private const float LimitUpperAngleMiddle = -90f;
 
-        private const float LimitLowerAngleEnd = 0f;
+        private const float LimitLowerAngleEnd = -5f;
         private const float LimitUpperAngleEnd = -180f;
 
         private new HingeJoint2D hingeJoint;

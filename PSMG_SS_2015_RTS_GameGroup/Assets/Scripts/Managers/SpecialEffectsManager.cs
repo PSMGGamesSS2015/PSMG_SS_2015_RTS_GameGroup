@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Controllers.Objects;
-using Assets.Scripts.Controllers.Objects.Water;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -15,7 +14,6 @@ namespace Assets.Scripts.Managers
         public const float StandardRotation = 0.1f;
 
         private const float VariationLimiter = 0.35f;
-        public Water Water { get; private set; }
 
         public void Awake()
         {
@@ -27,8 +25,6 @@ namespace Assets.Scripts.Managers
             {
                 Destroy(this);
             }
-            Water = gameObject.AddComponent<Water>();
-            gameObject.AddComponent<WaterDetector>();
         }
 
         // position in world coordinates

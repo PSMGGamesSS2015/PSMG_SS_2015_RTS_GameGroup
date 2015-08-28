@@ -31,8 +31,8 @@ namespace Assets.Scripts.Controllers.Objects
         {
             flare.ForEach(f => f.Stop());
 
-            var canonBall = Instantiate(CanonBallPrefab);
-            canonBall.GetComponent<Rigidbody2D>().velocity = new Vector2(10f, 2f);
+            var canonBall = (GameObject) Instantiate(CanonBallPrefab, gameObject.transform.position, Quaternion.identity);
+            canonBall.GetComponent<Rigidbody2D>().velocity = new Vector2(25f, 3f);
         }
     }
 }

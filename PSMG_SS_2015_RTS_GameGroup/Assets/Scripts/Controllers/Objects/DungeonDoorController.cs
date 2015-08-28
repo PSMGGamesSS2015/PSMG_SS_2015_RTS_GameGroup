@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using Assets.Scripts.AssetReferences;
+using Assets.Scripts.Helpers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects
@@ -7,6 +9,7 @@ namespace Assets.Scripts.Controllers.Objects
     {
         private SpriteRenderer doorOpenSprite;
         private SpriteRenderer doorClosedSprite;
+        private AudioHelper audioHelper;
 
         private const string DoorOpenName = "OpenDoor";
         private const string DoorClosedName = "ClosedDoor";
@@ -27,6 +30,8 @@ namespace Assets.Scripts.Controllers.Objects
             doorOpenSprite.enabled = false;
 
             State = DoorState.Closed;
+
+            audioHelper = gameObject.AddComponent<AudioHelper>();
         }
 
         public void Open()
@@ -35,6 +40,8 @@ namespace Assets.Scripts.Controllers.Objects
 
             doorClosedSprite.enabled = false;
             doorOpenSprite.enabled = true;
+
+            audioHelper.Play(SoundReferences.DoorOpen);
 
             State = DoorState.Open;
         }
@@ -45,6 +52,8 @@ namespace Assets.Scripts.Controllers.Objects
 
             doorOpenSprite.enabled = true;
             doorClosedSprite.enabled = false;
+
+            audioHelper.Play(SoundReferences.DoorOpen);
 
             State = DoorState.Closed;
         }

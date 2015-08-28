@@ -1,5 +1,4 @@
-﻿using System.CodeDom;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Assets.Scripts.AssetReferences
 {
@@ -24,7 +23,6 @@ namespace Assets.Scripts.AssetReferences
 
         public const string Bodenschalter = "Sounds/FX_bodenschalter";
         public const string BombExplosion = "Sounds/FX_bombe_explodiert";
-        public const string BushBurn = "Sounds/FX_busch_abbrennen";
         public const string BushRustle1 = "Sounds/FX_buschrascheln1";
         public const string BushRustle2 = "Sounds/FX_buschrascheln2";
         public const string TorchLight1 = "Sounds/FX_fackel_entzuenden1";
@@ -35,23 +33,14 @@ namespace Assets.Scripts.AssetReferences
         public const string ShieldMetal2 = "Sounds/FX_metallschild2";
         public const string ShieldMetal3 = "Sounds/FX_metallschild3";
         public const string Puddle1 = "Sounds/FX_pfuetze1";
-        public const string Puddle2 = "Sounds/FX_pfuetze2";
-        public const string Puddle3 = "Sounds/FX_pfuetze3";
         public const string ShipCanon = "Sounds/FX_schiffskanone";
-        public const string DoorOpen = "Sounds/FX_tuer_oeffnen";
-        public const string DoorOpen_II = "Sounds/Tuer_oeffnen_II";
+        public const string DoorOpen = "Sounds/Tuer_oeffnen_II";
         public const string WallTrigger = "Sounds/FX_wandschalter";
-        public const string WaterDrops1 = "Sounds/Tropfen1";
-        public const string WaterDrops2 = "Sounds/Tropfen2";
-        public const string WaterDrops3 = "Sounds/Tropfen3";
-        public const string WaterDrops4 = "Sounds/Tropfen4";
-        public const string WaterDrops5 = "Sounds/Tropfen5";
         public const string TorchFireV1 = "Sounds/feuerrascheln_carolin";
         public const string TorchFireV2 = "Sounds/feuerrascheln_v2";
         public const string MetallDrum = "Sounds/Metalltrommel";
         public const string FireBurning = "Sounds/Rascheln";
         public const string Walking = "Sounds/Ritter_Gehen";
-        public const string HeavyWalking = "Sounds/Schweres_Gehen";
         public const string UI_Feedback = "Sounds/Feedback";
 
         #endregion

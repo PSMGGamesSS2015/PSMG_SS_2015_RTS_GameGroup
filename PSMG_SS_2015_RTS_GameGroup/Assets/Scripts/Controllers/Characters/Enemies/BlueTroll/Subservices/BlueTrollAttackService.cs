@@ -114,7 +114,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.BlueTroll.Subservices
 
         public IEnumerator SmashingRoutine()
         {
-            GetComponent<BlueTrollAudioService>().Voice.Play(SoundReferences.TrollAttack2);
             GetComponent<BlueTrollAnimationHelper>().Play(AnimationReferences.BlueTrollAttack);
 
             yield return new WaitForSeconds(1f);

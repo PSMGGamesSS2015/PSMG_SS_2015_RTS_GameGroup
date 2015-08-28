@@ -83,16 +83,25 @@ namespace Assets.Scripts.AssetReferences
 
         #region Troll
 
-        public const string TrollAttack1 = "Troll/Troll_attack1";
-        public const string TrollAttack2 = "Troll/Troll_attack2";
-        public const string TrollAttack3 = "Troll/Troll_attack3";
+        public static readonly string[] TrollAttackVariants =
+        {
+            "Troll/Troll_attack1",
+            "Troll/Troll_attack2",
+            "Troll/Troll_attack3"
+        };
+
         public const string TrollDeath = "Troll/Troll_death";
-        public const string TrollComment1 = "Troll/Troll_draufhaun";
-        public const string TrollComment2 = "Troll/Troll_oarr";
-        public const string TrollComment3 = "Troll/Troll_oeoea";
-        public const string TrollComment4 = "Troll/Troll_rahahaha";
-        public const string TrollComment5 = "Troll/Troll_uooa";
-        public const string TrollComment6 = "Troll/Troll_wooaa";
+
+        public static readonly string[] TrollSelectedVariants
+            =
+        {
+            "Troll/Troll_draufhaun",
+            "Troll/Troll_oarr",
+            "Troll/Troll_oeoea",
+            "Troll/Troll_rahahaha",
+            "Troll/Troll_uooa",
+            "Troll/Troll_wooaa"
+        };
 
         #endregion
 
@@ -170,7 +179,10 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl1_02 = "Sprachausgabe/Level_1/1_02_Kobold_auswaehlen";
         public const string SoundLvl1_03_AssignProfession = "Sprachausgabe/Level_1/1_03_Beruf_zuweisen";
         public const string SoundLvl1_04_CowardTrained = "Sprachausgabe/Level_1/1_04_Feigling_ausgebildet";
-        public const string SoundLvl1_05_SuspensionBridgesCrossed = "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
+
+        public const string SoundLvl1_05_SuspensionBridgesCrossed =
+            "Sprachausgabe/Level_1/1_05_Beide_Haengebruecken_ueberquert";
+
         public const string SoundLvl1_07 = "Sprachausgabe/Level_1/1_07_Leitern_gefunden";
         public const string SoundLvl1_08 = "Sprachausgabe/Level_1/1_08_Felsbrocken_erreicht";
         public const string SoundLvl1_09 = "Sprachausgabe/Level_1/1_09_Waffen_gefunden";
@@ -215,7 +227,10 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl6_02 = "Sprachausgabe/Level_6/6_02_Tuer_Sprengen_fehlgeschlagen";
         public const string SoundLvl6_03 = "Sprachausgabe/Level_6/6_03_Kuchen_fast_fertig";
         public const string SoundLvl6_04_KnightSaliva = "Sprachausgabe/Level_6/6_04_Kuchen_fertig";
-        public const string SoundLvl6_05_KnightEatingCake = "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
+
+        public const string SoundLvl6_05_KnightEatingCake =
+            "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
+
         public const string SoundLvl6_06 = "Sprachausgabe/Level_6/6_06_Imps_sind_bei_der_Haengebruecke";
         public const string SoundLvl6_07 = "Sprachausgabe/Level_6/6_07_Imp_befreien_Prinzessin";
         public const string SoundLvl6_08 = "Sprachausgabe/Level_6/6_08_Koenig_springt_aus_Torte";

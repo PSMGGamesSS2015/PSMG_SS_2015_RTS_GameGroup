@@ -114,7 +114,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         public IEnumerator SmashingRoutine()
         {
-            GetComponent<AudioHelper>().Play(SoundReferences.TrollAttack2);
+            GetComponent<TrollAudioService>().PlayAttackSound();
             GetComponent<AnimationHelper>().Play(AnimationReferences.TrollAttacking);
 
             yield return new WaitForSeconds(1f);

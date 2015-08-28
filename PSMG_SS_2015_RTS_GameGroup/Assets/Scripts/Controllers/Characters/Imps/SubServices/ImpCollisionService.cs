@@ -77,6 +77,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 case TagReferences.FragileRock:
                     impMovementService.Turn();
                     break;
+                case TagReferences.FragileWall:
+                    impMovementService.Turn();
+                    break;
                 case TagReferences.Impassable:
                     impMovementService.Turn();
                     break;

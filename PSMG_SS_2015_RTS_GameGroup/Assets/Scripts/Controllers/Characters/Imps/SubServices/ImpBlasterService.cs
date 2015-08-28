@@ -93,20 +93,35 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             var objectsWithinRadius = Physics2D.OverlapCircleAll(gameObject.transform.position, 4f);
 
-            // TODO use more efficient code here
-
             objectsWithinRadius.ToList()
                 .Where(o => o.tag == TagReferences.RockyArc)
                 .ToList()
                 .ForEach(o => o.GetComponent<RockyArcScript>().Detonate());
 
-            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FragileRock).ToList().ForEach(Destroy);
-            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.Explodable).ToList().ForEach(ApplyChaos);
+            objectsWithinRadius.ToList()
+                .Where(c => c.tag == TagReferences.FragileRock)
+                .ToList()
+                .ForEach(Destroy);
+
+            objectsWithinRadius.ToList()
+                .Where(c => c.tag == TagReferences.Explodable)
+                .ToList()
+                .ForEach(ApplyChaos);
+
+            objectsWithinRadius.ToList()
+                .Where(c => c.tag == TagReferences.FragileWall)
+                .ToList()
+                .ForEach(fw => fw.GetComponent<FragileWallController>().Detonate(GetComponent<ImpController>()));
+
             objectsWithinRadius.ToList()
                 .Where(c => c.tag == TagReferences.BatterBowl)
                 .ToList()
                 .ForEach(DetonateBatterBowl);
-            objectsWithinRadius.ToList().Where(c => c.tag == TagReferences.FlourBag).ToList().ForEach(DetonateFlourBag);
+
+            objectsWithinRadius.ToList()
+                .Where(c => c.tag == TagReferences.FlourBag)
+                .ToList()
+                .ForEach(DetonateFlourBag);
         }
 
         private void DetonateBatterBowl(Collider2D collider)

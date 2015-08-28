@@ -6,7 +6,6 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Dragon.Subservices
 {
     public class DragonAudioService : CharacterAudioService
     {
-
         public void PlaySelectionSound()
         {
             var randomLimit = SoundReferences.DragonSelectedVariants.Length;

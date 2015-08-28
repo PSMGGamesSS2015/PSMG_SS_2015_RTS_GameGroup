@@ -27,6 +27,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight
             gameObject.AddComponent<KnightEatingTartService>();
             gameObject.AddComponent<KnightFeelsSoHotService>();
             gameObject.AddComponent<KnightAudioService>();
+            gameObject.AddComponent<KnightUIService>();
         }
 
         public void Leave()

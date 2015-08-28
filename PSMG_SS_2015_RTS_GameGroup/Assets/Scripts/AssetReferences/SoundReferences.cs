@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.CodeDom;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Assets.Scripts.AssetReferences
 {
@@ -144,18 +145,33 @@ namespace Assets.Scripts.AssetReferences
 
         #region Knight
 
-        public const string KnightAttack1 = "Knight/Knight_attack1";
-        public const string KnightAttack2 = "Knight/Knight_attack2";
-        public const string KnightAttack3 = "Knight/Knight_attack3";
-        public const string KnightDeath = "Knight/Knight_death";
-        public const string KnightEnGarde = "Knight/Knight_en_garde";
-        public const string KnightHA = "Knight/Knight_ha";
-        public const string KnightHallo = "Knight/Knight_halloo";
-        public const string KnightHohoho = "Knight/Knight_hohoho";
-        public const string KnightHohoo = "Knight/Knight_hohoo";
-        public const string KnightOuioui = "Knight/Knight_ouiouioui";
-        public const string KnightUiui = "Knight/Knight_uiuiui";
-        public const string KnightWennIchDarf = "Knight/Knight_wenn_ich_bitten_darf";
+        public static readonly string[] KnightDeadVariants =
+        {
+            "Knight/Knight_death",
+            "Knight/Knight_uiuiui"
+        };
+
+        public static readonly string[] KnightAttackVariants =
+        {
+            "Knight/Knight_attack1",
+            "Knight/Knight_attack2",
+            "Knight/Knight_attack3"
+        };
+
+        public static readonly string[] KnightSelectedVariants =
+        {
+            "Knight/Knight_ha",
+            "Knight/Knight_halloo",
+            "Knight/Knight_hohoho",
+            "Knight/Knight_hohoo",
+            "Knight/Knight_ouiouioui"
+        };
+
+        public static readonly string[] KnightBeingAttackedVariants =
+        {
+            "Knight/Knight_en_garde",
+            "Knight/Knight_wenn_ich_bitten_darf"
+        };
 
         #endregion
 

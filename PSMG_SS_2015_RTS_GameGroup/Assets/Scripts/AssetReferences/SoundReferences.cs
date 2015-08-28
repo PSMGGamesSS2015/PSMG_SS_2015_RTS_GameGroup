@@ -47,11 +47,11 @@ namespace Assets.Scripts.AssetReferences
         public const string WaterDrops5 = "Sounds/Tropfen5";
         public const string TorchFireV1 = "Sounds/feuerrascheln_carolin";
         public const string TorchFireV2 = "Sounds/feuerrascheln_v2";
-        public const string MetallDrum = "Metalltrommel";
-        public const string FireBurning = "Rascheln";
-        public const string Walking = "Ritter_Gehen";
-        public const string HeavyWalking = "Schweres_Gehen";
-        public const string UI_Feedback = "Feedback";
+        public const string MetallDrum = "Sounds/Metalltrommel";
+        public const string FireBurning = "Sounds/Rascheln";
+        public const string Walking = "Sounds/Ritter_Gehen";
+        public const string HeavyWalking = "Sounds/Schweres_Gehen";
+        public const string UI_Feedback = "Sounds/Feedback";
 
         #endregion
 

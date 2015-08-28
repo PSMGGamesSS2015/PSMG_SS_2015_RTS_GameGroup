@@ -122,6 +122,16 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 .Where(c => c.tag == TagReferences.FlourBag)
                 .ToList()
                 .ForEach(DetonateFlourBag);
+
+            objectsWithinRadius.ToList()
+                .Where(c => c.tag == TagReferences.Gong)
+                .ToList()
+                .ForEach(g => RingGong(g.GetComponent<GongController>()));
+        }
+
+        private void RingGong(GongController gong)
+        {
+            gong.Ring();
         }
 
         private void DetonateBatterBowl(Collider2D collider)

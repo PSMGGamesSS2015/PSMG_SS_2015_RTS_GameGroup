@@ -26,8 +26,8 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void OnTriggerEnterKnight(KnightController knight)
         {
-            // TODO Detonate
-            // TODO hurt knight
+            knight.Leave();
+            Destroy(gameObject);
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)

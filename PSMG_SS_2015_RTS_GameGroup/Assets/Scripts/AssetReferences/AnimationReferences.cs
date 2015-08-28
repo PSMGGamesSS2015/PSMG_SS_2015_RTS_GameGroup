@@ -20,6 +20,7 @@
         public const string ImpClimbingLadderSpearman = "Imp Climbing Ladder with Spear";
         public const string ImpClimbingLadderFirebug = "Imp Climbing Ladder with Torch";
         public const string ImpClimbingLadderUnemployed = "Imp Climbing Ladder";
+        public const string ImpClimbingLadderLadder = "Imp Climbing Ladder with Ladder";
         public const string ImpClimbingLadderEnd = "Imp End of Ladder";
         public const string ImpClimbingLadderEndWithTorch = "Imp End of Ladder with Torch";
         public const string ImpClimbingLadderEndWithLadder = "Imp End of Ladder with Ladder";

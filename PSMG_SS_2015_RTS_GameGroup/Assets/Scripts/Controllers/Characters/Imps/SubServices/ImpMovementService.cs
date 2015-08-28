@@ -82,37 +82,12 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             {
                 IsBeingThrown = false;
             }
-
         }
 
         public void ClimbLadder()
         {
-            PlayClimbingAnimation();
+            GetComponent<ImpAnimationHelper>().PlayClimbingAnimation();
             CurrentDirection = Direction.Vertical;
-        }
-
-        // TODO refactor
-
-        private void PlayClimbingAnimation()
-        {
-            string anim;
-            switch (GetComponent<ImpTrainingService>().Type)
-            {
-                case ImpType.Spearman:
-                    anim = AnimationReferences.ImpClimbingLadderSpearman;
-                    break;
-                case ImpType.Unemployed:
-                    anim = AnimationReferences.ImpClimbingLadderUnemployed;
-                    break;
-                case ImpType.Firebug:
-                    anim = AnimationReferences.ImpClimbingLadderFirebug;
-                    break;
-                default:
-                    anim = AnimationReferences.ImpClimbingLadderUnemployed;
-                    break;
-            }
-
-            GetComponent<ImpAnimationHelper>().Play(anim);
         }
 
         public void Jump()

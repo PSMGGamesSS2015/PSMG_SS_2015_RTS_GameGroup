@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Helpers;
-using Assets.Scripts.Types;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 {
     public class TrollController : EnemyController
     {
-        public EnemyType Type;
 
         private TrollAttackService attackService;
         private TrollMoodService moodService;

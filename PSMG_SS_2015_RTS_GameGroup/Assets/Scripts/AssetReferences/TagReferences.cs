@@ -88,5 +88,6 @@
         public const string Canon = "Canon";
         public const string CanonBall = "CanonBall";
         public const string TrapDoor = "TrapDoor";
+        public const string DrawBridge = "DrawBridge";
     }
 }

@@ -17,7 +17,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private ImpAnimationHelper impAnimationService;
         private Vector3 screenPos;
         private Vector3 screenPosOfTopMargin;
-        public int yOffset = 20;
+        public int YOffset = 20;
+
+        private const float BombDetonationDelay = 3f;
 
         public void Awake()
         {
@@ -46,13 +48,13 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public void OnGUI()
         {
             GUI.Label(new Rect(screenPos.x, screenPosOfTopMargin.y - screenPos.y - 100, 100, 25),
-                ((int) bombCounter.CurrentCount).ToString());
+                ((int) BombDetonationDelay - (int)bombCounter.CurrentCount).ToString());
         }
 
         private void SetupBombCounter()
         {
             if (bombCounter != null) Destroy(bombCounter.gameObject);
-            bombCounter = Counter.SetCounter(this.gameObject, 3f, DetonateBomb, false);
+            bombCounter = Counter.SetCounter(this.gameObject, BombDetonationDelay, DetonateBomb, false);
         }
 
         public void DetonateBomb()

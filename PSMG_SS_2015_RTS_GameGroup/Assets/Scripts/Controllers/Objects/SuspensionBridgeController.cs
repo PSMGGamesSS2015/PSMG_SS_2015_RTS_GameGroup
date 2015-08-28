@@ -14,7 +14,9 @@ namespace Assets.Scripts.Controllers.Objects
         private List<ImpController> cowardsOnBridge;
         private TriggerCollider2D suspensionBridgeArea;
         private List<BreakableLink> breakableLinks;
-        private List<BoxCollider2D> colliders; 
+        private List<BoxCollider2D> colliders;
+
+        private const int NrOfCowardsThatBreakBridge = 3;
 
         public void Awake()
         {
@@ -43,7 +45,7 @@ namespace Assets.Scripts.Controllers.Objects
 
         private void CheckIfBridgeBreaks()
         {
-            if (cowardsOnBridge.Count >= 4)
+            if (cowardsOnBridge.Count >= NrOfCowardsThatBreakBridge)
             {
                 Break();
             }

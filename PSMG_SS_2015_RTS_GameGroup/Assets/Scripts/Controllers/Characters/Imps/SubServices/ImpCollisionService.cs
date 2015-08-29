@@ -285,7 +285,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             if (!GetComponent<ImpMovementService>().IsClimbing) return;
 
             impMovementService.ClimbALittleHigher();
-            impAnimationService.Play(AnimationReferences.ImpClimbingLadderEnd);
         }
 
         private void OnEnterLadderBottom()

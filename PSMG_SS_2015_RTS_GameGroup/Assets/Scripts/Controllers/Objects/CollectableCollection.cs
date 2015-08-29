@@ -11,6 +11,7 @@ namespace Assets.Scripts.Controllers.Objects
         public void Awake()
         {
             collectionItems = GetComponentsInChildren<CollectableObject>().ToList();
+
         }
 
         public void Start()
@@ -23,6 +24,7 @@ namespace Assets.Scripts.Controllers.Objects
             collectionItems.ForEach(ci => ci.GetComponent<SpriteRenderer>().enabled = false);
             collectionItems.ForEach(ci => ci.UnregisterListener(this));
             collectionItems.ForEach(Destroy);
+            Destroy(gameObject);
         }
 
         void CollectableObject.ICollectableObjectListener.OnCollected(CollectableObject self)

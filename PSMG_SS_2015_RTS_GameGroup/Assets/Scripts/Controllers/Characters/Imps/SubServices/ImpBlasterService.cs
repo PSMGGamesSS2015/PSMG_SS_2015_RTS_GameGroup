@@ -103,7 +103,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             objectsWithinRadius.ToList()
                 .Where(c => c.tag == TagReferences.FragileRock)
                 .ToList()
-                .ForEach(Destroy);
+                .ForEach(c => Destroy(c.gameObject));
 
             objectsWithinRadius.ToList()
                 .Where(c => c.tag == TagReferences.Explodable)

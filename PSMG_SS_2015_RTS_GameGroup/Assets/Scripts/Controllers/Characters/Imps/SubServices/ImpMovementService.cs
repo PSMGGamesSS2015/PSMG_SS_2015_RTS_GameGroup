@@ -99,16 +99,17 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void ClimbALittleHigher()
         {
-            Counter.SetCounter(gameObject, 6f, StopClimbing, false);
-        }
-
-        private void StopClimbing()
-        {
             StartCoroutine(StopClimbingRoutine());
         }
 
         private IEnumerator StopClimbingRoutine()
         {
+            yield return new WaitForSeconds(4.2f);
+
+            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpClimbingLadderEnd);
+
+            yield return new WaitForSeconds(1.8f);
+
             IsClimbing = false;
             GetComponent<ImpCollisionService>().StopIgnoringCollisions();
             GetComponent<ImpSpriteManagerService>().MoveToDefaultSortingLayer();

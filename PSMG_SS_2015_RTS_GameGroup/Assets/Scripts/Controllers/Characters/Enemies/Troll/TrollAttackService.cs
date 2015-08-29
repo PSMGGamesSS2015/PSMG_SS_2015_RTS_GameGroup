@@ -54,6 +54,9 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Troll
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
+            if (self.GetInstanceID() != triggerCollider2D.GetInstanceID())
+                return;
+
             if (isSmashing) return;
             if (collider.gameObject.tag != TagReferences.Imp) return;
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
 using UnityEngine;
 
@@ -16,8 +17,12 @@ namespace Assets.Scripts.Controllers.Objects
 
         public void Detonate(ImpController detonationSource)
         {
-            GetComponent<Collider2D>().enabled = false;
+            var collider = GetComponent<Collider2D>();
+            var max = collider.bounds.max * 0.5f;
+            var min = collider.bounds.min * 0.5f;
+            collider.bounds.SetMinMax(min, max);
 
+            gameObject.layer = LayerReferences.DecorationLayerBackground;
             stones.ForEach(s => s.isKinematic = false);
             stones.ForEach(s => ApplyForce(detonationSource, s));
         }

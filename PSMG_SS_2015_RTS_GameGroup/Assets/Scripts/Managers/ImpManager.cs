@@ -6,7 +6,6 @@ using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
-using Assets.Scripts.UserInterfaceComponents;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -18,11 +17,11 @@ namespace Assets.Scripts.Managers
     /// it spawns imps and gets notified when an imp is selected by the player.
     /// </summary>
     public class ImpManager : MonoBehaviour, ImpController.IImpControllerListener, LevelManager.ILevelManagerListener,
+        LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener,
         InputManager.IInputManagerListener
     {
         private LevelConfig config;
         private Vector3 spawnPosition;
-        private UserInterface currentUserInterface;
         public List<ImpController> Imps;
 
         public Counter SpawnCounter { get; private set; }
@@ -50,6 +49,7 @@ namespace Assets.Scripts.Managers
 
         public void UnregisterListener(IMpManagerListener listener)
         {
+            Debug.Log("Unregistering listener:" + listener);
             listeners.Remove(listener);
         }
 
@@ -100,13 +100,6 @@ namespace Assets.Scripts.Managers
             }
         }
 
-        public void OnNewUserInterfaceLoaded(UserInterface userInterface)
-        {
-            if (currentUserInterface != null) UnregisterListener(currentUserInterface);
-            currentUserInterface = userInterface;
-            RegisterListener(userInterface);
-        }
-
         public int[] GetProfessions()
         {
             return professions;
@@ -153,7 +146,7 @@ namespace Assets.Scripts.Managers
             listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
         }
 
-        private void SpawnImp()
+        public void SpawnImp()
         {
             if (currentImps >= config.MaxImps) return;
 
@@ -257,10 +250,17 @@ namespace Assets.Scripts.Managers
             SetLevel(level);
         }
 
-         void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
-         {
-             StartSpawningImps();
-         }
+        void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
+        {
+            StartSpawningImps();
+        }
+
+        void LevelManager.ILevelManagerListener.OnLevelEnding()
+        {
+            Debug.Log("Unregistering listening to UI");
+            if (UIManager.Instance.CurrentUserInterface != null)
+                UnregisterListener(UIManager.Instance.CurrentUserInterface);
+        }
 
         private void StartSpawningImps()
         {
@@ -276,6 +276,37 @@ namespace Assets.Scripts.Managers
         void ImpController.IImpControllerListener.OnCheckpointReached(CheckPointController checkPointController)
         {
             spawnPosition = checkPointController.transform.position;
+        }
+
+        void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
+        {
+            if (SpawnCounter != null) SpawnCounter.Stop();
+        }
+
+        void LevelManager.ILevelManagerNarrativeSceneListener.OnNarrativeLevelStarted(Level level)
+        {
+            if (SpawnCounter != null) SpawnCounter.Stop();
+        }
+
+        public void SpawnFireBugInLvl02Start()
+        {
+            if (currentImps >= config.MaxImps) return;
+
+            var imp = (GameObject)Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
+            var impController = imp.GetComponent<ImpController>();
+            impController.RegisterListener(this);
+            impController.gameObject.GetComponent<ImpSpriteManagerService>().MoveToSortingLayerPosition(currentImps);
+            currentImps++;
+            Imps.Add(impController);
+            impSelected = impController;
+
+            Counter.SetCounter(gameObject, 0.5f, TrainFirebug, false);
+        }
+
+        private void TrainFirebug()
+        {
+            SelectImp(impSelected);
+            SelectProfession(ImpType.Firebug);
         }
     }
 }

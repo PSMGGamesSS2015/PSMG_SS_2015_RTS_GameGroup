@@ -70,6 +70,11 @@ namespace Assets.Scripts.Managers
             // TODO
         }
 
+        void LevelManager.ILevelManagerListener.OnLevelEnding()
+        {
+            // TODO
+        }
+
         void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
         {
             StartPlaylist(level);

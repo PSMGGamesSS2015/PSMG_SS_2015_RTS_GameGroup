@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
@@ -46,6 +47,8 @@ namespace Assets.Scripts.Managers
 
         public void OnGUI()
         {
+            if (LevelManager.Instance.CurrentLevel.CurrentLevelConfig.Type != LevelConfig.LevelType.InGame) return;
+
             var e = Event.current;
             CheckScrollInput(e);
             CheckKeyInput(e);
@@ -274,6 +277,11 @@ namespace Assets.Scripts.Managers
         void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
         {
             // TODO enabled stuff
+        }
+
+        void LevelManager.ILevelManagerListener.OnLevelEnding()
+        {
+            // TODO 
         }
     }
 }

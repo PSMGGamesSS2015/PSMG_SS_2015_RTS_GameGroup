@@ -216,9 +216,13 @@ namespace Assets.Scripts.Managers
 
         private IEnumerator Level05StartedRoutine()
         {
-            yield return new WaitForSeconds(0f);
+            yield return (1f);
 
-            // TODO
+            var events = (Level05Events)CurrentLevelEvents;
+            events.LevelStartedMessage.TriggerManually();
+
+            yield return new WaitForSeconds(8f);
+
             listeners.ForEach(l => l.OnStartMessagePlayed());
         }
 

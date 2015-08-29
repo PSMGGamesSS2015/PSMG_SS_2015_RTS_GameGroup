@@ -10,13 +10,12 @@ namespace Assets.Scripts.LevelScripts
 {
     public class Level06Events : LevelEvents
     {
-        public Event LevelStartedMessage;
-        public Event FlourHasFallenIntoBowlMessage;
-        public Event CakeAlmostReadyMessage;
-        public Event CakeReadyMessage;
-        public Event KnightEatingCakeMessage;
-        public Event ImpsHaveRescuedPrincessMessage;
-        public Event KingJumpsOutOfCakeMessage;
+        public Event LevelStartedMessage { get; private set; }
+        public Event FlourHasFallenIntoBowlMessage { get; private set; }
+        public Event CakeAlmostReadyMessage { get; private set; }
+        public Event CakeReadyMessage { get; private set; }
+        public Event KnightEatingCakeMessage { get; private set; }
+        public Event ImpsHaveRescuedPrincessMessage { get; private set; }
 
         public KnightController KnightBehindFirstGate { get; private set; }
         public KnightController KnightAtEndOfFirstFloor { get; private set; }
@@ -83,21 +82,11 @@ namespace Assets.Scripts.LevelScripts
 
             KnightEatingCakeMessage = Events.First(e => e.Nr == 5);
             KnightEatingCakeMessage.Message = "Kuchen … hmm … nur ein kleines Stück.";
-            // TODO knightEatingCakeMessage.Message = "Lasst uns schnell weitergehen, bevor der Ritter aufgegessen hat.";
             KnightEatingCakeMessage.Action = KnightEatingCakeAction;
 
             ImpsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);
             ImpsHaveRescuedPrincessMessage.Message = "Geschafft, geschafft, geschafft! Nun bringt die Prinzessin sicher aus dem Verlies.";
             ImpsHaveRescuedPrincessMessage.Action = ImpsHaveRescuedPrincessAction;
-
-            KingJumpsOutOfCakeMessage = Events.First(e => e.Nr == 8);
-            KingJumpsOutOfCakeMessage.Message = "Ihr wollt meine Dienerin entführen? Niemand klaut mir meine Bäckerin!";
-            KingJumpsOutOfCakeMessage.Action = KingJumpsOutOfCakeAction;
-        }
-
-        private void KingJumpsOutOfCakeAction()
-        {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl6_08);
         }
 
         private void ImpsHaveRescuedPrincessAction()

@@ -4,11 +4,9 @@ using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Imps;
-using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.ParameterObjects;
-using Assets.Scripts.Types;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -230,7 +228,6 @@ namespace Assets.Scripts.Managers
         {
             yield return new WaitForSeconds(0f);
 
-             // TODO
             listeners.ForEach(l => l.OnStartMessagePlayed());
         }
 

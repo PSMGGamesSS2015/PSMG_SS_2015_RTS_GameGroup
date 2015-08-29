@@ -52,6 +52,9 @@ namespace Assets.Scripts.LevelScripts
         private void TorchesCollectedAction()
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_03);
+
+            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[4] += 2;
+            ImpManager.Instance.NotifyMaxProfessions();
         }
 
         private void ClosedDoorAction()

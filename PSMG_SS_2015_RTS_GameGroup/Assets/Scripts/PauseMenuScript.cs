@@ -79,7 +79,8 @@ namespace Assets.Scripts
 
         private void OnRestartGameButtonClick()
         {
-            // TODO
+            Time.timeScale = 1.0f;
+            LevelManager.Instance.LoadLevel(LevelManager.Instance.CurrentLevelNumber);
         }
 
         private void OnContinueGameButtonClick()

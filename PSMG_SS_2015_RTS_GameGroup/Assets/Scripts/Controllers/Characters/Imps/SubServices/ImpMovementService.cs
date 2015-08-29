@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Assets.Scripts.AssetReferences;
+using Assets.Scripts.ExtensionMethods;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using Assets.Scripts.Utility;
@@ -15,6 +17,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         private const float ThrowingSpeedX = 7f;
         private const float ThrowingSpeedY = 7f;
 
+        public Counter FacingInCorrectDirectionCheckCounter { get; private set; }
+
         public override void Start()
         {
             IsBeingThrown = false;
@@ -26,11 +30,30 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             HasStartedMoving = true;
             IsStanding = true;
             Walk();
+
+            FacingInCorrectDirectionCheckCounter = Counter.SetCounter(gameObject, 5f, CheckIfWalkingIntoRightDirection,
+                true);
+        }
+
+        private void CheckIfWalkingIntoRightDirection()
+        {
+            if (IsBeingThrown || IsClimbing || IsJumping || IsGettingBouncedBack || IsStanding) return;
+
+            if (!FacingRight || !(GetComponent<Rigidbody2D>().velocity.x < 0)) return;
+
+            MovementSpeed *= -1;
+        }
+
+        public void OnDestroy()
+        {
+            if (FacingInCorrectDirectionCheckCounter != null)
+                FacingInCorrectDirectionCheckCounter.Stop();
         }
 
         public override void FixedUpdate()
         {
-            if (IsBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping || IsGettingBouncedBack) return;
+            if (IsBeingThrown || IsFighting() || IsThrowing() || !HasStartedMoving || IsJumping || IsGettingBouncedBack)
+                return;
 
             if (CurrentDirection == Direction.Vertical)
             {
@@ -115,7 +138,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             GetComponent<ImpSpriteManagerService>().MoveToDefaultSortingLayer();
 
             Jump();
-            
+
             yield return new WaitForSeconds(2f);
 
             CurrentDirection = Direction.Horizontal;

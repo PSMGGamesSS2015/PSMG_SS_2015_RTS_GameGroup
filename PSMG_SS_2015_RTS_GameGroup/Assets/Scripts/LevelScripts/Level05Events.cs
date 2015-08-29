@@ -11,7 +11,6 @@ namespace Assets.Scripts.LevelScripts
         public Event LevelStartedMessage { get; private set; }
         public Event ClosedDoorMessage { get; private set; }
         public Event TorchesCollectedMessage { get; private set; }
-        public Event PotionCollectedMessage { get; private set; }
         public Event CanonFiringMessage { get; private set; }
 
         public GongController Gong { get; private set; }
@@ -27,41 +26,27 @@ namespace Assets.Scripts.LevelScripts
 
         protected override void RegisterEvents()
         {
-            LevelStartedMessage = Events.First(e => e.Nr == 1);
+            LevelStartedMessage = gameObject.AddComponent<Event>();
             LevelStartedMessage.Message =
-                "Mhh, hier geht’s nicht weiter, mein Herr. Wir müssen einen anderen Weg finden!";
+                "Ah, wir haben Schloss Tortenguss erreicht. Nun lasst uns die Prinzessin befreien!";
             LevelStartedMessage.Action = LevelStartedAction;
 
-
             ClosedDoorMessage = Events.First(e => e.Nr == 2);
-            ClosedDoorMessage.Message = "Wir haben einen Haufen Leitern gefunden.";
+            ClosedDoorMessage.Message = "Mhh, hier geht’s nicht weiter, mein Herr. Wir müssen einen anderen Weg finden!";
             ClosedDoorMessage.Action = ClosedDoorAction;
-
 
             TorchesCollectedMessage = Events.First(e => e.Nr == 3);
             TorchesCollectedMessage.Message = "Fackeln… guuut. Sie brennen hell und heiß. Die werden wir noch brauchen!";
             TorchesCollectedMessage.Action = TorchesCollectedAction;
 
-
-            PotionCollectedMessage = Events.First(e => e.Nr == 4);
-            PotionCollectedMessage.Message =
-                "Sieht aus wie eine Art Zaubertrank. Ein kleines Wildschwein ist auf der Flasche abgebildet. (Grunz Grunz). Laut Etikett soll er übermenschliche Kräfte verleihen!";
-            PotionCollectedMessage.Action = PotionCollectedAction;
-
-
-            CanonFiringMessage = Events.First(e => e.Nr == 5);
+            CanonFiringMessage = gameObject.AddComponent<Event>();
             CanonFiringMessage.Message = "Achtung, wir stehen unter Feueeer!!! In Deckung!";
             CanonFiringMessage.Action = CanonFiringAction;
         }
 
         private void CanonFiringAction()
         {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLVl5_05);
-        }
-
-        private void PotionCollectedAction()
-        {
-            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_04);
+            SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLVl5_04);
         }
 
         private void TorchesCollectedAction()

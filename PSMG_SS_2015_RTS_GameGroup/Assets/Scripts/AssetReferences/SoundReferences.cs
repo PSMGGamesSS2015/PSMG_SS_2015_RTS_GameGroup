@@ -213,8 +213,7 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl5_01 = "Sprachausgabe/Level_5/5_01_Spieler_betritt_die_Karte";
         public const string SoundLvl5_02 = "Sprachausgabe/Level_5/5_02_Spieler_steht_an_verschlossenem_Tor";
         public const string SoundLvl5_03 = "Sprachausgabe/Level_5/5_03_Imp_sammelt_Fackeln_auf";
-        public const string SoundLvl5_04 = "Sprachausgabe/Level_5/5_04_Imp_sammelt_Zaubertrank_auf";
-        public const string SoundLVl5_05 = "Sprachausgabe/Level_5/5_05_Kanone_feuert";
+        public const string SoundLVl5_04 = "Sprachausgabe/Level_5/5_05_Kanone_feuert";
 
         #endregion
 
@@ -228,15 +227,7 @@ namespace Assets.Scripts.AssetReferences
         public const string SoundLvl6_05_KnightEatingCake =
             "Sprachausgabe/Level_6/6_05_Tor_geht_auf_Ritter_holt_sich_Kuchen_und_isst";
 
-        public const string SoundLvl6_06 = "Sprachausgabe/Level_6/6_06_Imps_sind_bei_der_Haengebruecke";
         public const string SoundLvl6_07 = "Sprachausgabe/Level_6/6_07_Imp_befreien_Prinzessin";
-        public const string SoundLvl6_08 = "Sprachausgabe/Level_6/6_08_Koenig_springt_aus_Torte";
-
-        #endregion
-
-        #region Soundausgabe Level 7
-
-        public const string SoundLvl7_01 = "Sprachausgabe/Level_7/7_01_Imps_kommen_im_Dorf_an";
 
         #endregion
     }

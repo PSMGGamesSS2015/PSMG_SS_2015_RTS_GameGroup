@@ -45,7 +45,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         {
             currentMaxProfessions = config.MaxProfessions;
             
-            for (var i = 0; i < ImpTrainingButtons.Length; i++)
+            for (var i = 0; i < ImpTrainingButtons.Length-1; i++)
             {
                 ImpTrainingButtons[i].Counter.text = "0/" + currentMaxProfessions[i];
                 
@@ -54,7 +54,7 @@ namespace Assets.Scripts.UserInterfaceComponents
 
         void ImpManager.IMpManagerListener.OnUpdateMaxProfessions(int[] professions)
         {
-            for (var i = 0; i < ImpTrainingButtons.Length; i++)
+            for (var i = 0; i < ImpTrainingButtons.Length-1; i++)
             {
                 ImpTrainingButtons[i].Counter.text = professions[i] + "/" + currentMaxProfessions[i];
             }

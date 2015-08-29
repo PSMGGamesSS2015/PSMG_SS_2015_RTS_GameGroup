@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.LevelScripts;
+using Assets.Scripts.Managers;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects
@@ -10,10 +12,12 @@ namespace Assets.Scripts.Controllers.Objects
         private List<ParticleSystem> flare;
 
         public GameObject CanonBallPrefab;
+        private bool hasFired;
 
         public void Awake()
         {
             IsBeingFired = false;
+            hasFired = false;
             flare = GetComponentsInChildren<ParticleSystem>().ToList();
         }
 
@@ -33,6 +37,13 @@ namespace Assets.Scripts.Controllers.Objects
 
             var canonBall = (GameObject) Instantiate(CanonBallPrefab, gameObject.transform.position, Quaternion.identity);
             canonBall.GetComponent<Rigidbody2D>().velocity = new Vector2(25f, 3f);
+
+            if (hasFired) return;
+            var events = (Level02Events) LevelManager.Instance.CurrentLevelEvents;
+            events.Level02Started.TriggerManually();
+
+            events.Darkness.TriggerManually();
+            hasFired = true;
         }
     }
 }

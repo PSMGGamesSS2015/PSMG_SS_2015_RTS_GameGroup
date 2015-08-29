@@ -4,9 +4,11 @@ using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.LevelScripts;
 using Assets.Scripts.ParameterObjects;
+using Assets.Scripts.Types;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -48,7 +50,6 @@ namespace Assets.Scripts.Managers
 
             yield return new WaitForSeconds(10f);
 
-            
             LoadNextLevel();
         }
 
@@ -130,7 +131,6 @@ namespace Assets.Scripts.Managers
             narrativeSceneListeners.ForEach(nsl => nsl.OnNarrativeLevelStarted(CurrentLevel));
         }
 
-        // TODO handle stuff
         private void LoadMenuLevel()
         {
             CurrentLevel = new Level
@@ -194,14 +194,23 @@ namespace Assets.Scripts.Managers
             events.MapStartetMessage.TriggerManually();
 
             yield return new WaitForSeconds(12f);
+
             listeners.ForEach(l => l.OnStartMessagePlayed());
         }
 
         private IEnumerator Level02StartedRoutine()
         {
-            yield return new WaitForSeconds(0f);
+            yield return (1f);
 
-            // TODO
+            var events = (Level02Events) CurrentLevelEvents;
+            events.Level02Started.TriggerManually();
+
+            yield return new WaitForSeconds(12f);
+
+            events.Darkness.TriggerManually();
+
+            yield return new WaitForSeconds(10f);
+
             listeners.ForEach(l => l.OnStartMessagePlayed());
         }
 

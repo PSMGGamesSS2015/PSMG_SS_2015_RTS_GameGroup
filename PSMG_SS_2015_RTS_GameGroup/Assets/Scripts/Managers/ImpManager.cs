@@ -146,7 +146,7 @@ namespace Assets.Scripts.Managers
             listeners.ForEach(l => l.OnUpdateMaxProfessions(professions));
         }
 
-        private void SpawnImp()
+        public void SpawnImp()
         {
             if (currentImps >= config.MaxImps) return;
 
@@ -286,6 +286,27 @@ namespace Assets.Scripts.Managers
         void LevelManager.ILevelManagerNarrativeSceneListener.OnNarrativeLevelStarted(Level level)
         {
             if (SpawnCounter != null) SpawnCounter.Stop();
+        }
+
+        public void SpawnFireBugInLvl02Start()
+        {
+            if (currentImps >= config.MaxImps) return;
+
+            var imp = (GameObject)Instantiate(ImpPrefab, spawnPosition, Quaternion.identity);
+            var impController = imp.GetComponent<ImpController>();
+            impController.RegisterListener(this);
+            impController.gameObject.GetComponent<ImpSpriteManagerService>().MoveToSortingLayerPosition(currentImps);
+            currentImps++;
+            Imps.Add(impController);
+            impSelected = impController;
+
+            Counter.SetCounter(gameObject, 0.5f, TrainFirebug, false);
+        }
+
+        private void TrainFirebug()
+        {
+            SelectImp(impSelected);
+            SelectProfession(ImpType.Firebug);
         }
     }
 }

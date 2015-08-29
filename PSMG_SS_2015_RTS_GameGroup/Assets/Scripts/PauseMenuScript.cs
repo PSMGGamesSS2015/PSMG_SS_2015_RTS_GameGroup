@@ -1,114 +1,173 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Managers;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class PauseMenuScript : MonoBehaviour {
-    GameObject PauseMenuPanel, HelpMenuPanel, gameManager, WinningScreenPanel;
-    bool pauseOpen = false;
-    bool helpOpen = false;
+namespace Assets.Scripts
+{
+    public class PauseMenuScript : MonoBehaviour {
 
-    void Start()
-    {
-        gameManager = GameObject.Find("GameManager(Clone)");
-        PauseMenuPanel = GameObject.Find("UserInterface(Clone)/PauseMenu/PausePanel");
-        HelpMenuPanel = GameObject.Find("UserInterface(Clone)/PauseMenu/HelpPanel");
-        WinningScreenPanel = GameObject.Find("UserInterface(Clone)/WinningScreen");
-        Debug.Log(WinningScreenPanel);
-        WinningScreenPanel.SetActive(false);
-        HelpMenuPanel.SetActive(false);
-        PauseMenuPanel.SetActive(false);
-    }
+        private GameObject pauseMenuPanel, helpMenuPanel, winningScreenPanel;
+        private bool pauseOpen;
+        private bool helpOpen;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        private const string ContinueGameButtonName = "ContinueGameButton";
+        private const string RestartGameButtonName = "RestartGameButton";
+        private const string HelpButtonName = "HelpButton";
+        private const string MainMenuButtonName = "MainMenuButton";
+        private const string GameEndButtonName = "GameEndButton";
+        private const string HelpPanelBackButtonName = "HelpPanelBackButton";
+
+        private Button continueGameButton;
+        private Button restartGameButton;
+        private Button helpButton;
+        private Button mainMenuButton;
+        private Button gameEndButton;
+        private Button helpPanelBackButton;
+
+        public void Awake()
         {
-            Debug.Log("ESC wurde geklickt");
+            pauseMenuPanel = GameObject.FindWithTag(TagReferences.PausePanel);
+            helpMenuPanel = GameObject.FindWithTag(TagReferences.HelpPanel);
+            winningScreenPanel = GameObject.FindWithTag(TagReferences.WinningScreen);
+        }
 
+        public void Start()
+        {
+            RetrieveButtons();
+            RegisterButtonFunctions();
+            
+            winningScreenPanel.SetActive(false);
+            helpMenuPanel.SetActive(false);
+            pauseMenuPanel.SetActive(false);
+
+            pauseOpen = false;
+            helpOpen = false;
+        }
+
+        private void RegisterButtonFunctions()
+        {
+            continueGameButton.onClick.AddListener(OnContinueGameButtonClick);
+            restartGameButton.onClick.AddListener(OnRestartGameButtonClick);
+            helpButton.onClick.AddListener(OnHelpButtonClick);
+            mainMenuButton.onClick.AddListener(OnMainMenuButtonClick);
+            gameEndButton.onClick.AddListener(OnGameEndButtonClick);
+            helpPanelBackButton.onClick.AddListener(OnHelpPanelBackButtonClick);
+        }
+
+        private void OnHelpPanelBackButtonClick()
+        {
+            CloseHelp();
+        }
+
+        private void OnGameEndButtonClick()
+        {
+            QuitGame();
+        }
+
+        private void OnMainMenuButtonClick()
+        {
+            ChangeToMainMenu();
+        }
+
+        private void OnHelpButtonClick()
+        {
+            ShowHelp();
+        }
+
+        private void OnRestartGameButtonClick()
+        {
+            // TODO
+        }
+
+        private void OnContinueGameButtonClick()
+        {
+            ClosePauseMenu();
+        }
+
+        private void RetrieveButtons()
+        {
+            var buttons = GetComponentsInChildren<Button>().ToList();
+
+            continueGameButton = buttons.First(b => b.name == ContinueGameButtonName);
+            restartGameButton = buttons.First(b => b.name == RestartGameButtonName);
+            helpButton = buttons.First(b => b.name == HelpButtonName);
+            mainMenuButton = buttons.First(b => b.name == MainMenuButtonName);
+            gameEndButton = buttons.First(b => b.name == GameEndButtonName);
+            helpPanelBackButton = buttons.First(b => b.name == HelpPanelBackButtonName);
+        }
+
+        public void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.Escape)) return;
+
+            OpenPauseMenuButton();
+        }
+
+        public void OpenPauseMenuButton()
+        {
             if (!pauseOpen && !helpOpen)
             {
                 OpenPauseMenu();
             }
-            else if (helpOpen == true)
+            else if (helpOpen)
             {
                 CloseHelp();
             }
-            else if (pauseOpen == true)
+            else if (pauseOpen)
             {
                 ClosePauseMenu();
             }
         }
-    }
 
-    public void OpenPauseMenuButton()
-    {
-        if (!pauseOpen && !helpOpen)
+        public void OpenPauseMenu()
         {
-            OpenPauseMenu();
+            pauseOpen = true;
+            pauseMenuPanel.SetActive(true);
+            GameManager.Instance.GetComponent<InputManager>().PauseGameForMenu();
         }
-        else if (helpOpen == true)
+
+        private void ClosePauseMenu()
         {
-            CloseHelp();
+            pauseMenuPanel.SetActive(false);
+            pauseOpen = false;
+            GameManager.Instance.GetComponent<InputManager>().ContinueGameFromMenu();
         }
-        else if (pauseOpen == true)
+
+        public void ChangeToMainMenu()
         {
-            ClosePauseMenu();
+            LevelManager.Instance.LoadLevel(0);
         }
-    }
 
-    public void OpenPauseMenu()
-    {
-        pauseOpen = true;
-        PauseMenuPanel.SetActive(true);
-        gameManager.GetComponent<InputManager>().PauseGameForMenu();
-        Debug.Log("PauseMenu wird angezeigt");
-    }
+        public void ShowWinningScreen()
+        {
+            winningScreenPanel.SetActive(true);
+        }
 
-    public void ClosePauseMenu()
-    {
-        PauseMenuPanel.SetActive(false);
-        pauseOpen = false;
-        gameManager.GetComponent<InputManager>().ContinueGameFromMenu();
-        Debug.Log("Pause wurde geschlossen");
-    }
+        private void QuitGame()
+        {
+            Application.Quit();
+        }
 
-    public void ChangeToMainMenu()
-    {
-        gameManager.GetComponent<InputManager>().PauseGame();
-        LevelManager.Instance.LoadLevel(0);
-    }
+        public void CloseHelp()
+        {
+            helpOpen  =false;
+            pauseOpen = true;
+            helpMenuPanel.SetActive(false);
+        }
 
-    public void showWinningScreen()
-    {
-        WinningScreenPanel.SetActive(true);
-    }
+        private void ShowHelp()
+        {
+            helpMenuPanel.SetActive(true);
+            helpOpen=true;
+        }
 
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    public void CloseHelp()
-    {
-        helpOpen=false;
-        pauseOpen = true;
-        HelpMenuPanel.SetActive(false);
-        Debug.Log("Hilfe wurde geschlossen");
+        public void ChangeLevel(int sceneNumber)
+        {
+            GameManager.Instance.GetComponent<InputManager>().PauseGame();
+            LevelManager.Instance.LoadLevel(sceneNumber);
+        }
 
     }
-
-    public void ShowHelp()
-    {
-        Debug.Log("helpback wird ausgeführt PauseMenuPanel.activeSelf:");
-        Debug.Log(PauseMenuPanel.activeSelf);
-        HelpMenuPanel.SetActive(true);
-        helpOpen=true;
-
-    }
-
-    public void ChangeLevel(int sceneNumber)
-    {
-        gameManager.GetComponent<InputManager>().PauseGame();
-        LevelManager.Instance.LoadLevel(sceneNumber);
-    }
-
 }

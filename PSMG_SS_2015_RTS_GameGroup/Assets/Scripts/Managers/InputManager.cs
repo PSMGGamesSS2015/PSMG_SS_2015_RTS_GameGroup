@@ -12,11 +12,10 @@ namespace Assets.Scripts.Managers
     /// forwards these events to its listeners.
     /// It registers input from the keyboard as well as from the user interface.
     /// </summary>
-
-    public class InputManager : MonoBehaviour, UIManager.IUIManagerListener, LevelManager.ILevelManagerListener {
-
+    public class InputManager : MonoBehaviour, UIManager.IUIManagerListener, LevelManager.ILevelManagerListener
+    {
         private List<IInputManagerListener> listeners;
-        private bool isPaused=false, pauseMenuOpen=false;
+        private bool isPaused = false, pauseMenuOpen = false;
         // ReSharper disable once NotAccessedField.Local
         private UserInterface userInterface;
         private GameObject mainCamera;
@@ -203,37 +202,31 @@ namespace Assets.Scripts.Managers
 
         public void PauseGame()
         {
-            Debug.Log("PauseGame");
+            if (pauseMenuOpen) return;
 
-            if (!pauseMenuOpen)
+            if (isPaused)
             {
-                if (isPaused)
-                {
-                    Time.timeScale = 1f;
-                    isPaused = false;
-                }
-                else
-                {
-                    Time.timeScale = 0f;
-                    isPaused = true;
-                }
+                Time.timeScale = 1f;
+                isPaused = false;
+            }
+            else
+            {
+                Time.timeScale = 0f;
+                isPaused = true;
             }
         }
 
         public void PauseGameForMenu()
         {
-            Debug.Log("PauseGameForMenu");
-                Time.timeScale = 0f;
-                pauseMenuOpen = true;
+            Time.timeScale = 0f;
+            pauseMenuOpen = true;
         }
 
         public void ContinueGameFromMenu()
         {
-            Debug.Log("ContinueGameFromMenu");
-                Time.timeScale = 1f;
-                pauseMenuOpen = false;
-                isPaused = false;
-
+            Time.timeScale = 1f;
+            pauseMenuOpen = false;
+            isPaused = false;
         }
 
         private void SelectNextImp()

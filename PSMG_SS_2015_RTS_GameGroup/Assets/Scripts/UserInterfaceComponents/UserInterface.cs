@@ -3,6 +3,7 @@ using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Config;
 using Assets.Scripts.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.UserInterfaceComponents
 {
@@ -12,6 +13,10 @@ namespace Assets.Scripts.UserInterfaceComponents
 
         public ImpTrainingButton[] ImpTrainingButtons { get; private set; }
         public Canvas UICanvas { get; private set; }
+        private Button menuButton;
+        public PauseMenuScript PauseMenuScript { get; private set; }
+
+        private const string MenuButtonName = "MenuButton";
 
         public void Awake()
         {
@@ -21,9 +26,19 @@ namespace Assets.Scripts.UserInterfaceComponents
 
         private void RetrieveComponents()
         {
-            ImpTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+            PauseMenuScript = GetComponentInChildren<PauseMenuScript>();
 
-            UICanvas = GetComponentsInChildren<Canvas>().ToList().Find(c => c.tag == TagReferences.UICanvas);
+            ImpTrainingButtons = GetComponentsInChildren<ImpTrainingButton>();
+            var buttons = GetComponentsInChildren<Button>().ToList();
+            menuButton = buttons.First(b => b.name == MenuButtonName);
+            menuButton.onClick.AddListener(OnMenuButtonClick);
+
+            UICanvas = GetComponentsInChildren<Canvas>().First(c => c.tag == TagReferences.UICanvas);
+        }
+
+        private void OnMenuButtonClick()
+        {
+            PauseMenuScript.OpenPauseMenuButton();
         }
 
         public void Setup(LevelConfig config)

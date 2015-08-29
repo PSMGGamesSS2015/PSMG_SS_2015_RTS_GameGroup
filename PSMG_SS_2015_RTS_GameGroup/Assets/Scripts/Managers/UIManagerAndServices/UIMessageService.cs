@@ -76,12 +76,7 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         private void ConfigureMessageTextAndImage(string message, Speaker speaker, GameObject msg)
         {
-            
-
             SetMessageText(message, msg);
-
-            var speakerLabel =
-                msg.GetComponentsInChildren<Text>().ToList().First(sr => sr.gameObject.name == "Speaker_Label");
 
             var nameOfSpeaker = "";
 
@@ -89,23 +84,18 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             {
                 case Speaker.Knight:
                     nameOfSpeaker = "Knight_Image";
-                    speakerLabel.text = "Knight";
                     break;
                 case Speaker.Wilbur:
                     nameOfSpeaker = "Wilbur_Image";
-                    speakerLabel.text = "Wilbur";
                     break;
                 case Speaker.Koboldigunde:
                     nameOfSpeaker = "Koboldigunde_Image";
-                    speakerLabel.text = "Koboldigunde";
                     break;
                 case Speaker.KruemelBart:
                     nameOfSpeaker = "Kruemelbart_Image";
-                    speakerLabel.text = "Kruemelbart";
                     break;
                 case Speaker.Troll:
                     nameOfSpeaker = "Troll_Image";
-                    speakerLabel.text = "Troll";
                     break;
             }
 

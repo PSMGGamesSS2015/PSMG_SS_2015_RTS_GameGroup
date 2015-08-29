@@ -90,5 +90,10 @@
         public const string TrapDoor = "TrapDoor";
         public const string DrawBridge = "DrawBridge";
         public const string BlueTroll = "BlueTroll";
+
+        public const string PausePanel = "PausePanel";
+        public const string HelpPanel = "HelpPanel";
+        public const string PauseMenu = "PauseMenu";
+        public const string WinningScreen = "WinningScreen";
     }
 }

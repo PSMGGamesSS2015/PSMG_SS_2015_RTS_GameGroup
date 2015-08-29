@@ -127,6 +127,7 @@ namespace Assets.Scripts.Managers
             narrativeSceneListeners.ForEach(nsl => nsl.OnNarrativeLevelStarted(CurrentLevel));
         }
 
+        // TODO handle stuff
         private void LoadMenuLevel()
         {
             CurrentLevel = new Level

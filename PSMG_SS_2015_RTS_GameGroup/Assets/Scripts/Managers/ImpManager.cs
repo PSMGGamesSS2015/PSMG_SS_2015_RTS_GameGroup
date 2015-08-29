@@ -49,7 +49,6 @@ namespace Assets.Scripts.Managers
 
         public void UnregisterListener(IMpManagerListener listener)
         {
-            Debug.Log("Unregistering listener:" + listener);
             listeners.Remove(listener);
         }
 
@@ -75,7 +74,7 @@ namespace Assets.Scripts.Managers
 
             currentImps = 0;
             config = level.CurrentLevelConfig;
-            professions = new int[7];
+            professions = new int[6];
             spawnPosition = level.Start.transform.position;
             spawnInterval = level.CurrentLevelConfig.SpawnInterval;
         }
@@ -257,7 +256,6 @@ namespace Assets.Scripts.Managers
 
         void LevelManager.ILevelManagerListener.OnLevelEnding()
         {
-            Debug.Log("Unregistering listening to UI");
             if (UIManager.Instance.CurrentUserInterface != null)
                 UnregisterListener(UIManager.Instance.CurrentUserInterface);
         }

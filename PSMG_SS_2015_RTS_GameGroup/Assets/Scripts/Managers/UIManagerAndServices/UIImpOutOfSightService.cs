@@ -217,7 +217,12 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         public void Reset()
         {
+            imps.Clear();
+
+            ImpOutOfSightIcons.Values.ToList().ForEach(Destroy);
             ImpOutOfSightIcons.Clear();
+
+            imps = ImpManager.Instance.Imps;
         }
     }
 }

@@ -278,5 +278,10 @@ namespace Assets.Scripts.Managers
         {
             // TODO enabled stuff
         }
+
+        void LevelManager.ILevelManagerListener.OnLevelEnding()
+        {
+            // TODO 
+        }
     }
 }

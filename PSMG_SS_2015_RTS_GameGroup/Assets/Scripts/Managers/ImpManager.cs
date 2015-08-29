@@ -6,7 +6,6 @@ using Assets.Scripts.Controllers.Characters.Imps.SubServices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
-using Assets.Scripts.UserInterfaceComponents;
 using Assets.Scripts.Utility;
 using UnityEngine;
 
@@ -17,12 +16,12 @@ namespace Assets.Scripts.Managers
     /// logic behind the player-controlled imps in a level. For example,
     /// it spawns imps and gets notified when an imp is selected by the player.
     /// </summary>
-    public class ImpManager : MonoBehaviour, ImpController.IImpControllerListener, LevelManager.ILevelManagerListener, LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener,
+    public class ImpManager : MonoBehaviour, ImpController.IImpControllerListener, LevelManager.ILevelManagerListener,
+        LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener,
         InputManager.IInputManagerListener
     {
         private LevelConfig config;
         private Vector3 spawnPosition;
-        private UserInterface currentUserInterface;
         public List<ImpController> Imps;
 
         public Counter SpawnCounter { get; private set; }
@@ -50,6 +49,7 @@ namespace Assets.Scripts.Managers
 
         public void UnregisterListener(IMpManagerListener listener)
         {
+            Debug.Log("Unregistering listener:" + listener);
             listeners.Remove(listener);
         }
 
@@ -98,13 +98,6 @@ namespace Assets.Scripts.Managers
                 UpdateMaxProfessions();
                 impSelected.GetComponent<ImpTrainingService>().Train(profession);
             }
-        }
-
-        public void OnNewUserInterfaceLoaded(UserInterface userInterface)
-        {
-            if (currentUserInterface != null) UnregisterListener(currentUserInterface);
-            currentUserInterface = userInterface;
-            RegisterListener(userInterface);
         }
 
         public int[] GetProfessions()
@@ -257,10 +250,17 @@ namespace Assets.Scripts.Managers
             SetLevel(level);
         }
 
-         void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
-         {
-             StartSpawningImps();
-         }
+        void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
+        {
+            StartSpawningImps();
+        }
+
+        void LevelManager.ILevelManagerListener.OnLevelEnding()
+        {
+            Debug.Log("Unregistering listening to UI");
+            if (UIManager.Instance.CurrentUserInterface != null)
+                UnregisterListener(UIManager.Instance.CurrentUserInterface);
+        }
 
         private void StartSpawningImps()
         {

@@ -48,6 +48,7 @@ namespace Assets.Scripts.Managers
 
             yield return new WaitForSeconds(10f);
 
+            
             LoadNextLevel();
         }
 
@@ -81,6 +82,8 @@ namespace Assets.Scripts.Managers
 
         public void LoadLevel(int level)
         {
+            listeners.ForEach(l => l.OnLevelEnding());
+
             CurrentLevelNumber = level;
             LoadLevel(LevelConfig.Levels[level]);
         }
@@ -232,6 +235,7 @@ namespace Assets.Scripts.Managers
         {
             void OnLevelStarted(Level level);
             void OnStartMessagePlayed();
+            void OnLevelEnding();
         }
 
         private List<ILevelManagerMenuSceneListener> menuSceneListeners;

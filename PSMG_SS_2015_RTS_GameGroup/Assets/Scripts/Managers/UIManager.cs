@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Managers
 {
-    public class UIManager : MonoBehaviour, LevelManager.ILevelManagerListener
+    public class UIManager : MonoBehaviour, LevelManager.ILevelManagerListener, LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener
     {
         public GameObject UserInterfacePrefab;
 
@@ -55,17 +55,34 @@ namespace Assets.Scripts.Managers
         {
             UIMessageService.Reset();
             UIImpOutOfSightService.Reset();
-
+            
             CurrentUserInterface = Instantiate(UserInterfacePrefab).GetComponent<UserInterface>();
             CurrentUserInterface.Setup(level.CurrentLevelConfig);
 
-            GetComponent<ImpManager>().OnNewUserInterfaceLoaded(CurrentUserInterface);
+            ImpManager.Instance.RegisterListener(CurrentUserInterface);
             listeners.ForEach(x => x.OnUserInterfaceLoaded(CurrentUserInterface));
         }
 
         void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
         {
             // TODO
+        }
+
+        void LevelManager.ILevelManagerListener.OnLevelEnding()
+        {
+            // TODO
+        }
+
+        void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
+        {
+            UIMessageService.Reset();
+            UIImpOutOfSightService.Reset();
+        }
+
+        void LevelManager.ILevelManagerNarrativeSceneListener.OnNarrativeLevelStarted(Level level)
+        {
+            UIMessageService.Reset();
+            UIImpOutOfSightService.Reset();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Assets.Scripts.Managers
     /// logic behind the player-controlled imps in a level. For example,
     /// it spawns imps and gets notified when an imp is selected by the player.
     /// </summary>
-    public class ImpManager : MonoBehaviour, ImpController.IImpControllerListener, LevelManager.ILevelManagerListener,
+    public class ImpManager : MonoBehaviour, ImpController.IImpControllerListener, LevelManager.ILevelManagerListener, LevelManager.ILevelManagerMenuSceneListener, LevelManager.ILevelManagerNarrativeSceneListener,
         InputManager.IInputManagerListener
     {
         private LevelConfig config;
@@ -276,6 +276,16 @@ namespace Assets.Scripts.Managers
         void ImpController.IImpControllerListener.OnCheckpointReached(CheckPointController checkPointController)
         {
             spawnPosition = checkPointController.transform.position;
+        }
+
+        void LevelManager.ILevelManagerMenuSceneListener.OnMenuLevelStarted(Level level)
+        {
+            if (SpawnCounter != null) SpawnCounter.Stop();
+        }
+
+        void LevelManager.ILevelManagerNarrativeSceneListener.OnNarrativeLevelStarted(Level level)
+        {
+            if (SpawnCounter != null) SpawnCounter.Stop();
         }
     }
 }

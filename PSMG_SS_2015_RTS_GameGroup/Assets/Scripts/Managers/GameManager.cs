@@ -62,6 +62,8 @@ namespace Assets.Scripts.Managers
         private void SetupCommunicationBetweenManagers()
         {
             levelManager.RegisterListener(impManager);
+            levelManager.RegisterMenuSceneListener(impManager);
+            levelManager.RegisterNarrativeSceneListener(impManager);
             levelManager.RegisterListener(soundManager);
             levelManager.RegisterMenuSceneListener(soundManager);
             levelManager.RegisterNarrativeSceneListener(soundManager);

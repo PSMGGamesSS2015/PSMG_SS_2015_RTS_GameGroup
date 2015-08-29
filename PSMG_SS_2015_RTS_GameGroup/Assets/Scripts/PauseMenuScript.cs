@@ -68,6 +68,7 @@ namespace Assets.Scripts
 
         private void OnMainMenuButtonClick()
         {
+            Time.timeScale = 1.0f;
             ChangeToMainMenu();
         }
 

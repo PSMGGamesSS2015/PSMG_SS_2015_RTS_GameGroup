@@ -172,6 +172,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator PiercingRoutine()
         {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
             IsPiercing = true;
 
             impAnimationService.Play(AnimationReferences.ImpAttackingWithSpear);
@@ -184,6 +185,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             impAnimationService.Play(AnimationReferences.ImpStandingWithSpear);
 
             IsPiercing = false;
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
         private void Attack(EnemyController enemyController)
@@ -234,17 +236,22 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         public void StopAttacking()
         {
-            impMovementService.Walk();
-            impAnimationService.Play(AnimationReferences.ImpWalkingSpear);
-
             if (attackCounter != null) attackCounter.Stop();
+            impMovementService.Walk();
+            impAnimationService.PlayWalkingAnimation();
         }
 
         public void DissolveCommand()
         {
             StopAttacking();
             CommandPartner = null;
+            
+            if (!IsPiercing) return;
+
             IsPiercing = false;
+            StopCoroutine(PiercingRoutine());
+            GetComponent<ImpTrainingService>().IsTrainable = true;
+           
         }
 
         public bool IsInCommand()
@@ -280,6 +287,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator PiercingOnceRoutine()
         {
+            GetComponent<ImpTrainingService>().IsTrainable = false;
             impAnimationService.Play(AnimationReferences.ImpAttackingWithSpear);
             GetComponent<ImpAudioService>().Sounds.Play(SoundReferences.ImpAttack1);
 
@@ -289,6 +297,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             impAnimationService.PlayWalkingAnimation();
             impMovementService.Walk();
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
         public void BatterDough(BowlController bowl)

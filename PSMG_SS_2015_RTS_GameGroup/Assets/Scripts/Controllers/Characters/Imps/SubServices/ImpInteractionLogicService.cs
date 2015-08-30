@@ -63,7 +63,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private void OnWalkingIntoThrowingSchwarzenegger(ImpController imp)
         {
-            // TODO Does not work
             if (imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile != null &&
                 GetComponent<ImpController>().GetInstanceID() !=
                 imp.GetComponent<ImpSchwarzeneggerService>().CurrentProjectile.GetInstanceID())

@@ -2,6 +2,8 @@
 using System.Linq;
 using Assets.Scripts.AssetReferences;
 using Assets.Scripts.Controllers.Characters.Imps;
+using Assets.Scripts.Controllers.Characters.Imps.SubServices;
+using Assets.Scripts.Types;
 using UnityEngine;
 
 namespace Assets.Scripts.Controllers.Objects
@@ -59,6 +61,7 @@ namespace Assets.Scripts.Controllers.Objects
         {
             if (isOpen) return;
             if (impsOnTrapDoors.Contains(imp)) return;
+            if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
 
             impsOnTrapDoors.Add(imp);
             CheckIfDoorOpens();
@@ -98,10 +101,24 @@ namespace Assets.Scripts.Controllers.Objects
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {
-            if (self.GetInstanceID() != trapDoorCollisionCheck.GetInstanceID())
+            if (self.GetInstanceID() != trapDoorCollisionCheck.GetInstanceID()) return;
+
+            switch (collider.gameObject.tag)
             {
-                
+                case TagReferences.Imp:
+                    OnTriggerStayImp(collider.GetComponent<ImpController>());
+                    break;
             }
+        }
+
+        private void OnTriggerStayImp(ImpController imp)
+        {
+            if (isOpen) return;
+            if (impsOnTrapDoors.Contains(imp)) return;
+            if (imp.GetComponent<ImpTrainingService>().Type != ImpType.Coward) return;
+
+            impsOnTrapDoors.Add(imp);
+            CheckIfDoorOpens();
         }
     }
 }

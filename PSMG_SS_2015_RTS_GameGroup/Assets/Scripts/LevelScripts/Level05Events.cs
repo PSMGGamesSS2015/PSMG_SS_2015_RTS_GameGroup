@@ -53,7 +53,7 @@ namespace Assets.Scripts.LevelScripts
         {
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl5_03);
 
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[4] += 2;
+            LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions[4] += 2;
             ImpManager.Instance.NotifyMaxProfessions();
         }
 

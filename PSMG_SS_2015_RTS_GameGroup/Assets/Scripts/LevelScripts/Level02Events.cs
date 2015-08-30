@@ -48,7 +48,7 @@ namespace Assets.Scripts.LevelScripts
 
         private void SunglassesCollectedAction()
         {
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[5] += 1;
+            LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions[5] += 1;
             ImpManager.Instance.NotifyMaxProfessions();
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl2_04);
         }

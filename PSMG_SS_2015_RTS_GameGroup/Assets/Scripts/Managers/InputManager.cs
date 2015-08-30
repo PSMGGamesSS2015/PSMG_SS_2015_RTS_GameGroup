@@ -56,14 +56,38 @@ namespace Assets.Scripts.Managers
 
         public void OnGUI()
         {
-            if (LevelManager.Instance.CurrentLevel.CurrentLevelConfig.Type != LevelConfig.LevelType.InGame) return;
-
-            var e = Event.current;
-            CheckScrollInput(e);
-            CheckKeyInput(e);
+            switch (LevelManager.Instance.CurrentLevel.CurrentLevelConfig.Type)
+            {
+                case LevelConfig.LevelType.InGame:
+                {
+                    var e = Event.current;
+                    CheckScrollInput(e);
+                    CheckKeyInputForInGameLevel(e);
+                }
+                    break;
+                case LevelConfig.LevelType.Narrative:
+                {
+                    var e = Event.current;
+                    CheckKeyInputForNarrativeLevel(e);
+                }
+                    break;
+            }
         }
 
-        private void CheckKeyInput(Event e)
+        private void CheckKeyInputForNarrativeLevel(Event e)
+        {
+            if (e.type == EventType.KeyDown)
+            {
+                if (e.keyCode == KeyCode.Escape)
+                {
+                    Time.timeScale = 1.0f;
+                    Instance.CurrentSpeed = GameSpeed.Normal;
+                    LevelManager.Instance.LoadLevel(2);
+                }
+            }
+        }
+
+        private void CheckKeyInputForInGameLevel(Event e)
         {
             if (e.type == EventType.KeyDown)
             {

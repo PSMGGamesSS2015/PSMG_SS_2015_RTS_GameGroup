@@ -39,10 +39,10 @@ namespace Assets.Scripts.Controllers.Objects
             canonBall.GetComponent<Rigidbody2D>().velocity = new Vector2(25f, 3f);
 
             if (hasFired) return;
-            var events = (Level02Events) LevelManager.Instance.CurrentLevelEvents;
-            events.Level02Started.TriggerManually();
 
-            events.Darkness.TriggerManually();
+            var events = (Level05Events) LevelManager.Instance.CurrentLevelEvents;
+            events.CanonFiringMessage.TriggerManually();
+
             hasFired = true;
         }
     }

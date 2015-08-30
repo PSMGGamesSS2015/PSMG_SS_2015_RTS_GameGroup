@@ -133,8 +133,8 @@ namespace Assets.Scripts.LevelScripts
 
         private void WeaponsCollectedAction()
         {
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[0] += 1;
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[3] += 2;
+            LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions[0] += 1;
+            LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions[3] += 2;
             ImpManager.Instance.NotifyMaxProfessions();
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_09);
         }

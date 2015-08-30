@@ -14,22 +14,16 @@ namespace Assets.Scripts.Controllers.Characters.Other.Koboldigunde.Subservices
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerEnter2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != koboldigundeCollisionCheck.GetInstanceID()) return;
-
-            throw new System.NotImplementedException();
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerExit2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != koboldigundeCollisionCheck.GetInstanceID()) return;
-
-            throw new System.NotImplementedException();
         }
 
         void TriggerCollider2D.ITriggerCollider2DListener.OnTriggerStay2D(TriggerCollider2D self, Collider2D collider)
         {
             if (self.GetInstanceID() != koboldigundeCollisionCheck.GetInstanceID()) return;
-
-            throw new System.NotImplementedException();
         }
     }
 }

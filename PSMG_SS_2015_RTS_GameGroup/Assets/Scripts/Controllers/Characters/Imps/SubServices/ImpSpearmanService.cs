@@ -225,6 +225,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             StandAndAttack();
             CommandPartner = commandPartner;
+
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX;
+            GetComponent<Rigidbody2D>().freezeRotation = true;
         }
 
         public void StandAndAttack()
@@ -245,7 +248,9 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             StopAttacking();
             CommandPartner = null;
-            
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+            GetComponent<Rigidbody2D>().freezeRotation = true;
+
             if (!IsPiercing) return;
 
             IsPiercing = false;

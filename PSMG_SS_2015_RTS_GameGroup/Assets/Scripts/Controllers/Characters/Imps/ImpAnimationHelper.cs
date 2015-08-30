@@ -127,7 +127,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps
         public void PlayWinningAnimation()
         {
             GetComponent<ImpMovementService>().Stand();
-
+            ImpInventory.HideItems();
             Play(AnimationReferences.ImpHappy);
         }
     }

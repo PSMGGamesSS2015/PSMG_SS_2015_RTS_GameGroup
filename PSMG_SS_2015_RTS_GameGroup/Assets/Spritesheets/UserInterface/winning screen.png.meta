@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: 31c814b4190d27b4a882cd617a1becdf
+timeCreated: 1440938762
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: winning screen_2
+    21300002: winning screen_3
+    21300004: winning screen_4
+    21300006: winning screen_6
+    21300008: winning screen_7
+    21300010: winning screen_8
+    21300012: winning screen_9
+    21300014: winning screen_11
+    21300016: winning screen_12
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: winning screen_2
+      rect:
+        serializedVersion: 2
+        x: 970
+        y: 341
+        width: 193
+        height: 423
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_3
+      rect:
+        serializedVersion: 2
+        x: 1177
+        y: 341
+        width: 193
+        height: 423
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_4
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 341
+        width: 193
+        height: 423
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_6
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 344
+        width: 299
+        height: 413
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_7
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 333
+        width: 194
+        height: 404
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_8
+      rect:
+        serializedVersion: 2
+        x: 767
+        y: 340
+        width: 186
+        height: 356
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_9
+      rect:
+        serializedVersion: 2
+        x: 1763
+        y: 335
+        width: 80
+        height: 338
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_11
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 17
+        width: 157
+        height: 353
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: winning screen_12
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 21
+        width: 157
+        height: 353
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

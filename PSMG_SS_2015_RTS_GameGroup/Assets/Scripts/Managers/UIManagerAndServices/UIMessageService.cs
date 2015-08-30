@@ -141,7 +141,7 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
             msg.transform.position = new Vector3( // position message within canvas
                 screenPositionOfCanvas.x + Screen.width / 2f - 420,
-                screenPositionOfCanvas.y + Screen.height / 2.0f - 120 - 150 * (speechBubbleMessages.Count - 1),
+                screenPositionOfCanvas.y + Screen.height / 2.0f - 120 - 180 * (speechBubbleMessages.Count - 1),
                 screenPositionOfCanvas.z
                 );
         }

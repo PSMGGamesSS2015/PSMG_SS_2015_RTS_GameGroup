@@ -5,6 +5,7 @@ using Assets.Scripts.Controllers.Characters.Enemies.Knight;
 using Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices;
 using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Types;
 using UnityEngine;
 
@@ -242,6 +243,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             if (checkPointController.IsPassed) return;
             checkPointController.IsPassed = true;
             GetComponent<ImpController>().Listeners.ForEach(l => l.OnCheckpointReached(checkPointController));
+            UIManager.Instance.UIMessageService.CreateSimpleTextMessage("Checkpoint erreicht");
         }
 
         private void OnEnterSchwarzeneggerSpot(Collider2D collider)

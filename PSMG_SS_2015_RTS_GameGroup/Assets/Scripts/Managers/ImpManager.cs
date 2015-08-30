@@ -106,12 +106,12 @@ namespace Assets.Scripts.Managers
 
         public int[] GetProfessionsMax()
         {
-            return config.MaxProfessions;
+            return LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions;
         }
 
         private bool IsTrainingLimitReached(ImpType profession)
         {
-            return professions[(int) profession] >= config.MaxProfessions[(int) profession];
+            return professions[(int) profession] >= LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions[(int) profession];
         }
 
         private void UpdateMaxProfessions(ImpType profession)

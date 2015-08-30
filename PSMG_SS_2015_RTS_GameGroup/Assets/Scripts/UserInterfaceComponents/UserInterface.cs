@@ -21,7 +21,7 @@ namespace Assets.Scripts.UserInterfaceComponents
         public void Awake()
         {
             RetrieveComponents();
-            currentMaxProfessions = LevelManager.Instance.CurrentLevelConfig.MaxProfessions;
+            currentMaxProfessions = LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions;
         }
 
         private void RetrieveComponents()
@@ -43,7 +43,7 @@ namespace Assets.Scripts.UserInterfaceComponents
 
         public void Setup(LevelConfig config)
         {
-            currentMaxProfessions = config.MaxProfessions;
+            currentMaxProfessions = LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions;
             
             for (var i = 0; i < ImpTrainingButtons.Length-1; i++)
             {

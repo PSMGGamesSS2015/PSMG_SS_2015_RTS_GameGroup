@@ -83,7 +83,7 @@ namespace Assets.Scripts.Managers
         {
             listeners.ForEach(l => l.OnLevelEnding());
             StopAllCoroutines();
-            
+
             CurrentLevelNumber = level;
             LoadLevel(LevelConfig.Levels[level]);
         }
@@ -156,6 +156,17 @@ namespace Assets.Scripts.Managers
                 HighlightableObjects = GameObject.FindGameObjectsWithTag(TagReferences.HighlightableObject).ToList(),
                 Enemies = GameObject.FindGameObjectsWithTag(TagReferences.EnemyTroll).ToList()
             };
+
+            CurrentLevel.CopyOfMaxProfessions = new[]
+            {
+                CurrentLevelConfig.MaxProfessions[0],
+                CurrentLevelConfig.MaxProfessions[1],
+                CurrentLevelConfig.MaxProfessions[2],
+                CurrentLevelConfig.MaxProfessions[3],
+                CurrentLevelConfig.MaxProfessions[4],
+                CurrentLevelConfig.MaxProfessions[5],
+            };
+
             RegisterListeners();
             listeners.ForEach(l => l.OnLevelStarted(CurrentLevel));
 
@@ -217,7 +228,7 @@ namespace Assets.Scripts.Managers
         {
             yield return (1f);
 
-            var events = (Level05Events)CurrentLevelEvents;
+            var events = (Level05Events) CurrentLevelEvents;
             events.LevelStartedMessage.TriggerManually();
 
             yield return new WaitForSeconds(8f);
@@ -273,5 +284,4 @@ namespace Assets.Scripts.Managers
             void OnNarrativeLevelStarted(Level level);
         }
     }
-
 }

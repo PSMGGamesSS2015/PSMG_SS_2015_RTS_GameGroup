@@ -20,6 +20,15 @@ namespace Assets.Scripts.Managers
         private UserInterface userInterface;
         private GameObject mainCamera;
 
+        public GameSpeed CurrentSpeed;
+
+        public enum GameSpeed
+        {
+            Slow,
+            Normal,
+            Fast
+        }
+
         public static InputManager Instance;
 
         public void Awake()
@@ -34,6 +43,7 @@ namespace Assets.Scripts.Managers
             }
 
             isPaused = false;
+            CurrentSpeed = GameSpeed.Normal;
             listeners = new List<IInputManagerListener>();
         }
 
@@ -113,17 +123,35 @@ namespace Assets.Scripts.Managers
 
         public void DecreaseGameSpeed()
         {
-            if (Time.timeScale >= 0.1f && Time.timeScale <= 3.0f)
+            switch (CurrentSpeed)
             {
-                Time.timeScale -= 0.1f;
+                case GameSpeed.Slow:
+                    return;
+                case GameSpeed.Fast:
+                    CurrentSpeed = GameSpeed.Normal;
+                    Time.timeScale = 1.0f;
+                    return;
+                case GameSpeed.Normal:
+                    CurrentSpeed = GameSpeed.Slow;
+                    Time.timeScale = 0.3f;
+                    break;
             }
         }
 
         public void IncreaseGameSpeed()
         {
-            if (Time.timeScale >= 0.0f && Time.timeScale <= 2.9f)
+            switch (CurrentSpeed)
             {
-                Time.timeScale += 0.1f;
+                case GameSpeed.Fast:
+                    return;
+                case GameSpeed.Slow:
+                    CurrentSpeed = GameSpeed.Normal;
+                    Time.timeScale = 1.0f;
+                    return;
+                case GameSpeed.Normal:
+                    CurrentSpeed = GameSpeed.Fast;
+                    Time.timeScale = 2.5f;
+                    break;
             }
         }
 
@@ -193,6 +221,7 @@ namespace Assets.Scripts.Managers
             if (isPaused)
             {
                 Time.timeScale = 1f;
+                CurrentSpeed = GameSpeed.Normal;
                 isPaused = false;
             }
             else
@@ -211,6 +240,7 @@ namespace Assets.Scripts.Managers
         public void ContinueGameFromMenu()
         {
             Time.timeScale = 1f;
+            CurrentSpeed = GameSpeed.Normal;
             pauseMenuOpen = false;
             isPaused = false;
         }

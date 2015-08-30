@@ -69,6 +69,7 @@ namespace Assets.Scripts
         private void OnMainMenuButtonClick()
         {
             Time.timeScale = 1.0f;
+            InputManager.Instance.CurrentSpeed = InputManager.GameSpeed.Normal;
             ChangeToMainMenu();
         }
 
@@ -80,6 +81,7 @@ namespace Assets.Scripts
         private void OnRestartGameButtonClick()
         {
             Time.timeScale = 1.0f;
+            InputManager.Instance.CurrentSpeed = InputManager.GameSpeed.Normal;
             LevelManager.Instance.LoadLevel(LevelManager.Instance.CurrentLevelNumber);
         }
 

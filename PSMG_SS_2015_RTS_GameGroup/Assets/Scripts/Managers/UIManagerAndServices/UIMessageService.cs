@@ -38,20 +38,18 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
 
         private IEnumerator SimpleTextMessageRoutine(string message)
         {
+
+            var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
+
             var msg = Instantiate(SimpleTextMessagePrefab);
             msg.GetComponent<Text>().text = message;
 
-            var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
-            var pos = canvas.transform.position;
-            var width = canvas.GetComponent<RectTransform>().rect.width;
-            var height = canvas.GetComponent<RectTransform>().rect.height;
-
             msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
 
-            msg.transform.localPosition = new Vector3( // position message within canvas
-                pos.x - width / 6f, 
-                pos.y - height / 6f, 
-                pos.z
+            msg.transform.position = new Vector3( // position message within canvas
+                Screen.width / 2f,
+                Screen.height / 2.0f,
+                canvas.transform.position.z
                 );
 
             yield return new WaitForSeconds(SimpleTextMessageDuration);

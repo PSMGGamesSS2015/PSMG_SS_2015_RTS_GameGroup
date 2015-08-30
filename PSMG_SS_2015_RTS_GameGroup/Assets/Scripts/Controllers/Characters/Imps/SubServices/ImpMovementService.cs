@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Assets.Scripts.AssetReferences;
-using Assets.Scripts.ExtensionMethods;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Types;
 using Assets.Scripts.Utility;

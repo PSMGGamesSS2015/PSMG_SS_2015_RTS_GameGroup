@@ -15,7 +15,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         public CircleCollider2D CircleCollider2D { get; private set; }
         private TriggerCollider2D impCollisionCheck;
         private TriggerCollider2D impClickCheck;
-        private ImpAnimationHelper impAnimationService;
         private ImpMovementService impMovementService;
         private ImpTrainingService impTrainingService;
 
@@ -32,7 +31,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
             collidersIgnoredWhileClimbing = new List<Collider2D>();
 
             CircleCollider2D = GetComponent<CircleCollider2D>();
-            impAnimationService = GetComponent<ImpAnimationHelper>();
             impMovementService = GetComponent<ImpMovementService>();
             impTrainingService = GetComponent<ImpTrainingService>();
         }
@@ -56,8 +54,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
                 Physics2D.IgnoreCollision(CircleCollider2D, collision.gameObject.GetComponent<Collider2D>(), true);
                 return;
             }
-
-            
 
             switch (collision.gameObject.tag)
             {

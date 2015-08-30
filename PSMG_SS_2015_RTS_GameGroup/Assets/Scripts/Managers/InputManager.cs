@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Config;
-using Assets.Scripts.Controllers.Objects;
 using Assets.Scripts.ParameterObjects;
 using Assets.Scripts.Types;
 using Assets.Scripts.UserInterfaceComponents;
@@ -16,7 +15,7 @@ namespace Assets.Scripts.Managers
     public class InputManager : MonoBehaviour, UIManager.IUIManagerListener, LevelManager.ILevelManagerListener
     {
         private List<IInputManagerListener> listeners;
-        private bool isPaused = false, pauseMenuOpen = false;
+        private bool isPaused, pauseMenuOpen;
         // ReSharper disable once NotAccessedField.Local
         private UserInterface userInterface;
         private GameObject mainCamera;
@@ -60,9 +59,6 @@ namespace Assets.Scripts.Managers
             {
                 switch (e.keyCode)
                 {
-                    case KeyCode.LeftAlt:
-                        HighlightObjects(true);
-                        break;
                     case KeyCode.Tab:
                         SelectNextImp();
                         break;
@@ -113,19 +109,6 @@ namespace Assets.Scripts.Managers
                         break;
                 }
             }
-            if (e.type != EventType.KeyUp) return;
-            switch (e.keyCode)
-            {
-                case KeyCode.LeftAlt:
-                    HighlightObjects(false);
-                    break;
-            }
-        }
-
-        private void HighlightObjects(bool highlighted)
-        {
-            var highlightableObjects = LevelManager.Instance.CurrentLevel.HighlightableObjects;
-            highlightableObjects.ForEach(ho => ho.GetComponent<HighlightableObject>().IsBlinking = highlighted);
         }
 
         public void DecreaseGameSpeed()
@@ -276,12 +259,12 @@ namespace Assets.Scripts.Managers
 
         void LevelManager.ILevelManagerListener.OnStartMessagePlayed()
         {
-            // TODO enabled stuff
+            // not needed here
         }
 
         void LevelManager.ILevelManagerListener.OnLevelEnding()
         {
-            // TODO 
+            // not needed here
         }
     }
 }

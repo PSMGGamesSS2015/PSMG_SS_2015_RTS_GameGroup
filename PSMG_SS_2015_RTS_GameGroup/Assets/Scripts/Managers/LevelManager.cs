@@ -82,7 +82,8 @@ namespace Assets.Scripts.Managers
         public void LoadLevel(int level)
         {
             listeners.ForEach(l => l.OnLevelEnding());
-
+            StopAllCoroutines();
+            
             CurrentLevelNumber = level;
             LoadLevel(LevelConfig.Levels[level]);
         }

@@ -38,7 +38,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
         private IEnumerator ThrowingImpRoutine(ImpController projectile)
         {
-
+            GetComponent<ImpTrainingService>().IsTrainable = false;
             HandleCollisionManagementWithProjectile(projectile);
 
             CurrentProjectile = projectile;
@@ -61,6 +61,7 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
 
             CurrentProjectile = null;
             IsThrowing = false;
+            GetComponent<ImpTrainingService>().IsTrainable = true;
         }
 
         private void HandleCollisionManagementWithProjectile(ImpController projectile)

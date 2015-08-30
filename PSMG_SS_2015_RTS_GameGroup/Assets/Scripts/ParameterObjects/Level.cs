@@ -14,6 +14,7 @@ namespace Assets.Scripts.ParameterObjects
             HighlightableObjects = new List<GameObject>();
         }
 
+        public int[] CopyOfMaxProfessions { get; set; }
         public LevelConfig CurrentLevelConfig { get; set; }
 
         public GameObject Start { get; set; }

@@ -126,7 +126,7 @@ namespace Assets.Scripts.LevelScripts
 
         private void LaddersCollectedAction()
         {
-            LevelManager.Instance.CurrentLevel.CurrentLevelConfig.MaxProfessions[2] += 2;
+            LevelManager.Instance.CurrentLevel.CopyOfMaxProfessions[2] += 2;
             ImpManager.Instance.NotifyMaxProfessions();
             SoundManager.Instance.Narrator.PlayAfterCurrent(SoundReferences.SoundLvl1_07);
         }

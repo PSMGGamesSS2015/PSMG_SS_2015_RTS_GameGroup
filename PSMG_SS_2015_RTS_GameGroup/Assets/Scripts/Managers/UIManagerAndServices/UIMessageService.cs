@@ -137,12 +137,11 @@ namespace Assets.Scripts.Managers.UIManagerAndServices
             var canvas = GetComponent<UIManager>().CurrentUserInterface.UICanvas;
             var screenPositionOfCanvas = canvas.transform.position;
 
-
             msg.transform.SetParent(canvas.transform, false); // set canvas as parent element
 
             msg.transform.position = new Vector3( // position message within canvas
-                screenPositionOfCanvas.x + Screen.width/2f - 280,
-                screenPositionOfCanvas.y + Screen.height/2.0f -  75 * speechBubbleMessages.Count-1,
+                screenPositionOfCanvas.x + Screen.width / 2f - 420,
+                screenPositionOfCanvas.y + Screen.height / 2.0f - 120 - 150 * (speechBubbleMessages.Count - 1),
                 screenPositionOfCanvas.z
                 );
         }

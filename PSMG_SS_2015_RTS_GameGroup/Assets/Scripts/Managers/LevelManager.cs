@@ -24,6 +24,7 @@ namespace Assets.Scripts.Managers
         public LevelConfig CurrentLevelConfig { get; set; }
         public Level CurrentLevel { get; set; }
         public LevelEvents CurrentLevelEvents { get; set; }
+        private GameObject pauseMenu;
 
         private bool isEndingLevel;
 
@@ -42,6 +43,8 @@ namespace Assets.Scripts.Managers
 
         private IEnumerator OnGoalReachedRoutine()
         {
+            pauseMenu = GameObject.FindWithTag(TagReferences.PauseMenu);
+            pauseMenu.GetComponent<PauseMenuScript>().ShowWinningScreen();
             ImpManager.Instance.SpawnCounter.Stop();
             ImpManager.Instance.Imps.ForEach(i => i.GetComponent<ImpAnimationHelper>().PlayWinningAnimation());
             SoundManager.Instance.BackgroundMusic.PlayAsLast(SoundReferences.WonTheme);

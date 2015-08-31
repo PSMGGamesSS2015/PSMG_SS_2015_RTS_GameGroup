@@ -68,7 +68,7 @@ namespace Assets.Scripts.LevelScripts
             LevelStartedMessage.Action = LevelStartedAction;
 
             FlourHasFallenIntoBowlMessage = Events.First(e => e.Nr == 2);
-            FlourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Mit Wasser und etwas zum Rühren könnten wir uns einen Kuchen backen.";
+            FlourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Wenn wir ihn gut rühren, könnten wir uns einen Kuchen backen.";
             FlourHasFallenIntoBowlMessage.Action = FlourHasFallenIntoBowlAction;
 
 

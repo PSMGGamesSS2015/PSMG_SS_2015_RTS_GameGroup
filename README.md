@@ -11,4 +11,4 @@ des Audiokurses Johannes S., Carolin S., und Ayla G.
 
 Viel Spaß beim Spielen wünschen
 
-David Brem, Tobias Goeltz und Jan Gügel
+David Brem, Tobias Goelz und Jan Gügel

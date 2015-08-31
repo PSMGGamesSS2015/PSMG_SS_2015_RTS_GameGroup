@@ -33,6 +33,8 @@ namespace Assets.Scripts.LevelScripts
 
         private void SetCounters()
         {
+            Counter.SetCounter(gameObject, 15f, ChangeAudioVolume, false);
+
             Counter.SetCounter(gameObject, 24f, DisplayKoboldigunde, false);
 
             Counter.SetCounter(gameObject, 42f, DisplayKruemelbart, false);
@@ -42,6 +44,11 @@ namespace Assets.Scripts.LevelScripts
             Counter.SetCounter(gameObject, 62f, DisplayCake, false);
 
             Counter.SetCounter(gameObject, 80f, LoadNextLevel, false);
+        }
+
+        private void ChangeAudioVolume()
+        {
+            SoundManager.Instance.BackgroundMusic.AudioSource.volume = 0.1f;
         }
 
         private void LoadNextLevel()

@@ -27,8 +27,12 @@ namespace Assets.Scripts.Managers
 
             DontDestroyOnLoad(gameObject);
             BackgroundMusic = gameObject.AddComponent<AudioHelper>();
-            BackgroundMusic.AudioSource.volume = 0.3f;
             Narrator = gameObject.AddComponent<AudioHelper>();
+        }
+
+        public void Start()
+        {
+            BackgroundMusic.AudioSource.volume = 0.3f;
         }
 
         public void Update()

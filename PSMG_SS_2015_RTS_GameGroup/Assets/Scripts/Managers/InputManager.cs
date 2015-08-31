@@ -83,6 +83,7 @@ namespace Assets.Scripts.Managers
                     Time.timeScale = 1.0f;
                     Instance.CurrentSpeed = GameSpeed.Normal;
                     LevelManager.Instance.LoadLevel(2);
+                    SoundManager.Instance.BackgroundMusic.AudioSource.volume = 0.3f;
                 }
             }
         }

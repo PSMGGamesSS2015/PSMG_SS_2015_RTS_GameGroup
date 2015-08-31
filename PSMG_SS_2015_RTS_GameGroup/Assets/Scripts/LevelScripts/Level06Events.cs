@@ -67,24 +67,24 @@ namespace Assets.Scripts.LevelScripts
             LevelStartedMessage.Message = "Meister, sprengt dieses lästige Tor aus dem Weg.";
             LevelStartedMessage.Action = LevelStartedAction;
 
-            FlourHasFallenIntoBowlMessage = Events.First(e => e.Nr == 2);
+            FlourHasFallenIntoBowlMessage = gameObject.AddComponent<Event>();
             FlourHasFallenIntoBowlMessage.Message = "Mmh, es ist Mehl in die Schüssel gefallen. Wenn wir ihn gut rühren, könnten wir uns einen Kuchen backen.";
             FlourHasFallenIntoBowlMessage.Action = FlourHasFallenIntoBowlAction;
 
 
-            CakeAlmostReadyMessage = Events.First(e => e.Nr == 3);
+            CakeAlmostReadyMessage = gameObject.AddComponent<Event>();
             CakeAlmostReadyMessage.Message = "Das riecht fast so gut wie die Leckereien der Prinzessin, mein Herr. Er muss nur noch kurz backen.";
             CakeAlmostReadyMessage.Action = CakeAlmostReadyAction;
 
-            CakeReadyMessage = Events.First(e => e.Nr == 4);
+            CakeReadyMessage = gameObject.AddComponent<Event>();
             CakeReadyMessage.Message = "Mmmmmhh.";
             CakeReadyMessage.Action = CakeReadyAction;
 
-            KnightEatingCakeMessage = Events.First(e => e.Nr == 5);
+            KnightEatingCakeMessage = gameObject.AddComponent<Event>();
             KnightEatingCakeMessage.Message = "Kuchen … hmm … nur ein kleines Stück.";
             KnightEatingCakeMessage.Action = KnightEatingCakeAction;
 
-            ImpsHaveRescuedPrincessMessage = Events.First(e => e.Nr == 7);
+            ImpsHaveRescuedPrincessMessage = gameObject.AddComponent<Event>();
             ImpsHaveRescuedPrincessMessage.Message = "Geschafft, geschafft, geschafft! Nun bringt die Prinzessin sicher aus dem Verlies.";
             ImpsHaveRescuedPrincessMessage.Action = ImpsHaveRescuedPrincessAction;
         }

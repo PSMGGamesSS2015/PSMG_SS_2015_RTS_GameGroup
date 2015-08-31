@@ -24,7 +24,7 @@ namespace Assets.Scripts.Controllers.Characters.Enemies.Knight.Subservices
 
             GetComponent<KnightMovementService>().Stand();
             GetComponent<KnightAnimationHelper>().Play(AnimationReferences.KnightEating);
-            Counter.SetCounter(gameObject, 2.5f, PlaySaliveSound, true);
+            Counter.SetCounter(gameObject, 2.5f, PlaySaliveSound, false);
 
             GetComponent<KnightSpriteManagerService>().DisplayTart();
 

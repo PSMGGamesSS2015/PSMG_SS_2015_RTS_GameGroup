@@ -130,5 +130,30 @@ namespace Assets.Scripts.Controllers.Characters.Imps
             ImpInventory.HideItems();
             Play(AnimationReferences.ImpHappy);
         }
+
+        public void PlayLadderEndAnimation()
+        {
+            string anim;
+            switch (GetComponent<ImpTrainingService>().Type)
+            {
+                case ImpType.Spearman:
+                    anim = AnimationReferences.ImpClimbingLadderEnd;
+                    break;
+                case ImpType.Unemployed:
+                    anim = AnimationReferences.ImpClimbingLadderEnd;
+                    break;
+                case ImpType.Firebug:
+                    anim = AnimationReferences.ImpClimbingLadderEndWithTorch;
+                    break;
+                case ImpType.LadderCarrier:
+                    anim = AnimationReferences.ImpClimbingLadderEndWithLadder;
+                    break;
+                default:
+                    anim = AnimationReferences.ImpClimbingLadderEnd;
+                    break;
+            }
+
+            GetComponent<ImpAnimationHelper>().Play(anim);
+        }
     }
 }

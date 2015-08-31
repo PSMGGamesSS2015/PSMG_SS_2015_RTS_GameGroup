@@ -115,7 +115,6 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             IsJumping = true;
             GetComponent<Rigidbody2D>().velocity = new Vector2(2f, 2f);
-            // TODO Play jumping animation
         }
 
         public void ClimbALittleHigher()
@@ -127,7 +126,8 @@ namespace Assets.Scripts.Controllers.Characters.Imps.SubServices
         {
             yield return new WaitForSeconds(4.2f);
 
-            GetComponent<ImpAnimationHelper>().Play(AnimationReferences.ImpClimbingLadderEnd);
+           
+            GetComponent<ImpAnimationHelper>().PlayLadderEndAnimation();
 
             yield return new WaitForSeconds(1.8f);
 
